@@ -9,6 +9,14 @@
   color: var(--accent-ink); background: var(--accent); padding: 4px 10px; border-radius: 999px;
 }
 
+/* Franja de la demo: aclara que cada web es única */
+.demo-note {
+  margin: 0; background: var(--accent-soft); border-bottom: 1px solid rgba(245, 197, 24, .25);
+  color: #e4e4e7; font-size: .8125rem; line-height: 1.45;
+}
+.demo-note .wrap { display: block; padding-top: 10px; padding-bottom: 10px; }
+.demo-note strong { color: var(--accent); }
+
 /* ---------- Cabecera de la barbería ---------- */
 .shop { position: relative; overflow: hidden; background: #0d0d0e; }
 .shop-photo {

@@ -253,5 +253,6 @@ p { margin: 0; }
   .intro { padding-top: 112px; }
   .cards-6 { grid-template-columns: repeat(3, 1fr); }
   .steps { grid-template-columns: repeat(4, 1fr); column-gap: 32px; }
+  .steps-3 { grid-template-columns: repeat(3, 1fr); }
   .steps li { grid-template-columns: 1fr; border-bottom: 1px solid var(--line); }
 }
