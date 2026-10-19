@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tu barbería · Demo Book Lab</title>
+  <meta name="description" content="Demo de la web de una barbería hecha con Book Lab: precios, equipo, fotos, horario y reserva online desde el móvil.">
+  <meta name="theme-color" content="#0a0a0b">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/demo.css">
+</head>
+<body class="demo shop-page">
+  <a class="skip" href="#main">Saltar al contenido</a>
+
+  <div class="demo-bar">
+    <div class="wrap">
+      <a href="./" class="demo-back">← Book Lab</a>
+      <span class="demo-tag">Demo</span>
+    </div>
+  </div>
+
+  <!-- Toda la información de esta página sale de config.js -->
+  <header class="site-nav">
+    <div class="wrap">
+      <a href="#main" class="site-name" id="nav-name"></a>
+      <nav aria-label="Secciones" class="site-links">
+        <a href="#precios">Precios</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#visitanos">Horario</a>
+      </nav>
+      <a class="btn btn-primary btn-sm nav-cta" href="reservar.html" data-cta></a>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Portada -->
+    <section class="s-hero" aria-labelledby="shop-name">
+      <!-- Foto de portada: config.js → web.portada -->
+      <div class="s-hero-media" id="hero-media"></div>
+      <div class="wrap s-hero-inner">
+        <p class="shop-sub" id="shop-sub"></p>
+        <h1 class="shop-name" id="shop-name"></h1>
+        <p class="s-hero-tagline" id="tagline"></p>
+        <p class="s-hero-address"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span id="hero-address"></span></p>
+        <a class="g-rating" id="hero-rating" target="_blank" rel="noopener"></a>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="reservar.html" data-cta></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Precios -->
+    <section class="s-section" id="precios" aria-labelledby="precios-title">
+      <div class="wrap">
+        <span class="eyebrow">Precios</span>
+        <h2 class="s-title" id="precios-title">Servicios</h2>
+        <ul class="price-list" id="price-list"></ul>
+        <a class="btn btn-primary btn-block-sm" href="reservar.html" data-cta></a>
+      </div>
+    </section>
+
+    <!-- Reseñas de Google: config.js → resenas -->
+    <section class="s-section" id="resenas" aria-labelledby="resenas-title">
+      <div class="wrap">
+        <span class="eyebrow">Reseñas</span>
+        <h2 class="s-title" id="resenas-title">Lo que dicen en Google</h2>
+        <a class="g-summary" id="g-summary" target="_blank" rel="noopener"></a>
+        <ul class="reviews" id="reviews"></ul>
+        <p class="reviews-note" id="reviews-note"></p>
+      </div>
+    </section>
+
+    <!-- Quiénes somos -->
+    <section class="s-section" id="nosotros" aria-labelledby="nosotros-title">
+      <div class="wrap s-about">
+        <div>
+          <span class="eyebrow">Quiénes somos</span>
+          <h2 class="s-title" id="nosotros-title"></h2>
+          <div class="s-about-text" id="about-text"></div>
+          <ul class="values" id="values"></ul>
+        </div>
+        <!-- Fotos del local: config.js → web.fotosLocal -->
+        <div class="s-about-photo" id="about-photo"></div>
+      </div>
+    </section>
+
+    <!-- Equipo -->
+    <section class="s-section" id="equipo" aria-labelledby="equipo-title">
+      <div class="wrap">
+        <span class="eyebrow">El equipo</span>
+        <h2 class="s-title" id="equipo-title">Quién te corta</h2>
+        <ul class="team" id="team"></ul>
+      </div>
+    </section>
+
+    <!-- Galería -->
+    <section class="s-section" id="fotos" aria-labelledby="fotos-title">
+      <div class="wrap">
+        <span class="eyebrow">Nuestro trabajo</span>
+        <h2 class="s-title" id="fotos-title">Cortes recientes</h2>
+        <!-- Fotos: config.js → web.galeria -->
+        <div class="gallery" id="gallery"></div>
+        <p class="ig-line" id="ig-line"></p>
+      </div>
+    </section>
+
+    <!-- Horario y ubicación -->
+    <section class="s-section" id="visitanos" aria-labelledby="visitanos-title">
+      <div class="wrap s-visit">
+        <div>
+          <span class="eyebrow">Visítanos</span>
+          <h2 class="s-title" id="visitanos-title">Horario</h2>
+          <dl class="hours" id="hours"></dl>
+        </div>
+        <div>
+          <h2 class="s-title s-title-sm">Dónde estamos</h2>
+          <p class="visit-address" id="visit-address"></p>
+          <div class="visit-links" id="visit-links"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Llamada final -->
+    <section class="s-section" aria-labelledby="final-title">
+      <div class="wrap">
+        <div class="cta">
+          <h2 id="final-title">¿Te toca?</h2>
+          <p>Elige servicio, barbero y hora. En menos de un minuto tienes tu cita.</p>
+          <a class="btn" href="reservar.html" data-cta></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span id="footer-name"></span>
+      <a href="./">Web y reservas por Book Lab</a>
+    </div>
+  </footer>
+
+  <!-- Botón fijo abajo en el móvil -->
+  <div class="book-bar">
+    <a class="btn btn-primary btn-block" href="reservar.html" data-cta></a>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="assets/js/shop.js"></script>
+</body>
+</html>
