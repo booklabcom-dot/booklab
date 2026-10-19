@@ -497,6 +497,16 @@
     });
     $('#policy-close').textContent = pol.cierre;
     $('#consent-text').textContent = pol.casilla;
+
+    // Información básica de protección de datos (RGPD, primera capa)
+    var L = C.legal || {}, note = $('#legal-note');
+    if (note) {
+      note.appendChild(document.createTextNode(
+        'Responsable: ' + (L.titular || C.negocio.nombre) + '. Usamos tus datos para gestionar tu cita y enviarte la confirmación, los recordatorios y, tras tu visita, un correo para saber qué tal te fue. ' +
+        'Puedes acceder, rectificar o suprimir tus datos' + (L.email ? ' escribiendo a ' + L.email : '') + '. Más información en la '));
+      note.appendChild(el('a', { href: 'legal.html#privacidad', text: 'política de privacidad' }));
+      note.appendChild(document.createTextNode('.'));
+    }
     $('#copy-hint').textContent = C.textos.notaResumen;
 
     if (!LIVE) {

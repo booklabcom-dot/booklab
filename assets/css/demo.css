@@ -212,6 +212,31 @@
   -webkit-user-select: all; user-select: all;
 }
 
+/* Nota de privacidad junto al botón de reservar */
+.legal-note { margin-top: 14px; color: var(--muted); font-size: .8125rem; line-height: 1.55; }
+.legal-note a { color: var(--text); text-underline-offset: 3px; }
+
+/* ---------- Página legal (legal.html) ---------- */
+.legal { max-width: 720px; padding-top: 40px; padding-bottom: 64px; }
+.legal-title { font-size: clamp(2.25rem, 10vw, 3.5rem); letter-spacing: -.045em; }
+.legal-updated { color: var(--muted); font-size: .875rem; margin-top: 12px; }
+.legal-updated:empty { display: none; }
+.legal-toc { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 8px; }
+.legal-toc a {
+  display: inline-flex; align-items: center; min-height: 44px; padding: 0 16px; border: 1px solid var(--line);
+  border-radius: 999px; text-decoration: none; font-weight: 600; font-size: .9375rem;
+}
+.legal-toc a:hover { border-color: var(--accent); }
+.legal section { padding-top: 48px; scroll-margin-top: 16px; }
+.legal h2 { font-size: clamp(1.75rem, 7vw, 2.25rem); letter-spacing: -.04em; padding-bottom: 16px; border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+.legal h3 { font-size: 1.125rem; letter-spacing: -.02em; margin-top: 28px; }
+.legal p, .legal li { color: #c9c9cd; line-height: 1.65; }
+.legal p { margin-top: 10px; }
+.legal ul { margin: 10px 0 0; padding-left: 20px; display: grid; gap: 6px; }
+.legal strong { color: var(--text); }
+.legal a { color: var(--text); text-underline-offset: 3px; }
+.legal-ph { background: var(--accent-soft); color: var(--accent); border: 1px dashed rgba(245, 197, 24, .6); border-radius: 4px; padding: 0 4px; font-weight: 600; }
+
 /* ============================================================
  *  Web de la barbería (demo.html)
  * ============================================================ */

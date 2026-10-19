@@ -29,6 +29,13 @@ window.BOOKLAB_CONFIG = {
     zonaHoraria: 'Europe/Madrid'
   },
 
+  // ---------- Responsable de los datos de la demo (nota RGPD de la reserva) ----------
+  // En la demo de getbooklab.com el responsable es Book Lab (ver legal.html).
+  legal: {
+    titular: 'Book Lab',
+    email: 'booklab.com@gmail.com'
+  },
+
   // ---------- Página de la barbería (demo.html) ----------
   web: {
     // Fotos: pon la ruta de cada imagen (por ejemplo 'assets/img/local.webp').
