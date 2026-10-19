@@ -99,22 +99,45 @@ p { margin: 0; }
 .lead { color: var(--muted); font-size: 1.125rem; max-width: 34ch; margin-top: 16px; }
 .rule { width: 56px; height: 3px; background: var(--accent); border: 0; margin: 28px 0; border-radius: 2px; }
 
-/* ---------- Hero: la foto del anuncio tal cual (lleva su propio lema) ---------- */
-.hero { padding: 0 0 72px; overflow: hidden; }
-.hero-grid { display: grid; gap: 32px; align-items: center; }
-.hero-media {
-  margin: 0 calc(var(--gutter) * -1); aspect-ratio: 1; background: #000; overflow: hidden;
+/* ---------- Hero: el anuncio de Book Lab hecho web ---------- */
+.hero {
+  position: relative; overflow: hidden; background: #000;
+  min-height: calc(100svh - 68px - env(safe-area-inset-top)); display: flex; align-items: center;
+  padding: 56px 0 64px;
 }
-.hero-media img { width: 100%; height: 100%; object-fit: cover; }
-.hero-kicker {
-  font-size: .75rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--accent);
-  line-height: 1.4; margin: 0;
+.hero-photo { position: absolute; top: 0; right: 0; bottom: 0; width: 72%; max-width: 560px; }
+.hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: 35% 60%; }
+.hero-photo::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, #000 0%, rgba(0,0,0,.82) 28%, rgba(0,0,0,.25) 70%, rgba(0,0,0,0) 100%),
+    linear-gradient(0deg, var(--bg) 0%, rgba(0,0,0,0) 22%);
 }
-.hero-statement {
-  margin-top: 14px; font-size: clamp(2rem, 9vw, 3.5rem); font-weight: 800; letter-spacing: -.045em; line-height: 1.02;
-  text-wrap: balance;
+.hero-copy { position: relative; z-index: 1; }
+.hero h1 {
+  font-size: clamp(2.5rem, 12.2vw, 5.75rem); line-height: 1; letter-spacing: -.045em; max-width: 9.5em;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, .7);
 }
-.hero .lead { margin-top: 20px; font-size: 1.125rem; max-width: 34ch; color: #c9c9cd; }
+.hero-answer {
+  margin-top: 22px; font-size: clamp(1.75rem, 8vw, 3.25rem); font-weight: 700; letter-spacing: -.035em; line-height: 1.1;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, .7);
+}
+.hero .rule { margin: 28px 0 22px; width: 64px; }
+.hero-sub { font-size: 1.0625rem; line-height: 1.55; letter-spacing: .03em; color: #e4e4e7; text-shadow: 0 1px 12px rgba(0, 0, 0, .8); }
+.hero-scroll {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 48px; margin-top: 28px;
+  color: var(--muted); font-size: .9375rem; font-weight: 600; text-decoration: none;
+}
+.hero-scroll:hover { color: var(--accent); }
+
+/* Qué hacemos (justo debajo del hero) */
+.intro { padding-top: 72px; }
+.intro-statement {
+  margin-top: 4px; font-size: clamp(2rem, 9vw, 3.75rem); font-weight: 800; letter-spacing: -.045em; line-height: 1.02;
+  text-wrap: balance; max-width: 16em;
+}
+.intro .lead { margin-top: 20px; font-size: 1.125rem; max-width: 40ch; color: #c9c9cd; }
+.intro h2.eyebrow { line-height: 1.4; }
 .hero-ctas { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
 .hero-tags {
   display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 28px 0 0; padding: 0; list-style: none;
@@ -220,9 +243,14 @@ p { margin: 0; }
   .contact { grid-template-columns: 1fr 1fr; align-items: end; }
 }
 @media (min-width: 1024px) {
-  .hero { padding-top: 40px; padding-bottom: 0; }
-  .hero-grid { grid-template-columns: 1fr 1fr; gap: 64px; }
-  .hero-media { margin: 0; border-radius: 24px; }
+  .hero { min-height: min(calc(100svh - 68px), 820px); }
+  .hero-photo { width: 46%; max-width: none; }
+  .hero-photo::after {
+    background:
+      linear-gradient(90deg, #000 0%, rgba(0,0,0,.6) 18%, rgba(0,0,0,0) 55%),
+      linear-gradient(0deg, var(--bg) 0%, rgba(0,0,0,0) 18%);
+  }
+  .intro { padding-top: 112px; }
   .cards-6 { grid-template-columns: repeat(3, 1fr); }
   .steps { grid-template-columns: repeat(4, 1fr); column-gap: 32px; }
   .steps li { grid-template-columns: 1fr; border-bottom: 1px solid var(--line); }

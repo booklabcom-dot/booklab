@@ -12,7 +12,7 @@
   <meta property="og:title" content="Book Lab · ¿Cuántas horas pierdes contestando WhatsApps? Te las devuelvo.">
   <meta property="og:description" content="Tu barbería con web propia, dominio, SEO local y reservas online 24/7. Hecho por un barbero, para barberos.">
   <meta property="og:image" content="https://getbooklab.com/assets/img/og.jpg">
-  <link rel="preload" as="image" href="assets/img/hero-anuncio-750.webp" imagesrcset="assets/img/hero-anuncio-750.webp 750w, assets/img/hero-anuncio-1254.webp 1254w" imagesizes="(min-width: 1024px) 50vw, 100vw" type="image/webp">
+  <link rel="preload" as="image" href="assets/img/hero-sillon-hd.webp" type="image/webp">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -46,36 +46,41 @@
   </header>
 
   <main id="main">
-    <!-- 2. Hero: la foto del anuncio con su lema (el texto de la imagen está también en el h1 y en el alt) -->
+    <!-- 2. Hero: el anuncio de Book Lab hecho web (texto real + sillón) -->
     <section class="hero" aria-labelledby="hero-title">
-      <div class="wrap hero-grid">
-        <div class="hero-media">
-          <img src="assets/img/hero-anuncio-750.webp"
-               srcset="assets/img/hero-anuncio-750.webp 750w, assets/img/hero-anuncio-1254.webp 1254w"
-               sizes="(min-width: 1024px) 50vw, 100vw"
-               width="1254" height="1254" fetchpriority="high" decoding="async"
-               alt="Book Lab. ¿Cuántas horas pierdes contestando WhatsApps? Te las devuelvo. Tu barbería funcionando, tu agenda trabajando 24 horas sin llamadas ni mensajes.">
-        </div>
-        <div class="hero-copy">
-          <h1 id="hero-title" class="hero-kicker">Webs para barberías con reservas online</h1>
-          <p class="hero-statement">Tu barbería en Google, con <span class="accent">web propia</span> y una agenda que se llena sola.</p>
-          <p class="lead">Diseño a medida, dominio propio, SEO local y sistema de citas. Todo en uno y llave en mano: tú cortas, yo me encargo del resto.</p>
-          <div class="hero-ctas">
-            <a class="btn btn-primary" href="demo.html">Ver la demo</a>
-            <a class="btn btn-ghost" href="#contacto">Quiero mi web</a>
-          </div>
-          <ul class="hero-tags">
-            <li>Dominio propio</li>
-            <li>SEO local</li>
-            <li>Reservas 24/7</li>
-            <li>Recordatorios y reseñas</li>
-          </ul>
-        </div>
+      <!-- Foto: assets/img/hero-sillon-hd.webp (el sillón del anuncio, sin texto) -->
+      <div class="hero-photo" aria-hidden="true">
+        <img src="assets/img/hero-sillon-hd.webp" width="514" height="1254" alt="" fetchpriority="high" decoding="async">
+      </div>
+      <div class="wrap hero-copy">
+        <h1 id="hero-title">¿Cuántas horas pierdes contestando <span class="accent">WhatsApps?</span></h1>
+        <p class="hero-answer">Te las devuelvo.</p>
+        <hr class="rule">
+        <p class="hero-sub">Tu barbería funcionando,<br>tu agenda trabajando 24h<br>sin llamadas ni mensajes.</p>
+        <a class="hero-scroll" href="#web">Descubre cómo <span aria-hidden="true">↓</span></a>
       </div>
     </section>
 
+    <!-- 2b. Qué hacemos -->
+    <section class="section intro" id="web" aria-labelledby="intro-title">
+      <div class="wrap">
+        <h2 id="intro-title" class="eyebrow">Webs para barberías con reservas online</h2>
+        <p class="intro-statement">Tu barbería en Google, con <span class="accent">web propia</span> y una agenda que se llena sola.</p>
+        <p class="lead">Diseño a medida, dominio propio, SEO local y sistema de citas. Todo en uno y llave en mano: tú cortas, yo me encargo del resto.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="demo.html">Ver la demo</a>
+          <a class="btn btn-ghost" href="#contacto">Quiero mi web</a>
+        </div>
+        <ul class="hero-tags">
+          <li>Dominio propio</li>
+          <li>SEO local</li>
+          <li>Reservas 24/7</li>
+          <li>Recordatorios y reseñas</li>
+        </ul>
+      </div>
+    </section>
     <!-- 3. Todo incluido -->
-    <section class="section" id="incluye" aria-labelledby="incluye-title">
+    <section class="section" id="incluye" aria-labelledby="incluye-title" style="padding-top:0">
       <div class="wrap">
         <span class="eyebrow">Todo incluido</span>
         <h2 class="h2" id="incluye-title">Una web de verdad.<br><span class="accent">No solo un botón de reservas.</span></h2>
