@@ -3,13 +3,30 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Book Lab · Reservas online para barberías</title>
-  <meta name="description" content="Una web para tu barbería donde tus clientes reservan solos desde el móvil, 24/7. Las citas van directas a tu Google Calendar, con recordatorios automáticos.">
+  <title>Book Lab · Webs para barberías con dominio propio, SEO y reservas online</title>
+  <meta name="description" content="Webs a medida para barberías: dominio propio, SEO local para salir en Google y reservas online 24/7 conectadas a Google Calendar, con recordatorios y reseñas automáticas.">
+  <link rel="canonical" href="https://getbooklab.com/">
   <meta name="theme-color" content="#0a0a0b">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Book Lab · Tu barbería reservando sola, 24/7">
-  <meta property="og:description" content="Menos WhatsApp. Más cortes. Webs con reservas online para barberías.">
-  <meta property="og:image" content="assets/img/og.jpg">
+  <meta property="og:url" content="https://getbooklab.com/">
+  <meta property="og:title" content="Book Lab · ¿Cuántas horas pierdes contestando WhatsApps? Te las devuelvo.">
+  <meta property="og:description" content="Tu barbería con web propia, dominio, SEO local y reservas online 24/7. Hecho por un barbero, para barberos.">
+  <meta property="og:image" content="https://getbooklab.com/assets/img/og.jpg">
+  <link rel="preload" as="image" href="assets/img/hero-anuncio-750.webp" imagesrcset="assets/img/hero-anuncio-750.webp 750w, assets/img/hero-anuncio-1254.webp 1254w" imagesizes="(min-width: 1024px) 50vw, 100vw" type="image/webp">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Book Lab",
+    "url": "https://getbooklab.com/",
+    "logo": "https://getbooklab.com/assets/img/logo.webp",
+    "description": "Webs para barberías con dominio propio, SEO local y sistema de reservas online.",
+    "email": "booklab.com@gmail.com",
+    "telephone": "+34625725758",
+    "areaServed": "ES",
+    "sameAs": ["https://www.instagram.com/xffade/"]
+  }
+  </script>
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="preload" as="image" href="assets/img/logo.webp" type="image/webp">
@@ -29,61 +46,85 @@
   </header>
 
   <main id="main">
-    <!-- 2. Hero -->
+    <!-- 2. Hero: la foto del anuncio con su lema (el texto de la imagen está también en el h1 y en el alt) -->
     <section class="hero" aria-labelledby="hero-title">
       <div class="wrap hero-grid">
-        <div>
-          <span class="eyebrow">Webs con reservas para barberías</span>
-          <h1 id="hero-title">Menos WhatsApp.<br><span class="accent">Más cortes.</span></h1>
-          <p class="lead">Tu barbería con web propia: tus fotos, tus precios, tu equipo. Y un botón para que tus clientes reserven solos desde el móvil, a cualquier hora.</p>
+        <div class="hero-media">
+          <img src="assets/img/hero-anuncio-750.webp"
+               srcset="assets/img/hero-anuncio-750.webp 750w, assets/img/hero-anuncio-1254.webp 1254w"
+               sizes="(min-width: 1024px) 50vw, 100vw"
+               width="1254" height="1254" fetchpriority="high" decoding="async"
+               alt="Book Lab. ¿Cuántas horas pierdes contestando WhatsApps? Te las devuelvo. Tu barbería funcionando, tu agenda trabajando 24 horas sin llamadas ni mensajes.">
+        </div>
+        <div class="hero-copy">
+          <h1 id="hero-title" class="hero-kicker">Webs para barberías con reservas online</h1>
+          <p class="hero-statement">Tu barbería en Google, con <span class="accent">web propia</span> y una agenda que se llena sola.</p>
+          <p class="lead">Diseño a medida, dominio propio, SEO local y sistema de citas. Todo en uno y llave en mano: tú cortas, yo me encargo del resto.</p>
           <div class="hero-ctas">
-            <a class="btn btn-primary" href="demo.html">Probar la demo</a>
-            <a class="btn btn-ghost" href="#contacto">Quiero una web así</a>
+            <a class="btn btn-primary" href="demo.html">Ver la demo</a>
+            <a class="btn btn-ghost" href="#contacto">Quiero mi web</a>
           </div>
           <ul class="hero-tags">
-            <li>Google Calendar</li>
-            <li>Recordatorios por correo</li>
-            <li>Sin apps que instalar</li>
+            <li>Dominio propio</li>
+            <li>SEO local</li>
+            <li>Reservas 24/7</li>
+            <li>Recordatorios y reseñas</li>
           </ul>
         </div>
-        <!-- Foto principal: assets/img/hero-sillon.webp (sillón de barbero) -->
-        <div class="hero-media">
-          <img src="assets/img/hero-sillon.webp" width="519" height="1000" alt="Sillón de barbero en una barbería con luz cálida" fetchpriority="high" decoding="async">
-        </div>
       </div>
     </section>
 
-    <!-- 3. Beneficios -->
-    <section class="section" aria-labelledby="beneficios-title">
+    <!-- 3. Todo incluido -->
+    <section class="section" id="incluye" aria-labelledby="incluye-title">
       <div class="wrap">
-        <span class="eyebrow">Por qué Book Lab</span>
-        <h2 class="h2" id="beneficios-title">Tu agenda trabaja.<br>Tú, a lo tuyo.</h2>
-        <div class="cards">
+        <span class="eyebrow">Todo incluido</span>
+        <h2 class="h2" id="incluye-title">Una web de verdad.<br><span class="accent">No solo un botón de reservas.</span></h2>
+        <div class="cards cards-6">
           <article class="card">
             <div class="card-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg>
+            </div>
+            <h3>Web a medida</h3>
+            <p>Tus fotos, tus precios, tu equipo y tus reseñas de Google, con un diseño premium que da ganas de entrar y reservar.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+            </div>
+            <h3>Tu propio dominio</h3>
+            <p><b>tubarberia.com</b>, con candado de seguridad. Nada de enlaces raros de plataformas: tu marca, tu dirección.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5M11 8v6M8 11h6"/></svg>
+            </div>
+            <h3>SEO local</h3>
+            <p>Preparada para que te encuentren cuando buscan «barbería en tu ciudad»: textos optimizados, datos para Google y conexión con tu ficha de Google Maps.</p>
+          </article>
+          <article class="card">
+            <div class="card-icon" aria-hidden="true">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 10h18M8 2v4M16 2v4M8 15h3"/></svg>
             </div>
             <h3>Reservas 24/7</h3>
-            <p>Tu barbería coge citas mientras duermes, cortas o descansas. Domingo a las 23:00 también.</p>
+            <p>Tus clientes eligen servicio, barbero, día y hora desde el móvil. Directo a tu Google Calendar, sin dobles reservas ni huecos sueltos.</p>
           </article>
           <article class="card">
             <div class="card-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/><path d="m9 9 6 6M15 9l-6 6"/></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l2.6 5.3 5.9.9-4.2 4.1 1 5.8L12 16.4l-5.3 2.7 1-5.8L3.5 9.2l5.9-.9Z"/></svg>
             </div>
-            <h3>Cero mensajes para cuadrar citas</h3>
-            <p>Se acabó el «¿tienes algo el jueves por la tarde?». El cliente ve las horas libres y elige.</p>
+            <h3>Recordatorios y reseñas</h3>
+            <p>Confirmación al reservar, avisos 24 h y 3 h antes, y un correo tras el corte pidiendo reseña en Google. Menos plantones, más estrellas.</p>
           </article>
           <article class="card">
             <div class="card-icon" aria-hidden="true">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 10h18M8 2v4M16 2v4M8 15h8"/></svg>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 4.4 3.4 8.3 8 9 4.6-.7 8-4.6 8-9V6Z"/><path d="m9 12 2 2 4-4"/></svg>
             </div>
-            <h3>Sin huecos sueltos</h3>
-            <p>Solo se ofrecen horas donde el servicio cabe entero y que no dejan ratos muertos entre cita y cita.</p>
+            <h3>Rápida, legal y sin líos</h3>
+            <p>Pensada para el móvil y rapidísima. Con aviso legal y RGPD incluidos. Alojamiento, mantenimiento y cambios: de eso me encargo yo.</p>
           </article>
         </div>
       </div>
     </section>
-
     <!-- Hecho por un barbero -->
     <section class="section founder" aria-labelledby="founder-title" style="padding-top:0">
       <div class="wrap">
@@ -105,11 +146,11 @@
       </div>
     </section>
 
-    <!-- 4. Cómo funciona -->
+    <!-- 4. Cómo funcionan las reservas -->
     <section class="section" aria-labelledby="como-title" style="padding-top:0">
       <div class="wrap">
-        <span class="eyebrow">Cómo funciona</span>
-        <h2 class="h2" id="como-title">Cuatro pasos.<br><span class="accent">Ninguno es tuyo.</span></h2>
+        <span class="eyebrow">El sistema de citas</span>
+        <h2 class="h2" id="como-title">Tu agenda se gestiona sola.<br><span class="accent">Tú solo cortas.</span></h2>
         <ol class="steps">
           <li>
             <div>
@@ -139,24 +180,57 @@
       </div>
     </section>
 
-    <!-- 5. Llamada a la acción -->
-    <section aria-labelledby="cta-title">
+    <!-- 5. Cómo trabajamos -->
+    <section class="section" aria-labelledby="proceso-title" style="padding-top:0">
       <div class="wrap">
-        <div class="cta">
-          <h2 id="cta-title">Reserva como lo haría tu cliente.</h2>
-          <p>Abre la demo en el móvil y pide cita en una barbería de prueba. Tarda 40 segundos.</p>
-          <a class="btn" href="demo.html">Probar la demo</a>
-        </div>
+        <span class="eyebrow">Cómo trabajamos</span>
+        <h2 class="h2" id="proceso-title">Llave en mano.<br><span class="accent">Tú no tocas nada.</span></h2>
+        <ol class="steps">
+          <li>
+            <div>
+              <h3>Me cuentas</h3>
+              <p>Rellenas una ficha con tus servicios, precios, horario y fotos. Diez minutos.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Diseño tu web</h3>
+              <p>A medida, con tu estilo. Te la enseño y la ajustamos antes de publicarla.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Lo conecto todo</h3>
+              <p>Tu dominio, Google Calendar, los correos automáticos, Google Maps y el SEO.</p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <h3>Online</h3>
+              <p>Tu web publicada y lista para poner en tu Instagram y en Google. A reservar.</p>
+            </div>
+          </li>
+        </ol>
       </div>
     </section>
 
-    <!-- 6. Contacto -->
+    <!-- 6. Llamada a la acción -->
+    <section aria-labelledby="cta-title">
+      <div class="wrap">
+        <div class="cta">
+          <h2 id="cta-title">Mira cómo quedaría la tuya.</h2>
+          <p>Una barbería de ejemplo con web, precios, reseñas, equipo y reservas. Todo lo que ves, lo tendría la tuya.</p>
+          <a class="btn" href="demo.html">Ver la demo</a>
+        </div>
+      </div>
+    </section>
+    <!-- 7. Contacto -->
     <section class="section" id="contacto" aria-labelledby="contacto-title">
       <div class="wrap contact">
         <div>
           <span class="eyebrow">Contacto</span>
           <h2 class="h2" id="contacto-title">¿Hablamos de tu barbería?</h2>
-          <p class="lead">Escríbeme y cuéntame cómo se llama tu barbería, cuántos sois y tu horario. Te respondo yo, en persona.</p>
+          <p class="lead">Cuéntame cómo se llama tu barbería y cómo trabajáis. Te respondo yo, en persona, y te digo cómo quedaría tu web.</p>
         </div>
         <div class="contact-list">
           <a class="contact-item" href="https://wa.me/34625725758?text=Hola%2C%20tengo%20una%20barber%C3%ADa%20y%20me%20interesa%20Book%20Lab" target="_blank" rel="noopener">
