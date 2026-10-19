@@ -112,13 +112,15 @@ No hace falta instalar nada: se hace todo desde el navegador.
 5. Abajo, en **Commit changes**, pulsa el botón verde **Commit changes**. (Te preguntará si reemplazar el README: sí.)
 6. Ve a **Settings** (pestaña de arriba) → en la izquierda **Pages**.
 7. En **Build and deployment** → **Source** elige **Deploy from a branch**. En **Branch** elige **main** y la carpeta **/ (root)**. Pulsa **Save**.
-8. Espera 1–2 minutos y recarga. Arriba saldrá **"Your site is live at https://booklabcom-dot.github.io/booklab/"**. Esa es la dirección de la web; la demo está en `https://booklabcom-dot.github.io/booklab/demo.html`.
+8. Espera 1–2 minutos y recarga. Arriba saldrá **"Your site is live at https://getbooklab.com/"**. Esa es la dirección de la web; la demo está en `https://getbooklab.com/demo.html`.
 
 > Para actualizar la web más adelante: **Add file** → **Upload files**, arrastra los archivos cambiados y **Commit changes**. En un minuto se ve el cambio.
 
+> **Dominio propio:** la web está en **https://getbooklab.com** (comprado en Spaceship). En Spaceship → **DNS avanzado** hay 4 registros `A` de `@` a `185.199.108.153`, `185.199.109.153`, `185.199.110.153` y `185.199.111.153`, un `CNAME` de `www` a `booklabcom-dot.github.io` y un `TXT` de verificación de GitHub. No los borres. El archivo `CNAME` del repositorio indica el dominio a GitHub Pages.
+
 ## Paso 8 · Probar la reserva desde el móvil (5 minutos)
 
-1. Abre `https://booklabcom-dot.github.io/booklab/demo.html` en el móvil (con datos, no solo wifi, si quieres probar como un cliente).
+1. Abre `https://getbooklab.com/demo.html` en el móvil (con datos, no solo wifi, si quieres probar como un cliente).
 2. Pulsa **Aparta tu cita** → elige servicio → barbero → día y hora → rellena tus datos con un correo tuyo de prueba (por ejemplo, el propio booklab.com@gmail.com) → marca **He leído y acepto la política de cancelación** → **Confirmar reserva**.
 3. Comprueba que:
    - Sale la pantalla **¡Cita reservada!**
