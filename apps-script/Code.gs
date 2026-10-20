@@ -12,6 +12,7 @@
  *          · action "cambiar"       → mueve la cita a otro día u hora
  *          · action "panel"         → números para el panel del jefe (pide la clave)
  *          · action "novino"        → marca o desmarca "No vino" (pide la clave)
+ *          · action "mostrador"     → el barbero apunta a un cliente que llega sin cita (apuntar.html, enlace firmado)
  *   - sendReminders(): con un activador cada 15 minutos. Recordatorios de 24 h
  *          y 3 h, y correo de reseña 1 h después del corte.
  *
@@ -143,6 +144,7 @@ function doGet(e) {
       var ev = citaSegura_(p.b, p.e, p.t);
       return json_(datosCita_(p.b, ev));
     }
+    if (p.action === 'mostrador') return json_(mostradorInfo_(p));
     return json_({ ok: true, mensaje: 'Book Lab funcionando. Usa ?action=slots para consultar horas.' });
   } catch (err) {
     return error_(err);
@@ -163,6 +165,8 @@ function doPost(e) {
     if (d.action === 'pagado') return json_(pagado_(d));
     if (d.action === 'bloquear') return json_(bloquear_(d));
     if (d.action === 'desbloquear') return json_(desbloquear_(d));
+    if (d.action === 'mostrador') return json_(mostrador_(d, lock));
+    if (d.action === 'mostradorDeshacer') return json_(mostradorDeshacer_(d));
 
     // ----- Reservar -----
     // Campo trampa: solo lo rellenan los bots
@@ -430,7 +434,8 @@ function panel_(d) {
           dur: Math.round((fin - ini) / 60000),
           f: Utilities.formatDate(ini, ZONA_HORARIA, 'yyyy-MM-dd'), h: Utilities.formatDate(ini, ZONA_HORARIA, 'HH:mm'),
           cliente: ((t.nombre || '') + ' ' + (t.apellidos || '')).trim(), email: t.email || '', tel: t.telefono || '',
-          novino: t.novino === '1', pagado: t.novinoPagado === '1', cambios: Number(t.cambios || 0)
+          novino: t.novino === '1', pagado: t.novinoPagado === '1', cambios: Number(t.cambios || 0),
+          origen: t.origen === 'mostrador' ? 'mostrador' : 'web'
         });
       });
       token = lista.nextPageToken;
@@ -518,6 +523,115 @@ function desbloquear_(d) {
   var lista = bloqueados_().filter(function (x) { return x.id !== d.id; });
   guardarBloqueados_(lista);
   return { ok: true, bloqueados: lista };
+}
+
+// ---------- Mostrador: el barbero apunta a los clientes que llegan sin cita (apuntar.html) ----------
+// Cada barbero tiene su enlace, sin contraseña y sin publicar en la web: TU-WEB/panel-agenda-marcos.
+// Lo escribe enlacesMostrador().
+
+function comprobarMostrador_(barbero) {
+  if (!BARBEROS[barbero]) throw aviso_('Este enlace no es válido. Pide el tuyo al dueño de la barbería.', 'ENLACE');
+}
+
+/** GET: comprueba el enlace y, si se pide, devuelve las horas libres de un día (sin antelación mínima). */
+function mostradorInfo_(p) {
+  comprobarMostrador_(p.b);
+  var hoy = Utilities.formatDate(new Date(), ZONA_HORARIA, 'yyyy-MM-dd');
+  var r = { ok: true, barbero: BARBEROS[p.b].nombre, hoy: hoy, ahora: Utilities.formatDate(new Date(), ZONA_HORARIA, 'HH:mm') };
+  if (p.date && p.service) {
+    validarFecha_(p.date);
+    r.slots = horasLibres_(p.date, servicio_(p.service), p.b, '', true);
+  }
+  return r;
+}
+
+/** POST: apunta una cita de mostrador. time = 'ahora' o HH:MM. Nombre obligatorio; teléfono y correo opcionales
+ *  (con correo, el cliente recibe la confirmación, los recordatorios y el enlace para gestionar su cita). */
+function mostrador_(d, lock) {
+  comprobarMostrador_(d.b);
+  var servicio = servicio_(d.service);
+  var ahora = new Date();
+  var hoy = Utilities.formatDate(ahora, ZONA_HORARIA, 'yyyy-MM-dd');
+  var fecha, hora;
+  if (d.time === 'ahora') {
+    var m = aMin_(Utilities.formatDate(ahora, ZONA_HORARIA, 'HH:mm'));
+    fecha = hoy; hora = aHHMM_(m - m % 5);                     // redondeado a 5 minutos
+  } else {
+    validarFecha_(d.date);
+    if (!/^\d{2}:\d{2}$/.test(d.time || '')) throw aviso_('Elige una hora.');
+    fecha = d.date; hora = d.time;
+  }
+  var nombre = limpiar_(d.name, 60), telefono = limpiar_(d.phone, 20), email = limpiar_(d.email, 120).toLowerCase();
+  if (!nombre) throw aviso_('Escribe el nombre del cliente.');
+  if (email && !EMAIL_RE.test(email)) throw aviso_('Revisa el correo (o déjalo vacío).');
+  var minutosHasta = (fechaHora_(fecha, hora).getTime() - ahora.getTime()) / 60000;
+
+  var tengo = lock.tryLock(25000);
+  if (!tengo) throw aviso_('Hay mucha gente reservando ahora mismo. Inténtalo en unos segundos.');
+  try {
+    // ¿Choca con otra cita? Se avisa y el barbero decide (forzar)
+    var ini = aMin_(hora), fin = ini + servicio.duracion;
+    var choque = ocupado_(d.b, fecha).filter(function (o) { return ini < o[1] && fin > o[0]; })[0];
+    if (choque && !d.forzar) {
+      throw aviso_('Ya tienes otra cita de ' + aHHMM_(choque[0]) + ' a ' + aHHMM_(choque[1]) + '.', 'SOLAPA');
+    }
+    var inicio = fechaHora_(fecha, hora);
+    var creado = Calendar.Events.insert({
+      summary: servicio.nombre + ' · ' + nombre,
+      start: { dateTime: inicio.toISOString(), timeZone: ZONA_HORARIA },
+      end: { dateTime: new Date(inicio.getTime() + servicio.duracion * 60000).toISOString(), timeZone: ZONA_HORARIA },
+      description:
+        'Cliente: ' + nombre + '\n' +
+        (telefono ? 'Teléfono: ' + telefono + '\n' : '') +
+        (email ? 'Correo: ' + email + '\n' : '') +
+        'Servicio: ' + servicio.nombre + ' (' + servicio.duracion + ' min, ' + servicio.precio + ' €)\n' +
+        'Barbero: ' + BARBEROS[d.b].nombre + '\n\n' +
+        'Apuntada en el mostrador (Book Lab).',
+      location: DIRECCION,
+      extendedProperties: {
+        private: {
+          booklab: '1', origen: 'mostrador', email: email, nombre: nombre, apellidos: '', telefono: telefono,
+          servicio: d.service, precio: String(servicio.precio), barbero: d.b, cambios: '0',
+          // Con correo: recordatorios y reseña como en la web. Sin correo: nada que enviar.
+          r24: email && minutosHasta > 24 * 60 ? 'pendiente' : 'no',
+          r3: email && minutosHasta > 3 * 60 ? 'pendiente' : 'no',
+          resena: email ? 'pendiente' : 'no'
+        }
+      }
+    }, calendario_(d.b), { sendUpdates: 'none' });
+  } finally {
+    lock.releaseLock();
+  }
+
+  var cuando = cuandoTexto_(fecha, hora);
+  if (email && minutosHasta > 0) {
+    try {
+      enviarCorreo_(email, 'Cita confirmada · ' + NOMBRE_BARBERIA, '¡Cita confirmada!', 'Hola ' + nombre + ', te esperamos.',
+        servicio, BARBEROS[d.b].nombre, cuando, { gestionar: enlaceCita_(d.b, creado.id) });
+    } catch (mailErr) { console.error('No se pudo enviar la confirmación: ' + mailErr); }
+  }
+  return { ok: true, id: creado.id, fecha: fecha, hora: hora, cuando: cuando, servicio: servicio.nombre, precio: servicio.precio };
+}
+
+/** POST: borra una cita recién apuntada en el mostrador (botón "Deshacer"). Solo citas de mostrador. */
+function mostradorDeshacer_(d) {
+  comprobarMostrador_(d.b);
+  var calId = calendario_(d.b);
+  var ev;
+  try { ev = Calendar.Events.get(calId, d.e); } catch (x) { ev = null; }
+  var tags = (ev && ev.extendedProperties && ev.extendedProperties.private) || {};
+  if (!ev || tags.origen !== 'mostrador') throw aviso_('No se puede deshacer esa cita.');
+  Calendar.Events.remove(calId, d.e, { sendUpdates: 'none' });
+  return { ok: true };
+}
+
+/** Ejecútala desde el editor: escribe en el registro el enlace de "Apuntar cliente" de cada barbero. */
+function enlacesMostrador() {
+  var base = URL_WEB ? (URL_WEB.charAt(URL_WEB.length - 1) === '/' ? URL_WEB : URL_WEB + '/') : 'TU-WEB/';
+  Object.keys(BARBEROS).forEach(function (id) {
+    console.log(BARBEROS[id].nombre + ': ' + base + 'panel-agenda-' + id);
+  });
+  console.log('Pásale a cada barbero SOLO su enlace. Que lo abra en su móvil y lo añada a la pantalla de inicio.');
 }
 
 // ---------- Recordatorios (activador cada 15 minutos) ----------
@@ -629,14 +743,17 @@ function instalarRecordatorios() {
 
 // ---------- Cálculo de horas libres ----------
 
-/** excluirId: al cambiar una cita, su propio evento no cuenta como ocupado. */
-function horasLibres_(fecha, servicio, barbero, excluirId) {
+/**
+ * excluirId: al cambiar una cita, su propio evento no cuenta como ocupado.
+ * sinAntelacion: el barbero (página de mostrador) puede apuntar para dentro de un rato, sin la antelación mínima de la web.
+ */
+function horasLibres_(fecha, servicio, barbero, excluirId, sinAntelacion) {
   var ventanas = (HORARIO[diaSemana_(fecha)] || []).map(function (v) { return [aMin_(v[0]), aMin_(v[1])]; });
   if (!ventanas.length) return [];
 
   var hoy = Utilities.formatDate(new Date(), ZONA_HORARIA, 'yyyy-MM-dd');
   var minimo = -1;
-  if (fecha === hoy) minimo = aMin_(Utilities.formatDate(new Date(), ZONA_HORARIA, 'HH:mm')) + ANTELACION_MINUTOS;
+  if (fecha === hoy) minimo = aMin_(Utilities.formatDate(new Date(), ZONA_HORARIA, 'HH:mm')) + (sinAntelacion ? 0 : ANTELACION_MINUTOS);
 
   var minHueco = Math.min.apply(null, Object.keys(SERVICIOS).map(function (k) { return SERVICIOS[k].duracion; }));
   var ids = barbero === 'any' ? Object.keys(BARBEROS) : [barbero];

@@ -106,7 +106,8 @@
             var cl = clientes[cartera - 1 - Math.floor(Math.pow(rnd(), 1.4) * cartera)], s = servicios[ids[si]];
             var h = ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + (m % 60)).slice(-2);
             citas.push({ id: 'demo' + citas.length, b: b.id, s: ids[si], sn: s.nombre, precio: s.precio, dur: s.duracion, f: f, h: h,
-              cliente: cl.cliente, email: cl.email, tel: cl.tel, novino: false, pagado: false, cambios: rnd() < 0.08 ? 1 : 0 });
+              cliente: cl.cliente, email: cl.email, tel: cl.tel, novino: false, pagado: false, cambios: rnd() < 0.08 ? 1 : 0,
+              origen: f <= hoy && citas.length % 6 === 0 ? 'mostrador' : 'web' });
             var ult = citas[citas.length - 1];
             if (f < hoy && rnd() < 0.04) { ult.novino = true; ult.pagado = rnd() < 0.5; }
           }
@@ -200,6 +201,7 @@
     cs.forEach(function (c) { if (c.email && primeraVisita[c.email] && primeraVisita[c.email].slice(0, 7) === m) nuevos[c.email] = 1; });
     return {
       citas: cs.length, hechas: hechas.length, futuras: futuras.length, novino: novino.length,
+      mostrador: cs.filter(function (c) { return c.origen === 'mostrador'; }).length,
       cobradoNoVino: cobradoNoVino, pendienteNoVino: pendienteNoVino,
       facturado: facturado, previsto: previsto, ticket: hechas.length ? facturado / hechas.length : 0,
       ocupacion: pct(ocupado, minutosDisponibles(m, nB)), cancelaciones: cancel, cambios: cambios, nuevos: Object.keys(nuevos).length
@@ -244,7 +246,7 @@
     var r = resumen(S.mes), antes = resumen(mesAnterior(S.mes), esActual ? Number(D.hoy.slice(8, 10)) : 0);
     var box = $('#kpis'); box.textContent = '';
     box.appendChild(kpi('Facturado', eur.format(r.facturado), r.previsto ? '+ ' + eur.format(r.previsto) + ' previstos este mes' : (esActual ? 'Hasta hoy' : ''), delta(r.facturado, antes.facturado)));
-    box.appendChild(kpi('Citas', num.format(r.citas), r.hechas + ' hechas · ' + r.futuras + ' pendientes', delta(r.citas, antes.citas)));
+    box.appendChild(kpi('Citas', num.format(r.citas), r.hechas + ' hechas · ' + r.futuras + ' pendientes' + (r.mostrador ? ' · ' + r.mostrador + ' de mostrador' : ''), delta(r.citas, antes.citas)));
     box.appendChild(kpi('Ticket medio', eur2.format(Math.round(r.ticket * 100) / 100), 'Por cita realizada'));
     box.appendChild(kpi('Ocupación', r.ocupacion + ' %', 'Horas reservadas sobre horas abiertas'));
     box.appendChild(kpi('Clientes nuevos', num.format(r.nuevos), 'Primera reserva este mes'));
@@ -359,6 +361,47 @@
   }
   function waAviso(c) { return waHref(c.tel) + '?text=' + encodeURIComponent(mensajeNoVino(c)); }
 
+  // Recordatorio semiautomático por WhatsApp para las citas que aún no han llegado
+  function mensajeRecordatorio(c) {
+    var negocio = C.negocio.nombre || 'la barbería';
+    var fecha = cap(fechaLarga.format(utc(c.f)).replace(',', ''));
+    var cuando = c.f === D.hoy ? 'hoy' : c.f === addDays(D.hoy, 1) ? 'mañana' : 'el ' + fechaLarga.format(utc(c.f)).replace(',', '');
+    return [
+      '🤖 *Book Lab · Asistente de ' + negocio + '*',
+      '_Recordatorio automático_',
+      '',
+      'Hola, ' + (String(c.cliente || '').split(' ')[0] || 'cliente') + ':',
+      'Te recordamos que ' + cuando + ' tienes cita con nosotros:',
+      '',
+      '📅 ' + (c.f === D.hoy ? 'Hoy, ' + fechaLarga.format(utc(c.f)).replace(',', '') : fecha) + ' a las ' + c.h,
+      '✂️ ' + c.sn + ' con ' + nombreBarbero(c.b),
+      C.negocio.direccion ? '📍 ' + C.negocio.direccion : null,
+      '',
+      'Si no puedes venir, avísanos respondiendo a este mensaje para poder ofrecer tu hueco a otro cliente.',
+      '',
+      '¡Te esperamos! 💈'
+    ].filter(function (l) { return l !== null; }).join('\n');
+  }
+  var RECORDADOS_LS = 'booklab_recordados';
+  function recordados() { try { return JSON.parse(localStorage.getItem(RECORDADOS_LS) || '{}'); } catch (e) { return {}; } }
+  function marcarRecordado(c) {
+    try {
+      var r = recordados(), limite = addDays(D.hoy, -7);
+      Object.keys(r).forEach(function (k) { if (r[k] < limite) delete r[k]; });   // no acumular basura
+      r[c.b + ':' + c.id] = c.f;
+      localStorage.setItem(RECORDADOS_LS, JSON.stringify(r));
+    } catch (e) { /* sin almacenamiento */ }
+  }
+  function botonRecordar(c) {
+    var hecho = !!recordados()[c.b + ':' + c.id];
+    return el('a', {
+      href: waHref(c.tel) + '?text=' + encodeURIComponent(mensajeRecordatorio(c)), target: '_blank', rel: 'noopener',
+      class: 'p-wa p-recordar' + (hecho ? ' is-hecho' : ''),
+      'aria-label': 'Enviar recordatorio por WhatsApp a ' + (c.cliente || 'el cliente') + ' (' + c.h + ')',
+      onclick: function (ev) { marcarRecordado(c); var a = ev.currentTarget; a.classList.add('is-hecho'); a.lastChild.textContent = 'Recordado ✓'; }
+    }, [el('span', { 'aria-hidden': 'true', text: '💬' }), el('span', { text: hecho ? 'Recordado ✓' : 'Recordar' })]);
+  }
+
   function noShowsDe(c) {
     var k = claveCliente(c);
     return D.citas.filter(function (x) { return x.novino && claveCliente(x) === k; }).length;
@@ -393,22 +436,25 @@
     box.appendChild(res);
     var ul = el('ul', { class: 'p-agenda' });
     cs.forEach(function (c) {
-      var puedeMarcar = pasada(c);
-      var estado = !puedeMarcar ? el('span', { class: 'p-estado', text: 'Pendiente' })
+      var ya = pasada(c);
+      // Por defecto: vino y pagó. Solo se toca si alguien falla («No show»).
+      var estado = !ya ? el('span', { class: 'p-estado', text: 'Pendiente' })
         : c.novino ? el('span', { class: 'p-estado is-mal', text: c.pagado ? 'No vino · pagado' : 'No vino' })
         : el('span', { class: 'p-estado is-ok', text: 'Vino · pagado ✓' });
       ul.appendChild(el('li', { class: c.novino ? 'is-novino' : '' }, [
         el('span', { class: 'p-ag-h', text: c.h }),
         el('div', { class: 'p-ag-d' }, [
           el('b', { text: (c.cliente || 'Cliente') + (bloqueado(c) ? ' · bloqueado' : '') }),
-          el('small', { text: c.sn + ' · ' + eur.format(c.precio) + (S.filtro === 'todos' ? ' · ' + nombreBarbero(c.b) : '') }),
-          c.tel ? el('a', { href: telHref(c.tel), class: 'p-ag-tel', text: c.tel }) : null
+          el('small', null, [c.origen === 'mostrador' ? el('span', { class: 'p-mostrador', text: 'Mostrador' }) : null,
+            c.sn + ' · ' + eur.format(c.precio) + (S.filtro === 'todos' ? ' · ' + nombreBarbero(c.b) : '')]),
+          c.tel ? el('span', { class: 'p-ag-telrow' }, [
+            el('a', { href: telHref(c.tel), class: 'p-ag-tel', text: c.tel }),
+            !ya ? botonRecordar(c) : null
+          ]) : null
         ]),
         el('div', { class: 'p-acciones' }, [
           estado,
-          puedeMarcar
-            ? el('button', { type: 'button', class: 'p-novino', 'aria-pressed': String(!!c.novino), 'aria-label': (c.novino ? 'Quitar «No vino» a ' : 'Marcar que no vino ') + (c.cliente || 'el cliente') + ' a las ' + c.h, onclick: function (ev) { marcarNoVino(c, ev.currentTarget); } }, [c.novino ? 'Sí vino' : 'No show'])
-            : null
+          el('button', { type: 'button', class: 'p-novino', 'aria-pressed': String(!!c.novino), 'aria-label': (c.novino ? 'Quitar «No vino» a ' : 'Marcar que no vino ') + (c.cliente || 'el cliente') + ' a las ' + c.h, onclick: function (ev) { marcarNoVino(c, ev.currentTarget); } }, [c.novino ? 'Sí vino' : 'No show'])
         ])
       ]));
     });

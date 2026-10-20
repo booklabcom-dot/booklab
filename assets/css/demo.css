@@ -16,6 +16,34 @@
 }
 .demo-panel:hover, .demo-panel:focus-visible { background: var(--accent); color: var(--accent-ink); }
 
+/* Apartado de la demo: panel de agenda del barbero */
+.demo-agenda {
+  position: relative; overflow: hidden; padding: 32px 22px; border-radius: 24px;
+  background: radial-gradient(120% 90% at 100% 0%, rgba(245, 197, 24, .16), transparent 60%), var(--surface);
+  border: 1px solid rgba(245, 197, 24, .35);
+}
+.demo-agenda-tag {
+  display: inline-block; font-size: .6875rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent-ink); background: var(--accent); padding: 5px 10px; border-radius: 999px;
+}
+.demo-agenda h2 { font-size: clamp(1.875rem, 8vw, 2.75rem); letter-spacing: -.045em; line-height: 1.05; margin-top: 18px; }
+.demo-agenda-lead { color: #d4d4d8; font-size: 1.0625rem; line-height: 1.55; margin-top: 14px; max-width: 34em; }
+.demo-agenda-list { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 12px; }
+.demo-agenda-list li { position: relative; padding-left: 30px; color: var(--muted); line-height: 1.5; }
+.demo-agenda-list li::before {
+  content: "✓"; position: absolute; left: 0; top: 0; width: 20px; height: 20px; border-radius: 50%;
+  display: grid; place-items: center; font-size: .75rem; font-weight: 800; background: var(--accent-soft); color: var(--accent);
+}
+.demo-agenda-list b { color: var(--text); }
+.demo-agenda-btn { margin-top: 26px; gap: 10px; width: 100%; }
+.demo-agenda-url { margin-top: 12px; font-size: .8125rem; color: var(--muted); text-align: center; }
+.demo-agenda-url span { color: var(--text); font-weight: 600; white-space: nowrap; }
+@media (min-width: 768px) {
+  .demo-agenda { padding: 48px 44px; }
+  .demo-agenda-btn { width: auto; }
+  .demo-agenda-url { text-align: left; }
+}
+
 /* Franja de la demo: aclara que cada web es única */
 .demo-note {
   margin: 0; background: var(--accent-soft); border-bottom: 1px solid rgba(245, 197, 24, .25);
