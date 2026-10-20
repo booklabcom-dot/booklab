@@ -79,6 +79,8 @@ var DIAS_MAXIMOS = 60;
 var EVITAR_HUECOS_SUELTOS = true;
 var CANCELACION_HORAS = 2;   // hasta cuántas horas antes se puede cancelar o cambiar online
 var MAX_CAMBIOS = 2;         // cuántas veces se puede cambiar una misma cita
+// Lo que ve un cliente bloqueado (desde el panel) si intenta reservar o cambiar su cita
+var MENSAJE_BLOQUEO = 'Tu reserva online está bloqueada porque faltaste a una cita sin avisar. Si quieres regularizarlo y pagar esa cita, ponte en contacto con la barbería en el ' + TELEFONO_BARBERIA + ' y te desbloqueamos.';
 
 // ============================================================
 //  A partir de aquí no hace falta tocar nada.
@@ -158,6 +160,9 @@ function doPost(e) {
     if (d.action === 'cambiar') return json_(cambiar_(d));
     if (d.action === 'panel') return json_(panel_(d));
     if (d.action === 'novino') return json_(noVino_(d));
+    if (d.action === 'pagado') return json_(pagado_(d));
+    if (d.action === 'bloquear') return json_(bloquear_(d));
+    if (d.action === 'desbloquear') return json_(desbloquear_(d));
 
     // ----- Reservar -----
     // Campo trampa: solo lo rellenan los bots
@@ -176,6 +181,7 @@ function doPost(e) {
     if (!EMAIL_RE.test(email)) throw aviso_('Revisa el correo: debe tener la forma nombre@ejemplo.com.');
     if (telefono.replace(/\D/g, '').length < 9) throw aviso_('Revisa el teléfono: debe tener al menos 9 cifras.');
     if (d.consent !== true) throw aviso_('Para reservar tienes que aceptar la política de cancelación.');
+    if (estaBloqueado_(email, telefono)) throw aviso_(MENSAJE_BLOQUEO, 'BLOQUEADO');
 
     // Bloqueo para que dos personas no reserven la misma hora a la vez
     tengoLock = lock.tryLock(25000);
@@ -325,6 +331,7 @@ function cambiar_(d) {
   if (!/^\d{2}:\d{2}$/.test(d.time || '')) throw aviso_('La hora elegida no es válida.');
 
   var tags = (ev.extendedProperties && ev.extendedProperties.private) || {};
+  if (estaBloqueado_(tags.email, tags.telefono)) throw aviso_(MENSAJE_BLOQUEO, 'BLOQUEADO');
   var servicio = SERVICIOS[tags.servicio] || servicio_(info.servicioId);
 
   var lock = LockService.getScriptLock();
@@ -423,7 +430,7 @@ function panel_(d) {
           dur: Math.round((fin - ini) / 60000),
           f: Utilities.formatDate(ini, ZONA_HORARIA, 'yyyy-MM-dd'), h: Utilities.formatDate(ini, ZONA_HORARIA, 'HH:mm'),
           cliente: ((t.nombre || '') + ' ' + (t.apellidos || '')).trim(), email: t.email || '', tel: t.telefono || '',
-          novino: t.novino === '1', cambios: Number(t.cambios || 0)
+          novino: t.novino === '1', pagado: t.novinoPagado === '1', cambios: Number(t.cambios || 0)
         });
       });
       token = lista.nextPageToken;
@@ -435,6 +442,7 @@ function panel_(d) {
     barberos: Object.keys(BARBEROS).map(function (id) { return { id: id, nombre: BARBEROS[id].nombre }; }),
     servicios: SERVICIOS, horario: HORARIO,
     estadisticas: JSON.parse(PropertiesService.getScriptProperties().getProperty('ESTADISTICAS') || '{}'),
+    bloqueados: bloqueados_(),
     citas: citas
   };
 }
@@ -448,6 +456,7 @@ function noVino_(d) {
   var tags = (ev.extendedProperties && ev.extendedProperties.private) || {};
   if (tags.booklab !== '1') throw aviso_('Esa cita no se hizo desde la web.');
   tags.novino = d.valor ? '1' : '';
+  if (!d.valor) tags.novinoPagado = '';
   if (d.valor) {
     Calendar.Events.patch({ extendedProperties: { private: tags }, colorId: '11' }, calId, d.e, { sendUpdates: 'none' }); // rojo
   } else {
@@ -455,6 +464,60 @@ function noVino_(d) {
     catch (x) { Calendar.Events.patch({ extendedProperties: { private: tags } }, calId, d.e, { sendUpdates: 'none' }); }
   }
   return { ok: true, novino: !!d.valor };
+}
+
+/** Marca o desmarca que el cliente ya ha pagado su "No vino" (desde el panel). */
+function pagado_(d) {
+  comprobarClave_(d.clave);
+  barbero_(d.b);
+  var calId = calendario_(d.b);
+  var ev = Calendar.Events.get(calId, d.e);
+  var tags = (ev.extendedProperties && ev.extendedProperties.private) || {};
+  if (tags.novino !== '1') throw aviso_('Primero marca la cita como "No vino".');
+  tags.novinoPagado = d.valor ? '1' : '';
+  Calendar.Events.patch({ extendedProperties: { private: tags } }, calId, d.e, { sendUpdates: 'none' });
+  return { ok: true, pagado: !!d.valor };
+}
+
+// ---------- Clientes bloqueados (no pueden reservar online) ----------
+
+function bloqueados_() {
+  return JSON.parse(PropertiesService.getScriptProperties().getProperty('BLOQUEADOS') || '[]');
+}
+
+function guardarBloqueados_(lista) {
+  PropertiesService.getScriptProperties().setProperty('BLOQUEADOS', JSON.stringify(lista));
+}
+
+/** Teléfono comparable: solo las 9 últimas cifras (quita +34, espacios, guiones…). */
+function telNormal_(t) { var d = String(t || '').replace(/\D/g, ''); return d.length >= 9 ? d.slice(-9) : ''; }
+
+function estaBloqueado_(email, telefono) {
+  var e = String(email || '').trim().toLowerCase(), t = telNormal_(telefono);
+  return bloqueados_().some(function (x) { return (e && x.email && x.email === e) || (t && x.tel && x.tel === t); });
+}
+
+function bloquear_(d) {
+  comprobarClave_(d.clave);
+  var email = limpiar_(d.email, 120).toLowerCase(), tel = telNormal_(d.tel);
+  if (!email && !tel) throw aviso_('Escribe el correo o el teléfono del cliente.');
+  if (email && !EMAIL_RE.test(email)) throw aviso_('Ese correo no parece válido.');
+  var lista = bloqueados_();
+  if (lista.some(function (x) { return (email && x.email === email) || (tel && x.tel === tel); })) throw aviso_('Ese cliente ya está bloqueado.');
+  lista.push({
+    id: Utilities.getUuid().slice(0, 8), email: email, tel: tel,
+    nombre: limpiar_(d.nombre, 80), motivo: limpiar_(d.motivo, 120),
+    fecha: Utilities.formatDate(new Date(), ZONA_HORARIA, 'yyyy-MM-dd')
+  });
+  guardarBloqueados_(lista);
+  return { ok: true, bloqueados: lista };
+}
+
+function desbloquear_(d) {
+  comprobarClave_(d.clave);
+  var lista = bloqueados_().filter(function (x) { return x.id !== d.id; });
+  guardarBloqueados_(lista);
+  return { ok: true, bloqueados: lista };
 }
 
 // ---------- Recordatorios (activador cada 15 minutos) ----------

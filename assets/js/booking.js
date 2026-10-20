@@ -407,6 +407,13 @@
         return;
       }
       alertBox.textContent = err.message;
+      if (err.code === 'BLOQUEADO') {
+        var tel = String(C.negocio.telefono || '').replace(/[^\d+]/g, '');
+        alertBox.textContent = '';
+        alertBox.appendChild(el('strong', { class: 'alert-t', text: 'Reserva online bloqueada' }));
+        alertBox.appendChild(el('span', { text: err.message }));
+        if (tel) alertBox.appendChild(el('a', { class: 'btn btn-ghost btn-sm alert-btn', href: 'tel:' + tel, text: 'Llamar a la barbería' }));
+      }
       alertBox.hidden = false;
       alertBox.setAttribute('tabindex', '-1');
       alertBox.focus();

@@ -18,7 +18,7 @@
   var MESES_A_CARGAR = 12;
 
   var D = null;                 // datos del motor
-  var S = { mes: '', filtro: 'todos', dia: 0 };
+  var S = { mes: '', filtro: 'todos', dia: '' };   // dia: fecha de la agenda (AAAA-MM-DD)
   var clave = '';
   var primeraVisita = {};       // email → primera fecha
   var ultimaVisita = {};        // email → última fecha pasada
@@ -106,7 +106,9 @@
             var cl = clientes[cartera - 1 - Math.floor(Math.pow(rnd(), 1.4) * cartera)], s = servicios[ids[si]];
             var h = ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + (m % 60)).slice(-2);
             citas.push({ id: 'demo' + citas.length, b: b.id, s: ids[si], sn: s.nombre, precio: s.precio, dur: s.duracion, f: f, h: h,
-              cliente: cl.cliente, email: cl.email, tel: cl.tel, novino: (f < hoy && rnd() < 0.04), cambios: rnd() < 0.08 ? 1 : 0 });
+              cliente: cl.cliente, email: cl.email, tel: cl.tel, novino: false, pagado: false, cambios: rnd() < 0.08 ? 1 : 0 });
+            var ult = citas[citas.length - 1];
+            if (f < hoy && rnd() < 0.04) { ult.novino = true; ult.pagado = rnd() < 0.5; }
           }
         });
       });
@@ -117,7 +119,7 @@
       barberos.forEach(function (b) { est[mm][b.id] = { cancelaciones: 2 + Math.floor(rnd() * 6), cambios: 3 + Math.floor(rnd() * 8) }; });
       mm = mesSiguiente(mm);
     }
-    return { ok: true, negocio: C.negocio.nombre, hoy: hoy, ahora: ahora, barberos: barberos, servicios: servicios, horario: C.horario, estadisticas: est, citas: citas };
+    return { ok: true, negocio: C.negocio.nombre, hoy: hoy, ahora: ahora, barberos: barberos, servicios: servicios, horario: C.horario, estadisticas: est, bloqueados: [], citas: citas };
   }
 
   // ---------- Carga ----------
@@ -162,6 +164,8 @@
     var sel = $('#mes'); sel.textContent = '';
     meses.forEach(function (x) { sel.appendChild(el('option', { value: x, text: cap(mesTexto(x)) })); });
     if (!S.mes || meses.indexOf(S.mes) === -1) S.mes = D.hoy.slice(0, 7);
+    if (!S.dia) S.dia = D.hoy;
+    D.bloqueados = D.bloqueados || [];
     sel.value = S.mes;
     $('#p-name').textContent = D.negocio;
     document.title = 'Panel · ' + D.negocio;
@@ -182,7 +186,11 @@
     var hechas = cs.filter(function (c) { return pasada(c) && !c.novino; });
     var futuras = cs.filter(function (c) { return !pasada(c); });
     var novino = cs.filter(function (c) { return c.novino; });
-    var facturado = hechas.reduce(function (s, c) { return s + c.precio; }, 0);
+    var novinoPagado = novino.filter(function (c) { return c.pagado; });
+    var cobradoNoVino = novinoPagado.reduce(function (s, c) { return s + c.precio; }, 0);
+    var pendienteNoVino = novino.filter(function (c) { return !c.pagado; }).reduce(function (s, c) { return s + c.precio; }, 0);
+    // Facturación automática: toda cita pasada cuenta como cobrada, salvo "No vino"; un "No vino" pagado vuelve a sumar
+    var facturado = hechas.reduce(function (s, c) { return s + c.precio; }, 0) + cobradoNoVino;
     var previsto = futuras.reduce(function (s, c) { return s + c.precio; }, 0);
     var ocupado = cs.reduce(function (s, c) { return s + c.dur; }, 0);
     var nB = S.filtro === 'todos' ? D.barberos.length : 1;
@@ -192,6 +200,7 @@
     cs.forEach(function (c) { if (c.email && primeraVisita[c.email] && primeraVisita[c.email].slice(0, 7) === m) nuevos[c.email] = 1; });
     return {
       citas: cs.length, hechas: hechas.length, futuras: futuras.length, novino: novino.length,
+      cobradoNoVino: cobradoNoVino, pendienteNoVino: pendienteNoVino,
       facturado: facturado, previsto: previsto, ticket: hechas.length ? facturado / hechas.length : 0,
       ocupacion: pct(ocupado, minutosDisponibles(m, nB)), cancelaciones: cancel, cambios: cambios, nuevos: Object.keys(nuevos).length
     };
@@ -204,9 +213,11 @@
     pintarBarberos();
     pintarEvolucion();
     pintarAgenda();
+    pintarNoVino();
     pintarServicios();
     pintarPunta();
     pintarClientes();
+    pintarBloqueados();
     $('#mes-ant').disabled = $('#mes').selectedIndex <= 0;
     $('#mes-sig').disabled = $('#mes').selectedIndex >= $('#mes').options.length - 1;
   }
@@ -237,7 +248,7 @@
     box.appendChild(kpi('Ticket medio', eur2.format(Math.round(r.ticket * 100) / 100), 'Por cita realizada'));
     box.appendChild(kpi('Ocupación', r.ocupacion + ' %', 'Horas reservadas sobre horas abiertas'));
     box.appendChild(kpi('Clientes nuevos', num.format(r.nuevos), 'Primera reserva este mes'));
-    box.appendChild(kpi('No vinieron', num.format(r.novino), r.hechas + r.novino ? pct(r.novino, r.hechas + r.novino) + ' % de las citas pasadas' : ''));
+    box.appendChild(kpi('No vinieron', num.format(r.novino), r.novino ? eur.format(r.pendienteNoVino) + ' por cobrar · ' + pct(r.novino, r.hechas + r.novino) + ' % de las citas' : 'Ninguno este mes'));
     box.appendChild(kpi('Cancelaciones', num.format(r.cancelaciones), 'Desde la web'));
     box.appendChild(kpi('Cambios de cita', num.format(r.cambios), 'Desde la web'));
     var nota = esActual ? 'La flecha compara con el mismo periodo del mes pasado.' : 'La flecha compara con el mes anterior.';
@@ -317,32 +328,177 @@
     barras($('#horas'), Object.keys(horas).sort().map(function (h) { return { l: h + ':00', v: horas[h] }; }), function (x) { return String(x.v); });
   }
 
+  // ---------- Clientes ----------
+  function claveCliente(c) { return c.email || telNorm(c.tel); }
+  function telNorm(t) { var d = String(t || '').replace(/\D/g, ''); return d.length >= 9 ? d.slice(-9) : ''; }
+  function bloqueado(c) {
+    var e = String(c.email || '').toLowerCase(), t = telNorm(c.tel);
+    return D.bloqueados.some(function (x) { return (e && x.email === e) || (t && x.tel === t); });
+  }
+  // Mensaje del "asistente Book Lab": se nota que es automático para que al jefe no le dé apuro enviarlo.
+  var fechaLarga = new Intl.DateTimeFormat('es-ES', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
+  function mensajeNoVino(c) {
+    var negocio = C.negocio.nombre || 'la barbería';
+    return [
+      '🤖 *Book Lab · Asistente de ' + negocio + '*',
+      '_Mensaje automático_',
+      '',
+      'Hola, ' + (String(c.cliente || '').split(' ')[0] || 'cliente') + ':',
+      'Te informamos de que no acudiste a tu cita y no recibimos ningún aviso de cancelación.',
+      '',
+      '📅 ' + cap(fechaLarga.format(utc(c.f)).replace(',', '')) + ' a las ' + c.h,
+      '✂️ ' + c.sn + ' con ' + nombreBarbero(c.b),
+      '💶 Importe: *' + eur2.format(c.precio) + '*',
+      '',
+      'Según nuestra política de cancelaciones, las citas no anuladas con antelación se abonan, ya que ese tiempo queda reservado exclusivamente para ti.',
+      '',
+      'Para regularizar el pago, responde a este mensaje y te indicamos cómo hacerlo.',
+      '',
+      'Gracias por tu comprensión.'
+    ].join('\n');
+  }
+  function waAviso(c) { return waHref(c.tel) + '?text=' + encodeURIComponent(mensajeNoVino(c)); }
+
+  function noShowsDe(c) {
+    var k = claveCliente(c);
+    return D.citas.filter(function (x) { return x.novino && claveCliente(x) === k; }).length;
+  }
+
+  // ---------- Agenda de un día (para marcar "No vino") ----------
   function pintarAgenda() {
-    document.querySelectorAll('.p-tabs [data-dia]').forEach(function (b) { b.setAttribute('aria-selected', String(+b.getAttribute('data-dia') === S.dia)); });
-    var dia = addDays(D.hoy, S.dia), box = $('#agenda'); box.textContent = '';
-    var cs = D.citas.filter(function (c) { return c.f === dia && enFiltro(c); });
-    if (!cs.length) { box.appendChild(el('p', { class: 'g-note', text: 'No hay citas reservadas por la web.' })); return; }
+    document.querySelectorAll('.p-tabs [data-dia]').forEach(function (b) {
+      b.setAttribute('aria-selected', String(addDays(D.hoy, +b.getAttribute('data-dia')) === S.dia));
+    });
+    $('#agenda-fecha').value = S.dia;
+    var box = $('#agenda'); box.textContent = '';
+    var cs = D.citas.filter(function (c) { return c.f === S.dia && enFiltro(c); });
+    if (!cs.length) { box.appendChild(el('p', { class: 'g-note', text: 'No hay citas reservadas por la web ese día.' })); return; }
+    // Resumen del día: lo que ya ha pasado cuenta como venido y pagado, salvo los "No vino"
+    var vinieron = 0, cobrado = 0, fallos = 0, pendientes = 0, perdido = 0;
+    cs.forEach(function (c) {
+      if (!pasada(c)) pendientes++;
+      else if (c.novino) { fallos++; if (c.pagado) cobrado += c.precio; else perdido += c.precio; }
+      else { vinieron++; cobrado += c.precio; }
+    });
+    var res = el('div', { class: 'p-dia-res' }, [
+      el('div', null, [el('b', { text: String(vinieron) }), el('small', { text: vinieron === 1 ? 'vino' : 'vinieron' })]),
+      el('div', null, [el('b', { text: eur.format(cobrado) }), el('small', { text: 'cobrado' })]),
+      el('div', { class: fallos ? 'is-mal' : '' }, [el('b', { text: String(fallos) }), el('small', { text: fallos ? 'no vino · ' + eur.format(perdido) : 'no vino' })]),
+      el('div', null, [el('b', { text: String(pendientes) }), el('small', { text: pendientes === 1 ? 'pendiente' : 'pendientes' })])
+    ]);
+    box.appendChild(res);
     var ul = el('ul', { class: 'p-agenda' });
     cs.forEach(function (c) {
       var puedeMarcar = pasada(c);
+      var estado = !puedeMarcar ? el('span', { class: 'p-estado', text: 'Pendiente' })
+        : c.novino ? el('span', { class: 'p-estado is-mal', text: c.pagado ? 'No vino · pagado' : 'No vino' })
+        : el('span', { class: 'p-estado is-ok', text: 'Vino · pagado ✓' });
       ul.appendChild(el('li', { class: c.novino ? 'is-novino' : '' }, [
         el('span', { class: 'p-ag-h', text: c.h }),
         el('div', { class: 'p-ag-d' }, [
-          el('b', { text: c.cliente || 'Cliente' }),
+          el('b', { text: (c.cliente || 'Cliente') + (bloqueado(c) ? ' · bloqueado' : '') }),
           el('small', { text: c.sn + ' · ' + eur.format(c.precio) + (S.filtro === 'todos' ? ' · ' + nombreBarbero(c.b) : '') }),
           c.tel ? el('a', { href: telHref(c.tel), class: 'p-ag-tel', text: c.tel }) : null
         ]),
-        puedeMarcar ? el('button', { type: 'button', class: 'p-novino', 'aria-pressed': String(!!c.novino), onclick: function (ev) { marcarNoVino(c, ev.currentTarget); } }, [c.novino ? 'No vino ✓' : 'No vino']) : null
+        el('div', { class: 'p-acciones' }, [
+          estado,
+          puedeMarcar
+            ? el('button', { type: 'button', class: 'p-novino', 'aria-pressed': String(!!c.novino), 'aria-label': (c.novino ? 'Quitar «No vino» a ' : 'Marcar que no vino ') + (c.cliente || 'el cliente') + ' a las ' + c.h, onclick: function (ev) { marcarNoVino(c, ev.currentTarget); } }, [c.novino ? 'Sí vino' : 'No show'])
+            : null
+        ])
       ]));
     });
     box.appendChild(ul);
   }
 
+  function accion(cuerpo, local) {
+    return DEMO ? new Promise(function (res) { setTimeout(function () { res(local ? local() : { ok: true }); }, 250); }) : pedir(cuerpo);
+  }
+
   function marcarNoVino(c, btn) {
     var valor = !c.novino;
     btn.disabled = true;
-    var prom = DEMO ? Promise.resolve({ ok: true }) : pedir({ action: 'novino', clave: clave, b: c.b, e: c.id, valor: valor });
-    prom.then(function () { c.novino = valor; preparar(); pintar(); }).catch(function (err) { btn.disabled = false; alert(err.message); });
+    accion({ action: 'novino', clave: clave, b: c.b, e: c.id, valor: valor })
+      .then(function () { c.novino = valor; if (!valor) c.pagado = false; preparar(); pintar(); })
+      .catch(function (err) { btn.disabled = false; alert(err.message); });
+  }
+
+  function marcarPagado(c, btn) {
+    var valor = !c.pagado;
+    btn.disabled = true;
+    accion({ action: 'pagado', clave: clave, b: c.b, e: c.id, valor: valor })
+      .then(function () { c.pagado = valor; pintar(); })
+      .catch(function (err) { btn.disabled = false; alert(err.message); });
+  }
+
+  // ---------- No vinieron (mes elegido) ----------
+  function pintarNoVino() {
+    var r = resumen(S.mes), box = $('#novino-lista'); box.textContent = '';
+    $('#novino-resumen').textContent = r.novino
+      ? r.novino + (r.novino === 1 ? ' cliente no vino' : ' clientes no vinieron') + ' · ' + eur.format(r.pendienteNoVino) + ' por cobrar · ' + eur.format(r.cobradoNoVino) + ' cobrados'
+      : 'Nadie ha fallado este mes. ¡Bien!';
+    var cs = delMes(S.mes).filter(function (c) { return c.novino; }).reverse();
+    if (!cs.length) return;
+    var ul = el('ul', { class: 'p-agenda p-novinos' });
+    cs.forEach(function (c) {
+      var veces = noShowsDe(c), bloq = bloqueado(c);
+      ul.appendChild(el('li', null, [
+        el('span', { class: 'p-ag-h', text: c.f.slice(8, 10) + '/' + c.f.slice(5, 7) }),
+        el('div', { class: 'p-ag-d' }, [
+          el('b', { text: (c.cliente || 'Cliente') }),
+          el('small', { text: c.h + ' · ' + c.sn + ' · ' + eur.format(c.precio) + ' · ' + nombreBarbero(c.b) }),
+          el('small', { class: veces >= 2 ? 'p-alerta' : '', text: veces === 1 ? 'Primera vez que falla' : 'Ha fallado ' + veces + ' veces' }),
+          c.tel && !c.pagado ? el('a', { href: waAviso(c), target: '_blank', rel: 'noopener', class: 'p-wa', title: 'Abre WhatsApp con un mensaje automático del asistente Book Lab' }, ['🤖 Enviar aviso del bot']) : null
+        ]),
+        el('div', { class: 'p-acciones' }, [
+          el('button', { type: 'button', class: 'p-novino p-pagado', 'aria-pressed': String(!!c.pagado), onclick: function (ev) { marcarPagado(c, ev.currentTarget); } }, [c.pagado ? 'Pagado ✓' : 'Marcar pagado']),
+          bloq
+            ? el('span', { class: 'p-ag-pend', text: 'Bloqueado' })
+            : el('button', { type: 'button', class: 'p-novino', onclick: function (ev) { bloquearCliente(c, ev.currentTarget); } }, ['Bloquear'])
+        ])
+      ]));
+    });
+    box.appendChild(ul);
+  }
+
+  // ---------- Bloqueados ----------
+  function bloquear(datos, btn) {
+    if (btn) btn.disabled = true;
+    return accion({ action: 'bloquear', clave: clave, email: datos.email, tel: datos.tel, nombre: datos.nombre, motivo: datos.motivo }, function () {
+      var lista = D.bloqueados.concat([{ id: 'demo' + Date.now(), email: String(datos.email || '').toLowerCase(), tel: telNorm(datos.tel), nombre: datos.nombre || '', motivo: datos.motivo || '', fecha: D.hoy }]);
+      return { ok: true, bloqueados: lista };
+    }).then(function (r) { D.bloqueados = r.bloqueados; pintar(); })
+      .catch(function (err) { if (btn) btn.disabled = false; throw err; });
+  }
+
+  function bloquearCliente(c, btn) {
+    var veces = noShowsDe(c);
+    if (!confirm('¿Bloquear a ' + (c.cliente || 'este cliente') + '? No podrá reservar online (ha fallado ' + veces + (veces === 1 ? ' vez' : ' veces') + ').')) return;
+    bloquear({ email: c.email, tel: c.tel, nombre: c.cliente, motivo: 'No vino ' + veces + (veces === 1 ? ' vez' : ' veces') }, btn).catch(function (err) { alert(err.message); });
+  }
+
+  function pintarBloqueados() {
+    var ul = $('#bloqueados'); ul.textContent = '';
+    if (!D.bloqueados.length) { ul.appendChild(el('li', { class: 'g-note', text: 'No hay nadie bloqueado.' })); return; }
+    D.bloqueados.forEach(function (x) {
+      ul.appendChild(el('li', { class: 'p-bloq' }, [
+        el('div', null, [
+          el('b', { text: x.nombre || x.email || x.tel }),
+          el('small', { text: [x.email, x.tel].filter(Boolean).join(' · ') }),
+          el('small', { text: (x.motivo ? x.motivo + ' · ' : '') + 'Desde el ' + x.fecha.split('-').reverse().join('/') })
+        ]),
+        el('button', { type: 'button', class: 'p-novino', onclick: function (ev) { desbloquear(x, ev.currentTarget); } }, ['Desbloquear'])
+      ]));
+    });
+  }
+
+  function desbloquear(x, btn) {
+    if (!confirm('¿Desbloquear a ' + (x.nombre || x.email || x.tel) + '? Podrá volver a reservar online.')) return;
+    btn.disabled = true;
+    accion({ action: 'desbloquear', clave: clave, id: x.id }, function () {
+      return { ok: true, bloqueados: D.bloqueados.filter(function (y) { return y.id !== x.id; }) };
+    }).then(function (r) { D.bloqueados = r.bloqueados; pintar(); })
+      .catch(function (err) { btn.disabled = false; alert(err.message); });
   }
 
   function pintarClientes() {
@@ -386,7 +542,19 @@
   $('#mes').addEventListener('change', function () { S.mes = this.value; pintar(); });
   $('#mes-ant').addEventListener('click', function () { var s = $('#mes'); if (s.selectedIndex > 0) { s.selectedIndex--; S.mes = s.value; pintar(); } });
   $('#mes-sig').addEventListener('click', function () { var s = $('#mes'); if (s.selectedIndex < s.options.length - 1) { s.selectedIndex++; S.mes = s.value; pintar(); } });
-  document.querySelectorAll('.p-tabs [data-dia]').forEach(function (b) { b.addEventListener('click', function () { S.dia = +b.getAttribute('data-dia'); pintarAgenda(); }); });
+  document.querySelectorAll('.p-tabs [data-dia]').forEach(function (b) { b.addEventListener('click', function () { S.dia = addDays(D.hoy, +b.getAttribute('data-dia')); pintarAgenda(); }); });
+  $('#agenda-fecha').addEventListener('change', function () { if (this.value) { S.dia = this.value; pintarAgenda(); } });
+  $('#form-bloquear').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var err = $('#b-error'); err.hidden = true;
+    var datos = { nombre: $('#b-nombre').value.trim(), email: $('#b-email').value.trim(), tel: $('#b-tel').value.trim(), motivo: $('#b-motivo').value.trim() };
+    if (!datos.email && telNorm(datos.tel).length < 9) { err.textContent = 'Escribe el correo o el teléfono (9 cifras) del cliente.'; err.hidden = false; return; }
+    var btn = this.querySelector('button[type="submit"]');
+    bloquear(datos, btn).then(function () {
+      ['#b-nombre', '#b-email', '#b-tel', '#b-motivo'].forEach(function (s) { $(s).value = ''; });
+      btn.disabled = false;
+    }).catch(function (x) { err.textContent = x.message; err.hidden = false; btn.disabled = false; });
+  });
   $('#exportar').addEventListener('click', exportar);
   $('#recargar').addEventListener('click', cargar);
   $('#salir').addEventListener('click', function () { guardar(''); clave = ''; D = null; $('#clave').value = ''; show('#v-login'); });

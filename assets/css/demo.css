@@ -178,6 +178,8 @@
   border: 1px solid rgba(255, 138, 122, .5); background: rgba(255, 138, 122, .1); color: var(--text);
   border-radius: var(--radius-sm); padding: 14px 16px; margin-bottom: 18px; font-size: .9375rem;
 }
+.alert-t { display: block; font-size: 1rem; margin-bottom: 4px; }
+.alert-btn { display: inline-flex; margin-top: 12px; }
 .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .check {
   display: grid; grid-template-columns: 28px 1fr; gap: 12px; align-items: start;

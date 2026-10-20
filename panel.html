@@ -78,15 +78,27 @@
           <div class="p-bars-v" id="evolucion"></div>
         </section>
 
-        <section class="p-card" aria-labelledby="t-agenda">
+        <section class="p-card p-wide" aria-labelledby="t-agenda">
           <div class="p-card-head">
-            <h2 id="t-agenda">Agenda</h2>
+            <h2 id="t-agenda">Clientes del día</h2>
             <div class="p-tabs" role="tablist" aria-label="Día">
+              <button type="button" role="tab" aria-selected="false" data-dia="-1">Ayer</button>
               <button type="button" role="tab" aria-selected="true" data-dia="0">Hoy</button>
               <button type="button" role="tab" aria-selected="false" data-dia="1">Mañana</button>
             </div>
           </div>
+          <div class="field p-dia">
+            <label for="agenda-fecha">Otro día</label>
+            <input type="date" id="agenda-fecha">
+          </div>
+          <p class="g-note" id="agenda-ayuda">Todos los que ya han pasado cuentan como venidos y pagados. Si alguien falló, pulsa «No show» y la facturación se recalcula sola.</p>
           <div id="agenda"></div>
+        </section>
+
+        <section class="p-card p-wide" aria-labelledby="t-novino">
+          <h2 id="t-novino">No vinieron este mes</h2>
+          <p class="p-summary" id="novino-resumen"></p>
+          <div id="novino-lista"></div>
         </section>
 
         <section class="p-card" aria-labelledby="t-servicios">
@@ -114,13 +126,32 @@
           <p class="g-note">Más de 45 días sin volver. Un mensaje a tiempo los recupera.</p>
           <ul class="p-list" id="perdidos"></ul>
         </section>
+
+        <section class="p-card p-wide" aria-labelledby="t-bloq">
+          <h2 id="t-bloq">Clientes bloqueados</h2>
+          <p class="g-note">Un cliente bloqueado no puede reservar ni cambiar citas online: verá un aviso para que llame a la barbería. Se bloquea por correo y por teléfono.</p>
+          <ul class="p-list" id="bloqueados"></ul>
+          <details class="p-bloq-form">
+            <summary>Bloquear a alguien a mano</summary>
+            <form id="form-bloquear" novalidate>
+              <div class="p-form-grid">
+                <div class="field"><label for="b-nombre">Nombre</label><input type="text" id="b-nombre" autocomplete="off"></div>
+                <div class="field"><label for="b-email">Correo</label><input type="email" id="b-email" inputmode="email" autocomplete="off" autocapitalize="off"></div>
+                <div class="field"><label for="b-tel">Teléfono</label><input type="tel" id="b-tel" inputmode="tel" autocomplete="off"></div>
+                <div class="field"><label for="b-motivo">Motivo (opcional)</label><input type="text" id="b-motivo" autocomplete="off"></div>
+              </div>
+              <div id="b-error" class="alert" role="alert" hidden></div>
+              <button type="submit" class="btn btn-primary">Bloquear</button>
+            </form>
+          </details>
+        </section>
       </div>
 
       <div class="p-foot">
         <button type="button" class="btn btn-ghost" id="exportar">Descargar el mes en Excel (CSV)</button>
         <button type="button" class="btn btn-ghost" id="recargar">Actualizar</button>
       </div>
-      <p class="g-note" id="p-nota">Cifras estimadas a partir de las reservas hechas en la web: «facturado» suma el precio de las citas ya pasadas (sin las de «No vino»). Las citas que se apuntan a mano en el calendario no cuentan.</p>
+      <p class="g-note" id="p-nota">Facturación automática a partir de las reservas hechas en la web: cada cita que ya ha pasado cuenta como cobrada, salvo las marcadas como «No vino». Un «No vino» marcado como pagado vuelve a sumar. Las citas que se apuntan a mano en el calendario no cuentan.</p>
     </section>
   </main>
 

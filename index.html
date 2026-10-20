@@ -155,6 +155,80 @@
       </div>
     </section>
 
+    <!-- Panel de control -->
+    <section class="section" id="panel" aria-labelledby="pc-title" style="padding-top:0">
+      <div class="wrap">
+        <div class="pc-head">
+          <span class="eyebrow">Tu panel de control</span>
+          <h2 class="h2" id="pc-title">Toda tu barbería,<br><span class="accent">en números.</span></h2>
+          <p class="ns-lead">Cuánto facturas, qué barbero rinde más, qué días se llenan y qué clientes no vuelven. Al momento, desde el móvil y sin hojas de cálculo. Solo entras tú.</p>
+        </div>
+
+        <div class="pc-stage">
+          <div class="pc-window" role="img" aria-label="Panel de control de ejemplo: 14.400 € facturados en septiembre, 13 % más que el mes anterior, 859 citas, ticket medio de 17,43 € y 56 % de ocupación, con la facturación de cada barbero.">
+            <div class="pc-bar"><i></i><i></i><i></i><span>Barbería Fade · Panel</span></div>
+            <div class="pc-body">
+              <div class="pc-top">
+                <b class="pc-h">Tus números</b>
+                <span class="pc-month">Septiembre 2026</span>
+              </div>
+              <div class="pc-chips"><span class="is-on">Todos</span><span>Marcos</span><span>Lucía</span><span>Diego</span></div>
+              <div class="pc-kpis">
+                <div><small>Facturado</small><b>14.400 €</b><em class="up">▲ 13 %</em></div>
+                <div><small>Citas</small><b>859</b><em class="up">▲ 14 %</em></div>
+                <div><small>Ticket medio</small><b>17,43 €</b><em>por cita</em></div>
+                <div><small>Ocupación</small><b>56 %</b><em>de la agenda</em></div>
+              </div>
+              <div class="pc-cards">
+                <div class="pc-card">
+                  <small>Evolución de la facturación</small>
+                  <div class="pc-cols">
+                    <span style="--h:78%"><i></i>Abr</span>
+                    <span style="--h:86%"><i></i>May</span>
+                    <span style="--h:86%"><i></i>Jun</span>
+                    <span style="--h:90%"><i></i>Jul</span>
+                    <span style="--h:82%"><i></i>Ago</span>
+                    <span class="is-on" style="--h:100%"><i></i>Sep</span>
+                  </div>
+                </div>
+                <div class="pc-card">
+                  <small>Por barbero</small>
+                  <div class="pc-rows">
+                    <p><span>Marcos</span><i style="--w:100%"></i><b>5.823 €</b></p>
+                    <p><span>Lucía</span><i style="--w:77%"></i><b>4.508 €</b></p>
+                    <p><span>Diego</span><i style="--w:70%"></i><b>4.069 €</b></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pc-phone" role="img" aria-label="Clientes del día en el móvil: los que vinieron aparecen como pagados y quien no vino, marcado en rojo.">
+            <div class="pc-notch"></div>
+            <b class="pc-h">Clientes del día</b>
+            <div class="pc-res"><div><b>22</b><small>vinieron</small></div><div><b>366 €</b><small>cobrado</small></div></div>
+            <ul class="pc-list">
+              <li><span>09:00</span><div><b>Raúl Díaz</b><small>Corte + barba</small></div><em class="ok">Pagado ✓</em></li>
+              <li class="is-off"><span>09:30</span><div><b>Pablo Romero</b><small>Corte clásico</small></div><em class="ko">No vino</em></li>
+              <li><span>10:00</span><div><b>Sergio García</b><small>Degradado</small></div><em class="ok">Pagado ✓</em></li>
+              <li><span>10:30</span><div><b>Nico Pérez</b><small>Arreglo de barba</small></div><em class="ok">Pagado ✓</em></li>
+            </ul>
+          </div>
+        </div>
+
+        <ul class="pc-feats">
+          <li>Facturación por barbero</li>
+          <li>Evolución mes a mes</li>
+          <li>Servicios más pedidos</li>
+          <li>Días y horas punta</li>
+          <li>Mejores clientes</li>
+          <li>Clientes que no vuelven</li>
+          <li>Descarga en Excel</li>
+        </ul>
+        <a class="btn btn-primary pc-cta" href="panel.html?demo=1">Probar el panel de ejemplo</a>
+      </div>
+    </section>
+
     <!-- 4. Cómo funcionan las reservas -->
     <section class="section" aria-labelledby="como-title" style="padding-top:0">
       <div class="wrap">
@@ -186,6 +260,43 @@
             </div>
           </li>
         </ol>
+      </div>
+    </section>
+
+    <!-- Gestión de clientes -->
+    <section class="section" id="no-shows" aria-labelledby="ns-title" style="padding-top:0">
+      <div class="wrap ns">
+        <div class="ns-text">
+          <span class="eyebrow">Gestión de clientes</span>
+          <h2 class="h2" id="ns-title">Tus clientes, tus reglas.<br><span class="accent">Tú decides.</span></h2>
+          <p class="ns-lead">Desde tu <b>panel de control</b> ves quién viene, quién falla y qué hacer con cada uno. Cobrar los no shows o no, avisar o dejarlo pasar: cada barbería trabaja a su manera y Book Lab se adapta a la tuya.</p>
+          <ul class="ns-list">
+            <li><b>Tu día, de un vistazo.</b> Todos los clientes del día con su servicio y su barbero. Si alguien no aparece, lo marcas con un toque y tus números se ajustan solos.</li>
+            <li><b>Un bot avisa por ti.</b> Si quieres, envías por WhatsApp un aviso automático de Book Lab con los datos de la cita. Educado y claro, y sin que te dé apuro.</li>
+            <li><b>Sabes quién falla.</b> Historial de citas perdidas y cuántas veces ha fallado cada cliente. Y si decides cobrarlas, también ves quién ha pagado.</li>
+            <li><b>Bloquea a los clientes problemáticos.</b> Si alguien falla una y otra vez, con un clic desde tu panel deja de poder reservar online. Y lo desbloqueas cuando quieras.</li>
+          </ul>
+          <a class="btn btn-ghost ns-cta" href="panel.html?demo=1">Ver el panel de control</a>
+        </div>
+        <div class="ns-visual" aria-hidden="true">
+          <div class="ns-chat">
+            <div class="ns-chat-head"><span class="ns-bot">🤖</span><div><b>Book Lab</b><small>Asistente automático</small></div></div>
+            <div class="ns-bubble">
+              <b>Hola, Carlos:</b>
+              <p>Te informamos de que no acudiste a tu cita y no recibimos ningún aviso de cancelación.</p>
+              <p>📅 Viernes 16 de octubre · 20:00<br>✂️ Corte + barba con Diego</p>
+              <p>Si no puedes venir a una cita, avísanos con antelación. Para cualquier consulta, responde a este mensaje.</p>
+              <span class="ns-time">20:31 ✓✓</span>
+            </div>
+          </div>
+          <div class="ns-block">
+            <span class="ns-lock">⛔</span>
+            <div>
+              <b>Reserva online bloqueada</b>
+              <p>Para volver a reservar, ponte en contacto con la barbería.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -249,9 +360,10 @@
         <ul class="price-includes" aria-label="Qué incluye">
           <li>Web a medida con tu propio dominio</li>
           <li>Reservas online 24/7, sin límite de citas</li>
-          <li>Recordatorios y correo pidiendo reseña en Google</li>
+          <li>Recordatorios y correos para que tus clientes cuenten su experiencia con una reseña en Google</li>
           <li>Tus clientes cancelan o cambian su cita solos</li>
-          <li>Panel con tus números: facturación por barbero y por mes · <a href="panel.html?demo=1">ver ejemplo</a></li>
+          <li>Panel de control: facturación por barbero y por mes · <a href="panel.html?demo=1">ver ejemplo</a></li>
+          <li>Gestión de clientes: no shows, avisos automáticos y bloqueo de clientes problemáticos</li>
           <li>SEO local y conexión con Google Maps</li>
           <li>Alojamiento, mantenimiento y cambios incluidos</li>
           <li>Sin comisiones por reserva ni coste por barbero</li>
