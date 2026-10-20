@@ -19,6 +19,13 @@ window.BOOKLAB_CONFIG = {
     url: 'https://script.google.com/macros/s/AKfycbziHjevRgHqJq4zaWmKW9BHu8KprIORzhEd_hyrK1keMOLHpMQ5vBELEyNNBwSvgqkZyw/exec'
   },
 
+  // ---------- Panel del jefe (panel.html) ----------
+  // ejemplo: true permite ver panel.html?demo=1 con datos inventados (solo para la web de Book Lab).
+  // En las webs de clientes déjalo en false: el panel solo lo ve el jefe, con su clave.
+  panel: {
+    ejemplo: true
+  },
+
   // ---------- Datos del negocio ----------
   negocio: {
     nombre: 'Nombre de tu barbería',

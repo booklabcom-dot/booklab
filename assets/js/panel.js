@@ -10,7 +10,10 @@
 
   var C = window.BOOKLAB_CONFIG;
   var URL_MOTOR = ((C.motor && C.motor.url) || '').trim();
-  var DEMO = new URLSearchParams(location.search).get('demo') === '1' || !/^https:\/\//.test(URL_MOTOR) || URL_MOTOR.indexOf('PEGAR_') !== -1;
+  // El panel de ejemplo (?demo=1) solo se permite si config.js lo activa (getbooklab.com). En las webs de clientes, no.
+  var EJEMPLO_PERMITIDO = !!(C.panel && C.panel.ejemplo);
+  var SIN_MOTOR = !/^https:\/\//.test(URL_MOTOR) || URL_MOTOR.indexOf('PEGAR_') !== -1;
+  var DEMO = SIN_MOTOR || (EJEMPLO_PERMITIDO && new URLSearchParams(location.search).get('demo') === '1');
   var CLAVE_LS = 'booklab_panel_clave';
   var MESES_A_CARGAR = 12;
 
@@ -407,6 +410,8 @@
     var m = location.hash.match(/clave=([^&]+)/);
     if (m) { clave = decodeURIComponent(m[1]); guardar(clave); history.replaceState(null, '', location.pathname + location.search); }
     else clave = leer();
+    var enlaceEjemplo = document.querySelector('#ver-ejemplo');
+    if (enlaceEjemplo) enlaceEjemplo.hidden = !EJEMPLO_PERMITIDO;
     if (clave) cargar(); else show('#v-login');
   }
 })();

@@ -245,6 +245,10 @@ p { margin: 0; }
 .cta .btn { margin-top: 32px; background: var(--accent-ink); color: var(--text); }
 .cta .btn:hover { background: #222; }
 .cta :focus-visible { outline-color: var(--accent-ink); }
+.cta-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+.cta .cta-actions .btn { margin-top: 0; }
+.cta .btn-cta-ghost { background: transparent; color: var(--accent-ink); border-color: var(--accent-ink); }
+.cta .btn-cta-ghost:hover { background: rgba(10, 10, 11, .08); }
 
 /* ---------- Contacto ---------- */
 .contact { display: grid; gap: 32px; }
