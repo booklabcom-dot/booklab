@@ -448,7 +448,12 @@ function noVino_(d) {
   var tags = (ev.extendedProperties && ev.extendedProperties.private) || {};
   if (tags.booklab !== '1') throw aviso_('Esa cita no se hizo desde la web.');
   tags.novino = d.valor ? '1' : '';
-  Calendar.Events.patch({ extendedProperties: { private: tags }, colorId: d.valor ? '11' : '' }, calId, d.e, { sendUpdates: 'none' });
+  if (d.valor) {
+    Calendar.Events.patch({ extendedProperties: { private: tags }, colorId: '11' }, calId, d.e, { sendUpdates: 'none' }); // rojo
+  } else {
+    try { Calendar.Events.patch({ extendedProperties: { private: tags }, colorId: null }, calId, d.e, { sendUpdates: 'none' }); } // color normal
+    catch (x) { Calendar.Events.patch({ extendedProperties: { private: tags } }, calId, d.e, { sendUpdates: 'none' }); }
+  }
   return { ok: true, novino: !!d.valor };
 }
 
