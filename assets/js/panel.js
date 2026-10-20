@@ -582,8 +582,8 @@
     n.className = 'notice p-privado';
     n.appendChild(el('span', { class: 'p-privado-ico', 'aria-hidden': 'true', text: '🔒' }));
     n.appendChild(el('span', null, [
-      el('strong', { text: 'Panel privado del dueño. ' }),
-      'En tu web, a este panel solo puede entrar el dueño con su clave personal: tus clientes no lo ven. Esto es un ejemplo con números inventados para que veas cómo funciona.'
+      el('strong', { text: 'Panel de ejemplo · Privado. ' }),
+      'Los números son inventados para que veas cómo funciona. En tu web, este panel es privado: solo entra el dueño con su clave personal y tus clientes no lo ven.'
     ]));
     n.hidden = false;
     cargar();

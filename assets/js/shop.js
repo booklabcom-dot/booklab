@@ -158,18 +158,4 @@
   } else {
     bar.classList.add('is-visible');
   }
-
-  // Menú de arriba a la derecha (secciones + "Menú del jefe")
-  var menuBtn = $('#menu-btn'), menuPop = $('#menu-pop');
-  if (menuBtn && menuPop) {
-    var abrir = function (si) {
-      menuPop.hidden = !si;
-      menuBtn.setAttribute('aria-expanded', String(si));
-      menuBtn.setAttribute('aria-label', si ? 'Cerrar menú' : 'Abrir menú');
-    };
-    menuBtn.addEventListener('click', function (e) { e.stopPropagation(); abrir(menuPop.hidden); });
-    menuPop.addEventListener('click', function (e) { if (e.target.closest('a')) abrir(false); });
-    document.addEventListener('click', function (e) { if (!menuPop.hidden && !e.target.closest('.menu')) abrir(false); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menuPop.hidden) { abrir(false); menuBtn.focus(); } });
-  }
 })();
