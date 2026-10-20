@@ -372,7 +372,11 @@
     $('#agenda-fecha').value = S.dia;
     var box = $('#agenda'); box.textContent = '';
     var cs = D.citas.filter(function (c) { return c.f === S.dia && enFiltro(c); });
-    if (!cs.length) { box.appendChild(el('p', { class: 'g-note', text: 'No hay citas reservadas por la web ese día.' })); return; }
+    if (!cs.length) {
+      var cerrado = !(D.horario[wd(S.dia)] || []).length;
+      box.appendChild(el('p', { class: 'g-note', text: cerrado ? 'Ese día la barbería está cerrada. Elige otro día en «Otro día».' : 'No hay citas reservadas por la web ese día.' }));
+      return;
+    }
     // Resumen del día: lo que ya ha pasado cuenta como venido y pagado, salvo los "No vino"
     var vinieron = 0, cobrado = 0, fallos = 0, pendientes = 0, perdido = 0;
     cs.forEach(function (c) {
@@ -557,6 +561,12 @@
   });
   $('#exportar').addEventListener('click', exportar);
   $('#recargar').addEventListener('click', cargar);
+  // "Volver a la web": a la página de la que vienes (si es de esta web); si no, a la portada
+  try {
+    var ref = document.referrer ? new URL(document.referrer) : null;
+    if (ref && ref.origin === location.origin && ref.pathname !== location.pathname) $('#volver').href = ref.pathname + ref.search;
+  } catch (e) { /* sin referrer */ }
+
   $('#salir').addEventListener('click', function () { guardar(''); clave = ''; D = null; $('#clave').value = ''; show('#v-login'); });
   $('#login-form').addEventListener('submit', function (e) {
     e.preventDefault();
@@ -569,8 +579,12 @@
 
   if (DEMO) {
     var n = $('#p-demo');
-    n.appendChild(el('strong', { text: 'Panel de ejemplo. ' }));
-    n.appendChild(document.createTextNode('Los números son inventados para que veas cómo funciona.'));
+    n.className = 'notice p-privado';
+    n.appendChild(el('span', { class: 'p-privado-ico', 'aria-hidden': 'true', text: '🔒' }));
+    n.appendChild(el('span', null, [
+      el('strong', { text: 'Panel privado del dueño. ' }),
+      'En tu web, a este panel solo puede entrar el dueño con su clave personal: tus clientes no lo ven. Esto es un ejemplo con números inventados para que veas cómo funciona.'
+    ]));
     n.hidden = false;
     cargar();
   } else {

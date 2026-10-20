@@ -23,7 +23,10 @@
         <span class="p-name" id="p-name"></span>
         <span class="p-tag">Panel</span>
       </div>
-      <button type="button" class="btn btn-ghost btn-sm" id="salir" hidden>Salir</button>
+      <div class="p-top-acc">
+        <a class="btn btn-ghost btn-sm" href="./" id="volver">&larr; Volver a la web</a>
+        <button type="button" class="btn btn-ghost btn-sm" id="salir" hidden>Salir</button>
+      </div>
     </div>
   </header>
 
@@ -68,16 +71,6 @@
       <div class="p-kpis" id="kpis"></div>
 
       <div class="p-grid">
-        <section class="p-card p-wide" aria-labelledby="t-barberos">
-          <h2 id="t-barberos">Por barbero</h2>
-          <div class="p-table-wrap"><table class="p-table" id="tabla-barberos"></table></div>
-        </section>
-
-        <section class="p-card p-wide" aria-labelledby="t-evolucion">
-          <h2 id="t-evolucion">Evolución de la facturación</h2>
-          <div class="p-bars-v" id="evolucion"></div>
-        </section>
-
         <section class="p-card p-wide" aria-labelledby="t-agenda">
           <div class="p-card-head">
             <h2 id="t-agenda">Clientes del día</h2>
@@ -93,6 +86,16 @@
           </div>
           <p class="g-note" id="agenda-ayuda">Todos los que ya han pasado cuentan como venidos y pagados. Si alguien falló, pulsa «No show» y la facturación se recalcula sola.</p>
           <div id="agenda"></div>
+        </section>
+
+        <section class="p-card p-wide" aria-labelledby="t-barberos">
+          <h2 id="t-barberos">Por barbero</h2>
+          <div class="p-table-wrap"><table class="p-table" id="tabla-barberos"></table></div>
+        </section>
+
+        <section class="p-card p-wide" aria-labelledby="t-evolucion">
+          <h2 id="t-evolucion">Evolución de la facturación</h2>
+          <div class="p-bars-v" id="evolucion"></div>
         </section>
 
         <section class="p-card p-wide" aria-labelledby="t-novino">

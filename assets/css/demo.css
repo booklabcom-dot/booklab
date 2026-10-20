@@ -9,6 +9,16 @@
   color: var(--accent-ink); background: var(--accent); padding: 4px 10px; border-radius: 999px;
 }
 
+.demo-panel {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin: 4px 0; padding: 6px 14px 6px 12px;
+  border-radius: 14px; background: var(--accent); color: var(--accent-ink); text-decoration: none;
+  box-shadow: 0 0 0 4px rgba(245, 197, 24, .15);
+}
+.demo-panel:hover, .demo-panel:focus-visible { background: #ffd43b; }
+.demo-panel span { display: grid; line-height: 1.15; }
+.demo-panel b { font-size: .875rem; font-weight: 800; letter-spacing: -.01em; }
+.demo-panel small { font-size: .6875rem; font-weight: 600; opacity: .75; }
+
 /* Franja de la demo: aclara que cada web es única */
 .demo-note {
   margin: 0; background: var(--accent-soft); border-bottom: 1px solid rgba(245, 197, 24, .25);
@@ -269,6 +279,25 @@
 .site-links a { display: inline-flex; align-items: center; min-height: 48px; padding: 0 12px; color: var(--muted); text-decoration: none; font-weight: 600; font-size: .9375rem; }
 .site-links a:hover { color: var(--text); }
 .nav-cta { display: none; }
+.nav-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.menu { position: relative; }
+.menu-btn {
+  width: 48px; height: 48px; display: grid; place-items: center; border-radius: 12px; cursor: pointer;
+  background: var(--surface); border: 1.5px solid var(--line); color: var(--text);
+}
+.menu-btn[aria-expanded="true"] { border-color: var(--accent); color: var(--accent); }
+.menu-pop {
+  position: absolute; right: 0; top: calc(100% + 8px); width: 250px; padding: 6px; z-index: 60;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 24px 60px rgba(0, 0, 0, .6);
+  display: grid;
+}
+.menu-pop[hidden] { display: none; }
+.menu-pop a { display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border-radius: 10px; color: var(--text); text-decoration: none; font-weight: 600; font-size: .9375rem; }
+.menu-pop a:hover, .menu-pop a:focus-visible { background: var(--surface-2); }
+.menu-pop .menu-jefe { margin-top: 6px; padding: 10px 14px; background: var(--accent); color: var(--accent-ink); }
+.menu-pop .menu-jefe:hover, .menu-pop .menu-jefe:focus-visible { background: #ffd43b; }
+.menu-jefe span { display: grid; line-height: 1.2; }
+.menu-jefe small { font-weight: 600; font-size: .75rem; opacity: .75; }
 
 /* Portada */
 .s-hero { position: relative; overflow: hidden; min-height: min(78vh, 640px); display: flex; align-items: flex-end; background: #0d0d0e; }
