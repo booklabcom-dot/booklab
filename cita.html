@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- PLANTILLA BOOK LAB · Gestionar mi cita (cancelar o cambiar). Se abre desde los correos de la cita. -->
+  <title>Gestionar mi cita</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0a0a0b">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/demo.css">
+  <link rel="stylesheet" href="assets/css/gestion.css">
+</head>
+<body>
+  <a class="skip" href="#cita">Saltar al contenido</a>
+
+  <div class="demo-bar">
+    <div class="wrap">
+      <a href="./" class="demo-back">← Volver a la barbería</a>
+    </div>
+  </div>
+
+  <header class="shop">
+    <img class="shop-photo" src="assets/img/barberia.webp" width="514" height="994" alt="" decoding="async">
+    <div class="wrap shop-inner">
+      <h1 class="shop-name" id="shop-name"></h1>
+      <p class="shop-sub">Gestionar mi cita</p>
+    </div>
+  </header>
+
+  <main id="cita" class="wrap booking">
+    <div id="notice" class="notice" role="status" hidden></div>
+
+    <!-- Cargando -->
+    <section class="step" id="v-cargando" aria-live="polite">
+      <p class="slots-status"><span class="spinner" aria-hidden="true"></span>Buscando tu cita…</p>
+    </section>
+
+    <!-- Error (enlace no válido, cita cancelada…) -->
+    <section class="step" id="v-error" hidden aria-labelledby="t-error">
+      <h2 class="step-title" id="t-error" tabindex="-1">No encontramos tu cita</h2>
+      <p class="g-text" id="error-text"></p>
+      <div class="done-actions">
+        <a class="btn btn-primary btn-block" href="reservar.html">Reservar una cita</a>
+        <a class="btn btn-ghost btn-block" id="error-call" href="#">Llamar a la barbería</a>
+      </div>
+    </section>
+
+    <!-- Datos de la cita -->
+    <section class="step" id="v-info" hidden aria-labelledby="t-info">
+      <h2 class="step-title" id="t-info" tabindex="-1">Tu cita</h2>
+      <dl class="recap" id="recap"></dl>
+      <p class="g-note" id="info-note"></p>
+      <div class="done-actions" id="info-actions">
+        <button type="button" class="btn btn-primary btn-block" id="go-cambiar">Cambiar día u hora</button>
+        <button type="button" class="btn btn-ghost btn-block g-danger" id="go-cancelar">Cancelar cita</button>
+      </div>
+      <div class="done-actions" id="info-contact" hidden>
+        <a class="btn btn-primary btn-block" id="contact-call" href="#">Llamar a la barbería</a>
+        <a class="btn btn-ghost btn-block" id="contact-wa" href="#" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+      </div>
+    </section>
+
+    <!-- Cambiar día u hora -->
+    <section class="step" id="v-cambiar" hidden aria-labelledby="t-cambiar">
+      <h2 class="step-title" id="t-cambiar" tabindex="-1">Elige otro día y hora</h2>
+      <p class="g-note" id="cambiar-note"></p>
+      <div class="quick-days" id="quick-days" role="group" aria-label="Próximos días abiertos"></div>
+      <div class="field">
+        <label for="date">Otra fecha</label>
+        <input type="date" id="date" name="date">
+      </div>
+      <div id="slots-status" class="slots-status" role="status" aria-live="polite"></div>
+      <div id="slots"></div>
+      <div id="cambiar-error" class="alert" role="alert" hidden></div>
+      <button type="button" class="link-back" data-volver>← No cambiar nada</button>
+      <div class="sticky-cta">
+        <button type="button" class="btn btn-primary btn-block" id="confirmar-cambio" disabled>Confirmar cambio</button>
+      </div>
+    </section>
+
+    <!-- Confirmar cancelación -->
+    <section class="step" id="v-cancelar" hidden aria-labelledby="t-cancelar">
+      <h2 class="step-title" id="t-cancelar" tabindex="-1">¿Cancelar tu cita?</h2>
+      <p class="g-text" id="cancelar-text"></p>
+      <div id="cancelar-error" class="alert" role="alert" hidden></div>
+      <div class="done-actions">
+        <button type="button" class="btn btn-primary btn-block g-danger-solid" id="confirmar-cancelar">Sí, cancelar mi cita</button>
+        <button type="button" class="btn btn-ghost btn-block" data-volver>No, mantener mi cita</button>
+      </div>
+    </section>
+
+    <!-- Hecho -->
+    <section class="step" id="v-hecho" hidden aria-labelledby="t-hecho">
+      <div class="done-icon" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+      </div>
+      <h2 class="step-title" id="t-hecho" tabindex="-1"></h2>
+      <p class="g-text" id="hecho-text"></p>
+      <div class="done-actions">
+        <a class="btn btn-primary btn-block" id="hecho-gcal" href="#" target="_blank" rel="noopener" hidden>Añadir a Google Calendar</a>
+        <a class="btn btn-primary btn-block" id="hecho-reservar" href="reservar.html" hidden>Reservar otra cita</a>
+        <a class="btn btn-ghost btn-block" href="./">Volver a la barbería</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span>Reservas con <a href="https://getbooklab.com" target="_blank" rel="noopener" style="display:inline;min-height:0;text-decoration:underline">Book Lab</a></span>
+      <a href="legal.html#privacidad">Privacidad</a>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="assets/js/cita.js"></script>
+</body>
+</html>

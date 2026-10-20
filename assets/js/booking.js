@@ -1,7 +1,7 @@
 /*
  * Book Lab — lógica de la reserva (demo.html).
  * Lee todos los datos de config.js (window.BOOKLAB_CONFIG) y la URL del
- * backend de la constante ENDPOINT definida en demo.html.
+ * motor de config.js → motor.url.
  * No hace falta tocar este archivo para adaptar la web a otra barbería.
  */
 (function () {
@@ -10,7 +10,8 @@
   var C = window.BOOKLAB_CONFIG;
   var TZ = C.negocio.zonaHoraria || 'Europe/Madrid';
   var R = C.reglas;
-  var URL_BACKEND = (typeof ENDPOINT === 'string' ? ENDPOINT : '').trim();
+  // URL del motor: config.js → motor.url (o la constante ENDPOINT antigua, si existe)
+  var URL_BACKEND = ((C.motor && C.motor.url) || (typeof ENDPOINT === 'string' ? ENDPOINT : '')).trim();
   var LIVE = /^https:\/\//.test(URL_BACKEND) && URL_BACKEND.indexOf('PEGAR_') === -1;
   var TIMEOUT_MS = 25000;
   var MIN_GAP = Math.min.apply(null, C.servicios.map(function (s) { return s.duracion; }));
@@ -395,7 +396,7 @@
     };
 
     postBooking(payload).then(function (res) {
-      state.result = { barber: res.barber || barberById(state.barber).nombre, when: res.when, payload: payload };
+      state.result = { barber: res.barber || barberById(state.barber).nombre, when: res.when, payload: payload, gestionar: res.gestionar || (LIVE ? '' : 'cita.html?demo=1') };
       renderDone();
       go(5, { replace: true });
     }).catch(function (err) {
@@ -450,6 +451,11 @@
       '&details=' + encodeURIComponent('Con ' + state.result.barber + '. ' + money.format(svc.precio) + '.\nSi no puedes venir, avisa con al menos ' + R.cancelacionHoras + ' horas de antelación.') +
       '&location=' + encodeURIComponent(C.negocio.direccion || C.negocio.nombre);
     $('#gcal').href = url;
+    var manage = $('#manage');
+    if (manage) {
+      manage.hidden = !state.result.gestionar;
+      if (state.result.gestionar) manage.href = state.result.gestionar;
+    }
     $('#copy-status').textContent = '';
     if ($('#summary-text')) $('#summary-text').remove();
   }
@@ -514,7 +520,7 @@
       n.appendChild(el('strong', { text: 'Modo simulación. ' }));
       n.appendChild(document.createTextNode('Horas de ejemplo: no se crea ninguna cita ni se envía ningún correo.'));
       n.hidden = false;
-      console.info('[Book Lab] Para conectar Google Calendar, pega la URL /exec de Apps Script en ENDPOINT, al principio de demo.html.');
+      console.info('[Book Lab] Para conectar Google Calendar, pega la URL /exec de Apps Script en config.js → motor.url.');
     }
 
     renderServices();

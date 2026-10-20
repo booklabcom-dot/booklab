@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- PLANTILLA BOOK LAB · Panel del jefe. Los datos salen del motor (Apps Script) con la clave del panel.
+       Sin motor configurado, o con ?demo=1, muestra un panel de ejemplo con datos inventados. -->
+  <title>Panel</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#0a0a0b">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/demo.css">
+  <link rel="stylesheet" href="assets/css/gestion.css">
+</head>
+<body class="panel-page">
+  <a class="skip" href="#panel">Saltar al contenido</a>
+
+  <header class="p-top">
+    <div class="wrap">
+      <div class="p-brand">
+        <span class="p-name" id="p-name"></span>
+        <span class="p-tag">Panel</span>
+      </div>
+      <button type="button" class="btn btn-ghost btn-sm" id="salir" hidden>Salir</button>
+    </div>
+  </header>
+
+  <main id="panel" class="wrap p-main">
+    <div id="p-demo" class="notice" role="status" hidden></div>
+
+    <!-- Entrar -->
+    <section id="v-login" class="p-login" hidden aria-labelledby="t-login">
+      <h1 class="step-title" id="t-login" tabindex="-1">Panel de la barbería</h1>
+      <p class="g-text">Escribe la clave del panel. La encontrarás en el enlace que te dimos al montar la web.</p>
+      <form id="login-form" novalidate>
+        <div class="field">
+          <label for="clave">Clave del panel</label>
+          <input type="password" id="clave" autocomplete="current-password" autocapitalize="off" spellcheck="false" required>
+        </div>
+        <label class="p-remember"><input type="checkbox" id="recordar" checked> Recordarla en este dispositivo</label>
+        <div id="login-error" class="alert" role="alert" hidden></div>
+        <button type="submit" class="btn btn-primary btn-block" id="entrar">Entrar</button>
+      </form>
+      <p class="g-note"><a href="?demo=1">Ver un panel de ejemplo</a></p>
+    </section>
+
+    <!-- Cargando -->
+    <section id="v-cargando" hidden>
+      <p class="slots-status"><span class="spinner" aria-hidden="true"></span>Cargando tus números…</p>
+    </section>
+
+    <!-- Panel -->
+    <section id="v-panel" hidden aria-labelledby="t-panel">
+      <div class="p-head">
+        <h1 class="step-title" id="t-panel" tabindex="-1">Tus números</h1>
+        <div class="p-month" role="group" aria-label="Mes">
+          <button type="button" class="p-arrow" id="mes-ant" aria-label="Mes anterior">‹</button>
+          <label for="mes" class="sr-only">Mes</label>
+          <select id="mes"></select>
+          <button type="button" class="p-arrow" id="mes-sig" aria-label="Mes siguiente">›</button>
+        </div>
+      </div>
+
+      <div class="p-chips" id="filtro" role="group" aria-label="Barbero"></div>
+
+      <div class="p-kpis" id="kpis"></div>
+
+      <div class="p-grid">
+        <section class="p-card p-wide" aria-labelledby="t-barberos">
+          <h2 id="t-barberos">Por barbero</h2>
+          <div class="p-table-wrap"><table class="p-table" id="tabla-barberos"></table></div>
+        </section>
+
+        <section class="p-card p-wide" aria-labelledby="t-evolucion">
+          <h2 id="t-evolucion">Evolución de la facturación</h2>
+          <div class="p-bars-v" id="evolucion"></div>
+        </section>
+
+        <section class="p-card" aria-labelledby="t-agenda">
+          <div class="p-card-head">
+            <h2 id="t-agenda">Agenda</h2>
+            <div class="p-tabs" role="tablist" aria-label="Día">
+              <button type="button" role="tab" aria-selected="true" data-dia="0">Hoy</button>
+              <button type="button" role="tab" aria-selected="false" data-dia="1">Mañana</button>
+            </div>
+          </div>
+          <div id="agenda"></div>
+        </section>
+
+        <section class="p-card" aria-labelledby="t-servicios">
+          <h2 id="t-servicios">Servicios</h2>
+          <div class="p-bars" id="servicios"></div>
+        </section>
+
+        <section class="p-card" aria-labelledby="t-dias">
+          <h2 id="t-dias">Días con más citas</h2>
+          <div class="p-bars" id="dias"></div>
+        </section>
+
+        <section class="p-card" aria-labelledby="t-horas">
+          <h2 id="t-horas">Horas punta</h2>
+          <div class="p-bars" id="horas"></div>
+        </section>
+
+        <section class="p-card" aria-labelledby="t-top">
+          <h2 id="t-top">Mejores clientes</h2>
+          <ol class="p-list" id="top"></ol>
+        </section>
+
+        <section class="p-card" aria-labelledby="t-perdidos">
+          <h2 id="t-perdidos">Hace tiempo que no vienen</h2>
+          <p class="g-note">Más de 45 días sin volver. Un mensaje a tiempo los recupera.</p>
+          <ul class="p-list" id="perdidos"></ul>
+        </section>
+      </div>
+
+      <div class="p-foot">
+        <button type="button" class="btn btn-ghost" id="exportar">Descargar el mes en Excel (CSV)</button>
+        <button type="button" class="btn btn-ghost" id="recargar">Actualizar</button>
+      </div>
+      <p class="g-note" id="p-nota">Cifras estimadas a partir de las reservas hechas en la web: «facturado» suma el precio de las citas ya pasadas (sin las de «No vino»). Las citas que se apuntan a mano en el calendario no cuentan.</p>
+    </section>
+  </main>
+
+  <script src="config.js"></script>
+  <script src="assets/js/panel.js"></script>
+</body>
+</html>

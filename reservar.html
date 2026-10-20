@@ -10,15 +10,7 @@
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/demo.css">
-  <script>
-    /* ==========================================================
-     *  URL DEL BACKEND (Google Apps Script)
-     *  Sustituye PEGAR_URL_DE_APPS_SCRIPT por la URL que acaba en /exec
-     *  (ver README.md, paso 6). Mientras no la pegues, la reserva
-     *  funciona en "modo simulación": horas de ejemplo y sin correos.
-     * ========================================================== */
-    const ENDPOINT = 'https://script.google.com/macros/s/AKfycbziHjevRgHqJq4zaWmKW9BHu8KprIORzhEd_hyrK1keMOLHpMQ5vBELEyNNBwSvgqkZyw/exec';
-  </script>
+  <!-- La URL del motor de reservas está en config.js → motor.url -->
 </head>
 <body class="demo">
   <a class="skip" href="#reserva">Saltar a la reserva</a>
@@ -150,6 +142,7 @@
 
       <div class="done-actions">
         <a class="btn btn-primary btn-block" id="gcal" href="#" target="_blank" rel="noopener">Añadir a Google Calendar</a>
+        <a class="btn btn-ghost btn-block" id="manage" href="#" hidden>Gestionar mi cita</a>
         <button type="button" class="btn btn-ghost btn-block" id="copy-summary">Copiar resumen de la cita</button>
         <p class="copy-hint" id="copy-hint"></p>
         <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>

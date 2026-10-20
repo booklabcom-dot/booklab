@@ -1,21 +1,27 @@
 /**
  * ============================================================
- *  BOOK LAB — Backend de reservas (Google Apps Script)
+ *  BOOK LAB — Motor de reservas (Google Apps Script)
  * ============================================================
  *  Qué hace:
  *   - GET  ?action=slots&date=AAAA-MM-DD&service=ID&barber=ID|any
- *          → {"slots": ["10:00", "10:15", …]}
- *   - POST (cuerpo JSON en text/plain) → crea la cita en el Google
- *          Calendar del barbero, invita al cliente y le manda un correo.
- *          → {"ok": true, "barber": "Marcos", "when": "…"} o {"error": "…"}
- *   - sendReminders(): ejecútala con un activador cada 15 minutos.
- *          Envía el recordatorio de 24 h y el de 3 h (una sola vez cada uno).
+ *          → {"slots": ["10:00", "10:30", …]}
+ *   - GET  ?action=cita&b=BARBERO&e=EVENTO&t=FIRMA → datos de una cita (para cita.html)
+ *   - POST (cuerpo JSON en text/plain):
+ *          · reservar (por defecto) → crea la cita en el calendario del barbero
+ *          · action "cancelar"      → borra la cita del calendario (hueco libre)
+ *          · action "cambiar"       → mueve la cita a otro día u hora
+ *          · action "panel"         → números para el panel del jefe (pide la clave)
+ *          · action "novino"        → marca o desmarca "No vino" (pide la clave)
+ *   - sendReminders(): con un activador cada 15 minutos. Recordatorios de 24 h
+ *          y 3 h, y correo de reseña 1 h después del corte.
  *
  *  Antes de desplegar:
- *   1. Sustituye los PEGAR_ID_CALENDARIO_… por los IDs reales.
- *   2. Configuración del proyecto → Zona horaria: (GMT+01:00) Madrid.
- *   3. Servicios (+) → "Google Calendar API" (v3, identificador "Calendar") → Añadir.
- *   4. Ejecuta probarConfiguracion() una vez para dar permisos.
+ *   1. Sustituye los PEGAR_ID_CALENDARIO_… por los IDs reales (en el editor, no en GitHub).
+ *   2. Pon URL_WEB con la dirección de la web (para el enlace "Gestionar mi cita").
+ *   3. Configuración del proyecto → Zona horaria: (GMT+01:00) Madrid.
+ *   4. Servicios (+) → "Google Calendar API" (v3, identificador "Calendar") → Añadir.
+ *   5. Ejecuta probarConfiguracion() una vez para dar permisos.
+ *   6. Ejecuta configurarPanel() para crear la clave del panel del jefe.
  *
  *  Usa la API de Google Calendar (servicio avanzado) en vez de CalendarApp:
  *  en cuentas de Gmail nuevas CalendarApp a veces falla con
@@ -31,6 +37,9 @@ var NOMBRE_BARBERIA = 'Nombre de tu barbería';
 var DIRECCION = 'Calle Ejemplo 1, Madrid';
 var TELEFONO_BARBERIA = '600 000 000';
 var ZONA_HORARIA = 'Europe/Madrid';
+// Dirección pública de la web, con / al final (para el enlace "Gestionar mi cita" de los correos).
+// Por ejemplo 'https://tubarberia.com/'. Vacío = los correos no llevan el enlace.
+var URL_WEB = 'https://getbooklab.com/';
 // Enlace a las reseñas de Google de la barbería (para el correo de después del corte).
 // Vacío = busca el nombre + dirección en Google Maps.
 var ENLACE_RESENAS = '';
@@ -68,7 +77,8 @@ var INTERVALO_MINUTOS = 30;
 var ANTELACION_MINUTOS = 60;
 var DIAS_MAXIMOS = 60;
 var EVITAR_HUECOS_SUELTOS = true;
-var CANCELACION_HORAS = 2;
+var CANCELACION_HORAS = 2;   // hasta cuántas horas antes se puede cancelar o cambiar online
+var MAX_CAMBIOS = 2;         // cuántas veces se puede cambiar una misma cita
 
 // ============================================================
 //  A partir de aquí no hace falta tocar nada.
@@ -93,8 +103,23 @@ function probarConfiguracion() {
       catch (e) { console.log('✘ ' + BARBEROS[id].nombre + ': ' + (e.paraCliente ? e.message : 'no encontramos su calendario. Revisa el ID. (' + e.message + ')')); }
     });
   }
+  console.log((URL_WEB ? '✔ Web: ' + URL_WEB : '✘ Falta URL_WEB: los correos no llevarán el enlace "Gestionar mi cita".'));
+  console.log((PropertiesService.getScriptProperties().getProperty('CLAVE_PANEL') ? '✔' : '✘') + ' Clave del panel ' + (PropertiesService.getScriptProperties().getProperty('CLAVE_PANEL') ? 'creada' : 'sin crear: ejecuta configurarPanel()'));
   console.log('Correos que aún puedes enviar hoy: ' + MailApp.getRemainingDailyQuota());
   console.log('Prueba terminada.');
+}
+
+/**
+ * Crea (o cambia) la clave del panel del jefe y escribe en el registro el enlace para entrar.
+ * Si la vuelves a ejecutar, la clave anterior deja de funcionar.
+ */
+function configurarPanel() {
+  var clave = Utilities.base64EncodeWebSafe(Utilities.getUuid() + Utilities.getUuid()).replace(/[^A-Za-z0-9]/g, '').slice(0, 24);
+  PropertiesService.getScriptProperties().setProperty('CLAVE_PANEL', clave);
+  console.log('✔ Clave del panel creada: ' + clave);
+  console.log(URL_WEB
+    ? 'Enlace del panel (guárdalo y no lo compartas): ' + URL_WEB + 'panel.html#clave=' + clave
+    : 'Entra en TU-WEB/panel.html y escribe la clave.');
 }
 
 // ---------- Entradas web ----------
@@ -107,7 +132,14 @@ function doGet(e) {
       var servicio = servicio_(p.service);
       var barbero = p.barber || 'any';
       if (barbero !== 'any') barbero_(barbero);
-      return json_({ slots: horasLibres_(p.date, servicio, barbero) });
+      // Al cambiar una cita, su propio hueco cuenta como libre
+      var excluir = '';
+      if (p.e && p.t && barbero !== 'any') { citaSegura_(barbero, p.e, p.t); excluir = p.e; }
+      return json_({ slots: horasLibres_(p.date, servicio, barbero, excluir) });
+    }
+    if (p.action === 'cita') {
+      var ev = citaSegura_(p.b, p.e, p.t);
+      return json_(datosCita_(p.b, ev));
     }
     return json_({ ok: true, mensaje: 'Book Lab funcionando. Usa ?action=slots para consultar horas.' });
   } catch (err) {
@@ -120,17 +152,23 @@ function doPost(e) {
   var tengoLock = false;
   try {
     var d;
-    try { d = JSON.parse(e.postData.contents); } catch (x) { throw aviso_('No hemos entendido la reserva. Recarga la página e inténtalo de nuevo.'); }
+    try { d = JSON.parse(e.postData.contents); } catch (x) { throw aviso_('No hemos entendido la petición. Recarga la página e inténtalo de nuevo.'); }
 
+    if (d.action === 'cancelar') return json_(cancelar_(d));
+    if (d.action === 'cambiar') return json_(cambiar_(d));
+    if (d.action === 'panel') return json_(panel_(d));
+    if (d.action === 'novino') return json_(noVino_(d));
+
+    // ----- Reservar -----
     // Campo trampa: solo lo rellenan los bots
     if (d.web) throw aviso_('No se ha podido completar la reserva.');
 
-    // Validación de datos
     var servicio = servicio_(d.service);
     var barberoPedido = d.barber || 'any';
     if (barberoPedido !== 'any') barbero_(barberoPedido);
     validarFecha_(d.date);
     if (!/^\d{2}:\d{2}$/.test(d.time || '')) throw aviso_('La hora elegida no es válida.');
+    if (!(HORARIO[diaSemana_(d.date)] || []).length) throw aviso_('Ese día estamos cerrados. Elige otro día, por favor.');
     var nombre = limpiar_(d.name, 60), apellidos = limpiar_(d.surname, 80);
     var email = limpiar_(d.email, 120).toLowerCase(), telefono = limpiar_(d.phone, 20);
     if (!nombre) throw aviso_('Escribe tu nombre.');
@@ -156,7 +194,7 @@ function doPost(e) {
     var fin = new Date(inicio.getTime() + servicio.duracion * 60000);
     var minutosHasta = (inicio.getTime() - Date.now()) / 60000;
 
-    Calendar.Events.insert({
+    var creado = Calendar.Events.insert({
       summary: servicio.nombre + ' · ' + nombre + ' ' + apellidos,
       start: { dateTime: inicio.toISOString(), timeZone: ZONA_HORARIA },
       end: { dateTime: fin.toISOString(), timeZone: ZONA_HORARIA },
@@ -170,10 +208,11 @@ function doPost(e) {
         'Reserva hecha desde la web (Book Lab).',
       location: DIRECCION,
       attendees: [{ email: email, displayName: nombre + ' ' + apellidos }],
-      // Etiquetas para los recordatorios
+      // Etiquetas para recordatorios, gestión de la cita y panel
       extendedProperties: {
         private: {
-          booklab: '1', email: email, nombre: nombre, servicio: d.service, barbero: asignado,
+          booklab: '1', email: email, nombre: nombre, apellidos: apellidos, telefono: telefono,
+          servicio: d.service, precio: String(servicio.precio), barbero: asignado, cambios: '0',
           r24: minutosHasta > 24 * 60 ? 'pendiente' : 'no',
           r3: minutosHasta > 3 * 60 ? 'pendiente' : 'no',
           resena: 'pendiente'
@@ -185,21 +224,232 @@ function doPost(e) {
     tengoLock = false;
 
     var cuando = cuandoTexto_(d.date, d.time);
+    var gestionar = enlaceCita_(asignado, creado.id);
     try {
       enviarCorreo_(email, 'Cita confirmada · ' + NOMBRE_BARBERIA,
         '¡Cita confirmada!',
         'Hola ' + nombre + ', te esperamos.',
-        servicio, b.nombre, cuando);
+        servicio, b.nombre, cuando, { gestionar: gestionar });
     } catch (mailErr) {
       console.error('No se pudo enviar la confirmación: ' + mailErr);
     }
 
-    return json_({ ok: true, barber: b.nombre, barberId: asignado, when: cuando });
+    return json_({ ok: true, barber: b.nombre, barberId: asignado, when: cuando, gestionar: gestionar });
   } catch (err) {
     return error_(err);
   } finally {
     if (tengoLock) lock.releaseLock();
   }
+}
+
+// ---------- Gestionar mi cita (cancelar / cambiar) ----------
+
+/** Firma de la cita: sin ella nadie puede tocar la cita de otro cambiando la dirección. */
+function firma_(barbero, eventoId) {
+  var props = PropertiesService.getScriptProperties();
+  var secreto = props.getProperty('SECRETO');
+  if (!secreto) { secreto = Utilities.getUuid() + Utilities.getUuid(); props.setProperty('SECRETO', secreto); }
+  var bytes = Utilities.computeHmacSha256Signature(barbero + '|' + eventoId, secreto);
+  return Utilities.base64EncodeWebSafe(bytes).replace(/=+$/, '').slice(0, 32);
+}
+
+function enlaceCita_(barbero, eventoId) {
+  if (!URL_WEB || !eventoId) return '';
+  var base = URL_WEB.charAt(URL_WEB.length - 1) === '/' ? URL_WEB : URL_WEB + '/';
+  return base + 'cita.html?b=' + encodeURIComponent(barbero) + '&e=' + encodeURIComponent(eventoId) + '&t=' + firma_(barbero, eventoId);
+}
+
+/** Comprueba la firma y devuelve el evento de la cita. */
+function citaSegura_(barbero, eventoId, firma) {
+  if (!BARBEROS[barbero] || !eventoId || !firma || firma !== firma_(barbero, eventoId)) {
+    throw aviso_('Este enlace no es válido. Abre el último correo de tu cita o llámanos.', 'ENLACE');
+  }
+  var ev;
+  try { ev = Calendar.Events.get(calendario_(barbero), eventoId); } catch (x) { ev = null; }
+  if (!ev || ev.status === 'cancelled') throw aviso_('Esta cita ya no existe: puede que esté cancelada.', 'NO_EXISTE');
+  return ev;
+}
+
+function datosCita_(barbero, ev) {
+  var tags = (ev.extendedProperties && ev.extendedProperties.private) || {};
+  var inicio = new Date(ev.start.dateTime);
+  var fecha = Utilities.formatDate(inicio, ZONA_HORARIA, 'yyyy-MM-dd');
+  var hora = Utilities.formatDate(inicio, ZONA_HORARIA, 'HH:mm');
+  var servicio = SERVICIOS[tags.servicio] || { nombre: (ev.summary || '').split(' · ')[0], duracion: 30, precio: '' };
+  var minutos = (inicio.getTime() - Date.now()) / 60000;
+  var cambios = Number(tags.cambios || 0);
+  var enPlazo = minutos >= CANCELACION_HORAS * 60;
+  return {
+    ok: true,
+    barbero: BARBEROS[barbero].nombre, barberId: barbero,
+    servicio: servicio.nombre, servicioId: tags.servicio || '', precio: servicio.precio, duracion: servicio.duracion,
+    fecha: fecha, hora: hora, cuando: cuandoTexto_(fecha, hora), nombre: tags.nombre || '',
+    pasada: minutos <= 0,
+    puedeCancelar: enPlazo,
+    puedeCambiar: enPlazo && cambios < MAX_CAMBIOS,
+    cambios: cambios, maxCambios: MAX_CAMBIOS, limiteHoras: CANCELACION_HORAS,
+    telefono: TELEFONO_BARBERIA
+  };
+}
+
+function cancelar_(d) {
+  var ev = citaSegura_(d.b, d.e, d.t);
+  var info = datosCita_(d.b, ev);
+  if (info.pasada) throw aviso_('Esta cita ya ha pasado.');
+  if (!info.puedeCancelar) throw aviso_('Faltan menos de ' + CANCELACION_HORAS + ' horas para tu cita. Para cancelarla, llámanos al ' + TELEFONO_BARBERIA + '.', 'FUERA_DE_PLAZO');
+
+  var tags = (ev.extendedProperties && ev.extendedProperties.private) || {};
+  // Borrar la cita del calendario del barbero: el hueco queda libre al momento
+  Calendar.Events.remove(calendario_(d.b), d.e, { sendUpdates: 'all' });
+  sumarEstadistica_(info.fecha, d.b, 'cancelaciones');
+
+  try {
+    enviarCorreo_(tags.email, 'Cita cancelada · ' + NOMBRE_BARBERIA,
+      'Cita cancelada',
+      'Hola ' + (tags.nombre || '') + ', hemos cancelado tu cita. ¡Esperamos verte pronto!',
+      SERVICIOS[tags.servicio] || { nombre: info.servicio, precio: '' }, info.barbero, info.cuando,
+      { sinPolitica: true, boton: URL_WEB ? { texto: 'Reservar otra cita', url: URL_WEB.replace(/\/?$/, '/') + 'reservar.html' } : null });
+  } catch (mailErr) {
+    console.error('No se pudo enviar el aviso de cancelación: ' + mailErr);
+  }
+  return { ok: true };
+}
+
+function cambiar_(d) {
+  var ev = citaSegura_(d.b, d.e, d.t);
+  var info = datosCita_(d.b, ev);
+  if (info.pasada) throw aviso_('Esta cita ya ha pasado.');
+  if (!info.puedeCancelar) throw aviso_('Faltan menos de ' + CANCELACION_HORAS + ' horas para tu cita. Para cambiarla, llámanos al ' + TELEFONO_BARBERIA + '.', 'FUERA_DE_PLAZO');
+  if (info.cambios >= MAX_CAMBIOS) throw aviso_('Esta cita ya se ha cambiado ' + MAX_CAMBIOS + ' veces. Para otro cambio, llámanos al ' + TELEFONO_BARBERIA + '.', 'MAX_CAMBIOS');
+  validarFecha_(d.date);
+  if (!/^\d{2}:\d{2}$/.test(d.time || '')) throw aviso_('La hora elegida no es válida.');
+
+  var tags = (ev.extendedProperties && ev.extendedProperties.private) || {};
+  var servicio = SERVICIOS[tags.servicio] || servicio_(info.servicioId);
+
+  var lock = LockService.getScriptLock();
+  if (!lock.tryLock(25000)) throw aviso_('Hay mucha gente reservando ahora mismo. Espera unos segundos e inténtalo de nuevo.');
+  try {
+    if (horasLibres_(d.date, servicio, d.b, d.e).indexOf(d.time) === -1) {
+      throw aviso_('Vaya, esa hora ya no está libre. Elige otra, por favor.', 'SLOT_TAKEN');
+    }
+    var inicio = fechaHora_(d.date, d.time);
+    var fin = new Date(inicio.getTime() + servicio.duracion * 60000);
+    var minutosHasta = (inicio.getTime() - Date.now()) / 60000;
+    tags.cambios = String(info.cambios + 1);
+    tags.r24 = minutosHasta > 24 * 60 ? 'pendiente' : 'no';
+    tags.r3 = minutosHasta > 3 * 60 ? 'pendiente' : 'no';
+    tags.resena = 'pendiente';
+    // Mover la cita en el calendario del barbero: el hueco antiguo queda libre
+    Calendar.Events.patch({
+      start: { dateTime: inicio.toISOString(), timeZone: ZONA_HORARIA },
+      end: { dateTime: fin.toISOString(), timeZone: ZONA_HORARIA },
+      extendedProperties: { private: tags }
+    }, calendario_(d.b), d.e, { sendUpdates: 'all' });
+  } finally {
+    lock.releaseLock();
+  }
+  sumarEstadistica_(d.date, d.b, 'cambios');
+
+  var cuando = cuandoTexto_(d.date, d.time);
+  try {
+    enviarCorreo_(tags.email, 'Cita cambiada · ' + NOMBRE_BARBERIA,
+      'Tu cita ha cambiado',
+      'Hola ' + (tags.nombre || '') + ', esta es tu nueva cita.',
+      servicio, info.barbero, cuando, { gestionar: enlaceCita_(d.b, d.e) });
+  } catch (mailErr) {
+    console.error('No se pudo enviar el aviso de cambio: ' + mailErr);
+  }
+  return { ok: true, when: cuando, fecha: d.date, hora: d.time, cambios: info.cambios + 1, maxCambios: MAX_CAMBIOS };
+}
+
+/** Cuenta cancelaciones y cambios por mes y barbero (las citas canceladas ya no están en el calendario). */
+function sumarEstadistica_(fecha, barbero, tipo) {
+  var lock = LockService.getScriptLock();
+  lock.tryLock(10000);
+  try {
+    var props = PropertiesService.getScriptProperties();
+    var stats = JSON.parse(props.getProperty('ESTADISTICAS') || '{}');
+    var mes = fecha.slice(0, 7);
+    stats[mes] = stats[mes] || {};
+    stats[mes][barbero] = stats[mes][barbero] || {};
+    stats[mes][barbero][tipo] = (stats[mes][barbero][tipo] || 0) + 1;
+    props.setProperty('ESTADISTICAS', JSON.stringify(stats));
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// ---------- Panel del jefe ----------
+
+function comprobarClave_(clave) {
+  var cache = CacheService.getScriptCache();
+  var fallos = Number(cache.get('panel_fallos') || 0);
+  if (fallos >= 10) throw aviso_('Demasiados intentos con una clave incorrecta. Espera 15 minutos.', 'BLOQUEADO');
+  var buena = PropertiesService.getScriptProperties().getProperty('CLAVE_PANEL');
+  if (!buena) throw aviso_('El panel aún no está activado: ejecuta configurarPanel() en Apps Script.', 'SIN_CLAVE');
+  if (!clave || String(clave) !== buena) {
+    cache.put('panel_fallos', String(fallos + 1), 900);
+    throw aviso_('Clave incorrecta.', 'CLAVE');
+  }
+}
+
+/** Devuelve las citas de los últimos meses y la configuración, para que el panel calcule los números. */
+function panel_(d) {
+  comprobarClave_(d.clave);
+  var meses = Math.min(Math.max(Number(d.meses) || 6, 1), 24);
+  var hoy = Utilities.formatDate(new Date(), ZONA_HORARIA, 'yyyy-MM-dd');
+  var p = hoy.split('-');
+  var primerMes = new Date(Number(p[0]), Number(p[1]) - 1 - (meses - 1), 1);
+  var desde = fechaHora_(Utilities.formatDate(primerMes, ZONA_HORARIA, 'yyyy-MM') + '-01', '00:00');
+  var hasta = fechaHora_(sumarDias_(hoy, DIAS_MAXIMOS + 1), '00:00');
+
+  var citas = [];
+  Object.keys(BARBEROS).forEach(function (id) {
+    var calId = calendario_(id), token = null;
+    do {
+      var lista = Calendar.Events.list(calId, {
+        timeMin: desde.toISOString(), timeMax: hasta.toISOString(), singleEvents: true,
+        privateExtendedProperty: 'booklab=1', maxResults: 2500, pageToken: token || undefined
+      });
+      (lista.items || []).forEach(function (ev) {
+        if (ev.status === 'cancelled' || !ev.start || !ev.start.dateTime) return;
+        var t = (ev.extendedProperties && ev.extendedProperties.private) || {};
+        var s = SERVICIOS[t.servicio] || {};
+        var ini = new Date(ev.start.dateTime), fin = new Date(ev.end.dateTime);
+        citas.push({
+          id: ev.id, b: id, s: t.servicio || '', sn: s.nombre || (ev.summary || '').split(' · ')[0],
+          precio: t.precio ? Number(t.precio) : (s.precio || 0),
+          dur: Math.round((fin - ini) / 60000),
+          f: Utilities.formatDate(ini, ZONA_HORARIA, 'yyyy-MM-dd'), h: Utilities.formatDate(ini, ZONA_HORARIA, 'HH:mm'),
+          cliente: ((t.nombre || '') + ' ' + (t.apellidos || '')).trim(), email: t.email || '', tel: t.telefono || '',
+          novino: t.novino === '1', cambios: Number(t.cambios || 0)
+        });
+      });
+      token = lista.nextPageToken;
+    } while (token);
+  });
+
+  return {
+    ok: true, negocio: NOMBRE_BARBERIA, hoy: hoy, ahora: Utilities.formatDate(new Date(), ZONA_HORARIA, 'HH:mm'),
+    barberos: Object.keys(BARBEROS).map(function (id) { return { id: id, nombre: BARBEROS[id].nombre }; }),
+    servicios: SERVICIOS, horario: HORARIO,
+    estadisticas: JSON.parse(PropertiesService.getScriptProperties().getProperty('ESTADISTICAS') || '{}'),
+    citas: citas
+  };
+}
+
+/** Marca o desmarca "No vino" en una cita (desde el panel). */
+function noVino_(d) {
+  comprobarClave_(d.clave);
+  barbero_(d.b);
+  var calId = calendario_(d.b);
+  var ev = Calendar.Events.get(calId, d.e);
+  var tags = (ev.extendedProperties && ev.extendedProperties.private) || {};
+  if (tags.booklab !== '1') throw aviso_('Esa cita no se hizo desde la web.');
+  tags.novino = d.valor ? '1' : '';
+  Calendar.Events.patch({ extendedProperties: { private: tags }, colorId: d.valor ? '11' : '' }, calId, d.e, { sendUpdates: 'none' });
+  return { ok: true, novino: !!d.valor };
 }
 
 // ---------- Recordatorios (activador cada 15 minutos) ----------
@@ -229,11 +479,11 @@ function sendReminders() {
       });
       if (rechazada) return;
 
-      // Cita ya empezada: pedir reseña 1 h después de acabar (una sola vez)
+      // Cita ya empezada: pedir reseña 1 h después de acabar (una sola vez; no si no vino)
       if (minutos <= 0) {
         var fin = ev.end && ev.end.dateTime ? new Date(ev.end.dateTime) : inicio;
         var desdeFin = (ahora.getTime() - fin.getTime()) / 60000;
-        if (tags.resena === 'pendiente' && desdeFin >= MINUTOS_PARA_RESENA) {
+        if (tags.resena === 'pendiente' && tags.novino !== '1' && desdeFin >= MINUTOS_PARA_RESENA) {
           enviarResena_(email, tags.nombre || '', BARBEROS[id].nombre);
           tags.resena = 'enviado';
           Calendar.Events.patch({ extendedProperties: { private: tags } }, calId, ev.id, { sendUpdates: 'none' });
@@ -246,20 +496,21 @@ function sendReminders() {
       var hora = Utilities.formatDate(inicio, ZONA_HORARIA, 'HH:mm');
       var cuando = cuandoTexto_(fecha, hora);
       var nombre = tags.nombre || '';
+      var gestionar = enlaceCita_(id, ev.id);
       var cambio = null;
 
       if (minutos <= 3 * 60 && tags.r3 === 'pendiente') {
         enviarCorreo_(email, 'Hoy a las ' + hora + ' · ' + NOMBRE_BARBERIA,
           'Tu cita es en unas horas',
           'Hola ' + nombre + ', te recordamos que hoy tienes cita.',
-          servicio, BARBEROS[id].nombre, cuando);
+          servicio, BARBEROS[id].nombre, cuando, { gestionar: gestionar });
         cambio = { r3: 'enviado' };
         if (tags.r24 === 'pendiente') cambio.r24 = 'no';
       } else if (minutos <= 24 * 60 && tags.r24 === 'pendiente') {
         enviarCorreo_(email, 'Recordatorio: mañana tienes cita · ' + NOMBRE_BARBERIA,
           'Mañana te esperamos',
           'Hola ' + nombre + ', te recordamos tu cita.',
-          servicio, BARBEROS[id].nombre, cuando);
+          servicio, BARBEROS[id].nombre, cuando, { gestionar: gestionar });
         cambio = { r24: 'enviado' };
       }
 
@@ -310,7 +561,8 @@ function instalarRecordatorios() {
 
 // ---------- Cálculo de horas libres ----------
 
-function horasLibres_(fecha, servicio, barbero) {
+/** excluirId: al cambiar una cita, su propio evento no cuenta como ocupado. */
+function horasLibres_(fecha, servicio, barbero, excluirId) {
   var ventanas = (HORARIO[diaSemana_(fecha)] || []).map(function (v) { return [aMin_(v[0]), aMin_(v[1])]; });
   if (!ventanas.length) return [];
 
@@ -322,7 +574,7 @@ function horasLibres_(fecha, servicio, barbero) {
   var ids = barbero === 'any' ? Object.keys(BARBEROS) : [barbero];
   var libres = {};
   ids.forEach(function (id) {
-    inicioslibres_(ventanas, ocupado_(id, fecha), servicio.duracion, INTERVALO_MINUTOS, minimo, EVITAR_HUECOS_SUELTOS, minHueco)
+    inicioslibres_(ventanas, ocupado_(id, fecha, excluirId), servicio.duracion, INTERVALO_MINUTOS, minimo, EVITAR_HUECOS_SUELTOS, minHueco)
       .forEach(function (t) { libres[t] = true; });
   });
   return Object.keys(libres).map(Number).sort(function (a, b) { return a - b; }).map(aHHMM_);
@@ -355,7 +607,7 @@ function inicioslibres_(ventanas, ocupado, dur, paso, minimo, evitarHuecos, minH
 }
 
 /** Tramos ocupados del barbero ese día, en minutos desde medianoche. Los eventos de día completo bloquean el día. */
-function ocupado_(id, fecha) {
+function ocupado_(id, fecha, excluirId) {
   var calId = calendario_(id);
   var desde = fechaHora_(fecha, '00:00');
   var hasta = fechaHora_(sumarDias_(fecha, 1), '00:00');
@@ -366,7 +618,7 @@ function ocupado_(id, fecha) {
     console.error(err);
     throw aviso_('No encontramos el calendario de ' + BARBEROS[id].nombre + '. Avisa a la barbería, por favor.');
   }
-  return (lista.items || []).filter(function (ev) { return ev.status !== 'cancelled'; }).map(function (ev) {
+  return (lista.items || []).filter(function (ev) { return ev.status !== 'cancelled' && ev.id !== excluirId; }).map(function (ev) {
     // dateTime = evento con hora; date = evento de día completo
     var s = ev.start.dateTime ? new Date(ev.start.dateTime) : fechaHora_(ev.start.date, '00:00');
     var e = ev.end.dateTime ? new Date(ev.end.dateTime) : fechaHora_(ev.end.date, '00:00');
@@ -379,11 +631,17 @@ function ocupado_(id, fecha) {
 
 // ---------- Correo ----------
 
-function enviarCorreo_(para, asunto, titulo, saludo, servicio, barbero, cuando) {
+/**
+ * opciones: { gestionar: enlace "Gestionar mi cita", sinPolitica: true, boton: { texto, url } }
+ */
+function enviarCorreo_(para, asunto, titulo, saludo, servicio, barbero, cuando, opciones) {
+  opciones = opciones || {};
   var filas = [['Servicio', servicio.nombre], ['Barbero', barbero], ['Cuándo', cuando], ['Dónde', DIRECCION]];
-  if (servicio.precio !== '') filas.push(['Precio', servicio.precio + ' €']);
-  var politica = 'Si no puedes venir, avísanos con al menos ' + CANCELACION_HORAS + ' horas de antelación' +
-    (TELEFONO_BARBERIA ? ' llamando al ' + TELEFONO_BARBERIA : '') + '. Si no acudes sin avisar, se cobrará el servicio íntegro en tu próxima visita.';
+  if (servicio.precio !== '' && servicio.precio !== undefined) filas.push(['Precio', servicio.precio + ' €']);
+  var politica = opciones.sinPolitica ? '' : 'Si no puedes venir, avísanos con al menos ' + CANCELACION_HORAS + ' horas de antelación' +
+    (TELEFONO_BARBERIA ? ' o llama al ' + TELEFONO_BARBERIA : '') + '. Si no acudes sin avisar, se cobrará el servicio íntegro en tu próxima visita.';
+  var boton = opciones.gestionar ? { texto: 'Gestionar mi cita', url: opciones.gestionar } : opciones.boton;
+  var notaBoton = opciones.gestionar ? 'Desde ahí puedes cancelar o cambiar tu cita hasta ' + CANCELACION_HORAS + ' horas antes.' : '';
 
   var html =
     '<div style="background:#f4f4f5;padding:24px 12px;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif">' +
@@ -399,12 +657,17 @@ function enviarCorreo_(para, asunto, titulo, saludo, servicio, barbero, cuando) 
         '</td><td style="padding:10px 0;border-top:1px solid #e4e4e7;text-align:right;font-weight:700;color:#0a0a0b">' + esc_(f[1]) + '</td></tr>';
     }).join('') +
     '</table>' +
-    '<p style="margin:20px 0 0;color:#52525b;font-size:14px;line-height:1.5">' + esc_(politica) + '</p>' +
+    (boton ? '<p style="text-align:center;margin:24px 0 6px"><a href="' + esc_(boton.url) + '" style="display:inline-block;background:#0a0a0b;color:#ffffff;font-weight:700;font-size:15px;text-decoration:none;padding:14px 24px;border-radius:999px">' + esc_(boton.texto) + '</a></p>' : '') +
+    (notaBoton ? '<p style="margin:0;text-align:center;color:#71717a;font-size:13px">' + esc_(notaBoton) + '</p>' : '') +
+    (politica ? '<p style="margin:20px 0 0;color:#52525b;font-size:14px;line-height:1.5">' + esc_(politica) + '</p>' : '') +
     '</div></div>' +
     '<p style="text-align:center;color:#a1a1aa;font-size:12px;margin-top:16px">Reserva gestionada con Book Lab</p></div>';
 
   var texto = titulo + '\n\n' + saludo + '\n\n' +
-    filas.map(function (f) { return f[0] + ': ' + f[1]; }).join('\n') + '\n\n' + politica;
+    filas.map(function (f) { return f[0] + ': ' + f[1]; }).join('\n') +
+    (boton ? '\n\n' + boton.texto + ': ' + boton.url : '') +
+    (notaBoton ? '\n' + notaBoton : '') +
+    (politica ? '\n\n' + politica : '');
 
   MailApp.sendEmail({ to: para, subject: asunto, body: texto, htmlBody: html, name: NOMBRE_BARBERIA });
 }

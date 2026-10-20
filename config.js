@@ -14,6 +14,11 @@
  * ============================================================
  */
 window.BOOKLAB_CONFIG = {
+  // ---------- Motor de reservas (Google Apps Script) ----------
+  motor: {
+    url: 'https://script.google.com/macros/s/AKfycbziHjevRgHqJq4zaWmKW9BHu8KprIORzhEd_hyrK1keMOLHpMQ5vBELEyNNBwSvgqkZyw/exec'
+  },
+
   // ---------- Datos del negocio ----------
   negocio: {
     nombre: 'Nombre de tu barbería',
