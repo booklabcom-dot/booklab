@@ -178,6 +178,49 @@ p { margin: 0; }
 }
 .founder-sign:hover { color: var(--accent); }
 
+/* ---------- Cabecera: enlaces ---------- */
+.header-nav { display: flex; align-items: center; gap: 6px; }
+.header-link { display: inline-flex; align-items: center; min-height: 48px; padding: 0 12px; text-decoration: none; font-weight: 600; font-size: .9375rem; color: var(--muted); }
+.header-link:hover { color: var(--text); }
+
+/* ---------- Precios ---------- */
+.pricing { display: grid; gap: 12px; margin-top: 40px; }
+.price-card {
+  position: relative; background: var(--surface); border: 1.5px solid var(--line); border-radius: 20px; padding: 28px 24px;
+}
+.price-card.is-featured { border-color: var(--accent); background: radial-gradient(120% 90% at 100% 0%, rgba(245, 197, 24, .12), transparent 60%), var(--surface); }
+.price-badge {
+  display: inline-block; font-size: .6875rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent-ink); background: var(--accent); padding: 4px 10px; border-radius: 999px; margin-bottom: 16px;
+}
+.price-card h3, .price-setup h3, .referral h3 { font-size: 1.375rem; letter-spacing: -.03em; }
+.price-amount { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 10px; margin-top: 10px; }
+.price-amount b { font-size: clamp(2.5rem, 12vw, 3.25rem); font-weight: 800; letter-spacing: -.045em; line-height: 1; }
+.price-amount span { color: var(--muted); font-weight: 600; }
+.price-old { color: var(--muted); font-size: 1.125rem; font-weight: 600; text-decoration-thickness: 2px; text-decoration-color: var(--danger); }
+.price-note { color: var(--muted); margin-top: 8px; font-size: .9375rem; }
+.price-setup {
+  display: grid; gap: 8px; align-items: center; margin-top: 12px; padding: 22px 24px;
+  border: 1.5px dashed var(--line); border-radius: 20px;
+}
+.price-setup p { color: var(--muted); margin-top: 6px; }
+.price-setup .price-amount { margin-top: 0; }
+.price-setup .price-amount b { font-size: 2.25rem; }
+.price-includes { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 12px; }
+.price-includes li { position: relative; padding-left: 30px; line-height: 1.5; }
+.price-includes li::before {
+  content: "✓"; position: absolute; left: 0; top: 0; width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent-soft); color: var(--accent); font-weight: 800; font-size: .75rem; display: grid; place-items: center;
+}
+.price-includes a { color: var(--accent); text-underline-offset: 3px; }
+.referral {
+  display: flex; gap: 16px; align-items: flex-start; margin-top: 28px; padding: 22px 24px;
+  border-radius: 20px; background: var(--accent); color: var(--accent-ink);
+}
+.referral-icon { font-size: 1.75rem; line-height: 1; }
+.referral p { margin-top: 6px; color: #2a2400; }
+.price-legal { margin-top: 16px; color: var(--muted); font-size: .8125rem; line-height: 1.5; }
+
 /* ---------- Pasos ---------- */
 .steps { list-style: none; margin: 48px 0 0; padding: 0; display: grid; gap: 0; counter-reset: paso; }
 .steps li {
@@ -234,6 +277,9 @@ p { margin: 0; }
   .hero-ctas { flex-direction: row; }
   .cards { grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .cards-6 { grid-template-columns: repeat(2, 1fr); }
+  .pricing { grid-template-columns: 1fr 1fr; gap: 16px; }
+  .price-setup { grid-template-columns: 1fr auto; gap: 24px; }
+  .price-includes { grid-template-columns: 1fr 1fr; column-gap: 32px; }
   .card { padding: 36px 32px; }
   .steps { grid-template-columns: repeat(2, 1fr); column-gap: 48px; }
   .steps li:nth-last-child(2) { border-bottom: 1px solid var(--line); }
