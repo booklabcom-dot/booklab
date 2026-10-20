@@ -443,3 +443,16 @@
   .slot-grid, .skeleton { grid-template-columns: repeat(6, 1fr); }
   .quick-days { margin-left: 0; margin-right: 0; padding-left: 0; padding-right: 0; flex-wrap: wrap; }
 }
+/* Extras opcionales en "Tus datos" (config.js → extras) */
+.extras { display: grid; gap: 10px; margin: 4px 0 18px; }
+.extras[hidden] { display: none; }
+.extra { padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); }
+.extra-q { font-size: 1rem; }
+.extra-opc { color: var(--muted); font-size: .8125rem; font-weight: 500; }
+.extra-desc { color: var(--muted); font-size: .875rem; line-height: 1.45; margin-top: 4px; }
+.extra-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.extra-opt {
+  min-height: 48px; padding: 0 10px; border-radius: 12px; cursor: pointer; background: transparent;
+  border: 1.5px solid var(--line); color: var(--text); font: 600 .9375rem var(--font);
+}
+.extra-opt[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
