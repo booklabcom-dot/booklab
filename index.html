@@ -13,6 +13,8 @@
   <meta property="og:description" content="Tu barbería con web propia, dominio, SEO local y reservas online 24/7. Hecho por un barbero, para barberos.">
   <meta property="og:image" content="https://getbooklab.com/assets/img/og.jpg">
   <link rel="preload" as="image" href="assets/img/hero-sillon-hd.webp" type="image/webp">
+  <link rel="preload" as="font" href="assets/fonts/anton.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -27,12 +29,22 @@
     "sameAs": ["https://www.instagram.com/xffade/"]
   }
   </script>
+  <script>
+    // Animaciones solo si el usuario no ha pedido movimiento reducido.
+    // Si editorial.js no llega a cargar, a los 2,5 s se quita la clase y todo queda visible.
+    (function (d) {
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      d.classList.add('anim');
+      setTimeout(function () { if (!window.__ed) d.classList.remove('anim'); }, 2500);
+    })(document.documentElement);
+  </script>
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="preload" as="image" href="assets/img/logo.webp" type="image/webp">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/editorial.css">
 </head>
-<body>
+<body class="ed">
   <a class="skip" href="#main">Saltar al contenido</a>
 
   <!-- 1. Cabecera -->
@@ -41,40 +53,72 @@
       <a class="logo" href="./" aria-label="Book Lab, inicio">
         <img src="assets/img/logo.webp" width="66" height="40" alt="Book Lab">
       </a>
+      <span class="hdr-tag" aria-hidden="true">Webs para barberías</span>
       <nav class="header-nav" aria-label="Principal">
         <a class="btn btn-ghost btn-sm" href="demo.html">Ver demo</a>
       </nav>
     </div>
+    <span class="hdr-progress" aria-hidden="true"></span>
   </header>
 
   <main id="main">
-    <!-- 2. Hero: el anuncio de Book Lab hecho web (texto real + sillón) -->
-    <section class="hero" aria-labelledby="hero-title">
-      <!-- Foto: assets/img/hero-sillon-hd.webp (el sillón del anuncio, sin texto) -->
+    <!-- 2. Hero: composición editorial (texto real + sillón) -->
+    <section class="hero ed-hero" aria-labelledby="hero-title">
       <div class="hero-photo" aria-hidden="true">
         <img src="assets/img/hero-sillon-hd.webp" width="514" height="1254" alt="" fetchpriority="high" decoding="async">
+        <p class="hero-tech"><i></i>Hecho por un barbero,<br>para barberos</p>
       </div>
-      <div class="wrap hero-copy">
-        <h1 id="hero-title">¿Cuántas horas pierdes contestando <span class="accent">WhatsApps?</span></h1>
+      <span class="hero-line hero-line-h" aria-hidden="true"></span>
+      <span class="hero-line hero-line-v" aria-hidden="true"></span>
+      <span class="hero-node" aria-hidden="true"><i></i></span>
+
+      <div class="hero-a">
+        <p class="hero-kicker">Book Lab <span>/</span> Webs para barberías</p>
+        <h1 id="hero-title" class="hero-h1">
+          <span class="ed-line"><span class="ed-line-in f-cond">¿Cuántas horas</span></span>
+          <span class="ed-line hero-h1-mid"><span class="ed-line-in f-wide">pierdes contestando</span></span>
+          <span class="ed-line"><span class="ed-line-in f-cond accent hero-h1-big">WhatsApps?</span></span>
+        </h1>
+      </div>
+
+      <div class="hero-c">
         <p class="hero-answer">Te las devuelvo.</p>
-        <hr class="rule">
         <p class="hero-sub">Tu barbería funcionando,<br>tu agenda trabajando 24h<br>sin llamadas ni mensajes.</p>
         <p class="hero-claim">Recupera tu tiempo libre</p>
         <a class="hero-scroll" href="#web">Descubre cómo <span aria-hidden="true">↓</span></a>
       </div>
+
+      <div class="hero-d" aria-hidden="true">
+        <div class="stat"><b>24h</b><span>Tu agenda trabajando</span><i class="ind ind-sq"></i></div>
+        <div class="stat"><b>+12</b><span>Años detrás del sillón</span><i class="ind ind-dot"></i></div>
+      </div>
     </section>
+
+    <!-- Cinta técnica (decorativa) -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker-track">
+        <span>Dominio propio</span><span>SEO local</span><span>Reservas 24/7</span><span>Recordatorios y reseñas</span><span>Panel de control</span><span>Google Calendar</span>
+        <span>Dominio propio</span><span>SEO local</span><span>Reservas 24/7</span><span>Recordatorios y reseñas</span><span>Panel de control</span><span>Google Calendar</span>
+      </div>
+    </div>
 
     <!-- 2b. Qué hacemos -->
     <section class="section intro" id="web" aria-labelledby="intro-title">
       <div class="wrap">
-        <h2 id="intro-title" class="eyebrow">Webs para barberías con reservas online</h2>
-        <p class="intro-statement">Tu barbería en Google, con <span class="accent">web propia</span> y una agenda que se llena sola.</p>
-        <p class="lead">Diseño a medida, dominio propio, SEO local, sistema de citas y un panel de control con tu facturación y tus clientes.</p>
-        <div class="hero-ctas">
-          <a class="btn btn-primary" href="demo.html">Ver la demo</a>
-          <a class="btn btn-ghost" href="#contacto">Quiero mi web</a>
+        <h2 id="intro-title" class="eyebrow" data-reveal="left">Webs para barberías con reservas online</h2>
+        <p class="intro-statement">
+          <span class="ed-line"><span class="ed-line-in f-cond">Tu barbería en Google,</span></span>
+          <span class="ed-line intro-off"><span class="ed-line-in f-wide">con <span class="accent">web propia</span></span></span>
+          <span class="ed-line"><span class="ed-line-in f-light">y una agenda que se llena sola.</span></span>
+        </p>
+        <div class="intro-side" data-reveal="up">
+          <p class="lead">Diseño a medida, dominio propio, SEO local, sistema de citas y un panel de control con tu facturación y tus clientes.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="demo.html">Ver la demo</a>
+            <a class="btn btn-ghost" href="#contacto">Quiero mi web</a>
+          </div>
         </div>
-        <ul class="hero-tags">
+        <ul class="hero-tags" data-stagger>
           <li>Dominio propio</li>
           <li>SEO local</li>
           <li>Reservas 24/7</li>
@@ -83,12 +127,16 @@
         </ul>
       </div>
     </section>
+
     <!-- 3. Todo incluido -->
-    <section class="section" id="incluye" aria-labelledby="incluye-title" style="padding-top:0">
+    <section class="section incluye" id="incluye" aria-labelledby="incluye-title">
       <div class="wrap">
-        <span class="eyebrow">Todo incluido</span>
-        <h2 class="h2" id="incluye-title">Una web de verdad.<br><span class="accent">No solo un botón de reservas.</span></h2>
-        <div class="cards cards-6">
+        <span class="eyebrow" data-reveal="left">Todo incluido</span>
+        <h2 class="h2 ed-h" id="incluye-title">
+          <span class="ed-line"><span class="ed-line-in f-cond">Una web de verdad.</span></span>
+          <span class="ed-line"><span class="ed-line-in f-wide accent">No solo un botón de reservas.</span></span>
+        </h2>
+        <div class="cards cards-6" data-stagger>
           <article class="card">
             <div class="card-icon" aria-hidden="true">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></svg>
@@ -134,22 +182,26 @@
         </div>
       </div>
     </section>
+
     <!-- Hecho por un barbero -->
-    <section class="section founder" aria-labelledby="founder-title" style="padding-top:0">
+    <section class="section founder" aria-labelledby="founder-title">
       <div class="wrap">
         <div class="founder-card">
-          <span class="eyebrow">De barbero a barbero</span>
-          <h2 class="h2" id="founder-title">Esto no lo ha diseñado un informático. <span class="accent">Lo ha diseñado un barbero.</span></h2>
-          <div class="founder-body">
+          <span class="eyebrow" data-reveal="left">De barbero a barbero</span>
+          <h2 class="h2 ed-h" id="founder-title">
+            <span class="ed-line"><span class="ed-line-in f-wide founder-pre">Esto no lo ha diseñado un informático.</span></span>
+            <span class="ed-line"><span class="ed-line-in f-cond">Lo ha diseñado <span class="accent">un barbero.</span></span></span>
+          </h2>
+          <div class="founder-body" data-reveal="right">
             <p>Llevo más de 12 años detrás del sillón. Sé lo que es contestar WhatsApps con las manos llenas de espuma, cuadrar citas entre corte y corte y quedarte mirando un hueco vacío porque alguien no apareció.</p>
             <p>Y lo peor: pasar tu tiempo libre pegado al móvil, organizando la agenda. Tu tiempo libre es para disfrutar y desconectar, no para contestar mensajes.</p>
             <p>Probé agendas, apps y programas. Todos estaban pensados para cualquier negocio menos para el nuestro. Así que hice el mío: sencillo, rápido y hecho para cómo se trabaja de verdad en una barbería.</p>
             <p>Book Lab es lo que yo necesitaba. Ahora también es para ti.</p>
           </div>
-          <ul class="founder-stats">
-            <li><b>+12</b><span>años en el oficio</span></li>
-            <li><b>1 a 1</b><span>hablas conmigo, no con un call center</span></li>
-            <li><b>100%</b><span>a medida de tu barbería</span></li>
+          <ul class="founder-stats" data-stagger>
+            <li><b>+12</b><span>años en el oficio</span><i class="ind ind-sq" aria-hidden="true"></i></li>
+            <li><b>1 a 1</b><span>hablas conmigo, no con un call center</span><i class="ind ind-dot" aria-hidden="true"></i></li>
+            <li><b>100%</b><span>a medida de tu barbería</span><i class="ind ind-tri" aria-hidden="true"></i></li>
           </ul>
           <a class="founder-sign" href="https://www.instagram.com/xffade/" target="_blank" rel="noopener">@xffade · fundador de Book Lab</a>
         </div>
@@ -157,16 +209,19 @@
     </section>
 
     <!-- Panel de control -->
-    <section class="section" id="panel" aria-labelledby="pc-title" style="padding-top:0">
+    <section class="section panel-sec" id="panel" aria-labelledby="pc-title">
       <div class="wrap">
         <div class="pc-head">
-          <span class="eyebrow">Tu panel de control</span>
-          <h2 class="h2" id="pc-title">Toda tu barbería,<br><span class="accent">en números.</span></h2>
-          <p class="ns-lead">Cuánto facturas, qué barbero rinde más, qué días se llenan y qué clientes no vuelven. Al momento, desde el móvil y sin hojas de cálculo. Solo entras tú.</p>
+          <span class="eyebrow" data-reveal="left">Tu panel de control</span>
+          <h2 class="h2 ed-h" id="pc-title">
+            <span class="ed-line"><span class="ed-line-in f-wide">Toda tu barbería,</span></span>
+            <span class="ed-line"><span class="ed-line-in f-cond accent pc-big">en números.</span></span>
+          </h2>
+          <p class="ns-lead" data-reveal="up">Cuánto facturas, qué barbero rinde más, qué días se llenan y qué clientes no vuelven. Al momento, desde el móvil y sin hojas de cálculo. Solo entras tú.</p>
         </div>
 
         <div class="pc-stage">
-          <div class="pc-window" role="img" aria-label="Panel de control de ejemplo: 14.400 € facturados en septiembre, 13 % más que el mes anterior, 859 citas, ticket medio de 17,43 € y 56 % de ocupación, con la facturación de cada barbero.">
+          <div class="pc-window" data-reveal="left" role="img" aria-label="Panel de control de ejemplo: 14.400 € facturados en septiembre, 13 % más que el mes anterior, 859 citas, ticket medio de 17,43 € y 56 % de ocupación, con la facturación de cada barbero.">
             <div class="pc-bar"><i></i><i></i><i></i><span>Barbería Fade · Panel</span></div>
             <div class="pc-body">
               <div class="pc-top">
@@ -204,7 +259,7 @@
             </div>
           </div>
 
-          <div class="pc-phone" role="img" aria-label="Clientes del día en el móvil: los que vinieron aparecen como pagados y quien no vino, marcado en rojo.">
+          <div class="pc-phone" data-reveal="right" role="img" aria-label="Clientes del día en el móvil: los que vinieron aparecen como pagados y quien no vino, marcado en rojo.">
             <div class="pc-notch"></div>
             <b class="pc-h">Clientes del día</b>
             <div class="pc-res"><div><b>22</b><small>vinieron</small></div><div><b>366 €</b><small>cobrado</small></div></div>
@@ -217,7 +272,7 @@
           </div>
         </div>
 
-        <ul class="pc-feats">
+        <ul class="pc-feats" data-stagger>
           <li>Facturación por barbero</li>
           <li>Evolución mes a mes</li>
           <li>Servicios más pedidos</li>
@@ -230,12 +285,17 @@
       </div>
     </section>
 
-    <!-- 4. Cómo funcionan las reservas -->
-    <section class="section" aria-labelledby="como-title" style="padding-top:0">
+    <!-- 4. Cómo funcionan las reservas (superficie clara) -->
+    <section class="section light" aria-labelledby="como-title">
+      <span class="light-bg" aria-hidden="true"></span>
       <div class="wrap">
-        <span class="eyebrow">El sistema de citas</span>
-        <h2 class="h2" id="como-title">Tu agenda se gestiona sola.<br>Tus cuentas, también.<br><span class="accent">Tú solo cortas.</span></h2>
-        <ol class="steps">
+        <span class="eyebrow" data-reveal="left">El sistema de citas</span>
+        <h2 class="h2 ed-h" id="como-title">
+          <span class="ed-line"><span class="ed-line-in f-cond">Tu agenda se gestiona sola.</span></span>
+          <span class="ed-line"><span class="ed-line-in f-wide">Tus cuentas, también.</span></span>
+          <span class="ed-line"><span class="ed-line-in f-cond"><mark>Tú solo cortas.</mark></span></span>
+        </h2>
+        <ol class="steps" data-stagger>
           <li>
             <div>
               <h3>El cliente elige</h3>
@@ -260,17 +320,21 @@
               <p>Citas, cambios, cancelaciones y facturación se actualizan solos. Tú solo miras tus números en el panel.</p>
             </div>
           </li>
-        </ol>      </div>
+        </ol>
+      </div>
     </section>
 
     <!-- Gestión de clientes -->
-    <section class="section" id="no-shows" aria-labelledby="ns-title" style="padding-top:0">
+    <section class="section" id="no-shows" aria-labelledby="ns-title">
       <div class="wrap ns">
         <div class="ns-text">
-          <span class="eyebrow">Gestión de clientes</span>
-          <h2 class="h2" id="ns-title">Tus clientes, tus reglas.<br><span class="accent">Tú decides.</span></h2>
-          <p class="ns-lead">Desde tu <b>panel de control</b> ves quién viene, quién falla y qué hacer con cada uno. Cobrar los no shows o no, avisar o dejarlo pasar: cada barbería trabaja a su manera y Book Lab se adapta a la tuya.</p>
-          <ul class="ns-list">
+          <span class="eyebrow" data-reveal="left">Gestión de clientes</span>
+          <h2 class="h2 ed-h" id="ns-title">
+            <span class="ed-line"><span class="ed-line-in f-wide">Tus clientes, tus reglas.</span></span>
+            <span class="ed-line"><span class="ed-line-in f-cond accent ns-big">Tú decides.</span></span>
+          </h2>
+          <p class="ns-lead" data-reveal="up">Desde tu <b>panel de control</b> ves quién viene, quién falla y qué hacer con cada uno. Cobrar los no shows o no, avisar o dejarlo pasar: cada barbería trabaja a su manera y Book Lab se adapta a la tuya.</p>
+          <ul class="ns-list" data-stagger>
             <li><b>Tu día, de un vistazo.</b> Todos los clientes del día con su servicio y su barbero. Si alguien no aparece, lo marcas con un toque y tus números se ajustan solos.</li>
             <li><b>Un bot avisa por ti.</b> Si quieres, envías por WhatsApp un aviso automático de Book Lab con los datos de la cita. Educado y claro, y sin que te dé apuro.</li>
             <li><b>Sabes quién falla.</b> Historial de citas perdidas y cuántas veces ha fallado cada cliente. Y si decides cobrarlas, también ves quién ha pagado.</li>
@@ -278,7 +342,7 @@
           </ul>
           <a class="btn btn-ghost ns-cta" href="panel.html?demo=1">Ver el panel de control</a>
         </div>
-        <div class="ns-visual" aria-hidden="true">
+        <div class="ns-visual" data-reveal="right" aria-hidden="true">
           <div class="ns-chat">
             <div class="ns-chat-head"><span class="ns-bot">🤖</span><div><b>Book Lab</b><small>Asistente automático</small></div></div>
             <div class="ns-bubble">
@@ -301,11 +365,15 @@
     </section>
 
     <!-- 5. Cómo trabajamos -->
-    <section class="section" aria-labelledby="proceso-title" style="padding-top:0">
+    <section class="section proceso" aria-labelledby="proceso-title">
       <div class="wrap">
-        <span class="eyebrow">Cómo trabajamos</span>
-        <h2 class="h2" id="proceso-title">Tu web, <span class="accent">en tres pasos.</span></h2>
-        <ol class="steps steps-3">
+        <span class="eyebrow" data-reveal="left">Cómo trabajamos</span>
+        <h2 class="h2 ed-h" id="proceso-title">
+          <span class="ed-line"><span class="ed-line-in f-cond">Tu web,</span></span>
+          <span class="ed-line"><span class="ed-line-in f-wide accent">en tres pasos.</span></span>
+        </h2>
+        <span class="proceso-line" aria-hidden="true"></span>
+        <ol class="steps steps-3" data-stagger>
           <li>
             <div>
               <h3>Me cuentas</h3>
@@ -327,14 +395,18 @@
         </ol>
       </div>
     </section>
-    <!-- 5b. Precios (oferta de lanzamiento) -->
-    <section class="section" id="precios" aria-labelledby="precios-title" style="padding-top:0">
-      <div class="wrap">
-        <span class="eyebrow">Precios</span>
-        <h2 class="h2" id="precios-title">Precio de lanzamiento.<br><span class="accent">Sin letra pequeña.</span></h2>
-        <p class="lead">Oferta de salida para las primeras barberías que confíen en Book Lab.</p>
 
-        <div class="pricing">
+    <!-- 5b. Precios (oferta de lanzamiento) -->
+    <section class="section precios" id="precios" aria-labelledby="precios-title">
+      <div class="wrap">
+        <span class="eyebrow" data-reveal="left">Precios</span>
+        <h2 class="h2 ed-h" id="precios-title">
+          <span class="ed-line"><span class="ed-line-in f-cond">Precio de lanzamiento.</span></span>
+          <span class="ed-line"><span class="ed-line-in f-wide accent">Sin letra pequeña.</span></span>
+        </h2>
+        <p class="lead" data-reveal="up">Oferta de salida para las primeras barberías que confíen en Book Lab.</p>
+
+        <div class="pricing" data-stagger>
           <article class="price-card">
             <span class="price-badge">Oferta de lanzamiento</span>
             <h3>Mensual</h3>
@@ -349,7 +421,7 @@
           </article>
         </div>
 
-        <div class="price-setup">
+        <div class="price-setup" data-reveal="up">
           <div>
             <h3>Alta y puesta en marcha</h3>
             <p>Diseño a medida, dominio, Google Calendar, correos automáticos y SEO local. Un único pago.</p>
@@ -357,18 +429,19 @@
           <p class="price-amount"><s class="price-old">199 €</s> <b>99 €</b></p>
         </div>
 
-        <ul class="price-includes" aria-label="Qué incluye">
+        <ul class="price-includes" aria-label="Qué incluye" data-stagger>
           <li>Web a medida con tu propio dominio</li>
           <li>Reservas online 24/7, sin límite de citas</li>
           <li>Recordatorios y correos para que tus clientes cuenten su experiencia con una reseña en Google</li>
           <li>Tus clientes cancelan o cambian su cita solos</li>
           <li>Panel de control: facturación por barbero y por mes · <a href="panel.html?demo=1">ver ejemplo</a></li>
-          <li>Gestión de clientes: no shows, avisos automáticos y bloqueo de clientes problemáticos</li>          <li>SEO local y conexión con Google Maps</li>
+          <li>Gestión de clientes: no shows, avisos automáticos y bloqueo de clientes problemáticos</li>
+          <li>SEO local y conexión con Google Maps</li>
           <li>Alojamiento, mantenimiento y cambios incluidos</li>
           <li>Sin comisiones por reserva ni coste por barbero</li>
         </ul>
 
-        <div class="referral">
+        <div class="referral" data-reveal="scale">
           <span class="referral-icon" aria-hidden="true">🤝</span>
           <div>
             <h3>Trae a otra barbería y te regalo un mes</h3>
@@ -383,28 +456,34 @@
       </div>
     </section>
 
-    <!-- 6. Llamada a la acción -->
-    <section aria-labelledby="cta-title">
-      <div class="wrap">
-        <div class="cta">
-          <h2 id="cta-title">Mira cómo funciona.</h2>
-          <p>Una barbería de ejemplo con web, precios, reseñas, equipo y reservas. La tuya no será igual: se diseña a medida, con tus colores, tu estilo, tus fotos y tus textos.</p>
-          <div class="cta-actions">
-            <a class="btn" href="demo.html">Ver la demo</a>
-            <a class="btn btn-cta-ghost" href="panel.html?demo=1">Ver el panel del jefe (ejemplo)</a>
+    <!-- 6. Llamada a la acción (franja amarilla) -->
+    <section class="cta-sec" aria-labelledby="cta-title">
+      <div class="cta">
+        <div class="wrap">
+          <h2 id="cta-title"><span class="cta-word">Mira cómo</span> <span class="cta-word cta-word-2">funciona.</span></h2>
+          <div class="cta-row">
+            <p>Una barbería de ejemplo con web, precios, reseñas, equipo y reservas. La tuya no será igual: se diseña a medida, con tus colores, tu estilo, tus fotos y tus textos.</p>
+            <div class="cta-actions">
+              <a class="btn" href="demo.html">Ver la demo</a>
+              <a class="btn btn-cta-ghost" href="panel.html?demo=1">Ver el panel del jefe (ejemplo)</a>
+            </div>
           </div>
         </div>
       </div>
     </section>
+
     <!-- 7. Contacto -->
     <section class="section" id="contacto" aria-labelledby="contacto-title">
       <div class="wrap contact">
         <div>
-          <span class="eyebrow">Contacto</span>
-          <h2 class="h2" id="contacto-title">¿Hablamos de tu barbería?</h2>
-          <p class="lead">Cuéntame cómo se llama tu barbería y cómo trabajáis. Te respondo yo, en persona, y te digo cómo quedaría tu web.</p>
+          <span class="eyebrow" data-reveal="left">Contacto</span>
+          <h2 class="h2 ed-h" id="contacto-title">
+            <span class="ed-line"><span class="ed-line-in f-wide">¿Hablamos de</span></span>
+            <span class="ed-line"><span class="ed-line-in f-cond accent">tu barbería?</span></span>
+          </h2>
+          <p class="lead" data-reveal="up">Cuéntame cómo se llama tu barbería y cómo trabajáis. Te respondo yo, en persona, y te digo cómo quedaría tu web.</p>
         </div>
-        <div class="contact-list">
+        <div class="contact-list" data-stagger>
           <a class="contact-item" href="https://wa.me/34625725758?text=Hola%2C%20tengo%20una%20barber%C3%ADa%20y%20me%20interesa%20Book%20Lab" target="_blank" rel="noopener">
             <span class="contact-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg></span>
             <span><small>WhatsApp</small>625 725 758</span>
@@ -433,15 +512,9 @@
       <a href="legal.html#privacidad">Privacidad</a>
       <a href="#top">Volver arriba ↑</a>
     </div>
+    <p class="footer-mark" aria-hidden="true">Book Lab</p>
   </footer>
 
-  <script>
-    // Línea bajo la cabecera al hacer scroll
-    (function () {
-      var h = document.querySelector('.header');
-      var on = function () { h.classList.toggle('is-scrolled', window.scrollY > 8); };
-      window.addEventListener('scroll', on, { passive: true }); on();
-    })();
-  </script>
+  <script src="assets/js/editorial.js" defer></script>
 </body>
 </html>
