@@ -249,6 +249,8 @@
     return;
   }
   getInfo().then(function (r) {
+    // Este móvil es el de este barbero: en la web de la barbería le saldrá "Mi agenda" en el menú
+    if (!DEMO) { try { localStorage.setItem('booklab_agenda', B); } catch (e) { /* sin almacenamiento */ } }
     hoy = r.hoy;
     var input = $('#fecha'); input.min = hoy; input.max = addDays(hoy, R.diasMaximos || 60);
     $('#ap-barbero').textContent = r.barbero;
