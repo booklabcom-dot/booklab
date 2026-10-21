@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Reserva tu cita</title>
   <meta name="description" content="Demo de reserva online para barberías: elige servicio, barbero, día y hora desde el móvil.">
-  <meta name="theme-color" content="#0a0a0b">
+  <meta name="theme-color" content="#050505">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/demo.css">
+  <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/demo-editorial.css">
   <!-- La URL del motor de reservas está en config.js → motor.url -->
 </head>
-<body class="demo">
+<body class="demo dx rv">
   <a class="skip" href="#reserva">Saltar a la reserva</a>
 
   <div class="demo-bar">
@@ -31,7 +33,7 @@
     </div>
   </header>
 
-  <main id="reserva" class="wrap booking">
+  <main id="reserva" class="wrap booking rv-light">
     <div id="notice" class="notice" role="status" hidden></div>
 
     <nav aria-label="Pasos de la reserva">

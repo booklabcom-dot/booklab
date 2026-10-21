@@ -5,13 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Tu barbería · Demo Book Lab</title>
   <meta name="description" content="Demo de la web de una barbería hecha con Book Lab: precios, equipo, fotos, horario y reserva online desde el móvil.">
-  <meta name="theme-color" content="#0a0a0b">
+  <meta name="theme-color" content="#050505">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
+  <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" href="assets/img/barberia.webp" type="image/webp">
+  <script>
+    // Animaciones solo sin «movimiento reducido». Si demo-editorial.js no carga, a los 2,5 s todo queda visible.
+    (function (d) {
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      d.classList.add('anim');
+      setTimeout(function () { if (!window.__dx) d.classList.remove('anim'); }, 2500);
+    })(document.documentElement);
+  </script>
   <link rel="stylesheet" href="assets/css/styles.css">
   <link rel="stylesheet" href="assets/css/demo.css">
+  <link rel="stylesheet" href="assets/css/demo-editorial.css">
 </head>
-<body class="demo shop-page">
+<body class="demo shop-page dx">
   <a class="skip" href="#main">Saltar al contenido</a>
 
   <div class="demo-bar">
@@ -47,86 +58,133 @@
   </div>
 
   <main id="main">
-    <!-- Portada -->
-    <section class="s-hero" aria-labelledby="shop-name">
-      <!-- Foto de portada: config.js → web.portada -->
-      <div class="s-hero-media" id="hero-media"></div>
-      <div class="wrap s-hero-inner">
-        <p class="shop-sub" id="shop-sub"></p>
-        <h1 class="shop-name" id="shop-name"></h1>
-        <p class="s-hero-tagline" id="tagline"></p>
-        <p class="s-hero-address"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span id="hero-address"></span></p>
-        <a class="g-rating" id="hero-rating" target="_blank" rel="noopener"></a>
-        <div class="hero-ctas">
-          <a class="btn btn-primary" href="reservar.html" data-cta></a>
+    <!-- Portada editorial -->
+    <section class="s-hero dx-hero" aria-labelledby="shop-name">
+      <div class="wrap dx-hero-grid">
+        <!-- Fila técnica: ciudad, hora local y si está abierto (todo sale de config.js) -->
+        <div class="dx-meta" aria-hidden="true">
+          <span id="dx-city">Barbería</span>
+          <span><b id="dx-clock">--:--</b> <i>Hora local</i></span>
+          <span class="dx-open" id="dx-open"><i></i><em>Horario</em></span>
         </div>
+
+        <p class="dx-mega" aria-hidden="true">
+          <span class="dx-line"><span class="dx-line-in">Tu próximo</span></span>
+          <span class="dx-line dx-mega-2"><span class="dx-line-in"><span class="dx-y">fade.</span></span></span>
+        </p>
+
+        <div class="dx-hero-copy">
+          <p class="shop-sub" id="shop-sub"></p>
+          <h1 class="shop-name" id="shop-name"></h1>
+          <p class="s-hero-tagline" id="tagline"></p>
+          <p class="s-hero-address"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span id="hero-address"></span></p>
+          <a class="g-rating" id="hero-rating" target="_blank" rel="noopener"></a>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="reservar.html" data-cta></a>
+          </div>
+        </div>
+
+        <div class="dx-hero-pics">
+          <!-- Foto de portada: config.js → web.portada -->
+          <figure class="dx-pic dx-pic-a">
+            <div class="s-hero-media" id="hero-media"></div>
+            <figcaption aria-hidden="true"><span>/01</span><span>El local</span></figcaption>
+          </figure>
+          <!-- Segunda foto: la primera de config.js → web.galeria -->
+          <figure class="dx-pic dx-pic-b" id="dx-hero-pic-b" aria-hidden="true">
+            <figcaption><span>/02</span><span>Nuestro trabajo</span></figcaption>
+          </figure>
+        </div>
+
+        <a class="dx-scroll" href="#precios" aria-label="Ver los precios">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
+        </a>
       </div>
     </section>
 
+    <!-- Cinta (decorativa) -->
+    <div class="dx-ticker" aria-hidden="true">
+      <div class="dx-ticker-track">
+        <span>Reserva en un minuto</span><span>Sin llamadas</span><span>Elige barbero y hora</span><span>Recordatorio antes de tu cita</span>
+        <span>Reserva en un minuto</span><span>Sin llamadas</span><span>Elige barbero y hora</span><span>Recordatorio antes de tu cita</span>
+      </div>
+    </div>
+
     <!-- Precios -->
-    <section class="s-section" id="precios" aria-labelledby="precios-title">
+    <section class="s-section dx-white" id="precios" aria-labelledby="precios-title">
       <div class="wrap">
-        <span class="eyebrow">Precios</span>
-        <h2 class="s-title" id="precios-title">Servicios</h2>
-        <ul class="price-list" id="price-list"></ul>
+        <div class="dx-head">
+          <span class="eyebrow" data-reveal="left">Precios</span>
+          <h2 class="s-title dx-h" id="precios-title"><span class="dx-line"><span class="dx-line-in">Servicios <sup class="dx-count" id="dx-count-serv"></sup></span></span></h2>
+        </div>
+        <ul class="price-list" id="price-list" data-stagger></ul>
         <a class="btn btn-primary btn-block-sm" href="reservar.html" data-cta></a>
       </div>
+      <div class="dx-preview" id="dx-preview" aria-hidden="true"></div>
     </section>
 
     <!-- Reseñas de Google: config.js → resenas -->
-    <section class="s-section" id="resenas" aria-labelledby="resenas-title">
+    <section class="s-section dx-dark" id="resenas" aria-labelledby="resenas-title">
       <div class="wrap">
-        <span class="eyebrow">Reseñas</span>
-        <h2 class="s-title" id="resenas-title">Lo que dicen en Google</h2>
+        <div class="dx-stats" id="dx-stats" data-stagger aria-hidden="true"></div>
+        <div class="dx-head">
+          <span class="eyebrow" data-reveal="left">Reseñas</span>
+          <h2 class="s-title dx-h" id="resenas-title"><span class="dx-line"><span class="dx-line-in">Lo que dicen</span></span> <span class="dx-line"><span class="dx-line-in dx-y">en Google</span></span></h2>
+        </div>
         <a class="g-summary" id="g-summary" target="_blank" rel="noopener"></a>
-        <ul class="reviews" id="reviews"></ul>
+        <ul class="reviews" id="reviews" data-stagger></ul>
         <p class="reviews-note" id="reviews-note"></p>
       </div>
     </section>
 
     <!-- Quiénes somos -->
-    <section class="s-section" id="nosotros" aria-labelledby="nosotros-title">
+    <section class="s-section dx-light" id="nosotros" aria-labelledby="nosotros-title">
+      <span class="dx-ring" aria-hidden="true"></span>
       <div class="wrap s-about">
-        <div>
-          <span class="eyebrow">Quiénes somos</span>
-          <h2 class="s-title" id="nosotros-title"></h2>
-          <div class="s-about-text" id="about-text"></div>
-          <ul class="values" id="values"></ul>
+        <div class="dx-about-text">
+          <span class="eyebrow" data-reveal="left">Quiénes somos</span>
+          <h2 class="s-title dx-h" id="nosotros-title"></h2>
+          <div class="s-about-text" id="about-text" data-reveal="up"></div>
+          <ul class="values" id="values" data-stagger></ul>
         </div>
         <!-- Fotos del local: config.js → web.fotosLocal -->
-        <div class="s-about-photo" id="about-photo"></div>
+        <div class="s-about-photo" id="about-photo" data-stagger></div>
       </div>
     </section>
 
     <!-- Equipo -->
-    <section class="s-section" id="equipo" aria-labelledby="equipo-title">
+    <section class="s-section dx-white" id="equipo" aria-labelledby="equipo-title">
       <div class="wrap">
-        <span class="eyebrow">El equipo</span>
-        <h2 class="s-title" id="equipo-title">Quién te corta</h2>
-        <ul class="team" id="team"></ul>
+        <div class="dx-head">
+          <span class="eyebrow" data-reveal="left">El equipo</span>
+          <h2 class="s-title dx-h" id="equipo-title"><span class="dx-line"><span class="dx-line-in">Quién te corta</span></span></h2>
+        </div>
+        <ul class="team" id="team" data-stagger></ul>
       </div>
     </section>
 
     <!-- Galería -->
-    <section class="s-section" id="fotos" aria-labelledby="fotos-title">
+    <section class="s-section dx-dark" id="fotos" aria-labelledby="fotos-title">
       <div class="wrap">
-        <span class="eyebrow">Nuestro trabajo</span>
-        <h2 class="s-title" id="fotos-title">Cortes recientes</h2>
+        <div class="dx-head">
+          <span class="eyebrow" data-reveal="left">Nuestro trabajo</span>
+          <h2 class="s-title dx-h" id="fotos-title"><span class="dx-line"><span class="dx-line-in">Cortes recientes <sup class="dx-count" id="dx-count-fotos"></sup></span></span></h2>
+        </div>
         <!-- Fotos: config.js → web.galeria -->
-        <div class="gallery" id="gallery"></div>
+        <div class="gallery" id="gallery" data-stagger></div>
         <p class="ig-line" id="ig-line"></p>
       </div>
     </section>
 
     <!-- Horario y ubicación -->
-    <section class="s-section" id="visitanos" aria-labelledby="visitanos-title">
+    <section class="s-section dx-light" id="visitanos" aria-labelledby="visitanos-title">
       <div class="wrap s-visit">
         <div>
-          <span class="eyebrow">Visítanos</span>
-          <h2 class="s-title" id="visitanos-title">Horario</h2>
-          <dl class="hours" id="hours"></dl>
+          <span class="eyebrow" data-reveal="left">Visítanos</span>
+          <h2 class="s-title dx-h" id="visitanos-title"><span class="dx-line"><span class="dx-line-in">Horario</span></span></h2>
+          <dl class="hours" id="hours" data-stagger></dl>
         </div>
-        <div>
+        <div data-reveal="right">
           <h2 class="s-title s-title-sm">Dónde estamos</h2>
           <p class="visit-address" id="visit-address"></p>
           <div class="visit-links" id="visit-links"></div>
@@ -135,21 +193,23 @@
     </section>
 
     <!-- Llamada final -->
-    <section class="s-section" aria-labelledby="final-title">
+    <section class="s-section dx-final" aria-labelledby="final-title">
       <div class="wrap">
         <div class="cta">
-          <h2 id="final-title">¿Te toca?</h2>
-          <p>Elige servicio, barbero y hora. En menos de un minuto tienes tu cita.</p>
-          <a class="btn" href="reservar.html" data-cta></a>
+          <h2 id="final-title"><span class="dx-line"><span class="dx-line-in">¿Te toca?</span></span></h2>
+          <div class="dx-final-row">
+            <p>Elige servicio, barbero y hora. En menos de un minuto tienes tu cita.</p>
+            <a class="btn" href="reservar.html" data-cta></a>
+          </div>
         </div>
       </div>
     </section>
 
 
     <!-- Solo en la demo: lo que tiene el equipo (en la web real no sale) -->
-    <section class="s-section" id="equipo-agenda" aria-labelledby="agenda-title">
+    <section class="s-section dx-agenda-sec" id="equipo-agenda" aria-labelledby="agenda-title">
       <div class="wrap">
-        <div class="demo-agenda">
+        <div class="demo-agenda" data-reveal="up">
           <span class="demo-agenda-tag">Solo para tu equipo</span>
           <h2 id="agenda-title">Cada barbero, su agenda<br><span class="accent">en el bolsillo.</span></h2>
           <p class="demo-agenda-lead">¿Entra alguien por la puerta y pide hora? Servicio, hora y nombre: tres toques y queda apuntado. Va directo a su calendario y suma en la facturación. Adiós a la libreta.</p>
@@ -182,7 +242,11 @@
     <a class="btn btn-primary btn-block" href="reservar.html" data-cta></a>
   </div>
 
+  <!-- Cursor de escritorio (solo ratón, sin movimiento reducido) -->
+  <div class="dx-cursor" id="dx-cursor" aria-hidden="true"><span></span></div>
+
   <script src="config.js"></script>
   <script src="assets/js/shop.js"></script>
+  <script src="assets/js/demo-editorial.js"></script>
 </body>
 </html>
