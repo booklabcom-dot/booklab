@@ -36,9 +36,10 @@
   var gal = W.galeria || [];
   var picB = $('#dx-hero-pic-b');
   if (picB) {
-    if (gal[0]) {
+    var fotoB = W.fotoCorte || gal[0];
+    if (fotoB) {
       var im = document.createElement('img');
-      im.src = gal[0]; im.alt = ''; im.decoding = 'async'; im.width = 700; im.height = 700;
+      im.src = fotoB; im.alt = ''; im.decoding = 'async';
       picB.insertBefore(im, picB.firstChild);
     } else picB.hidden = true;
   }

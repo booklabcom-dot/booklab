@@ -57,12 +57,13 @@ window.BOOKLAB_CONFIG = {
     portada: 'assets/img/barberia.webp',
     fotosLocal: ['assets/img/local-1.webp', 'assets/img/local-2.webp'],
     galeria: ['assets/img/corte-1.webp', 'assets/img/corte-2.webp', 'assets/img/corte-3.webp', 'assets/img/corte-4.webp'],
-    tituloNosotros: 'Menos ruido. Mejores cortes.',
+    fotoCorte: 'assets/img/corte-portada.webp',   // segunda foto de la portada (si falta, se usa la primera de la galería)
+    tituloNosotros: 'Sales nuevo. Cada vez.',
     quienesSomos: [
-      'Una barbería pequeña, con las cosas claras: buen oficio, buen trato y cero prisas.',
-      'Cada corte empieza con una conversación y termina cuando te miras al espejo y sonríes.'
+      'Degradados al milímetro, barbas perfiladas a navaja y un acabado que aguanta hasta tu próxima cita.',
+      'Reservas en un minuto, llegas a tu hora y te vas con el corte que tenías en la cabeza.'
     ],
-    valores: ['Puntualidad', 'Producto profesional', 'Toalla caliente']
+    valores: ['Fades al milímetro', 'Navaja y toalla caliente', 'Cero esperas']
   },
 
   // ---------- Reseñas de Google ----------

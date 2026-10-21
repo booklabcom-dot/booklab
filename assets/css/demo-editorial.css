@@ -116,7 +116,7 @@
 .dx-pic img, .dx .dx-pic .s-hero-media { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: var(--r); display: block; }
 .dx .dx-pic .s-hero-media { position: relative; inset: auto; overflow: hidden; }
 .dx .dx-pic .s-hero-media img { aspect-ratio: auto; height: 100%; border-radius: 0; object-position: 62% 60%; }
-.dx-pic-b img { object-position: 50% 30%; filter: grayscale(1) contrast(1.05); }
+.dx-pic-b img { object-position: 50% 42%; filter: grayscale(1) contrast(1.05); }
 
 .dx-scroll {
   justify-self: start; display: grid; place-items: center; width: 58px; height: 58px; margin: 24px 0 30px; border-radius: 50%;
