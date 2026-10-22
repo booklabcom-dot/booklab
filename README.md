@@ -2,6 +2,9 @@
 
 Web de marketing de Book Lab + demo de una barbería con reservas online.
 
+> **La demo se edita en `clientes/demo/`** (repo privado `demo-barberia`), no aquí. Para publicarla: `bash clientes/demo/publicar-demo.sh` desde `~/Documents/BookLab`, que copia la demo a esta carpeta sin cambiar las URLs. Aquí solo se editan la landing (`index.html`, `editorial.*`, `assets/fonts/`, `logo.webp`, `hero-sillon-hd.webp`, `og.jpg`), `legal.html` y `CNAME`.
+> Ojo: `styles.css`, `demo.css`, `favicon.png` e `icon-180.png` vienen de la demo pero también los usan la landing y `legal.html`.
+
 - `index.html` → la landing de Book Lab.
 - `demo.html` → la web de una barbería de ejemplo: portada, precios, quiénes somos, equipo, fotos, horario, ubicación e Instagram. Su botón **«Aparta tu cita»** lleva a la reserva.
 - `reservar.html` → la reserva en 4 pasos (servicio, barbero, día y hora, datos) con política de cancelación y resumen copiable.
