@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- PLANTILLA BOOK LAB · Aviso legal, privacidad y cookies. Los datos salen de config.js → legal y negocio -->
+  <title>Aviso legal y privacidad</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0a0a0b">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/barberia.css">
+  <link rel="stylesheet" href="assets/css/marca.css">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Datos de la barbería y sus colores: config.js -->
+  <script src="config.js"></script>
+  <script src="assets/js/tema.js"></script>
+</head>
+<body>
+  <a class="skip" href="#legal">Saltar al contenido</a>
+
+  <div class="demo-bar">
+    <div class="wrap">
+      <a href="./" class="demo-back">← Volver a la barbería</a>
+    </div>
+  </div>
+
+  <main id="legal" class="wrap legal">
+    <h1 class="legal-title">Aviso legal y privacidad</h1>
+    <p class="legal-updated" id="legal-updated"></p>
+
+    <nav class="legal-toc" aria-label="Apartados">
+      <a href="#aviso-legal">Aviso legal</a>
+      <a href="#privacidad">Privacidad</a>
+      <a href="#cookies">Cookies</a>
+    </nav>
+
+    <section id="aviso-legal" aria-labelledby="t-aviso">
+      <h2 id="t-aviso">Aviso legal</h2>
+      <div id="aviso-body"></div>
+    </section>
+
+    <section id="privacidad" aria-labelledby="t-priv">
+      <h2 id="t-priv">Política de privacidad</h2>
+      <div id="priv-body"></div>
+    </section>
+
+    <section id="cookies" aria-labelledby="t-cookies">
+      <h2 id="t-cookies">Cookies</h2>
+      <div id="cookies-body"></div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span id="footer-name"></span>
+      <a href="https://getbooklab.com" target="_blank" rel="noopener">Web y reservas por Book Lab</a>
+    </div>
+  </footer>
+
+  <script src="assets/js/legal.js"></script>
+</body>
+</html>

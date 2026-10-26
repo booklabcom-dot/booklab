@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Reserva tu cita</title>
+  <meta name="description" content="Reserva tu cita online: elige servicio, barbero, día y hora desde el móvil.">
+  <meta name="theme-color" content="#0a0a0b">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/barberia.css">
+  <link rel="stylesheet" href="assets/css/marca.css">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- La URL del motor de reservas se pone en config.js → motor.url -->
+  <!-- Datos de la barbería y sus colores: config.js -->
+  <script src="config.js"></script>
+  <script src="assets/js/tema.js"></script>
+</head>
+<body>
+  <a class="skip" href="#reserva">Saltar a la reserva</a>
+
+  <div class="demo-bar">
+    <div class="wrap">
+      <a href="./" class="demo-back">← Volver a la barbería</a>
+      <a class="booked-with" href="https://getbooklab.com" target="_blank" rel="noopener">Reservas con <img src="assets/img/booklab-logo.webp" width="320" height="194" alt="Book Lab"></a>
+    </div>
+  </div>
+
+  <header class="shop">
+    <!-- Foto de la barbería: assets/img/barberia.webp. Cámbiala por una foto real del local. -->
+    <img class="shop-photo" src="assets/img/cesar-retrato.webp" width="720" height="860" alt="" decoding="async">
+    <div class="wrap shop-inner">
+      <h1 class="shop-name" id="shop-name"></h1>
+      <p class="shop-sub" id="shop-sub"></p>
+    </div>
+  </header>
+
+  <main id="reserva" class="wrap booking">
+    <div id="notice" class="notice" role="status" hidden></div>
+
+    <nav aria-label="Pasos de la reserva">
+      <ol class="progress" id="progress"></ol>
+    </nav>
+
+    <div class="summary" id="summary" aria-live="polite"></div>
+
+    <!-- Paso 1: Servicio -->
+    <section class="step" data-step="1" aria-labelledby="t1">
+      <h2 class="step-title" id="t1" tabindex="-1">Elige servicio</h2>
+      <div class="options" id="services" role="group" aria-labelledby="t1"></div>
+    </section>
+
+    <!-- Paso 2: Barbero -->
+    <section class="step" data-step="2" aria-labelledby="t2" hidden>
+      <h2 class="step-title" id="t2" tabindex="-1">¿Con quién?</h2>
+      <div class="options" id="barbers" role="group" aria-labelledby="t2"></div>
+      <button type="button" class="link-back" data-back>← Cambiar servicio</button>
+    </section>
+
+    <!-- Paso 3: Día y hora -->
+    <section class="step" data-step="3" aria-labelledby="t3" hidden>
+      <h2 class="step-title" id="t3" tabindex="-1">Día y hora</h2>
+
+      <!-- Botón «Primera hora libre» y colores de los días (verde = bastantes horas, amarillo = pocas, rojo = completo) -->
+      <!-- Aviso de citas fuera de horario (solo cuando el barbero las abre) -->
+      <div class="fh-banner" id="fh-banner" hidden></div>
+      <div class="first-free-row">
+        <div class="first-free-btns">
+          <button type="button" class="btn btn-primary btn-sm first-free" id="first-free">⚡ Primera hora libre</button>
+          <button type="button" class="btn btn-sm first-extra" id="first-extra" hidden></button>
+        </div>
+        <ul class="day-legend" aria-label="Leyenda de colores">
+          <li><i class="dot lvl-verde"></i>Libre</li>
+          <li><i class="dot lvl-amarillo"></i>Pocas horas</li>
+          <li><i class="dot lvl-rojo"></i>Completo</li>
+          <li class="fh-leyenda" hidden><i class="dot lvl-fh"></i>Fuera de horario</li>
+        </ul>
+      </div>
+      <div class="quick-days" id="quick-days" role="group" aria-label="Próximos días abiertos"></div>
+
+      <div class="field">
+        <label for="date">Otra fecha</label>
+        <input type="date" id="date" name="date" required>
+      </div>
+
+      <div id="slots-status" class="slots-status" role="status" aria-live="polite"></div>
+      <div id="slots"></div>
+      <p class="espera-link" id="espera-link" hidden>¿Ninguna hora te va bien? <button type="button" class="link-inline" id="espera-abrir">Apúntate a la lista de espera</button></p>
+
+      <button type="button" class="link-back" data-back>← Cambiar barbero</button>
+
+      <div class="sticky-cta">
+        <button type="button" class="btn btn-primary btn-block" id="to-step-4" disabled>Continuar</button>
+      </div>
+    </section>
+
+    <!-- Paso 4: Datos -->
+    <section class="step" data-step="4" aria-labelledby="t4" hidden>
+      <h2 class="step-title" id="t4" tabindex="-1">Tus datos</h2>
+
+      <div id="extra-note" class="notice extra-note" role="note" hidden></div>
+      <form id="form" novalidate>
+        <div id="form-error" class="alert" role="alert" hidden></div>
+
+        <div class="field">
+          <label for="name">Nombre</label>
+          <input type="text" id="name" name="name" autocomplete="given-name" autocapitalize="words" maxlength="60" required aria-describedby="name-err">
+          <p class="field-err" id="name-err"></p>
+        </div>
+        <div class="field">
+          <label for="surname">Apellidos</label>
+          <input type="text" id="surname" name="surname" autocomplete="family-name" autocapitalize="words" maxlength="80" required aria-describedby="surname-err">
+          <p class="field-err" id="surname-err"></p>
+        </div>
+        <div class="field">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" name="email" autocomplete="email" inputmode="email" autocapitalize="off" spellcheck="false" maxlength="120" required aria-describedby="email-hint email-err">
+          <p class="field-hint" id="email-hint">Aquí te llegan la confirmación y los recordatorios.</p>
+          <p class="field-err" id="email-err"></p>
+        </div>
+        <div class="field">
+          <label for="phone">Teléfono</label>
+          <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" maxlength="20" required aria-describedby="phone-err">
+          <p class="field-err" id="phone-err"></p>
+        </div>
+
+        <!-- Extras opcionales (config.js → extras). Solo sale si el servicio y el barbero elegidos lo admiten -->
+        <div id="extras" class="extras" hidden></div>
+
+        <!-- Campo trampa contra bots: las personas no lo ven -->
+        <div class="hp" aria-hidden="true">
+          <label for="web">No rellenes este campo</label>
+          <input type="text" id="web" name="web" tabindex="-1" autocomplete="off">
+        </div>
+
+        <section class="policy" aria-labelledby="policy-title">
+          <h3 id="policy-title"></h3>
+          <p id="policy-intro"></p>
+          <ul id="policy-list"></ul>
+          <p id="policy-close"></p>
+          <div class="check">
+            <input type="checkbox" id="consent" name="consent" required aria-describedby="consent-err">
+            <label for="consent" id="consent-text"></label>
+          </div>
+          <!-- Información básica de protección de datos (RGPD). Se rellena desde config.js → legal -->
+          <p class="legal-note" id="legal-note"></p>
+        </section>
+        <p class="field-err" id="consent-err"></p>
+
+        <button type="button" class="link-back" data-back>← Cambiar día u hora</button>
+
+        <div class="sticky-cta">
+          <button type="submit" class="btn btn-primary btn-block" id="submit">Confirmar reserva</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Paso 5: Confirmación -->
+    <section class="step" data-step="5" aria-labelledby="t5" hidden>
+      <div class="done-icon" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+      </div>
+      <h2 class="step-title" id="t5" tabindex="-1">¡Cita reservada!</h2>
+      <dl class="recap" id="recap"></dl>
+      <p class="done-note" id="done-note"></p>
+
+      <div class="done-actions">
+        <a class="btn btn-primary btn-block" id="gcal" href="#" target="_blank" rel="noopener">Añadir a Google Calendar</a>
+        <a class="btn btn-ghost btn-block" id="manage" href="#" hidden>Gestionar mi cita</a>
+        <button type="button" class="btn btn-ghost btn-block" id="copy-summary">Copiar resumen de la cita</button>
+        <p class="copy-hint" id="copy-hint"></p>
+        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+        <a class="btn btn-ghost btn-block" href="./">Volver a la barbería</a>
+        <button type="button" class="link-back" id="restart">Hacer otra reserva</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span>Reservas con <a href="https://getbooklab.com" target="_blank" rel="noopener" style="display:inline;min-height:0;text-decoration:underline">Book Lab</a></span>
+      <a href="legal.html#aviso-legal">Aviso legal</a>
+      <a href="legal.html#privacidad">Privacidad</a>
+    </div>
+  </footer>
+
+  <dialog class="espera-modal" id="espera-modal" aria-labelledby="t-espera"></dialog>
+  <script src="assets/js/booking.js"></script>
+</body>
+</html>

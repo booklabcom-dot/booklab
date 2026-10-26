@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- PLANTILLA BOOK LAB · Panel de agenda del barbero (apuntar citas en persona). Página oculta, sin contraseña:
+       cada barbero entra con su enlace (TU-WEB/panel-agenda-marcos, lo escribe enlacesMostrador() en Apps Script)
+       y la guarda en la pantalla de inicio del móvil. -->
+  <title>Agenda</title>
+  <!-- También se abre como /panel-agenda-marcos: lo hace el archivo _redirects (Cloudflare Pages) -->
+
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="format-detection" content="telephone=no, email=no">
+  <meta name="theme-color" content="#0a0a0b">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Agenda">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/barberia.css">
+  <link rel="stylesheet" href="assets/css/gestion.css">
+  <link rel="stylesheet" href="assets/css/marca.css">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- Datos de la barbería y sus colores: config.js -->
+  <script src="config.js"></script>
+  <script src="assets/js/tema.js"></script>
+</head>
+<body class="panel-page">
+  <a class="skip" href="#apuntar">Saltar al contenido</a>
+
+  <header class="p-top">
+    <div class="wrap">
+      <div class="p-brand">
+        <span class="p-name" id="ap-negocio"></span>
+        <span class="p-tag">Agenda</span>
+      </div>
+      <span class="ap-barbero" id="ap-barbero"></span>
+    </div>
+  </header>
+
+  <main id="apuntar" class="wrap ap-main">
+    <div id="ap-demo" class="notice" role="status" hidden></div>
+
+    <!-- Cargando -->
+    <section id="v-cargando">
+      <p class="slots-status"><span class="spinner" aria-hidden="true"></span>Cargando…</p>
+    </section>
+
+    <!-- Enlace no válido -->
+    <section id="v-error" hidden aria-labelledby="t-error">
+      <h1 class="step-title" id="t-error" tabindex="-1">Este enlace no funciona</h1>
+      <p class="g-text" id="error-text"></p>
+    </section>
+
+    <!-- Pestañas: Apuntar · Mis citas · Mi actividad -->
+    <div class="p-tabs ap-tabs" id="ap-tabs" role="tablist" aria-label="Agenda" hidden>
+      <button type="button" role="tab" aria-selected="true" data-tab="apuntar">Apuntar</button>
+      <button type="button" role="tab" aria-selected="false" data-tab="citas">Mis citas</button>
+      <button type="button" role="tab" aria-selected="false" data-tab="actividad">Mi actividad</button>
+    </div>
+
+    <!-- PIN (para «Mis citas» y «Mi actividad») -->
+    <section id="v-pin" hidden aria-labelledby="t-pin">
+      <h1 class="ap-title" id="t-pin" tabindex="-1">Tu PIN</h1>
+      <p class="g-text">Escribe tu PIN de 4 cifras. Se queda guardado en este móvil.</p>
+      <form id="pin-form" class="ap-pin" novalidate>
+        <div class="field">
+          <label for="pin" class="sr-only">PIN</label>
+          <input type="password" id="pin" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="off" required>
+        </div>
+        <div id="pin-error" class="alert" role="alert" hidden></div>
+        <button type="submit" class="btn btn-primary btn-block" id="pin-btn">Entrar</button>
+      </form>
+    </section>
+
+    <!-- Mis citas -->
+    <section id="v-citas" hidden aria-labelledby="t-citas">
+      <div class="ap-cab">
+        <h1 class="ap-title" id="t-citas" tabindex="-1">Mis citas</h1>
+        <button type="button" class="btn btn-ghost btn-sm" id="citas-actualizar">Actualizar</button>
+      </div>
+      <div id="citas-msg" class="notice ap-ok" role="status" hidden></div>
+      <div id="citas"></div>
+    </section>
+
+    <!-- Mi actividad -->
+    <section id="v-act" hidden aria-labelledby="t-act">
+      <div class="ap-cab">
+        <h1 class="ap-title" id="t-act" tabindex="-1">Mi actividad</h1>
+        <button type="button" class="btn btn-ghost btn-sm" id="act-actualizar">Actualizar</button>
+      </div>
+      <div class="h-filtros" style="margin-top:14px">
+        <label class="sr-only" for="act-tipo">Tipo</label>
+        <select id="act-tipo">
+          <option value="">Todo</option>
+          <option value="reserva">Reservas</option>
+          <option value="cambio">Cambios</option>
+          <option value="cancelacion">Cancelaciones</option>
+          <option value="mostrador">Mostrador</option>
+          <option value="no_show">No shows</option>
+        </select>
+        <label class="sr-only" for="act-buscar">Buscar</label>
+        <input type="search" id="act-buscar" placeholder="Buscar cliente…" autocomplete="off">
+      </div>
+      <ul class="h-act" id="actividad"></ul>
+      <div class="h-mas" id="act-mas"></div>
+    </section>
+
+    <!-- Horas extra (solo el barbero de config.js → horasExtra) -->
+    <section id="v-extra" hidden aria-labelledby="t-extra">
+      <div class="ap-cab">
+        <h1 class="ap-title" id="t-extra" tabindex="-1">Fuera de horario</h1>
+        <button type="button" class="btn btn-ghost btn-sm" id="extra-actualizar">Actualizar</button>
+      </div>
+      <p class="g-note" style="margin-top:6px">Citas fuera de horario a precio ×2. Están cerradas: toca las que quieras abrir y pulsa <b>OK</b>. Se pueden reservar hasta 30 min antes. Antes de abrir, mira que no tengas nada a esa hora.</p>
+      <div id="extra-msg" class="notice ap-ok" role="status" hidden></div>
+      <div id="extra"></div>
+      <p class="hx-leyenda"><span><i></i>Cerrada</span><span><i class="l-ab"></i>Abierta</span><span><i class="l-res"></i>Reservada</span></p>
+      <div class="sticky-cta">
+        <button type="button" class="btn btn-primary btn-block" id="extra-ok" disabled>OK · Guardar</button>
+      </div>
+    </section>
+
+    <dialog class="h-modal" id="cancelar-modal" aria-labelledby="t-cancelar"></dialog>
+
+    <!-- Formulario -->
+    <section id="v-form" hidden aria-labelledby="t-form">
+      <h1 class="ap-title" id="t-form" tabindex="-1">Apuntar cliente</h1>
+      <div id="ap-msg" class="notice ap-ok" role="status" hidden></div>
+
+      <h2 class="ap-h">Servicio</h2>
+      <div class="ap-servicios" id="servicios" role="group" aria-label="Servicio"></div>
+
+      <h2 class="ap-h">¿Cuándo?</h2>
+      <ul class="day-legend ap-leyenda" aria-label="Leyenda de colores">
+        <li><i class="dot lvl-verde"></i>Libre</li>
+        <li><i class="dot lvl-amarillo"></i>Pocas horas</li>
+        <li><i class="dot lvl-rojo"></i>Completo</li>
+      </ul>
+      <div class="quick-days" id="dias" role="group" aria-label="Día"></div>
+      <div class="field ap-fecha">
+        <label for="fecha">Otro día</label>
+        <input type="date" id="fecha">
+      </div>
+      <div id="slots-status" class="slots-status" role="status" aria-live="polite"></div>
+      <div class="slot-grid" id="slots"></div>
+
+      <h2 class="ap-h">Cliente</h2>
+      <div class="ap-cliente">
+        <div class="field"><label for="nombre">Nombre</label><input type="text" id="nombre" autocomplete="off" autocapitalize="words" maxlength="60" required></div>
+        <div class="field"><label for="tel">Teléfono <small class="ap-opc">(opcional)</small></label><input type="tel" id="tel" inputmode="tel" autocomplete="off" maxlength="20"></div>
+        <div class="field ap-full"><label for="email">Correo <small class="ap-opc">(opcional: le llegan la confirmación y los recordatorios)</small></label><input type="email" id="email" inputmode="email" autocomplete="off" autocapitalize="off" spellcheck="false" maxlength="120"></div>
+      </div>
+
+      <div id="ap-error" class="alert" role="alert" hidden></div>
+      <div class="sticky-cta">
+        <button type="button" class="btn btn-primary btn-block" id="apuntar-btn">Apuntar</button>
+      </div>
+    </section>
+
+    <!-- Hecho -->
+    <section id="v-hecho" hidden aria-labelledby="t-hecho">
+      <div class="done-icon" aria-hidden="true">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>
+      </div>
+      <h1 class="step-title" id="t-hecho" tabindex="-1">Apuntado</h1>
+      <p class="ap-resumen" id="hecho-text"></p>
+      <p class="g-note" id="hecho-nota">Ya está en tu calendario y cuenta en la facturación.</p>
+      <div class="done-actions">
+        <button type="button" class="btn btn-primary btn-block" id="otro">Apuntar otro</button>
+        <button type="button" class="btn btn-ghost btn-block g-danger" id="deshacer">Deshacer</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="assets/js/apuntar.js"></script>
+</body>
+</html>

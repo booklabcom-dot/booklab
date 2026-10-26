@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!--
+    GALERÍA DE EJEMPLOS · preparada, sin activar.
+    Ahora mismo no está enlazada desde la web y Google no la indexa (noindex).
+    Para activarla, con el ok de Johan:
+      1. Añadir los ejemplos con permiso en ejemplos.js
+      2. Quitar la línea "robots noindex" de aquí abajo
+      3. Enlazarla desde index.html (por ejemplo, «Barberías que ya trabajan con nosotros»)
+  -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>Ejemplos · Book Lab</title>
+  <meta name="description" content="Barberías que ya trabajan con Book Lab: webs con dominio propio y reservas online.">
+  <meta name="theme-color" content="#0a0a0b">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="../assets/img/icon-180.png">
+  <style>
+    @font-face { font-family: "Anton"; src: url("../assets/fonts/anton.woff2") format("woff2"); font-display: swap; }
+    @font-face { font-family: "Archivo"; src: url("../assets/fonts/archivo-var.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+    :root { --bone: #f2efe6; --ink: #0a0a0b; --mut: #9a978f; --line: rgba(242, 239, 230, .14); --pad: max(20px, 5vw); }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--ink); color: var(--bone); font: 400 1rem/1.6 "Archivo", system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    header, main, footer { padding: 0 var(--pad); }
+    header { display: flex; justify-content: space-between; align-items: center; padding-top: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--line); }
+    header img { height: 34px; width: auto; }
+    header a.back { font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; }
+    .tag { font-size: .6875rem; letter-spacing: .24em; text-transform: uppercase; color: var(--mut); margin: 72px 0 20px; }
+    h1 { font: 400 clamp(3.2rem, 14vw, 9rem)/.92 "Anton", Impact, sans-serif; text-transform: uppercase; margin: 0; }
+    .intro { max-width: 40ch; color: var(--mut); margin: 24px 0 0; }
+    .grid { list-style: none; padding: 0; margin: 64px 0 96px; display: grid; gap: 40px; }
+    .grid a { display: block; }
+    .grid .ph { aspect-ratio: 4 / 5; overflow: hidden; background: #141416; }
+    .grid img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s cubic-bezier(.16, 1, .3, 1); }
+    .grid a:hover img { transform: scale(1.04); }
+    .grid h2 { font: 400 1.8rem/1 "Anton", Impact, sans-serif; text-transform: uppercase; margin: 16px 0 4px; }
+    .grid p { margin: 0; font-size: .875rem; color: var(--mut); }
+    .grid .kind { font-size: .6875rem; letter-spacing: .2em; text-transform: uppercase; }
+    .empty { margin: 64px 0 96px; padding-top: 24px; border-top: 1px solid var(--line); color: var(--mut); }
+    footer { padding-top: 24px; padding-bottom: 40px; border-top: 1px solid var(--line); font-size: .8125rem; color: var(--mut); }
+    @media (min-width: 760px) { .grid { grid-template-columns: repeat(3, 1fr); gap: 2.5vw; } }
+  </style>
+  <script src="ejemplos.js"></script>
+</head>
+<body>
+  <header>
+    <a href="../"><img src="../assets/img/logo.webp" alt="Book Lab"></a>
+    <a class="back" href="../">← Volver</a>
+  </header>
+  <main>
+    <p class="tag">Ejemplos</p>
+    <h1>Barberías que ya<br>trabajan con nosotros</h1>
+    <p class="intro">Cada web, hecha a medida: su dominio, su estilo y sus reservas online. Toca una para verla en marcha.</p>
+    <ul class="grid" id="grid"></ul>
+    <p class="empty" id="empty" hidden>Muy pronto, las primeras barberías.</p>
+  </main>
+  <footer>© Book Lab · <a href="../legal.html">Aviso legal</a></footer>
+  <script>
+    (function () {
+      var lista = window.BOOKLAB_EJEMPLOS || [], grid = document.getElementById('grid');
+      if (!lista.length) { document.getElementById('empty').hidden = false; return; }
+      lista.forEach(function (e) {
+        var li = document.createElement('li'), a = document.createElement('a');
+        a.href = e.url; a.target = '_blank'; a.rel = 'noopener';
+        var ph = document.createElement('div'); ph.className = 'ph';
+        if (e.foto) { var img = document.createElement('img'); img.src = e.foto; img.alt = ''; img.loading = 'lazy'; ph.appendChild(img); }
+        var kind = document.createElement('p'); kind.className = 'kind'; kind.textContent = e.tipo === 'demo' ? 'Diseño de ejemplo' : 'Web en marcha';
+        var h = document.createElement('h2'); h.textContent = e.nombre;
+        var c = document.createElement('p'); c.textContent = e.ciudad || '';
+        a.appendChild(ph); a.appendChild(h); a.appendChild(c); a.appendChild(kind);
+        li.appendChild(a); grid.appendChild(li);
+      });
+    })();
+  </script>
+</body>
+</html>
