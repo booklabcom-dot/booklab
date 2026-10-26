@@ -478,3 +478,13 @@
 /* Transición corta al cambiar de paso (el paso nuevo entra sin saltos) */
 @keyframes rv-in { from { opacity: 0; transform: translateY(14px); } }
 @media (prefers-reduced-motion: no-preference) { .rv .step:not([hidden]) { animation: rv-in .45s var(--e-out) both; } }
+
+/* ---------- Fuera de horario sobre el fondo claro de la reserva (dorado oscuro para que se lea) ---------- */
+.rv-light .fh-banner { background: #fff6cc; border-color: #d4a017; }
+.rv-light .fh-txt { color: #3f3f46; }
+.rv-light .fh-txt strong, .rv-light .fh-status, .rv-light .extra-note strong { color: #8a6200; }
+.rv-light .first-extra, .rv-light .slot-extra { color: #8a6200; border-color: #d4a017; background: #fff6cc; }
+.rv-light .first-extra:hover { background: #ffec99; }
+.rv-light .slot-extra[aria-pressed="true"] { background: #ffd60a; color: #111; }
+.rv-light .day.has-extra:not([aria-pressed="true"]) b, .rv-light .day.has-extra b::after { color: #8a6200; }
+.rv-light .slot-group-extra h3 small { color: #8a6200; }

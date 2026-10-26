@@ -16,7 +16,9 @@
 window.BOOKLAB_CONFIG = {
   // ---------- Motor de reservas (Google Apps Script) ----------
   motor: {
-    url: 'https://script.google.com/macros/s/AKfycbziHjevRgHqJq4zaWmKW9BHu8KprIORzhEd_hyrK1keMOLHpMQ5vBELEyNNBwSvgqkZyw/exec'
+    // Vacío a propósito: la demo funciona en modo simulación (datos de ejemplo, sin correos ni citas reales).
+    // Las herramientas funcionales de verdad están en la plantilla (plantilla/), de donde sale cada cliente.
+    url: ''
   },
 
   // ---------- Panel del jefe (panel.html) ----------

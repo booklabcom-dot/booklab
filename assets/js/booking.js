@@ -161,10 +161,18 @@
       return data;
     });
   }
+  // Simulación: horas fuera de horario de ejemplo = las 3 medias horas antes de abrir ese día (si abre)
+  function simExtra(ymd) {
+    var tramos = C.horario[isoWeekday(ymd)] || [];
+    if (!tramos.length) return [];
+    var abre = tramos[0][0].split(':'), m = Number(abre[0]) * 60 + Number(abre[1]), out = [];
+    for (var t = m - 90; t < m; t += 30) if (t >= 0) out.push(('0' + Math.floor(t / 60)).slice(-2) + ':' + ('0' + (t % 60)).slice(-2));
+    return out;
+  }
   function getSlots(ymd, serviceId, barberId) {
     if (!LIVE) return new Promise(function (res) {
       // Simulación: mañana hay horas extra abiertas (si la barbería tiene horas extra)
-      var hx = C.horasExtra && (barberId === 'any' || barberId === C.horasExtra.barbero) && ymd === addDays(today(), 1) ? ['18:00', '18:30', '19:00'] : [];
+      var hx = C.horasExtra && (barberId === 'any' || barberId === C.horasExtra.barbero) && ymd === addDays(today(), 1) ? simExtra(ymd) : [];
       var normales = simulatedSlots(ymd, serviceId, barberId);
       hx = hx.filter(function (h) { return normales.indexOf(h) === -1; });
       setTimeout(function () { res({ slots: normales, extra: hx, extraBarbero: C.horasExtra && C.horasExtra.barbero, multiplicador: 2 }); }, 450);
@@ -539,7 +547,7 @@
   function getFuera(serviceId) {
     if (!C.horasExtra) return Promise.resolve({ dias: [] });
     if (!LIVE) return Promise.resolve({ barbero: C.horasExtra.barbero, nombre: (barberById(C.horasExtra.barbero) || {}).nombre, multiplicador: 2,
-      dias: [{ f: addDays(today(), 1), horas: ['18:00', '18:30', '19:00'].filter(function (h) { return simulatedSlots(addDays(today(), 1), serviceId, 'any').indexOf(h) === -1; }) }] });
+      dias: simExtra(addDays(today(), 1)).length ? [{ f: addDays(today(), 1), horas: simExtra(addDays(today(), 1)) }] : [] });
     return request(URL_BACKEND + '?action=fueraHorario&service=' + encodeURIComponent(serviceId));
   }
   function loadFuera() {
