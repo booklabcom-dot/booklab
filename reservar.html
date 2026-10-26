@@ -9,10 +9,13 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="stylesheet" href="assets/css/styles.css">
-  <link rel="stylesheet" href="assets/css/demo.css">
+  <link rel="stylesheet" href="assets/css/demo.css?v=20261026">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/demo-editorial.css?v=20261021b">
-  <!-- La URL del motor de reservas está en config.js → motor.url -->
+  <!-- La URL del motor de reservas se pone en config.js → motor.url -->
+  <!-- Datos de la barbería y sus colores: config.js -->
+  <script src="config.js?v=20261026"></script>
+  <script src="assets/js/tema.js?v=20261026"></script>
 </head>
 <body class="demo dx rv">
   <a class="skip" href="#reserva">Saltar a la reserva</a>
@@ -59,6 +62,21 @@
     <section class="step" data-step="3" aria-labelledby="t3" hidden>
       <h2 class="step-title" id="t3" tabindex="-1">Día y hora</h2>
 
+      <!-- Botón «Primera hora libre» y colores de los días (verde = bastantes horas, amarillo = pocas, rojo = completo) -->
+      <!-- Aviso de citas fuera de horario (solo cuando el barbero las abre) -->
+      <div class="fh-banner" id="fh-banner" hidden></div>
+      <div class="first-free-row">
+        <div class="first-free-btns">
+          <button type="button" class="btn btn-primary btn-sm first-free" id="first-free">⚡ Primera hora libre</button>
+          <button type="button" class="btn btn-sm first-extra" id="first-extra" hidden></button>
+        </div>
+        <ul class="day-legend" aria-label="Leyenda de colores">
+          <li><i class="dot lvl-verde"></i>Libre</li>
+          <li><i class="dot lvl-amarillo"></i>Pocas horas</li>
+          <li><i class="dot lvl-rojo"></i>Completo</li>
+          <li class="fh-leyenda" hidden><i class="dot lvl-fh"></i>Fuera de horario</li>
+        </ul>
+      </div>
       <div class="quick-days" id="quick-days" role="group" aria-label="Próximos días abiertos"></div>
 
       <div class="field">
@@ -68,6 +86,7 @@
 
       <div id="slots-status" class="slots-status" role="status" aria-live="polite"></div>
       <div id="slots"></div>
+      <p class="espera-link" id="espera-link" hidden>¿Ninguna hora te va bien? <button type="button" class="link-inline" id="espera-abrir">Apúntate a la lista de espera</button></p>
 
       <button type="button" class="link-back" data-back>← Cambiar barbero</button>
 
@@ -80,6 +99,7 @@
     <section class="step" data-step="4" aria-labelledby="t4" hidden>
       <h2 class="step-title" id="t4" tabindex="-1">Tus datos</h2>
 
+      <div id="extra-note" class="notice extra-note" role="note" hidden></div>
       <form id="form" novalidate>
         <div id="form-error" class="alert" role="alert" hidden></div>
 
@@ -104,6 +124,9 @@
           <input type="tel" id="phone" name="phone" autocomplete="tel" inputmode="tel" maxlength="20" required aria-describedby="phone-err">
           <p class="field-err" id="phone-err"></p>
         </div>
+
+        <!-- Extras opcionales (config.js → extras). Solo sale si el servicio y el barbero elegidos lo admiten -->
+        <div id="extras" class="extras" hidden></div>
 
         <!-- Campo trampa contra bots: las personas no lo ven -->
         <div class="hp" aria-hidden="true">
@@ -162,7 +185,7 @@
     </div>
   </footer>
 
-  <script src="config.js?v=20261021b"></script>
-  <script src="assets/js/booking.js"></script>
+  <dialog class="espera-modal" id="espera-modal" aria-labelledby="t-espera"></dialog>
+  <script src="assets/js/booking.js?v=20261026"></script>
 </body>
 </html>

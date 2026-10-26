@@ -15,12 +15,12 @@
 .panel-page { background: var(--bg); }
 .p-top {
   position: sticky; top: 0; z-index: 40; padding-top: env(safe-area-inset-top);
-  background: rgba(10, 10, 11, .9); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line);
+  background: color-mix(in srgb, var(--bg) 90%, transparent); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid var(--line);
 }
 .p-top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; }
 .p-brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
 .p-name { font-weight: 800; letter-spacing: -.02em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.p-privado { display: flex; gap: 12px; align-items: flex-start; border-color: rgba(245, 197, 24, .5); background: rgba(245, 197, 24, .1); line-height: 1.5; }
+.p-privado { display: flex; gap: 12px; align-items: flex-start; border-color: rgba(217, 222, 228, .5); background: rgba(217, 222, 228, .1); line-height: 1.5; }
 .p-privado strong { color: var(--accent); }
 .p-privado-ico { font-size: 1.25rem; line-height: 1.2; }
 .p-top-acc { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
@@ -75,7 +75,7 @@
 .p-table th, .p-table td { padding: 10px 6px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; }
 .p-table thead th { font-size: .75rem; color: var(--muted); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
 .p-table .num { text-align: right; font-variant-numeric: tabular-nums; }
-.p-table tr.is-sel th, .p-table tr.is-sel td { background: rgba(245, 197, 24, .07); }
+.p-table tr.is-sel th, .p-table tr.is-sel td { background: rgba(217, 222, 228, .07); }
 .p-link { background: none; border: 0; padding: 0; color: var(--text); font: 700 .9375rem var(--font); cursor: pointer; text-decoration: underline; text-underline-offset: 4px; min-height: 32px; }
 .p-mini { display: block; height: 4px; border-radius: 2px; background: var(--accent); margin: 6px 0 0 auto; }
 
@@ -84,7 +84,7 @@
 .p-col-v { font-size: .6875rem; color: var(--muted); white-space: nowrap; }
 .p-col-bar { flex: 1; width: 100%; max-width: 56px; display: flex; flex-direction: column; justify-content: flex-end; border-radius: 8px 8px 0 0; overflow: hidden; background: var(--surface-2); }
 .p-col-fill { background: #8a7420; display: block; }
-.p-col-prev { background: repeating-linear-gradient(135deg, rgba(245,197,24,.35) 0 6px, rgba(245,197,24,.15) 6px 12px); display: block; }
+.p-col-prev { background: repeating-linear-gradient(135deg, rgba(217, 222, 228,.35) 0 6px, rgba(217, 222, 228,.15) 6px 12px); display: block; }
 .p-col.is-sel .p-col-fill { background: var(--accent); }
 .p-col.is-sel .p-col-v { color: var(--text); font-weight: 700; }
 .p-col-l { font-size: .75rem; color: var(--muted); }
@@ -196,3 +196,105 @@ ol.p-list li::before { content: counter(top); position: absolute; left: 0; top: 
 @media (min-width: 560px) { .ap-cliente { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; } .ap-cliente .ap-full { grid-column: 1 / -1; } }
 .p-mostrador { display: inline-block; margin-right: 6px; padding: 1px 7px; border-radius: 999px; background: var(--surface-2); border: 1px solid var(--line); color: var(--muted); font-size: .6875rem; font-weight: 700; letter-spacing: .02em; vertical-align: 2px; }
 .ap-volver { display: inline-flex; align-items: center; min-height: 44px; color: var(--accent); font-weight: 700; text-decoration: none; }
+
+/* ============================================================
+ *  Herramientas: cancelar cita, huecos, actividad, correos, mis citas, PIN
+ * ============================================================ */
+.p-correos { font-size: .75rem; font-weight: 700; color: var(--muted); white-space: nowrap; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); font-variant-numeric: tabular-nums; }
+.p-correos.is-aviso { color: #ffcc00; border-color: rgba(255, 204, 0, .5); }
+.p-correos.is-mal { color: #ff453a; border-color: rgba(255, 69, 58, .55); }
+@media (max-width: 560px) { .p-top-acc #volver { display: none; } .p-correos-t { display: none; } }
+.p-cancelar { color: #ffb4a8; border-color: rgba(255, 138, 122, .4); }
+
+/* Ventana de cancelar */
+.h-modal { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); color: var(--text); padding: 0; width: min(460px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); }
+.h-modal::backdrop { background: rgba(0, 0, 0, .6); }
+.h-modal form { padding: 20px; display: grid; gap: 12px; }
+.h-modal h2 { font-size: 1.25rem; letter-spacing: -.02em; margin: 0; }
+.h-cita { background: var(--surface-2); border-radius: 12px; padding: 12px; display: grid; gap: 2px; font-size: .9375rem; }
+.h-cita small { color: var(--muted); }
+.h-label { font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.h-motivos { display: flex; flex-wrap: wrap; gap: 6px; }
+.h-motivos .p-chip { min-height: 40px; padding: 0 14px; font-size: .875rem; }
+.h-modal textarea, .h-texto { width: 100%; min-height: 72px; padding: 12px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--bg); color: var(--text); font: 500 16px/1.45 var(--font); resize: vertical; }
+.h-check { display: flex; align-items: flex-start; gap: 10px; color: #d4d4d8; font-size: .9375rem; line-height: 1.4; cursor: pointer; min-height: 44px; padding-top: 10px; }
+.h-check input { width: 20px; height: 20px; flex-shrink: 0; accent-color: var(--accent); margin: 0; }
+.h-check.is-off { opacity: .5; cursor: default; }
+.h-botones { display: grid; gap: 8px; margin-top: 4px; }
+.h-hecho { text-align: center; display: grid; gap: 10px; }
+.h-hecho .p-wa { justify-self: center; min-height: 44px; font-size: .9375rem; }
+
+/* Huecos de hoy */
+.h-huecos .h-texto { min-height: 170px; font-size: .9375rem; }
+.h-huecos-acc { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.h-huecos-acc .p-wa { margin: 0; min-height: 44px; font-size: .9375rem; }
+
+/* Actividad */
+.h-filtros { display: grid; gap: 8px; grid-template-columns: 1fr 1fr; margin-bottom: 8px; }
+.h-filtros .h-buscar { grid-column: 1 / -1; }
+@media (min-width: 768px) { .h-filtros { grid-template-columns: 180px 220px 1fr; } .h-filtros .h-buscar { grid-column: auto; } }
+.h-filtros select, .h-filtros input { min-height: 44px; padding: 0 12px; border-radius: 12px; background: var(--bg); color: var(--text); border: 1.5px solid var(--line); font: 500 16px var(--font); width: 100%; min-width: 0; }
+.h-act { list-style: none; margin: 0; padding: 0; }
+.h-act li { display: grid; grid-template-columns: 64px minmax(0, 1fr); gap: 10px; padding: 11px 0; border-top: 1px solid var(--line); }
+.h-act time { font-size: .75rem; color: var(--muted); line-height: 1.35; font-variant-numeric: tabular-nums; }
+.h-act time b { display: block; color: var(--text); font-size: .875rem; }
+.h-act .h-d { display: grid; gap: 2px; min-width: 0; }
+.h-act .h-d small { color: var(--muted); font-size: .8125rem; overflow-wrap: anywhere; }
+.h-tipo { display: inline-block; margin-right: 6px; padding: 1px 8px; border-radius: 999px; font-size: .6875rem; font-weight: 800; letter-spacing: .02em; vertical-align: 1px; background: var(--surface-2); color: var(--muted); border: 1px solid var(--line); }
+.h-tipo.t-reserva, .h-tipo.t-mostrador { color: #6ee7a0; border-color: rgba(110, 231, 160, .4); }
+.h-tipo.t-cambio { color: #ffcc00; border-color: rgba(255, 204, 0, .4); }
+.h-tipo.t-cancelacion_cliente, .h-tipo.t-cancelacion_barberia, .h-tipo.t-deshecha, .h-tipo.t-no_show { color: #ff8a7a; border-color: rgba(255, 138, 122, .45); }
+.h-mas { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+
+/* Agenda del barbero: pestañas, mis citas, PIN */
+.ap-tabs { display: grid; grid-template-columns: repeat(3, 1fr); margin-bottom: 18px; }
+.ap-tabs button { padding: 0 6px; }
+.ap-dia { font-size: .8125rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin: 22px 0 4px; }
+.ap-dia small { color: var(--muted); letter-spacing: 0; text-transform: none; font-weight: 600; margin-left: 6px; }
+.ap-citas li { grid-template-columns: 52px minmax(0, 1fr) auto; align-items: start; }
+.ap-citas li.is-pasada { opacity: .5; }
+.ap-citas .p-ag-d small, .ap-citas .p-ag-d b { white-space: normal; overflow-wrap: anywhere; }
+.ap-citas .ap-dato { color: #d4d4d8; font-size: .875rem; user-select: all; }
+.ap-pin { max-width: 320px; }
+.ap-pin input { font-size: 1.75rem; letter-spacing: .5em; text-align: center; font-variant-numeric: tabular-nums; }
+.ap-cab { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.ap-cab .ap-title { margin: 0; }
+
+/* Cuadrados y barras que se pulsan + ventana de detalle */
+.p-kpi.is-btn { text-align: left; font: inherit; color: inherit; cursor: pointer; position: relative; transition: border-color .15s, background .15s; }
+.p-kpi.is-btn:hover, .p-kpi.is-btn:focus-visible { border-color: var(--accent); background: rgba(255, 214, 10, .04); }
+.p-kpi-mas { font-size: .75rem; font-weight: 700; color: var(--accent); margin-top: 2px; }
+.p-bar.is-btn { width: 100%; background: none; border: 0; padding: 4px 0; font: inherit; color: inherit; cursor: pointer; text-align: left; border-radius: 8px; }
+.p-bar.is-btn:hover .p-bar-l, .p-bar.is-btn:focus-visible .p-bar-l { color: var(--accent); text-decoration: underline; }
+.h-detalle { width: min(640px, calc(100vw - 24px)); }
+.h-detalle form { gap: 10px; }
+.h-det-cab { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; position: sticky; top: -20px; background: var(--surface); padding: 4px 0 8px; z-index: 1; }
+.h-det-sub { color: var(--muted); font-size: .875rem; margin: 4px 0 0; }
+.h-cerrar { width: 44px; height: 44px; flex-shrink: 0; border-radius: 50%; border: 1.5px solid var(--line); background: none; color: var(--text); font-size: 1rem; cursor: pointer; }
+.h-det-h { font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 10px 0 4px; }
+.h-det-tabla { min-width: 0; }
+.h-det-buscar { width: 100%; min-height: 44px; padding: 0 12px; border-radius: 12px; background: var(--bg); color: var(--text); border: 1.5px solid var(--line); font: 500 16px var(--font); margin-bottom: 6px; }
+.h-det-lista li { grid-template-columns: 52px minmax(0, 1fr) auto; }
+.h-det-lista .p-ag-d small { white-space: normal; }
+.p-extra { color: #ffd60a; border-color: rgba(255, 214, 10, .45); }
+
+/* Horas extra (agenda del barbero de config.js → horasExtra) */
+.ap-tabs.has-4 { grid-template-columns: repeat(4, 1fr); }
+.ap-tabs.has-4 button { font-size: .8125rem; padding: 0 2px; }
+.hx-dia { margin: 22px 0 8px; display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.hx-dia h2 { font-size: .8125rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); margin: 0; }
+.hx-todo { background: none; border: 0; color: var(--muted); font: 600 .8125rem var(--font); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 36px; }
+.hx-franja { font-size: .75rem; color: var(--muted); font-weight: 600; margin: 8px 0 6px; }
+.hx-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.hx-h { min-height: 46px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--surface); color: var(--muted); font: 700 .9375rem var(--font); cursor: pointer; font-variant-numeric: tabular-nums; }
+.hx-h[aria-pressed="true"] { background: rgba(255, 214, 10, .14); border-color: #ffd60a; color: #ffd60a; }
+.hx-h.is-reservada { background: #ffd60a; border-color: #ffd60a; color: #111; cursor: default; }
+.hx-h:disabled:not(.is-reservada) { opacity: .35; cursor: default; }
+.hx-leyenda { display: flex; flex-wrap: wrap; gap: 12px; font-size: .75rem; color: var(--muted); margin: 10px 0 0; }
+.hx-leyenda i { display: inline-block; width: 12px; height: 12px; border-radius: 4px; border: 1.5px solid var(--line); vertical-align: -2px; margin-right: 5px; }
+.hx-leyenda .l-ab { border-color: #ffd60a; background: rgba(255, 214, 10, .14); }
+.hx-leyenda .l-res { border-color: #ffd60a; background: #ffd60a; }
+.ap-espera { color: #ffd60a; font-weight: 700; }
+
+/* Agenda: leyenda de colores de los días */
+.ap-leyenda { margin: 0 0 10px; }

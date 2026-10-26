@@ -124,6 +124,7 @@
       $('#go-cambiar').hidden = !cita.puedeCambiar;
       note.textContent = cita.puedeCambiar
         ? 'Puedes cancelarla o cambiarla hasta ' + cita.limiteHoras + ' horas antes.' + (cita.cambios ? ' Cambios usados: ' + cita.cambios + ' de ' + cita.maxCambios + '.' : '')
+        : cita.horaExtra ? 'Es una cita fuera de horario: no se puede cambiar online. Puedes cancelarla hasta ' + cita.limiteHoras + ' horas antes o llamarnos.'
         : 'Ya has cambiado esta cita ' + cita.maxCambios + ' veces. Aún puedes cancelarla o llamarnos.';
     }
     $('#cancelar-text').textContent = 'Vas a cancelar tu cita del ' + longDate(cita.fecha) + ' a las ' + cita.hora + ' con ' + cita.barbero +
@@ -237,7 +238,7 @@
     var prom = DEMO ? esperar({ ok: true }) : postMotor({ action: 'cambiar', b: ref.b, e: ref.e, t: ref.t, date: nuevaFecha, time: nuevaHora });
     prom.then(function () {
       cita.fecha = nuevaFecha; cita.hora = nuevaHora; cita.cambios++;
-      cita.puedeCambiar = cita.cambios < cita.maxCambios;
+      cita.puedeCambiar = cita.cambios < cita.maxCambios && !cita.horaExtra;
       $('#t-hecho').textContent = '¡Cita cambiada!';
       $('#hecho-text').textContent = 'Tu nueva cita es el ' + longDate(nuevaFecha) + ' a las ' + nuevaHora + ' con ' + cita.barbero + '.' +
         (DEMO ? ' (Simulación: no se ha cambiado nada de verdad.)' : ' Te hemos enviado un correo con los nuevos datos.');

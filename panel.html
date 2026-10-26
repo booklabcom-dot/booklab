@@ -11,8 +11,11 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="stylesheet" href="assets/css/styles.css">
-  <link rel="stylesheet" href="assets/css/demo.css">
-  <link rel="stylesheet" href="assets/css/gestion.css">
+  <link rel="stylesheet" href="assets/css/demo.css?v=20261026">
+  <link rel="stylesheet" href="assets/css/gestion.css?v=20261026">
+  <!-- Datos de la barbería y sus colores: config.js -->
+  <script src="config.js?v=20261026"></script>
+  <script src="assets/js/tema.js?v=20261026"></script>
 </head>
 <body class="panel-page">
   <a class="skip" href="#panel">Saltar al contenido</a>
@@ -24,6 +27,7 @@
         <span class="p-tag">Panel</span>
       </div>
       <div class="p-top-acc">
+        <span class="p-correos" id="p-correos" hidden title="Correos que el motor ha enviado hoy. Google permite unos 100 al día con una cuenta gratuita."></span>
         <a class="btn btn-ghost btn-sm" href="./" id="volver">&larr; Volver a la web</a>
         <button type="button" class="btn btn-ghost btn-sm" id="salir" hidden>Salir</button>
       </div>
@@ -84,8 +88,26 @@
             <label for="agenda-fecha">Otro día</label>
             <input type="date" id="agenda-fecha">
           </div>
-          <p class="g-note" id="agenda-ayuda">Todos los que ya han pasado cuentan como venidos y pagados. Si alguien falló, pulsa «No show» y la facturación se recalcula sola. En las citas que aún no han llegado, «💬 Recordar» abre WhatsApp con un recordatorio ya escrito.</p>
+          <p class="g-note" id="agenda-ayuda">Todos los que ya han pasado cuentan como venidos y pagados. Si alguien falló, pulsa «No show» y la facturación se recalcula sola. En las citas que aún no han llegado, «💬 Recordar» abre WhatsApp con un recordatorio ya escrito, y «Cancelar» anula la cita y libera el hueco.</p>
           <div id="agenda"></div>
+        </section>
+
+        <section class="p-card p-wide h-huecos" aria-labelledby="t-huecos">
+          <div class="p-card-head">
+            <h2 id="t-huecos">Huecos libres</h2>
+            <div class="p-tabs" role="tablist" aria-label="Día de los huecos">
+              <button type="button" role="tab" aria-selected="true" data-huecos="0">Hoy</button>
+              <button type="button" role="tab" aria-selected="false" data-huecos="1">Mañana</button>
+            </div>
+          </div>
+          <p class="g-note" style="margin-top:0">Texto listo para tu historia de Instagram o tu estado de WhatsApp. Puedes retocarlo antes de copiarlo.</p>
+          <label for="huecos-texto" class="sr-only">Texto de los huecos libres</label>
+          <textarea id="huecos-texto" class="h-texto" rows="8">Buscando huecos…</textarea>
+          <div class="h-huecos-acc">
+            <button type="button" class="btn btn-primary btn-sm" id="huecos-copiar">Copiar texto</button>
+            <a class="p-wa" id="huecos-wa" href="#" target="_blank" rel="noopener"><span aria-hidden="true">💬</span><span>Compartir por WhatsApp</span></a>
+            <button type="button" class="btn btn-ghost btn-sm" id="huecos-actualizar">Actualizar</button>
+          </div>
         </section>
 
         <section class="p-card p-wide" aria-labelledby="t-barberos">
@@ -102,6 +124,29 @@
           <h2 id="t-novino">No vinieron este mes</h2>
           <p class="p-summary" id="novino-resumen"></p>
           <div id="novino-lista"></div>
+        </section>
+
+        <section class="p-card p-wide" aria-labelledby="t-actividad">
+          <h2 id="t-actividad">Actividad</h2>
+          <p class="g-note" style="margin-top:-6px;margin-bottom:12px">Todo lo que pasa con las citas: reservas, cambios, cancelaciones, mostrador, no shows y pagos. Se guarda también en la hoja de Google «Registro» y lo de más de 2 años se borra solo.</p>
+          <div class="h-filtros">
+            <label class="sr-only" for="act-barbero">Barbero</label>
+            <select id="act-barbero"><option value="">Todos</option></select>
+            <label class="sr-only" for="act-tipo">Tipo</label>
+            <select id="act-tipo">
+              <option value="">Todo</option>
+              <option value="reserva">Reservas</option>
+              <option value="cambio">Cambios</option>
+              <option value="cancelacion">Cancelaciones</option>
+              <option value="mostrador">Mostrador</option>
+              <option value="no_show">No shows</option>
+              <option value="pagado">Pagos</option>
+            </select>
+            <label class="sr-only" for="act-buscar">Buscar</label>
+            <input type="search" id="act-buscar" class="h-buscar" placeholder="Buscar cliente, teléfono, servicio…" autocomplete="off">
+          </div>
+          <ul class="h-act" id="actividad"></ul>
+          <div class="h-mas" id="act-mas"></div>
         </section>
 
         <section class="p-card" aria-labelledby="t-servicios">
@@ -154,11 +199,12 @@
         <button type="button" class="btn btn-ghost" id="exportar">Descargar el mes en Excel (CSV)</button>
         <button type="button" class="btn btn-ghost" id="recargar">Actualizar</button>
       </div>
+      <dialog class="h-modal" id="cancelar-modal" aria-labelledby="t-cancelar"></dialog>
+      <dialog class="h-modal h-detalle" id="detalle-modal" aria-labelledby="t-detalle"></dialog>
       <p class="g-note" id="p-nota">Facturación automática a partir de las reservas hechas en la web: cada cita que ya ha pasado cuenta como cobrada, salvo las marcadas como «No vino». Un «No vino» marcado como pagado vuelve a sumar. Las citas que se apuntan a mano en el calendario no cuentan.</p>
     </section>
   </main>
 
-  <script src="config.js"></script>
-  <script src="assets/js/panel.js"></script>
+  <script src="assets/js/panel.js?v=20261026"></script>
 </body>
 </html>

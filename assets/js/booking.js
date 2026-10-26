@@ -16,8 +16,14 @@
   var TIMEOUT_MS = 25000;
   var MIN_GAP = Math.min.apply(null, C.servicios.map(function (s) { return s.duracion; }));
 
-  var state = { step: 1, service: null, barber: null, date: '', time: '', result: null };
+  var state = { step: 1, service: null, barber: null, date: '', time: '', result: null, extras: {}, extra: false };
+  var MULT_EXTRA = 2;          // horas extra (fuera de horario): precio x2 (el motor dice el número)
+  var pedidoURL = null;        // ?service=&barber=&date=&time= (enlace del correo de la lista de espera)
+  var preBarbero = '';         // ?fh=1 (aviso de la portada): tras elegir servicio, directo al barbero de fuera de horario
+  var fueraCache = {};         // servicio → { dias: [{ f, horas }], nombre, barbero, multiplicador }
   var slotsRequest = 0;
+  var dayCache = {};          // 'servicio|barbero' → { 'AAAA-MM-DD': { libres, total } }
+  var autoPickTime = false;   // tras «Primera hora libre», elegir sola la primera hora del día
 
   // ---------- Utilidades ----------
   var $ = function (sel) { return document.querySelector(sel); };
@@ -156,10 +162,37 @@
     });
   }
   function getSlots(ymd, serviceId, barberId) {
-    if (!LIVE) return new Promise(function (res) { setTimeout(function () { res({ slots: simulatedSlots(ymd, serviceId, barberId) }); }, 450); });
+    if (!LIVE) return new Promise(function (res) {
+      // Simulación: mañana hay horas extra abiertas (si la barbería tiene horas extra)
+      var hx = C.horasExtra && (barberId === 'any' || barberId === C.horasExtra.barbero) && ymd === addDays(today(), 1) ? ['18:00', '18:30', '19:00'] : [];
+      var normales = simulatedSlots(ymd, serviceId, barberId);
+      hx = hx.filter(function (h) { return normales.indexOf(h) === -1; });
+      setTimeout(function () { res({ slots: normales, extra: hx, extraBarbero: C.horasExtra && C.horasExtra.barbero, multiplicador: 2 }); }, 450);
+    });
     var q = '?action=slots&date=' + encodeURIComponent(ymd) + '&service=' + encodeURIComponent(serviceId) + '&barber=' + encodeURIComponent(barberId);
     return request(URL_BACKEND + q);
   }
+  // Horas libres de varios días seguidos (para los colores y «Primera hora libre»)
+  function getDays(from, n, serviceId, barberId) {
+    if (!LIVE) {
+      var out = {}, svc = serviceById(serviceId);
+      for (var i = 0; i < n; i++) {
+        var ymd = addDays(from, i);
+        if (ymd > lastDay()) break;
+        if (!isOpen(ymd)) { out[ymd] = { libres: 0, total: 0, cerrado: true }; continue; }
+        var windows = (C.horario[isoWeekday(ymd)] || []).map(function (w) { return [toMin(w[0]), toMin(w[1])]; });
+        var now = nowInShop(), earliest = ymd === now.date ? now.minutes + R.antelacionMinutos : -1;
+        out[ymd] = {
+          libres: simulatedSlots(ymd, serviceId, barberId).length,
+          total: freeStarts(windows, [], svc.duracion, R.intervaloMinutos, earliest, R.evitarHuecosSueltos, MIN_GAP).length
+        };
+      }
+      return Promise.resolve({ dias: out });
+    }
+    var q = '?action=dias&from=' + encodeURIComponent(from) + '&n=' + n + '&service=' + encodeURIComponent(serviceId) + '&barber=' + encodeURIComponent(barberId);
+    return request(URL_BACKEND + q);
+  }
+
   function postBooking(payload) {
     if (!LIVE) return simulatedBooking(payload);
     return request(URL_BACKEND, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
@@ -188,7 +221,7 @@
     if (state.step === 5) return;
     if (state.service && state.step > 1) chips.push(serviceById(state.service).nombre + ' · ' + money.format(serviceById(state.service).precio));
     if (state.barber && state.step > 2) chips.push(state.barber === 'any' ? 'Cualquier barbero' : barberById(state.barber).nombre);
-    if (state.date && state.time && state.step > 3) chips.push(capitalize(shortDate(state.date)) + ' · ' + state.time);
+    if (state.date && state.time && state.step > 3) chips.push(capitalize(shortDate(state.date)) + ' · ' + state.time + (state.extra ? ' · Fuera de horario ×' + MULT_EXTRA : ''));
     chips.forEach(function (c) { box.appendChild(el('span', { class: 'chip', text: c })); });
   }
 
@@ -198,7 +231,10 @@
     document.querySelectorAll('.step').forEach(function (s) { s.hidden = +s.getAttribute('data-step') !== n; });
     renderProgress();
     renderSummary();
+    if (n === 2 && preBarbero && state.service && barberById(preBarbero)) { var pb = preBarbero; preBarbero = ''; pick('barber', pb, '#barbers'); go(3); return; }
     if (n === 3) enterDateStep();
+    if (n === 4) pintarNotaExtra();
+    if (n === 4) renderExtras();
     if (!opts.fromHistory) {
       var st = { step: n };
       if (opts.replace) history.replaceState(st, ''); else history.pushState(st, '');
@@ -220,7 +256,7 @@
         type: 'button', class: 'option', 'aria-pressed': 'false', 'data-id': s.id,
         onclick: function () { pick('service', s.id, '#services'); go(2); }
       }, [
-        el('span', { class: 'option-name', text: s.nombre }),
+        el('span', { class: 'option-name', text: (s.destacado ? '★ ' : '') + s.nombre }),
         el('span', { class: 'option-price', text: money.format(s.precio) }),
         el('span', { class: 'option-desc', text: s.descripcion }),
         el('span', { class: 'option-meta', text: s.duracion + ' min' })
@@ -238,7 +274,43 @@
       box.appendChild(el('button', {
         type: 'button', class: 'option barber', 'aria-pressed': 'false', 'data-id': b.id,
         onclick: function () { pick('barber', b.id, '#barbers'); state.time = ''; go(3); }
-      }, [avatar, el('span', { class: 'option-name', text: b.nombre }), el('span', { class: 'option-desc', text: b.frase })]));
+      }, [avatar, el('span', { class: 'option-name', text: b.nombre }), b.frase ? el('span', { class: 'option-desc', text: b.frase }) : null]));
+    });
+  }
+
+  // ---------- Extras opcionales (config.js → extras) ----------
+  // Ej.: { id: 'cejas', nombre: 'Cejas', pregunta: '¿Añadir cejas?', precio: 6, barberos: ['lucia'] }
+  // barberos / servicios: si se ponen, el extra solo se ofrece con esos. No suma tiempo a la cita.
+  function extrasDisponibles(servicio, barbero) {
+    return (C.extras || []).filter(function (x) {
+      return (!x.barberos || x.barberos.indexOf(barbero) !== -1) && (!x.servicios || x.servicios.indexOf(servicio) !== -1);
+    });
+  }
+  function extrasElegidos(p) {
+    var ids = (p && p.extras) || [];
+    return (C.extras || []).filter(function (x) { return ids.indexOf(x.id) !== -1; });
+  }
+  function nombreConExtras(svc, extras) { return svc.nombre + extras.map(function (x) { return ' + ' + x.nombre; }).join(''); }
+  function precioConExtras(svc, extras, esExtra) { return (svc.precio + extras.reduce(function (s, x) { return s + x.precio; }, 0)) * (esExtra ? MULT_EXTRA : 1); }
+
+  function renderExtras() {
+    var box = $('#extras');
+    if (!box) return;
+    var lista = extrasDisponibles(state.service, state.barber);
+    Object.keys(state.extras).forEach(function (id) { if (!lista.some(function (x) { return x.id === id; })) delete state.extras[id]; });
+    box.textContent = '';
+    box.hidden = !lista.length;
+    lista.forEach(function (x) {
+      var si = state.extras[x.id] === true, no = state.extras[x.id] === false;
+      var grupo = el('div', { class: 'extra-opts', role: 'group', 'aria-label': x.pregunta || ('¿Añadir ' + x.nombre + '?') }, [
+        el('button', { type: 'button', class: 'extra-opt', 'aria-pressed': String(si), onclick: function () { state.extras[x.id] = true; renderExtras(); } }, ['Sí, añadir (+' + money.format(x.precio) + ')']),
+        el('button', { type: 'button', class: 'extra-opt', 'aria-pressed': String(no), onclick: function () { state.extras[x.id] = false; renderExtras(); } }, ['No, gracias'])
+      ]);
+      box.appendChild(el('div', { class: 'extra' }, [
+        el('p', { class: 'extra-q' }, [el('b', { text: x.pregunta || ('¿Añadir ' + x.nombre + '?') }), el('span', { class: 'extra-opc', text: ' Opcional' })]),
+        x.descripcion ? el('p', { class: 'extra-desc', text: x.descripcion }) : null,
+        grupo
+      ]));
     });
   }
 
@@ -252,7 +324,7 @@
   function renderQuickDays() {
     var box = $('#quick-days'), d = today(), count = 0;
     box.textContent = '';
-    for (var i = 0; i <= R.diasMaximos && count < 10; i++) {
+    for (var i = 0; i <= R.diasMaximos && count < 14; i++) {
       var ymd = addDays(d, i);
       if (!isOpen(ymd)) continue;
       count++;
@@ -261,8 +333,72 @@
         type: 'button', class: 'day', 'aria-pressed': String(state.date === ymd), 'data-date': ymd,
         'aria-label': capitalize(longDate(ymd)),
         onclick: (function (v) { return function () { setDate(v); }; })(ymd)
-      }, [el('small', { text: wd }), el('b', { text: String(u.getUTCDate()) }), el('span', { text: fmtMon.format(u).replace('.', '') })]));
+      }, [el('small', { text: wd }), el('b', { text: String(u.getUTCDate()) }), el('span', { text: fmtMon.format(u).replace('.', '') }), el('i', { class: 'lvl', 'aria-hidden': 'true' })]));
     }
+    paintDays();
+  }
+
+  // ---------- Colores de los días y «Primera hora libre» ----------
+  function dayKey() { return state.service + '|' + state.barber; }
+  function dayLevel(info) {
+    if (!info || info.cerrado || !info.total) return '';
+    if (!info.libres) return 'rojo';
+    if (info.libres <= 3 || info.libres / info.total <= 0.25) return 'amarillo';
+    return 'verde';
+  }
+  function paintDays() {
+    var cache = dayCache[dayKey()] || {};
+    document.querySelectorAll('#quick-days .day').forEach(function (b) {
+      var ymd = b.getAttribute('data-date'), info = cache[ymd], lvl = dayLevel(info);
+      b.classList.remove('lvl-verde', 'lvl-amarillo', 'lvl-rojo');
+      if (lvl) b.classList.add('lvl-' + lvl);
+      b.classList.toggle('has-extra', !!((info && info.extra) || fueraDia(ymd)));
+      var txt = !info ? '' : !info.libres ? ' · completo' : ' · ' + info.libres + (info.libres === 1 ? ' hora libre' : ' horas libres');
+      b.setAttribute('aria-label', capitalize(longDate(ymd)) + txt);
+      b.title = txt.replace(' · ', '');
+    });
+  }
+  // Pide el resumen de los próximos días (una vez por servicio y barbero) y pinta los colores
+  function loadDays() {
+    var key = dayKey();
+    if (dayCache[key]) { paintDays(); return Promise.resolve(dayCache[key]); }
+    return getDays(today(), 21, state.service, state.barber).then(function (data) {
+      dayCache[key] = (data && data.dias) || {};
+      if (key === dayKey()) paintDays();
+      return dayCache[key];
+    }).catch(function () { return {}; });   // sin colores no pasa nada: se puede seguir eligiendo día
+  }
+  function firstFreeIn(cache, from) {
+    return Object.keys(cache).filter(function (d) { return d >= from && cache[d] && cache[d].libres > 0; }).sort()[0] || '';
+  }
+  // Busca el primer día con hueco (los próximos 21 y, si hace falta, más allá) y lo selecciona con su primera hora
+  function goFirstFree() {
+    var btn = $('#first-free'), key = dayKey();
+    btn.disabled = true;
+    var old = btn.textContent;
+    btn.textContent = 'Buscando…';
+    var done = function (ymd) {
+      btn.disabled = false; btn.textContent = old;
+      if (!ymd) { setStatus('No quedan horas libres en los próximos ' + R.diasMaximos + ' días' + (state.barber !== 'any' ? ' con ' + barberById(state.barber).nombre + '. Prueba con «Cualquiera».' : '.'), true); return; }
+      autoPickTime = true;
+      setDate(ymd);
+    };
+    loadDays().then(function (cache) {
+      var hit = firstFreeIn(cache, today());
+      if (hit) return done(hit);
+      // Más allá de los 21 días: de 21 en 21 hasta el máximo de reserva
+      var from = addDays(today(), 21);
+      (function next() {
+        if (from > lastDay()) return done('');
+        getDays(from, 21, state.service, state.barber).then(function (data) {
+          var extra = (data && data.dias) || {};
+          Object.keys(extra).forEach(function (d) { (dayCache[key] = dayCache[key] || {})[d] = extra[d]; });
+          var h = firstFreeIn(extra, from);
+          if (h) return done(h);
+          from = addDays(from, 21); next();
+        }).catch(function () { done(''); });
+      })();
+    });
   }
 
   function enterDateStep() {
@@ -270,8 +406,20 @@
     input.min = today();
     input.max = lastDay();
     renderQuickDays();
+    var key = dayKey();
+    $('#fh-banner').hidden = true; $('#first-extra').hidden = true;
+    Promise.all([loadDays(), loadFuera()]).then(function () { if (key === dayKey()) pintarFuera(); });
+    loadDays().then(function (cache) {
+      // Si el día elegido está completo (o aún no hay día), salta al primer día con hueco
+      if (key !== dayKey()) return;
+      var cur = state.date && cache[state.date];
+      if (!pedidoURL && !state.time && (!state.date || (cur && !cur.libres))) {
+        var hit = firstFreeIn(cache, today());
+        if (hit && hit !== state.date) setDate(hit);
+      }
+    });
     if (!state.date) {
-      // Preselecciona el primer día abierto para que el cliente vea horas al momento
+      // Mientras llegan los colores, el primer día abierto para que el cliente vea horas al momento
       var first = document.querySelector('#quick-days .day');
       if (first) { setDate(first.getAttribute('data-date')); return; }
     }
@@ -282,6 +430,7 @@
   function setDate(ymd) {
     state.date = ymd;
     state.time = '';
+    state.extra = false;
     $('#date').value = ymd;
     document.querySelectorAll('#quick-days .day').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-date') === ymd)); });
     loadSlots();
@@ -312,27 +461,64 @@
     for (var i = 0; i < 8; i++) sk.appendChild(el('i'));
     box.appendChild(sk);
 
+    $('#espera-link').hidden = true;
     getSlots(ymd, state.service, state.barber).then(function (data) {
       if (id !== slotsRequest) return;
       box.textContent = '';
       var slots = (data && data.slots) || [];
-      if (!slots.length) {
-        setStatus('No quedan horas libres ese día' + (state.barber !== 'any' ? ' con ' + barberById(state.barber).nombre : '') + '. Prueba otro día' + (state.barber !== 'any' ? ' o elige «Cualquiera».' : '.'));
+      var extra = (data && data.extra) || [];
+      if (data && data.multiplicador) MULT_EXTRA = data.multiplicador;
+      $('#espera-link').hidden = false;
+      if (!slots.length && !extra.length) {
+        autoPickTime = false;
+        setStatus(['Ese día está completo' + (state.barber !== 'any' ? ' con ' + barberById(state.barber).nombre : '') + '. ',
+          el('button', { type: 'button', class: 'btn btn-primary btn-sm', text: '⚡ Ir a la primera hora libre', onclick: goFirstFree }),
+          el('button', { type: 'button', class: 'btn btn-ghost btn-sm espera-btn', text: 'Apuntarme a la lista de espera', onclick: abrirEspera })]);
+        $('#espera-link').hidden = true;
         return;
       }
-      setStatus(slots.length + (slots.length === 1 ? ' hora libre' : ' horas libres') + ' el ' + longDate(ymd) + '.');
+      setStatus(slots.length
+        ? slots.length + (slots.length === 1 ? ' hora libre' : ' horas libres') + ' el ' + longDate(ymd) + '.'
+        : null);
+      if (!slots.length) setStatus([el('span', { class: 'fh-status', text: '★ ' + (barberById(data.extraBarbero || (C.horasExtra && C.horasExtra.barbero)) || { nombre: 'El barbero' }).nombre + ' ha abierto citas fuera de horario este día (precio ×' + MULT_EXTRA + ').' })]);
       var groups = [['Mañana', slots.filter(function (t) { return t < '14:00'; })], ['Tarde', slots.filter(function (t) { return t >= '14:00'; })]];
       groups.forEach(function (g) {
         if (!g[1].length) return;
         var grid = el('div', { class: 'slot-grid', role: 'group', 'aria-label': g[0] });
         g[1].forEach(function (t) {
           grid.appendChild(el('button', {
-            type: 'button', class: 'slot', 'aria-pressed': String(state.time === t), 'data-time': t,
-            onclick: function () { selectTime(t); }
+            type: 'button', class: 'slot', 'aria-pressed': String(state.time === t && !state.extra), 'data-time': t,
+            onclick: function () { selectTime(t, false); }
           }, [t]));
         });
         box.appendChild(el('div', { class: 'slot-group' }, [el('h3', { text: g[0] }), grid]));
       });
+      // Citas fuera de horario (precio x2): solo si el barbero las ha abierto
+      if (extra.length) {
+        var gx = el('div', { class: 'slot-grid', role: 'group', 'aria-label': 'Fuera de horario' });
+        extra.forEach(function (t) {
+          gx.appendChild(el('button', {
+            type: 'button', class: 'slot slot-extra', 'aria-pressed': String(state.time === t && state.extra), 'data-time': t, 'data-extra': '1',
+            'aria-label': t + ', fuera de horario, precio por ' + MULT_EXTRA,
+            onclick: function () { selectTime(t, true); }
+          }, [t]));
+        });
+        var quien = barberById(data.extraBarbero || (C.horasExtra && C.horasExtra.barbero));
+        box.appendChild(el('div', { class: 'slot-group slot-group-extra' }, [
+          el('h3', null, ['★ Fuera de horario', el('small', { text: (quien ? 'Con ' + quien.nombre + ' · ' : '') + 'precio ×' + MULT_EXTRA })]), gx]));
+      }
+      if (pedidoURL && pedidoURL.date === ymd) {
+        var quiere = pedidoURL;
+        pedidoURL = null;
+        if ((quiere.extra ? extra : slots).indexOf(quiere.time) !== -1) { autoPickTime = false; selectTime(quiere.time, quiere.extra); }
+        else setStatus('Esa hora ya la ha cogido otra persona. Mira las que quedan libres.', true);
+      }
+      if (autoPickTime) {
+        autoPickTime = false;
+        if (slots.length) selectTime(slots[0], false); else selectTime(extra[0], true);
+        var sel = box.querySelector('.slot[aria-pressed="true"]');
+        if (sel && sel.scrollIntoView) sel.scrollIntoView({ block: 'center', behavior: 'smooth' });
+      }
     }).catch(function (err) {
       if (id !== slotsRequest) return;
       box.textContent = '';
@@ -340,10 +526,142 @@
     });
   }
 
-  function selectTime(t) {
+  function selectTime(t, esExtra) {
     state.time = t;
-    document.querySelectorAll('#slots .slot').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-time') === t)); });
+    state.extra = !!esExtra;
+    document.querySelectorAll('#slots .slot').forEach(function (b) {
+      b.setAttribute('aria-pressed', String(b.getAttribute('data-time') === t && (b.getAttribute('data-extra') === '1') === state.extra));
+    });
     updateContinue();
+  }
+
+  // ---------- Citas fuera de horario: aviso arriba, días en dorado y «O antes, fuera de horario» ----------
+  function getFuera(serviceId) {
+    if (!C.horasExtra) return Promise.resolve({ dias: [] });
+    if (!LIVE) return Promise.resolve({ barbero: C.horasExtra.barbero, nombre: (barberById(C.horasExtra.barbero) || {}).nombre, multiplicador: 2,
+      dias: [{ f: addDays(today(), 1), horas: ['18:00', '18:30', '19:00'].filter(function (h) { return simulatedSlots(addDays(today(), 1), serviceId, 'any').indexOf(h) === -1; }) }] });
+    return request(URL_BACKEND + '?action=fueraHorario&service=' + encodeURIComponent(serviceId));
+  }
+  function loadFuera() {
+    var k = state.service;
+    if (fueraCache[k]) return Promise.resolve(fueraCache[k]);
+    return getFuera(k).then(function (r) { fueraCache[k] = r || { dias: [] }; return fueraCache[k]; }, function () { return { dias: [] }; });
+  }
+  // Solo cuenta si el barbero elegido es el de fuera de horario o «Cualquiera»
+  function fueraActual() {
+    var r = fueraCache[state.service];
+    if (!r || !r.dias || !r.dias.length) return null;
+    if (state.barber !== 'any' && state.barber !== r.barbero) return null;
+    return r;
+  }
+  function fueraDia(ymd) { var r = fueraActual(); return !!(r && r.dias.some(function (d) { return d.f === ymd; })); }
+  function cuandoCorto(ymd) {
+    return ymd === today() ? 'hoy' : ymd === addDays(today(), 1) ? 'mañana' : 'el ' + longDate(ymd).replace(/ de [a-záéíóúñ]+$/i, '');
+  }
+  function irAFuera(f, h) {
+    pedidoURL = { date: f, time: h, extra: true };
+    setDate(f);
+    var b = document.querySelector('#quick-days .day[data-date="' + f + '"]');
+    if (b && b.scrollIntoView) b.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+  }
+  function pintarFuera() {
+    var r = fueraActual(), ban = $('#fh-banner'), btn = $('#first-extra');
+    document.querySelectorAll('.fh-leyenda').forEach(function (x) { x.hidden = !r; });
+    paintDays();
+    if (!r) { ban.hidden = true; btn.hidden = true; return; }
+    var primero = r.dias[0];
+    ban.textContent = '';
+    ban.appendChild(el('div', { class: 'fh-txt' }, [
+      el('strong', { text: '★ Fuera de horario' }),
+      el('span', { text: r.nombre + ' abre citas ' + r.dias.slice(0, 3).map(function (d) { return cuandoCorto(d.f) + ' (' + d.horas.slice(0, 4).join(' · ') + (d.horas.length > 4 ? '…' : '') + ')'; }).join(', ') + '. Precio ×' + r.multiplicador + '.' })
+    ]));
+    ban.appendChild(el('button', { type: 'button', class: 'btn btn-sm fh-ver', text: 'Ver horas', onclick: function () { irAFuera(primero.f, primero.horas[0]); } }));
+    ban.hidden = false;
+    // «O antes, fuera de horario»: si llega antes que la primera hora normal libre
+    var normal = firstFreeIn(dayCache[dayKey()] || {}, today());
+    var antes = !normal || primero.f <= normal;
+    btn.hidden = !antes;
+    if (antes) {
+      btn.textContent = '★ Fuera de horario: ' + cuandoCorto(primero.f) + ' ' + primero.horas[0];
+      btn.onclick = function () { irAFuera(primero.f, primero.horas[0]); };
+    }
+  }
+
+  // Aviso en «Tus datos» cuando la hora elegida es fuera de horario
+  function pintarNotaExtra() {
+    var n = $('#extra-note');
+    n.textContent = '';
+    n.hidden = !state.extra;
+    if (!state.extra) return;
+    var svc = serviceById(state.service), ex = extrasElegidos({ service: state.service, barber: state.barber, extras: elegidosIds() });
+    n.appendChild(el('strong', { text: '★ Cita fuera de horario. ' }));
+    n.appendChild(document.createTextNode('El precio es el doble: ' + money.format(precioConExtras(svc, ex, true)) + '. Estas citas no se pueden cambiar online y, si no vienes, se cobra entera.'));
+  }
+  function elegidosIds() { return extrasDisponibles(state.service, state.barber).filter(function (x) { return state.extras[x.id] === true; }).map(function (x) { return x.id; }); }
+
+  // ---------- Lista de espera ----------
+  var FRANJAS = [['manana', 'Mañana'], ['tarde', 'Tarde'], ['todo', 'Me da igual']];
+  function abrirEspera() {
+    var dlg = $('#espera-modal');
+    if (!dlg || !state.date) return;
+    dlg.textContent = '';
+    var franja = 'todo';
+    var chips = el('div', { class: 'espera-franjas', role: 'group', 'aria-label': 'Franja' }, FRANJAS.map(function (f) {
+      return el('button', { type: 'button', class: 'chip-opt', 'data-f': f[0], 'aria-pressed': String(f[0] === franja), onclick: function () {
+        franja = f[0];
+        chips.querySelectorAll('.chip-opt').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-f') === franja)); });
+      } }, [f[1]]);
+    }));
+    var campo = function (id, label, type, extra) {
+      var inp = el('input', Object.assign({ id: id, type: type, autocomplete: 'on', maxlength: '120' }, extra || {}));
+      return [el('div', { class: 'field' }, [el('label', { for: id, text: label }), inp]), inp];
+    };
+    var fN = campo('esp-nombre', 'Nombre', 'text', { autocomplete: 'given-name' });
+    var fT = campo('esp-tel', 'Teléfono', 'tel', { inputmode: 'tel', autocomplete: 'tel' });
+    var fE = campo('esp-email', 'Correo', 'email', { inputmode: 'email', autocomplete: 'email', autocapitalize: 'off' });
+    // Si ya ha escrito sus datos en el paso 4, se aprovechan
+    if ($('#name').value) fN[1].value = ($('#name').value + ' ' + $('#surname').value).trim();
+    if ($('#phone').value) fT[1].value = $('#phone').value;
+    if ($('#email').value) fE[1].value = $('#email').value;
+    var err = el('div', { class: 'alert', role: 'alert', hidden: '' });
+    var btn = el('button', { type: 'submit', class: 'btn btn-primary btn-block', text: 'Apuntarme' });
+    var quien = state.barber === 'any' ? 'cualquier barbero' : barberById(state.barber).nombre;
+    var form = el('form', { novalidate: '' }, [
+      el('h2', { id: 't-espera', text: 'Lista de espera' }),
+      el('p', { class: 'espera-sub', text: capitalize(longDate(state.date)) + ' · ' + serviceById(state.service).nombre + ' · con ' + quien }),
+      el('span', { class: 'espera-label', text: '¿Qué franja te va bien?' }), chips,
+      fN[0], fT[0], fE[0],
+      el('p', { class: 'espera-sub espera-privacidad' }, ['Usaremos tus datos solo para avisarte si se libera una hora. Más información en la ',
+        el('a', { href: 'legal.html#privacidad', target: '_blank', text: 'política de privacidad' }), '.']),
+      err,
+      el('div', { class: 'espera-botones' }, [btn, el('button', { type: 'button', class: 'btn btn-ghost btn-block', text: 'Volver', onclick: function () { dlg.close(); } })])
+    ]);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      err.hidden = true;
+      var nombre = fN[1].value.trim(), tel = fT[1].value.trim(), email = fE[1].value.trim();
+      var msg = !nombre ? 'Escribe tu nombre.' : tel.replace(/\D/g, '').length < 9 ? 'Escribe tu teléfono (9 cifras).' : !EMAIL_RE.test(email) ? 'Revisa el correo: debe tener la forma nombre@ejemplo.com.' : '';
+      if (msg) { err.textContent = msg; err.hidden = false; return; }
+      btn.disabled = true; btn.textContent = 'Apuntando…';
+      var payload = { action: 'esperaApuntar', date: state.date, barber: state.barber, service: state.service, franja: franja, name: nombre, phone: tel, email: email, web: $('#web').value };
+      var envio = LIVE ? request(URL_BACKEND, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
+        : new Promise(function (res) { setTimeout(function () { res({ ok: true }); }, 500); });
+      envio.then(function () {
+        dlg.textContent = '';
+        dlg.appendChild(el('form', { method: 'dialog', class: 'espera-hecho' }, [
+          el('div', { class: 'done-icon', 'aria-hidden': 'true', text: '✓' }),
+          el('h2', { id: 't-espera', text: '¡Te hemos apuntado!' }),
+          el('p', { text: 'Ya estás en la lista de espera del ' + longDate(state.date) + '. Nos ha llegado y lo tendremos en cuenta.' }),
+          el('p', { text: 'Si se libera un hueco te avisaremos al momento: estate pendiente de tu correo y de tu WhatsApp. El primero que reserva se lo queda.' }),
+          el('button', { type: 'submit', class: 'btn btn-primary btn-block', text: 'Entendido' })
+        ]));
+      }).catch(function (x) {
+        err.textContent = x.message; err.hidden = false;
+        btn.disabled = false; btn.textContent = 'Apuntarme';
+      });
+    });
+    dlg.appendChild(form);
+    dlg.showModal();
   }
 
   function updateContinue() { $('#to-step-4').disabled = !(state.date && state.time); }
@@ -392,7 +710,9 @@
       service: state.service, barber: state.barber, date: state.date, time: state.time,
       name: $('#name').value.trim(), surname: $('#surname').value.trim(),
       email: $('#email').value.trim(), phone: $('#phone').value.trim(),
-      consent: $('#consent').checked, web: $('#web').value
+      consent: $('#consent').checked, web: $('#web').value,
+      extras: extrasDisponibles(state.service, state.barber).filter(function (x) { return state.extras[x.id] === true; }).map(function (x) { return x.id; }),
+      extra: state.extra
     };
 
     postBooking(payload).then(function (res) {
@@ -428,19 +748,19 @@
 
   // Texto de "Copiar resumen de la cita" (plantilla en config.js → textos.resumen)
   function summaryText() {
-    var p = state.result.payload, svc = serviceById(p.service);
+    var p = state.result.payload, svc = serviceById(p.service), ex = extrasElegidos(p);
     var values = {
-      barberia: C.negocio.nombre, servicio: svc.nombre, precio: money.format(svc.precio),
+      barberia: C.negocio.nombre, servicio: nombreConExtras(svc, ex) + (p.extra ? ' (fuera de horario)' : ''), precio: money.format(precioConExtras(svc, ex, p.extra)),
       barbero: state.result.barber, fecha: longDate(p.date), hora: p.time, direccion: C.negocio.direccion
     };
     return C.textos.resumen.replace(/\{(\w+)\}/g, function (m, k) { return k in values ? values[k] : m; });
   }
 
   function renderDone() {
-    var p = state.result.payload, svc = serviceById(p.service);
+    var p = state.result.payload, svc = serviceById(p.service), ex = extrasElegidos(p);
     var rows = [
-      ['Servicio', svc.nombre], ['Barbero', state.result.barber], ['Día', capitalize(longDate(p.date))],
-      ['Hora', p.time], ['Duración', svc.duracion + ' min'], ['Precio', money.format(svc.precio)]
+      ['Servicio', nombreConExtras(svc, ex)], ['Barbero', state.result.barber], ['Día', capitalize(longDate(p.date))],
+      ['Hora', p.time + (p.extra ? ' · fuera de horario' : '')], ['Duración', svc.duracion + ' min'], ['Precio', money.format(precioConExtras(svc, ex, p.extra)) + (p.extra ? ' (×' + MULT_EXTRA + ')' : '')]
     ];
     var dl = $('#recap');
     dl.textContent = '';
@@ -452,10 +772,10 @@
 
     var start = toMin(p.time);
     var url = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
-      '&text=' + encodeURIComponent(svc.nombre + ' · ' + C.negocio.nombre) +
+      '&text=' + encodeURIComponent(nombreConExtras(svc, ex) + ' · ' + C.negocio.nombre) +
       '&dates=' + gcalDate(p.date, start) + '/' + gcalDate(p.date, start + svc.duracion) +
       '&ctz=' + encodeURIComponent(TZ) +
-      '&details=' + encodeURIComponent('Con ' + state.result.barber + '. ' + money.format(svc.precio) + '.\nSi no puedes venir, avisa con al menos ' + R.cancelacionHoras + ' horas de antelación.') +
+      '&details=' + encodeURIComponent('Con ' + state.result.barber + '. ' + money.format(precioConExtras(svc, ex, p.extra)) + '.\nSi no puedes venir, avisa con al menos ' + R.cancelacionHoras + ' horas de antelación.') +
       '&location=' + encodeURIComponent(C.negocio.direccion || C.negocio.nombre);
     $('#gcal').href = url;
     var manage = $('#manage');
@@ -483,7 +803,7 @@
   }
 
   function reset() {
-    state = { step: 1, service: null, barber: null, date: '', time: '', result: null };
+    state = { step: 1, service: null, barber: null, date: '', time: '', result: null, extras: {}, extra: false };
     $('#form').reset();
     triedSubmit = false;
     document.querySelectorAll('[aria-invalid]').forEach(function (n) { n.removeAttribute('aria-invalid'); });
@@ -539,6 +859,8 @@
       setDate(v);
     });
     $('#to-step-4').addEventListener('click', function () { if (state.date && state.time) go(4); });
+    $('#first-free').addEventListener('click', goFirstFree);
+    $('#espera-abrir').addEventListener('click', abrirEspera);
     $('#form').addEventListener('submit', onSubmit);
     Object.keys(FIELDS).forEach(function (f) {
       $('#' + f).addEventListener('blur', function () { if (triedSubmit || this.value) validateField(f); });
@@ -571,6 +893,20 @@
     });
 
     go(1, { replace: true, initial: true });
+
+    // Enlace del correo «Se ha quedado un hueco libre»: entra directo al día con la hora marcada
+    var q = new URLSearchParams(location.search);
+    if (q.get('fh') === '1' && C.horasExtra) preBarbero = C.horasExtra.barbero;
+    var qs = q.get('service'), qb = q.get('barber'), qd = q.get('date');
+    if (qs && serviceById(qs) && qb && barberById(qb) && /^\d{4}-\d{2}-\d{2}$/.test(qd || '') && qd >= today()) {
+      pick('service', qs, '#services');
+      pick('barber', qb, '#barbers');
+      pedidoURL = { date: qd, time: q.get('time') || '', extra: q.get('extra') === '1' };
+      state.date = qd;
+      go(2);
+      go(3);
+      $('#date').value = qd;
+    }
   }
 
   init();

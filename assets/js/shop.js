@@ -37,11 +37,18 @@
   $('#shop-name').appendChild(shopName());
   $('#nav-name').textContent = N.nombre;
   $('#footer-name').textContent = '© ' + new Date().getFullYear() + ' ' + N.nombre;
-  $('#shop-sub').textContent = C.textos.subtitulo;
+  $('#shop-sub').textContent = C.textos.subtitulo || '';
+  $('#shop-sub').hidden = !C.textos.subtitulo;
   $('#tagline').textContent = N.eslogan || '';
   $('#hero-address').textContent = N.direccion;
-  document.title = N.nombre + ' · Reserva tu cita';
+  document.title = (C.seo && C.seo.titulo) || (N.nombre + ' · Reserva tu cita');
   document.querySelectorAll('[data-cta]').forEach(function (a) { a.textContent = C.textos.botonCita; });
+
+  // Logo (config.js → web.logo): en el menú y encima del nombre en la portada
+  if (W.logo) {
+    $('#nav-name').prepend(el('img', { class: 'nav-logo', src: W.logo, alt: '', width: '28', height: '40' }));
+    $('#shop-name').before(el('img', { class: 'shop-logo', src: W.logo, alt: 'Logo de ' + N.nombre, decoding: 'async' }));
+  }
 
   // Portada
   var hero = $('#hero-media');
@@ -52,13 +59,25 @@
   // Precios
   var list = $('#price-list');
   C.servicios.forEach(function (s) {
-    list.appendChild(el('li', null, [
+    list.appendChild(el('li', { class: s.destacado ? 'is-star' : '' }, [
       el('div', null, [
-        el('h3', { text: s.nombre }),
+        el('h3', { text: (s.destacado ? '★ ' : '') + s.nombre }),
         el('p', { text: s.descripcion }),
         el('small', { text: s.duracion + ' min' })
       ]),
       el('span', { class: 'price', text: money.format(s.precio) })
+    ]));
+  });
+  // Extras (config.js → extras): se añaden al reservar
+  (C.extras || []).forEach(function (x) {
+    var con = (x.barberos || []).map(function (id) { var b = C.barberos.filter(function (y) { return y.id === id; })[0]; return b ? b.nombre : id; });
+    list.appendChild(el('li', { class: 'is-extra' }, [
+      el('div', null, [
+        el('h3', { text: '+ ' + x.nombre }),
+        x.descripcion ? el('p', { text: x.descripcion }) : null,
+        el('small', { text: 'Extra al reservar' + (con.length ? ' · solo con ' + con.join(' y ') : '') })
+      ]),
+      el('span', { class: 'price', text: money.format(x.precio) })
     ]));
   });
 
@@ -127,13 +146,14 @@
     $('#ig-line').appendChild(el('a', { href: igUrl, target: '_blank', rel: 'noopener', text: '@' + N.instagram }));
   }
 
-  // Horario (resalta hoy)
+  // Horario (resalta hoy). Si config.js trae horarioWeb, se enseña ese; las reservas usan siempre "horario".
+  var HORARIO_VISIBLE = C.horarioWeb || C.horario;
   var todayIso = (function () {
     var wd = new Intl.DateTimeFormat('en-GB', { timeZone: N.zonaHoraria || 'Europe/Madrid', weekday: 'short' }).format(new Date());
     return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(wd) + 1;
   })();
   for (var d = 1; d <= 7; d++) {
-    var tramos = C.horario[d] || [];
+    var tramos = HORARIO_VISIBLE[d] || [];
     var txt = tramos.length ? tramos.map(function (t) { return t[0] + ' – ' + t[1]; }).join(' · ') : 'Cerrado';
     var row = el('div', { class: (d === todayIso ? 'is-today ' : '') + (tramos.length ? '' : 'is-closed') }, [
       el('dt', { text: DAYS[d] + (d === todayIso ? ' (hoy)' : '') }), el('dd', { text: txt })
@@ -158,4 +178,13 @@
   } else {
     bar.classList.add('is-visible');
   }
+
+  // Accesos privados en el menú: solo en el móvil del jefe (clave del panel guardada)
+  // y en el de cada barbero (su agenda abierta una vez). Los clientes no los ven.
+  try {
+    var pPanel = $('#nav-panel'), pAgenda = $('#nav-agenda');
+    if (pPanel && localStorage.getItem('booklab_panel_clave')) pPanel.hidden = false;
+    var miAgenda = localStorage.getItem('booklab_agenda');
+    if (pAgenda && miAgenda) { pAgenda.href = 'apuntar.html?b=' + encodeURIComponent(miAgenda); pAgenda.hidden = false; }
+  } catch (e) { /* sin almacenamiento: no se muestran */ }
 })();

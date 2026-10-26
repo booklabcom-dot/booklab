@@ -91,6 +91,10 @@ window.BOOKLAB_CONFIG = {
     { id: 'barba', nombre: 'Arreglo de barba', descripcion: 'Perfilado, rebaje y acabado con navaja.', duracion: 30, precio: 12 }
   ],
 
+  // ---------- Citas fuera de horario (precio x2) ----------
+  // Marcos las abre desde su agenda (pestaña «Fuera horario»). Debe coincidir con Code.gs → HORAS_EXTRA.
+  horasExtra: { barbero: 'marcos' },
+
   // ---------- Barberos ----------
   // El primero con id "any" es la opción "Cualquiera": no lo borres.
   // foto: ruta de la foto del barbero (opcional). Vacía = círculo con la inicial.

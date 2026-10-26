@@ -42,6 +42,7 @@
   var num = new Intl.NumberFormat('es-ES');
   var MES_NOMBRE = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
   var DIA_CORTO = ['', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+  var DIA_LARGO = ['', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábados', 'domingos'];
   function utc(ymd) { var p = ymd.split('-'); return new Date(Date.UTC(+p[0], +p[1] - 1, +p[2], 12)); }
   function addDays(ymd, n) { var d = utc(ymd); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0, 10); }
   function wd(ymd) { return utc(ymd).getUTCDay() || 7; }
@@ -120,7 +121,14 @@
       barberos.forEach(function (b) { est[mm][b.id] = { cancelaciones: 2 + Math.floor(rnd() * 6), cambios: 3 + Math.floor(rnd() * 8) }; });
       mm = mesSiguiente(mm);
     }
-    return { ok: true, negocio: C.negocio.nombre, hoy: hoy, ahora: ahora, barberos: barberos, servicios: servicios, horario: C.horario, estadisticas: est, bloqueados: [], citas: citas };
+    // Datos de ejemplo: barberos de config.js; el de fuera de horario, el de config.js → horasExtra (o el primero)
+    var b1 = (barberos[0] || {}).id || 'any', b2 = (barberos[1] || barberos[0] || {}).id || 'any';
+    var bExtra = (C.horasExtra && C.horasExtra.barbero) || b1;
+    var espera = [['Hugo Martín', 1, b1, 'tarde'], ['Pablo Ruiz', 1, 'any', 'todo'], ['Iván Torres', 2, b2, 'manana'], ['Dani López', 3, 'any', 'tarde']].map(function (x, i) {
+      return { id: 'e' + i, apuntado: new Date().toISOString(), f: addDays(hoy, x[1]), b: x[2], franja: x[3], s: ids[i % ids.length], nombre: x[0], tel: '6' + (12345670 + i * 1111), email: x[0].split(' ')[0].toLowerCase() + '@ejemplo.com', avisado: i === 1 };
+    });
+    citas.filter(function (c) { return C.horasExtra && c.b === bExtra && c.h >= '18:00'; }).slice(-3).forEach(function (c) { c.extra = true; c.precio = c.precio * 2; });
+    return { ok: true, negocio: C.negocio.nombre, hoy: hoy, ahora: ahora, barberos: barberos, servicios: servicios, horario: C.horario, estadisticas: est, bloqueados: [], correos: { restantes: 77, limite: 100 }, espera: espera, citas: citas };
   }
 
   // ---------- Carga ----------
@@ -142,6 +150,9 @@
       preparar();
       show('#v-panel');
       pintar();
+      cargarHuecos();
+      A.items = null;
+      cargarActividad();
     }).catch(function (err) {
       if (err.code === 'CLAVE' || err.code === 'SIN_CLAVE' || err.code === 'BLOQUEADO') guardar('');
       $('#login-error').textContent = err.message;
@@ -167,6 +178,7 @@
     if (!S.mes || meses.indexOf(S.mes) === -1) S.mes = D.hoy.slice(0, 7);
     if (!S.dia) S.dia = D.hoy;
     D.bloqueados = D.bloqueados || [];
+    D.espera = D.espera || [];
     sel.value = S.mes;
     $('#p-name').textContent = D.negocio;
     document.title = 'Panel · ' + D.negocio;
@@ -195,8 +207,8 @@
     var previsto = futuras.reduce(function (s, c) { return s + c.precio; }, 0);
     var ocupado = cs.reduce(function (s, c) { return s + c.dur; }, 0);
     var nB = S.filtro === 'todos' ? D.barberos.length : 1;
-    var est = D.estadisticas[m] || {}, cancel = 0, cambios = 0;
-    Object.keys(est).forEach(function (b) { if (S.filtro === 'todos' || b === S.filtro) { cancel += est[b].cancelaciones || 0; cambios += est[b].cambios || 0; } });
+    var est = D.estadisticas[m] || {}, cancel = 0, cancelB = 0, cambios = 0;
+    Object.keys(est).forEach(function (b) { if (S.filtro === 'todos' || b === S.filtro) { cancel += est[b].cancelaciones || 0; cancelB += est[b].cancelacionesBarberia || 0; cambios += est[b].cambios || 0; } });
     var nuevos = {};
     cs.forEach(function (c) { if (c.email && primeraVisita[c.email] && primeraVisita[c.email].slice(0, 7) === m) nuevos[c.email] = 1; });
     return {
@@ -204,7 +216,7 @@
       mostrador: cs.filter(function (c) { return c.origen === 'mostrador'; }).length,
       cobradoNoVino: cobradoNoVino, pendienteNoVino: pendienteNoVino,
       facturado: facturado, previsto: previsto, ticket: hechas.length ? facturado / hechas.length : 0,
-      ocupacion: pct(ocupado, minutosDisponibles(m, nB)), cancelaciones: cancel, cambios: cambios, nuevos: Object.keys(nuevos).length
+      ocupacion: pct(ocupado, minutosDisponibles(m, nB)), cancelaciones: cancel, cancelBarberia: cancelB, cambios: cambios, nuevos: Object.keys(nuevos).length
     };
   }
 
@@ -220,6 +232,7 @@
     pintarPunta();
     pintarClientes();
     pintarBloqueados();
+    pintarCorreos();
     $('#mes-ant').disabled = $('#mes').selectedIndex <= 0;
     $('#mes-sig').disabled = $('#mes').selectedIndex >= $('#mes').options.length - 1;
   }
@@ -237,22 +250,28 @@
     return el('span', { class: 'p-delta ' + (v >= 0 ? 'up' : 'down') }, [(v >= 0 ? '▲ ' : '▼ ') + Math.abs(v) + ' %']);
   }
 
-  function kpi(titulo, valor, sub, extra) {
-    return el('div', { class: 'p-kpi' }, [el('span', { class: 'p-kpi-t', text: titulo }), el('b', { text: valor }), extra || null, sub ? el('small', { text: sub }) : null]);
+  // Cada cuadrado se pulsa y abre su detalle
+  function kpi(titulo, valor, sub, extra, abrir) {
+    var hijos = [el('span', { class: 'p-kpi-t', text: titulo }), el('b', { text: valor }), extra || null, sub ? el('small', { text: sub }) : null];
+    if (!abrir) return el('div', { class: 'p-kpi' }, hijos);
+    hijos.push(el('span', { class: 'p-kpi-mas', 'aria-hidden': 'true', text: 'Ver detalle ›' }));
+    return el('button', { type: 'button', class: 'p-kpi is-btn', 'aria-label': titulo + ': ' + valor + '. Ver detalle', onclick: abrir }, hijos);
   }
 
   function pintarKpis() {
     var esActual = S.mes === D.hoy.slice(0, 7);
     var r = resumen(S.mes), antes = resumen(mesAnterior(S.mes), esActual ? Number(D.hoy.slice(8, 10)) : 0);
     var box = $('#kpis'); box.textContent = '';
-    box.appendChild(kpi('Facturado', eur.format(r.facturado), r.previsto ? '+ ' + eur.format(r.previsto) + ' previstos este mes' : (esActual ? 'Hasta hoy' : ''), delta(r.facturado, antes.facturado)));
-    box.appendChild(kpi('Citas', num.format(r.citas), r.hechas + ' hechas · ' + r.futuras + ' pendientes' + (r.mostrador ? ' · ' + r.mostrador + ' de mostrador' : ''), delta(r.citas, antes.citas)));
-    box.appendChild(kpi('Ticket medio', eur2.format(Math.round(r.ticket * 100) / 100), 'Por cita realizada'));
-    box.appendChild(kpi('Ocupación', r.ocupacion + ' %', 'Horas reservadas sobre horas abiertas'));
-    box.appendChild(kpi('Clientes nuevos', num.format(r.nuevos), 'Primera reserva este mes'));
-    box.appendChild(kpi('No vinieron', num.format(r.novino), r.novino ? eur.format(r.pendienteNoVino) + ' por cobrar · ' + pct(r.novino, r.hechas + r.novino) + ' % de las citas' : 'Ninguno este mes'));
-    box.appendChild(kpi('Cancelaciones', num.format(r.cancelaciones), 'Desde la web'));
-    box.appendChild(kpi('Cambios de cita', num.format(r.cambios), 'Desde la web'));
+    box.appendChild(kpi('Facturado', eur.format(r.facturado), r.previsto ? '+ ' + eur.format(r.previsto) + ' previstos este mes' : (esActual ? 'Hasta hoy' : ''), delta(r.facturado, antes.facturado), detFacturado));
+    box.appendChild(kpi('Citas', num.format(r.citas), r.hechas + ' hechas · ' + r.futuras + ' pendientes' + (r.mostrador ? ' · ' + r.mostrador + ' de mostrador' : ''), delta(r.citas, antes.citas), detCitas));
+    box.appendChild(kpi('Ticket medio', eur2.format(Math.round(r.ticket * 100) / 100), 'Por cita realizada', null, detTicket));
+    box.appendChild(kpi('Ocupación', r.ocupacion + ' %', 'Horas reservadas sobre horas abiertas', null, detOcupacion));
+    box.appendChild(kpi('Clientes nuevos', num.format(r.nuevos), 'Primera reserva este mes', null, detNuevos));
+    box.appendChild(kpi('No vinieron', num.format(r.novino), r.novino ? eur.format(r.pendienteNoVino) + ' por cobrar · ' + pct(r.novino, r.hechas + r.novino) + ' % de las citas' : 'Ninguno este mes', null, detNoVino));
+    box.appendChild(kpi('Cancelaciones', num.format(r.cancelaciones), 'Del cliente, desde la web' + (r.cancelBarberia ? ' · + ' + r.cancelBarberia + ' de la barbería' : ''), null, function () { detRegistro('cancelacion', 'Cancelaciones'); }));
+    box.appendChild(kpi('Cambios de cita', num.format(r.cambios), 'Desde la web', null, function () { detRegistro('cambio', 'Cambios de cita'); }));
+    var esp = esperaFiltrada();
+    box.appendChild(kpi('Lista de espera', num.format(esp.length), esp.length ? 'Esperando hueco · ' + esp.filter(function (x) { return x.avisado; }).length + ' ya avisados' : 'Nadie esperando', null, detEspera));
     var nota = esActual ? 'La flecha compara con el mismo periodo del mes pasado.' : 'La flecha compara con el mes anterior.';
     box.appendChild(el('p', { class: 'g-note p-kpi-note', text: nota }));
   }
@@ -304,18 +323,22 @@
     if (!items.length) { box.appendChild(el('p', { class: 'g-note', text: 'Sin datos este mes.' })); return; }
     var max = Math.max.apply(null, items.map(function (i) { return i.v; })) || 1;
     items.forEach(function (i) {
-      box.appendChild(el('div', { class: 'p-bar' }, [
+      var hijos = [
         el('span', { class: 'p-bar-l', text: i.l }),
         el('span', { class: 'p-bar-t' }, [el('span', { class: 'p-bar-f', style: 'width:' + Math.max(2, i.v / max * 100) + '%' })]),
         el('span', { class: 'p-bar-v', text: fmt(i) })
-      ]));
+      ];
+      box.appendChild(i.abrir
+        ? el('button', { type: 'button', class: 'p-bar is-btn', 'aria-label': i.l + ': ' + fmt(i) + '. Ver citas', onclick: i.abrir }, hijos)
+        : el('div', { class: 'p-bar' }, hijos));
     });
   }
 
   function pintarServicios() {
     var acc = {};
     delMes(S.mes).filter(function (c) { return !c.novino; }).forEach(function (c) {
-      acc[c.sn] = acc[c.sn] || { l: c.sn, v: 0, e: 0 }; acc[c.sn].v++; acc[c.sn].e += c.precio;
+      acc[c.sn] = acc[c.sn] || { l: c.sn, v: 0, e: 0, abrir: function () { detListaCitas('Servicio · ' + c.sn, function (x) { return x.sn === c.sn && !x.novino; }); } };
+      acc[c.sn].v++; acc[c.sn].e += c.precio;
     });
     barras($('#servicios'), Object.keys(acc).map(function (k) { return acc[k]; }).sort(function (a, b) { return b.v - a.v; }),
       function (i) { return i.v + ' · ' + eur.format(i.e); });
@@ -325,9 +348,11 @@
     var cs = delMes(S.mes).filter(function (c) { return !c.novino; }), dias = {}, horas = {};
     cs.forEach(function (c) { var d = wd(c.f); dias[d] = (dias[d] || 0) + 1; var h = c.h.slice(0, 2); horas[h] = (horas[h] || 0) + 1; });
     var d = [];
-    for (var i = 1; i <= 7; i++) if ((D.horario[i] || []).length) d.push({ l: DIA_CORTO[i], v: dias[i] || 0 });
+    for (var i = 1; i <= 7; i++) if ((D.horario[i] || []).length) d.push({ l: DIA_CORTO[i], v: dias[i] || 0, abrir: (function (n) { return function () { detListaCitas('Citas de los ' + DIA_LARGO[n], function (x) { return wd(x.f) === n && !x.novino; }); }; })(i) });
     barras($('#dias'), d, function (x) { return String(x.v); });
-    barras($('#horas'), Object.keys(horas).sort().map(function (h) { return { l: h + ':00', v: horas[h] }; }), function (x) { return String(x.v); });
+    barras($('#horas'), Object.keys(horas).sort().map(function (h) {
+      return { l: h + ':00', v: horas[h], abrir: function () { detListaCitas('Citas de ' + h + ':00 a ' + h + ':59', function (x) { return x.h.slice(0, 2) === h && !x.novino; }); } };
+    }), function (x) { return String(x.v); });
   }
 
   // ---------- Clientes ----------
@@ -446,6 +471,7 @@
         el('div', { class: 'p-ag-d' }, [
           el('b', { text: (c.cliente || 'Cliente') + (bloqueado(c) ? ' · bloqueado' : '') }),
           el('small', null, [c.origen === 'mostrador' ? el('span', { class: 'p-mostrador', text: 'Mostrador' }) : null,
+            c.extra ? el('span', { class: 'p-mostrador p-extra', text: '★ Fuera de horario' }) : null,
             c.sn + ' · ' + eur.format(c.precio) + (S.filtro === 'todos' ? ' · ' + nombreBarbero(c.b) : '')]),
           c.tel ? el('span', { class: 'p-ag-telrow' }, [
             el('a', { href: telHref(c.tel), class: 'p-ag-tel', text: c.tel }),
@@ -454,7 +480,8 @@
         ]),
         el('div', { class: 'p-acciones' }, [
           estado,
-          el('button', { type: 'button', class: 'p-novino', 'aria-pressed': String(!!c.novino), 'aria-label': (c.novino ? 'Quitar «No vino» a ' : 'Marcar que no vino ') + (c.cliente || 'el cliente') + ' a las ' + c.h, onclick: function (ev) { marcarNoVino(c, ev.currentTarget); } }, [c.novino ? 'Sí vino' : 'No show'])
+          el('button', { type: 'button', class: 'p-novino', 'aria-pressed': String(!!c.novino), 'aria-label': (c.novino ? 'Quitar «No vino» a ' : 'Marcar que no vino ') + (c.cliente || 'el cliente') + ' a las ' + c.h, onclick: function (ev) { marcarNoVino(c, ev.currentTarget); } }, [c.novino ? 'Sí vino' : 'No show']),
+          !ya ? el('button', { type: 'button', class: 'p-novino p-cancelar', 'aria-label': 'Cancelar la cita de ' + (c.cliente || 'el cliente') + ' a las ' + c.h, onclick: function () { abrirCancelar(c); } }, ['Cancelar']) : null
         ])
       ]));
     });
@@ -479,6 +506,404 @@
     accion({ action: 'pagado', clave: clave, b: c.b, e: c.id, valor: valor })
       .then(function () { c.pagado = valor; pintar(); })
       .catch(function (err) { btn.disabled = false; alert(err.message); });
+  }
+
+  // ---------- Cancelar una cita (la cancela la barbería, no el cliente) ----------
+  var MOTIVOS = ['Barbero enfermo', 'Imprevisto en la barbería', 'Cierre del local', 'Error al apuntar la cita'];
+  function urlReservar() { return location.origin + '/reservar'; }
+  function mensajeCancelada(c, motivo) {
+    var negocio = C.negocio.nombre || 'la barbería';
+    return [
+      '🤖 *Book Lab · Asistente de ' + negocio + '*',
+      '_Mensaje automático_',
+      '',
+      'Hola, ' + (String(c.cliente || '').split(' ')[0] || 'cliente') + ':',
+      'Sentimos comunicarte que hemos tenido que cancelar tu cita:',
+      '',
+      '📅 ' + cap(fechaLarga.format(utc(c.f)).replace(',', '')) + ' a las ' + c.h,
+      '✂️ ' + c.sn + ' con ' + nombreBarbero(c.b),
+      motivo ? '📝 Motivo: ' + motivo : null,
+      '',
+      'Puedes reservar otra cita cuando quieras aquí: ' + urlReservar(),
+      '',
+      'Disculpa las molestias.'
+    ].filter(function (l) { return l !== null; }).join('\n');
+  }
+
+  function abrirCancelar(c) {
+    var dlg = $('#cancelar-modal');
+    dlg.textContent = '';
+    var texto = el('textarea', { id: 'c-motivo', maxlength: '200', rows: '2', placeholder: 'O escribe otro motivo (opcional)…', 'aria-label': 'Motivo' });
+    var chips = el('div', { class: 'h-motivos', role: 'group', 'aria-label': 'Motivos rápidos' }, MOTIVOS.map(function (m) {
+      return el('button', { type: 'button', class: 'p-chip', 'aria-pressed': 'false', onclick: function () { texto.value = texto.value.trim() === m ? '' : m; marcarChips(); } }, [m]);
+    }));
+    function marcarChips() { chips.querySelectorAll('.p-chip').forEach(function (b) { b.setAttribute('aria-pressed', String(b.textContent === texto.value.trim())); }); }
+    texto.addEventListener('input', marcarChips);
+    var avisar = el('input', { type: 'checkbox', id: 'c-avisar' });
+    if (c.email) avisar.checked = true; else avisar.disabled = true;
+    var err = el('div', { class: 'alert', role: 'alert', hidden: '' });
+    var btn = el('button', { type: 'submit', class: 'btn btn-block g-danger-solid', text: 'Cancelar la cita' });
+    var form = el('form', { novalidate: '' }, [
+      el('h2', { id: 't-cancelar', text: 'Cancelar cita' }),
+      el('div', { class: 'h-cita' }, [
+        el('b', { text: c.cliente || 'Cliente' }),
+        el('small', { text: cap(fechaLarga.format(utc(c.f)).replace(',', '')) + ' · ' + c.h + ' · ' + c.sn + ' · ' + nombreBarbero(c.b) })
+      ]),
+      el('span', { class: 'h-label', text: 'Motivo' }), chips, texto,
+      el('label', { class: 'h-check' + (c.email ? '' : ' is-off') }, [avisar, el('span', {
+        text: c.email ? 'Avisar al cliente por correo (' + c.email + ') con el motivo y un botón para reservar otra cita' : 'Este cliente no dejó correo: avísale por WhatsApp'
+      })]),
+      err,
+      el('div', { class: 'h-botones' }, [btn, el('button', { type: 'button', class: 'btn btn-ghost btn-block', text: 'Volver', onclick: function () { dlg.close(); } })])
+    ]);
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var motivo = texto.value.trim();
+      btn.disabled = true; btn.textContent = 'Cancelando…'; err.hidden = true;
+      accion({ action: 'cancelarBarberia', clave: clave, b: c.b, e: c.id, motivo: motivo, avisar: avisar.checked }, function () { return { ok: true, avisado: avisar.checked }; })
+        .then(function (r) {
+          D.citas = D.citas.filter(function (x) { return !(x.id === c.id && x.b === c.b); });
+          preparar(); pintar(); cargarHuecos(); cargarActividad();
+          hechoCancelar(dlg, c, motivo, r);
+        })
+        .catch(function (x) { err.textContent = x.message; err.hidden = false; btn.disabled = false; btn.textContent = 'Cancelar la cita'; });
+    });
+    dlg.appendChild(form);
+    dlg.showModal();
+  }
+
+  function hechoCancelar(dlg, c, motivo, r) {
+    dlg.textContent = '';
+    dlg.appendChild(el('form', { method: 'dialog', class: 'h-hecho' }, [
+      el('h2', { id: 't-cancelar', text: 'Cita cancelada ✓' }),
+      el('p', { class: 'g-text', text: (c.cliente || 'El cliente') + ' · ' + c.h + '. El hueco ya vuelve a estar libre en la web.' + (r.avisado ? ' Le hemos enviado un correo con el motivo.' : '') }),
+      c.tel ? el('a', { href: waHref(c.tel) + '?text=' + encodeURIComponent(mensajeCancelada(c, motivo)), target: '_blank', rel: 'noopener', class: 'p-wa' },
+        [el('span', { 'aria-hidden': 'true', text: '💬' }), el('span', { text: 'Avisar también por WhatsApp' })]) : null,
+      el('button', { type: 'submit', class: 'btn btn-ghost btn-block', text: 'Cerrar' })
+    ]));
+  }
+
+  // ---------- Huecos libres de hoy y mañana (texto para Instagram / WhatsApp) ----------
+  var H = { datos: null, dia: 0 };
+  function cargarHuecos() {
+    $('#huecos-texto').value = 'Buscando huecos…';
+    accion({ action: 'huecos', clave: clave }, huecosDemo)
+      .then(function (r) { H.datos = r; pintarHuecos(); })
+      .catch(function (err) { $('#huecos-texto').value = err.message; });
+  }
+  function huecosDemo() {
+    var out = { ok: true, hoy: D.hoy, manana: addDays(D.hoy, 1), dias: {} };
+    [out.hoy, out.manana].forEach(function (f) {
+      out.dias[f] = {};
+      D.barberos.forEach(function (b) {
+        var ocupado = {}, libres = [];
+        D.citas.forEach(function (c) { if (c.f === f && c.b === b.id) ocupado[c.h] = 1; });
+        (D.horario[wd(f)] || []).forEach(function (t) {
+          for (var m = toMin(t[0]); m + 30 <= toMin(t[1]); m += 30) {
+            var h = ('0' + Math.floor(m / 60)).slice(-2) + ':' + ('0' + (m % 60)).slice(-2);
+            if (!ocupado[h] && (f !== D.hoy || h > D.ahora)) libres.push(h);
+          }
+        });
+        out.dias[f][b.id] = libres;
+      });
+    });
+    out.extra = {}; out.extra[out.hoy] = []; out.extra[out.manana] = C.horasExtra ? ['18:00', '18:30', '19:00'] : []; out.extraBarbero = C.horasExtra ? C.horasExtra.barbero : '';
+    return out;
+  }
+  function textoHuecos() {
+    var r = H.datos, f = H.dia ? r.manana : r.hoy, dias = r.dias[f] || {};
+    var negocio = C.negocio.nombre || 'la barbería', web = location.host + '/reservar';
+    var lineas = D.barberos.filter(function (b) { return (dias[b.id] || []).length; }).map(function (b) { return '✂️ ' + b.nombre + ': ' + dias[b.id].join(' · '); });
+    var cuando = (H.dia ? 'mañana' : 'hoy');
+    var hx = (r.extra && r.extra[f]) || [];
+    if (hx.length) lineas.push('★ Fuera de horario con ' + nombreBarbero(r.extraBarbero) + ': ' + hx.join(' · '));
+    if (!lineas.length) {
+      return (D.horario[wd(f)] || []).length
+        ? '💈 ' + negocio + '\n\n' + cap(cuando) + ' estamos completos. ¡Gracias! 🙌\n\n📲 Reserva para otro día en ' + web
+        : '💈 ' + negocio + '\n\n' + cap(cuando) + ' estamos cerrados.\n\n📲 Reserva tu cita en ' + web;
+    }
+    return ['💈 ' + negocio + ' · Huecos libres ' + cuando + ', ' + fechaLarga.format(utc(f)).replace(',', ''), '']
+      .concat(lineas).concat(['', '📲 Reserva en ' + web]).join('\n');
+  }
+  function pintarHuecos() {
+    document.querySelectorAll('[data-huecos]').forEach(function (b) { b.setAttribute('aria-selected', String(+b.getAttribute('data-huecos') === H.dia)); });
+    if (!H.datos) return;
+    $('#huecos-texto').value = textoHuecos();
+    enlaceHuecos();
+  }
+  function enlaceHuecos() { $('#huecos-wa').href = 'https://wa.me/?text=' + encodeURIComponent($('#huecos-texto').value); }
+  function copiarHuecos() {
+    var t = $('#huecos-texto'), b = $('#huecos-copiar');
+    var ok = function () { b.textContent = 'Copiado ✓'; setTimeout(function () { b.textContent = 'Copiar texto'; }, 2000); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(t.value).then(ok, function () { t.select(); document.execCommand('copy'); ok(); });
+    else { t.select(); document.execCommand('copy'); ok(); }
+  }
+
+  // ---------- Detalle de cada cuadrado (ventana) ----------
+  function abrirDetalle(titulo, sub, cuerpo) {
+    var dlg = $('#detalle-modal');
+    dlg.textContent = '';
+    dlg.appendChild(el('form', { method: 'dialog' }, [
+      el('div', { class: 'h-det-cab' }, [
+        el('div', null, [el('h2', { id: 't-detalle', text: titulo }), sub ? el('p', { class: 'h-det-sub', text: sub }) : null]),
+        el('button', { type: 'submit', class: 'h-cerrar', 'aria-label': 'Cerrar', text: '✕' })
+      ]),
+      el('div', { class: 'h-det-cuerpo' }, cuerpo)
+    ]));
+    dlg.showModal();
+  }
+  function subMes() { return cap(mesTexto(S.mes)) + (S.filtro === 'todos' ? ' · todos los barberos' : ' · ' + nombreBarbero(S.filtro)); }
+  function fechaCorta(f) { return f.slice(8, 10) + '/' + f.slice(5, 7); }
+  function estadoCita(c) { return c.novino ? (c.pagado ? 'No vino · pagado' : 'No vino') : pasada(c) ? 'Hecha' : 'Pendiente'; }
+  function filaCita(c) {
+    return el('li', { class: c.novino ? 'is-novino' : '' }, [
+      el('span', { class: 'p-ag-h', text: fechaCorta(c.f) }),
+      el('div', { class: 'p-ag-d' }, [
+        el('b', { text: c.h + ' · ' + (c.cliente || 'Cliente') }),
+        el('small', { text: [c.sn, eur.format(c.precio), S.filtro === 'todos' ? nombreBarbero(c.b) : '', c.origen === 'mostrador' ? 'Mostrador' : '', c.extra ? '★ Fuera de horario' : ''].filter(Boolean).join(' · ') }),
+        c.tel ? el('small', { text: c.tel }) : null
+      ]),
+      el('span', { class: 'p-estado' + (c.novino ? ' is-mal' : pasada(c) ? ' is-ok' : ''), text: estadoCita(c) })
+    ]);
+  }
+  // Lista con buscador (se pinta de 100 en 100)
+  function listaBuscable(items, fila, vacio, textoDe) {
+    var ul = el('ul', { class: 'p-agenda h-det-lista' }), mas = el('div', { class: 'h-mas' }), max = 100;
+    var buscar = el('input', { type: 'search', class: 'h-det-buscar', placeholder: 'Buscar…', 'aria-label': 'Buscar', autocomplete: 'off' });
+    function pintar() {
+      var q = normal(buscar.value).trim();
+      var lista = q ? items.filter(function (x) { return normal(textoDe(x)).indexOf(q) !== -1; }) : items;
+      ul.textContent = ''; mas.textContent = '';
+      if (!lista.length) ul.appendChild(el('li', { class: 'g-note', text: items.length ? 'Nada con esa búsqueda.' : vacio }));
+      lista.slice(0, max).forEach(function (x) { ul.appendChild(fila(x)); });
+      if (lista.length > max) mas.appendChild(el('button', { type: 'button', class: 'btn btn-ghost btn-sm', text: 'Ver más (' + (lista.length - max) + ')', onclick: function () { max += 100; pintar(); } }));
+    }
+    buscar.addEventListener('input', function () { max = 100; pintar(); });
+    pintar();
+    return items.length > 8 ? [buscar, ul, mas] : [ul, mas];
+  }
+  function textoCita(c) { return [c.cliente, c.tel, c.email, c.sn, nombreBarbero(c.b), c.f, c.h].join(' '); }
+  function detListaCitas(titulo, filtro) {
+    var cs = delMes(S.mes).filter(filtro).reverse();
+    var total = cs.filter(function (c) { return !c.novino || c.pagado; }).reduce(function (a, c) { return a + c.precio; }, 0);
+    abrirDetalle(titulo, subMes() + ' · ' + cs.length + (cs.length === 1 ? ' cita' : ' citas') + ' · ' + eur.format(total), listaBuscable(cs, filaCita, 'No hay citas.', textoCita));
+  }
+  function tablaSimple(cab, filas) {
+    return el('div', { class: 'p-table-wrap' }, [el('table', { class: 'p-table h-det-tabla' }, [
+      el('thead', null, [el('tr', null, cab.map(function (h, i) { return el('th', { scope: 'col', class: i ? 'num' : '' }, [h]); }))]),
+      el('tbody', null, filas.map(function (f) { return el('tr', null, f.map(function (v, i) { return el(i ? 'td' : 'th', i ? { class: 'num' } : { scope: 'row' }, [String(v)]); })); }))
+    ])]);
+  }
+  function detFacturado() {
+    var cs = delMes(S.mes), dias = {};
+    cs.forEach(function (c) {
+      var d = dias[c.f] = dias[c.f] || { n: 0, fact: 0, prev: 0 };
+      if (!pasada(c)) { d.prev += c.precio; return; }
+      if (!c.novino || c.pagado) { d.n++; d.fact += c.precio; }
+    });
+    var filas = Object.keys(dias).sort().reverse().map(function (f) {
+      var d = dias[f]; return [cap(DIA_CORTO[wd(f)]) + ' ' + fechaCorta(f), d.n || '—', d.fact ? eur.format(d.fact) : '—', d.prev ? eur.format(d.prev) : '—'];
+    });
+    var cuerpo = [];
+    if (S.filtro === 'todos') {
+      var porB = D.barberos.map(function (b) {
+        var f = 0, pv = 0;
+        cs.filter(function (c) { return c.b === b.id; }).forEach(function (c) { if (!pasada(c)) pv += c.precio; else if (!c.novino || c.pagado) f += c.precio; });
+        return [b.nombre, eur.format(f), eur.format(pv)];
+      });
+      cuerpo.push(el('h3', { class: 'h-det-h', text: 'Por barbero' }), tablaSimple(['Barbero', 'Facturado', 'Previsto'], porB));
+    }
+    cuerpo.push(el('h3', { class: 'h-det-h', text: 'Día a día' }), tablaSimple(['Día', 'Citas', 'Facturado', 'Previsto'], filas));
+    var r = resumen(S.mes);
+    abrirDetalle('Facturado', subMes() + ' · ' + eur.format(r.facturado) + (r.previsto ? ' + ' + eur.format(r.previsto) + ' previstos' : ''), cuerpo);
+  }
+  function detCitas() { detListaCitas('Citas', function () { return true; }); }
+  function detTicket() {
+    var hechas = delMes(S.mes).filter(function (c) { return pasada(c) && (!c.novino || c.pagado); });
+    function agrupar(clave) {
+      var acc = {};
+      hechas.forEach(function (c) { var k = clave(c); acc[k] = acc[k] || { n: 0, e: 0 }; acc[k].n++; acc[k].e += c.precio; });
+      return Object.keys(acc).map(function (k) { return [k, acc[k].n, eur.format(acc[k].e), eur2.format(Math.round(acc[k].e / acc[k].n * 100) / 100)]; })
+        .sort(function (a, b) { return b[1] - a[1]; });
+    }
+    var cuerpo = [];
+    if (S.filtro === 'todos') cuerpo.push(el('h3', { class: 'h-det-h', text: 'Por barbero' }), tablaSimple(['Barbero', 'Citas', 'Total', 'Ticket'], agrupar(function (c) { return nombreBarbero(c.b); })));
+    cuerpo.push(el('h3', { class: 'h-det-h', text: 'Por servicio' }), tablaSimple(['Servicio', 'Citas', 'Total', 'Precio medio'], agrupar(function (c) { return c.sn; })));
+    abrirDetalle('Ticket medio', subMes() + ' · citas ya hechas', cuerpo);
+  }
+  function detOcupacion() {
+    var nB = S.filtro === 'todos' ? D.barberos.length : 1, cs = delMes(S.mes), out = [];
+    for (var d = 1; d <= diasDelMes(S.mes); d++) {
+      var f = S.mes + '-' + ('0' + d).slice(-2), abierto = 0;
+      (D.horario[wd(f)] || []).forEach(function (t) { abierto += toMin(t[1]) - toMin(t[0]); });
+      if (!abierto) continue;
+      var ocup = cs.filter(function (c) { return c.f === f; }).reduce(function (a, c) { return a + c.dur; }, 0);
+      out.push({ l: DIA_CORTO[wd(f)] + ' ' + fechaCorta(f), v: Math.min(100, pct(ocup, abierto * nB)), abrir: (function (ff) { return function () { detListaCitas('Citas del ' + fechaCorta(ff), function (x) { return x.f === ff; }); }; })(f) });
+    }
+    var box = el('div', { class: 'p-bars h-det-barras' });
+    barras(box, out, function (x) { return x.v + ' %'; });
+    abrirDetalle('Ocupación por día', subMes() + ' · pulsa un día para ver sus citas', [box]);
+  }
+  function detNuevos() {
+    var vistos = {}, lista = [];
+    delMes(S.mes).forEach(function (c) {
+      var k = c.email;
+      if (!k || vistos[k] || primeraVisita[k] !== c.f) return;
+      vistos[k] = 1;
+      var visitas = D.citas.filter(function (x) { return x.email === k && pasada(x) && !x.novino; }).length;
+      lista.push({ c: c, visitas: visitas });
+    });
+    abrirDetalle('Clientes nuevos', subMes() + ' · ' + lista.length + ' con su primera reserva este mes', listaBuscable(lista.reverse(), function (x) {
+      return el('li', null, [
+        el('span', { class: 'p-ag-h', text: fechaCorta(x.c.f) }),
+        el('div', { class: 'p-ag-d' }, [el('b', { text: x.c.cliente || 'Cliente' }), el('small', { text: [x.c.sn, nombreBarbero(x.c.b), x.c.tel].filter(Boolean).join(' · ') })]),
+        el('span', { class: 'p-estado' + (x.visitas > 1 ? ' is-ok' : ''), text: x.visitas > 1 ? 'Ha vuelto (' + x.visitas + ')' : x.visitas ? '1 visita' : 'Aún no ha venido' })
+      ]);
+    }, 'Ningún cliente nuevo este mes.', function (x) { return textoCita(x.c); }));
+  }
+  function detNoVino() {
+    var cs = delMes(S.mes).filter(function (c) { return c.novino; }).reverse();
+    abrirDetalle('No vinieron', subMes(), listaBuscable(cs, function (c) {
+      var li = filaCita(c);
+      if (c.tel && !c.pagado) li.querySelector('.p-ag-d').appendChild(el('a', { href: waAviso(c), target: '_blank', rel: 'noopener', class: 'p-wa' }, ['🤖 Enviar aviso del bot']));
+      return li;
+    }, 'Nadie ha fallado este mes. ¡Bien!', textoCita));
+  }
+  // Cancelaciones y cambios: salen del registro (el detalle existe desde que se activó, el 21/10/2026)
+  function detRegistro(tipo, titulo) {
+    var mostrar = function () {
+      var lista = filtrarActividad(A.items || [], S.filtro === 'todos' ? '' : S.filtro, tipo, '').filter(function (x) { return (x.f || x.t.slice(0, 10)).slice(0, 7) === S.mes || x.t.slice(0, 7) === S.mes; });
+      abrirDetalle(titulo, subMes() + ' · ' + lista.length + (lista.length === 1 ? ' registro' : ' registros'), [
+        el('p', { class: 'g-note', style: 'margin-top:0', text: 'El detalle (quién y cuándo) se guarda desde el 21 de octubre de 2026. Antes solo se contaba cuántas hubo.' })
+      ].concat(listaBuscable(lista, function (x) {
+        var cuando = fHoraMadrid.format(new Date(x.t)).split(', ');
+        return el('li', null, [
+          el('span', { class: 'p-ag-h', text: cuando[0] }),
+          el('div', { class: 'p-ag-d' }, [
+            el('b', { text: x.cliente || 'Cliente' }),
+            el('small', { text: [TIPO_TXT[x.tipo] || x.tipo, x.servicio, x.f ? 'cita ' + fechaCorta(x.f) + (x.h ? ' ' + x.h : '') : '', x.barbero].filter(Boolean).join(' · ') }),
+            x.detalle ? el('small', { text: x.detalle }) : null,
+            x.tel ? el('small', { text: x.tel }) : null
+          ])
+        ]);
+      }, 'Aún no hay ninguna registrada este mes.', function (x) { return [x.cliente, x.tel, x.email, x.servicio, x.detalle].join(' '); })));
+    };
+    if (A.items) mostrar(); else accion({ action: 'actividad', clave: clave, dias: A.dias }, actividadDemo).then(function (r) { A.items = r.items || []; mostrar(); }, function (err) { alert(err.message); });
+  }
+
+  // ---------- Lista de espera ----------
+  var FRANJA_TXT = { manana: 'Mañana', tarde: 'Tarde', todo: 'Cualquier hora' };
+  function esperaFiltrada() {
+    return (D.espera || []).filter(function (x) { return S.filtro === 'todos' || x.b === S.filtro || x.b === 'any'; })
+      .sort(function (a, b) { return (a.f + a.apuntado).localeCompare(b.f + b.apuntado); });
+  }
+  function mensajeEspera(x) {
+    var url = location.origin + '/reservar?service=' + encodeURIComponent(x.s) + '&barber=' + encodeURIComponent(x.b) + '&date=' + x.f;
+    return [
+      'Hola, ' + (String(x.nombre || '').split(' ')[0] || 'cliente') + ':',
+      'Te escribimos de ' + (C.negocio.nombre || 'la barbería') + '. Estás en nuestra lista de espera para el ' + fechaLarga.format(utc(x.f)).replace(',', '') + ' (' + FRANJA_TXT[x.franja].toLowerCase() + ').',
+      '',
+      '¡Se nos ha quedado un hueco libre! Resérvalo aquí antes de que vuele:',
+      url
+    ].join('\n');
+  }
+  function detEspera() {
+    var lista = esperaFiltrada();
+    abrirDetalle('Lista de espera', lista.length + (lista.length === 1 ? ' persona esperando hueco' : ' personas esperando hueco') + (S.filtro === 'todos' ? '' : ' · ' + nombreBarbero(S.filtro)), [
+      el('p', { class: 'g-note', style: 'margin-top:0', text: 'Cuando se libera un hueco que les encaja, les llega un correo automático. Con «Enviar WhatsApp» les escribes tú con el mensaje ya preparado.' })
+    ].concat(listaBuscable(lista, function (x) {
+      var li = el('li', null, [
+        el('span', { class: 'p-ag-h', text: fechaCorta(x.f) }),
+        el('div', { class: 'p-ag-d' }, [
+          el('b', { text: x.nombre }),
+          el('small', { text: [cap(fechaLarga.format(utc(x.f)).replace(',', '')), FRANJA_TXT[x.franja] || x.franja, x.b === 'any' ? 'Cualquier barbero' : nombreBarbero(x.b), (D.servicios[x.s] || {}).nombre].filter(Boolean).join(' · ') }),
+          el('small', { text: x.tel + (x.avisado ? ' · ya avisado por correo' : '') }),
+          x.tel ? el('a', { href: waHref(x.tel) + '?text=' + encodeURIComponent(mensajeEspera(x)), target: '_blank', rel: 'noopener', class: 'p-wa' }, [el('span', { 'aria-hidden': 'true', text: '💬' }), el('span', { text: 'Enviar WhatsApp' })]) : null
+        ]),
+        el('button', { type: 'button', class: 'p-novino', text: 'Quitar', onclick: function (ev) { quitarEspera(x, ev.currentTarget); } })
+      ]);
+      return li;
+    }, 'Nadie en la lista de espera.', function (x) { return [x.nombre, x.tel, x.email].join(' '); })));
+  }
+  function quitarEspera(x, btn) {
+    if (!confirm('¿Quitar a ' + x.nombre + ' de la lista de espera?')) return;
+    btn.disabled = true;
+    accion({ action: 'esperaQuitar', clave: clave, id: x.id }, function () { return { ok: true, espera: D.espera.filter(function (y) { return y.id !== x.id; }) }; })
+      .then(function (r) { D.espera = r.espera || []; pintarKpis(); detEspera(); })
+      .catch(function (err) { btn.disabled = false; alert(err.message); });
+  }
+
+  // ---------- Correos enviados hoy (Google: unos 100 al día con una cuenta gratuita) ----------
+  function pintarCorreos() {
+    var s = $('#p-correos'), k = D.correos;
+    if (!k || k.restantes === undefined || k.restantes === null) { s.hidden = true; return; }
+    var limite = k.limite || 100, usados = Math.max(0, limite - k.restantes);
+    s.textContent = '';
+    s.appendChild(el('span', { class: 'p-correos-t', text: 'Correos hoy: ' }));
+    s.appendChild(document.createTextNode('✉ ' + usados + ' / ' + limite));
+    s.className = 'p-correos' + (usados >= 95 ? ' is-mal' : usados >= 80 ? ' is-aviso' : '');
+    s.hidden = false;
+  }
+
+  // ---------- Actividad (registro de todo lo que pasa con las citas) ----------
+  var A = { items: null, dias: 60, max: 40 };
+  var TIPO_TXT = {
+    reserva: 'Reserva', cambio: 'Cambio', cancelacion_cliente: 'Cancelada por el cliente', cancelacion_barberia: 'Cancelada por la barbería',
+    mostrador: 'Mostrador', deshecha: 'Deshecha', no_show: 'No vino', no_show_quitado: 'Quitado «No vino»', pagado: 'Pagado'
+  };
+  var fHoraMadrid = new Intl.DateTimeFormat('es-ES', { timeZone: C.negocio.zonaHoraria || 'Europe/Madrid', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+  function cargarActividad() {
+    var ul = $('#actividad');
+    if (!A.items) { ul.textContent = ''; ul.appendChild(el('li', { class: 'g-note', text: 'Cargando la actividad…' })); }
+    accion({ action: 'actividad', clave: clave, dias: A.dias }, actividadDemo)
+      .then(function (r) { A.items = r.items || []; A.dias = r.dias || A.dias; pintarActividad(); })
+      .catch(function (err) { ul.textContent = ''; ul.appendChild(el('li', { class: 'alert', text: err.message })); });
+  }
+  function actividadDemo() {
+    var items = [], ahora = Date.now();
+    D.citas.filter(function (c) { return c.f >= addDays(D.hoy, -10) && c.f <= addDays(D.hoy, 6); }).forEach(function (c, i) {
+      var t = utc(c.f).getTime() - (i % 5 + 1) * 86400000 + (i % 9) * 3600000;
+      items.push({ t: new Date(Math.min(t, ahora - i * 60000)).toISOString(), tipo: c.origen === 'mostrador' ? 'mostrador' : 'reserva', b: c.b, barbero: nombreBarbero(c.b),
+        cliente: c.cliente, tel: c.tel, email: c.email, servicio: c.sn, precio: c.precio, f: c.f, h: c.h, origen: c.origen === 'mostrador' ? 'Agenda de ' + nombreBarbero(c.b) : 'Web', detalle: '' });
+      if (c.novino) items.push({ t: new Date(utc(c.f).getTime() + 3600000 * 8).toISOString(), tipo: 'no_show', b: c.b, barbero: nombreBarbero(c.b), cliente: c.cliente, tel: c.tel, email: c.email, servicio: c.sn, precio: c.precio, f: c.f, h: c.h, origen: 'Panel', detalle: '' });
+      if (i % 11 === 3) items.push({ t: new Date(t + 7200000).toISOString(), tipo: 'cambio', b: c.b, barbero: nombreBarbero(c.b), cliente: c.cliente, tel: c.tel, email: c.email, servicio: c.sn, precio: c.precio, f: c.f, h: c.h, origen: 'Web (el cliente)', detalle: 'Antes: ' + c.f.split('-').reverse().slice(0, 2).join('/') + ' a las 10:00' });
+      if (i % 13 === 5) items.push({ t: new Date(t + 3600000).toISOString(), tipo: 'cancelacion_cliente', b: c.b, barbero: nombreBarbero(c.b), cliente: c.cliente, tel: c.tel, email: c.email, servicio: c.sn, precio: c.precio, f: c.f, h: '11:30', origen: 'Web (el cliente)', detalle: '' });
+    });
+    items.sort(function (a, b) { return b.t.localeCompare(a.t); });
+    return { ok: true, items: items.filter(function (x) { return x.t <= new Date().toISOString(); }), dias: A.dias };
+  }
+  function normal(s) { return String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+  function filtrarActividad(items, b, tipo, q) {
+    q = normal(q).trim();
+    return items.filter(function (x) {
+      if (b && x.b !== b) return false;
+      if (tipo && String(x.tipo).indexOf(tipo) !== 0) return false;
+      return !q || normal([x.cliente, x.tel, x.email, x.servicio, x.barbero, x.detalle].join(' ')).indexOf(q) !== -1;
+    });
+  }
+  function pintarActividad() {
+    var sel = $('#act-barbero');
+    if (sel.options.length === 1) D.barberos.forEach(function (b) { sel.appendChild(el('option', { value: b.id, text: b.nombre })); });
+    var ul = $('#actividad'), mas = $('#act-mas'); ul.textContent = ''; mas.textContent = '';
+    if (!A.items) return;
+    var lista = filtrarActividad(A.items, sel.value, $('#act-tipo').value, $('#act-buscar').value);
+    if (!lista.length) ul.appendChild(el('li', { class: 'g-note', text: A.items.length ? 'Nada con esos filtros.' : 'Aún no hay actividad. Se irá llenando con cada reserva, cambio o cancelación.' }));
+    lista.slice(0, A.max).forEach(function (x) {
+      var cuando = fHoraMadrid.format(new Date(x.t)).split(', ');
+      var cita = x.f ? x.f.split('-').reverse().slice(0, 2).join('/') + (x.h ? ' ' + x.h : '') : '';
+      ul.appendChild(el('li', null, [
+        el('time', { datetime: x.t }, [el('b', { text: cuando[0] }), cuando[1] || '']),
+        el('div', { class: 'h-d' }, [
+          el('span', null, [el('span', { class: 'h-tipo t-' + x.tipo, text: TIPO_TXT[x.tipo] || x.tipo }), el('b', { text: x.cliente || 'Cliente' })]),
+          el('small', { text: [x.servicio, cita ? 'cita ' + cita : '', x.barbero, x.precio !== '' && x.precio !== undefined ? eur2.format(x.precio) : ''].filter(Boolean).join(' · ') }),
+          el('small', { text: [x.tel, x.email].filter(Boolean).join(' · ') }),
+          x.origen || x.detalle ? el('small', { text: [x.origen, x.detalle].filter(Boolean).join(' · ') }) : null
+        ])
+      ]));
+    });
+    mas.appendChild(el('span', { class: 'g-note', style: 'margin:0', text: lista.length + (lista.length === 1 ? ' movimiento' : ' movimientos') + ' en los últimos ' + A.dias + ' días' }));
+    if (lista.length > A.max) mas.appendChild(el('button', { type: 'button', class: 'btn btn-ghost btn-sm', text: 'Ver más', onclick: function () { A.max += 60; pintarActividad(); } }));
+    if (A.dias < 730) mas.appendChild(el('button', { type: 'button', class: 'btn btn-ghost btn-sm', text: A.dias < 365 ? 'Ver hasta 1 año atrás' : 'Ver hasta 2 años atrás', onclick: function () { A.dias = A.dias < 365 ? 365 : 730; cargarActividad(); } }));
   }
 
   // ---------- No vinieron (mes elegido) ----------
@@ -605,6 +1030,12 @@
       btn.disabled = false;
     }).catch(function (x) { err.textContent = x.message; err.hidden = false; btn.disabled = false; });
   });
+  document.querySelectorAll('[data-huecos]').forEach(function (b) { b.addEventListener('click', function () { H.dia = +b.getAttribute('data-huecos'); pintarHuecos(); }); });
+  $('#huecos-texto').addEventListener('input', enlaceHuecos);
+  $('#huecos-copiar').addEventListener('click', copiarHuecos);
+  $('#huecos-actualizar').addEventListener('click', cargarHuecos);
+  ['#act-barbero', '#act-tipo'].forEach(function (s) { $(s).addEventListener('change', function () { A.max = 40; pintarActividad(); }); });
+  $('#act-buscar').addEventListener('input', function () { A.max = 40; pintarActividad(); });
   $('#exportar').addEventListener('click', exportar);
   $('#recargar').addEventListener('click', cargar);
   // "Volver a la web": a la página de la que vienes (si es de esta web); si no, a la portada

@@ -456,3 +456,69 @@
   border: 1.5px solid var(--line); color: var(--text); font: 600 .9375rem var(--font);
 }
 .extra-opt[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+
+/* ====== Herramientas nuevas (de la plantilla, 26/10/2026) ====== */
+/* ---------- «Reservas con Book Lab» en la barra de arriba ---------- */
+.booked-with { display: inline-flex; align-items: center; gap: 10px; color: var(--muted); text-decoration: none; font-size: .625rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; }
+.booked-with img { height: 24px; width: auto; }
+.booked-with:hover { color: var(--text); }
+
+/* Paso 3: «Primera hora libre» y colores de los días */
+.first-free-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; margin: 0 0 12px; }
+.first-free { min-height: 44px; }
+.day-legend { display: flex; gap: 14px; list-style: none; margin: 0; padding: 0; font-size: .6875rem; color: var(--muted); }
+.day-legend li { display: inline-flex; align-items: center; gap: 6px; }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; }
+.day { position: relative; overflow: hidden; padding-bottom: 16px; }
+.day .lvl { position: absolute; left: 12px; right: 12px; bottom: 6px; height: 4px; border-radius: 2px; background: transparent; }
+.dot.lvl-verde, .day.lvl-verde .lvl { background: #34c759; }
+.dot.lvl-amarillo, .day.lvl-amarillo .lvl { background: #ffcc00; }
+.dot.lvl-rojo, .day.lvl-rojo .lvl { background: #ff453a; }
+.day.lvl-rojo:not([aria-pressed="true"]) { opacity: .55; }
+.day[aria-pressed="true"] .lvl { left: 14px; right: 14px; box-shadow: 0 0 0 2px var(--accent-ink); }
+
+/* Horas extra (fuera de horario, precio x2) y lista de espera */
+.slot-extra { border-color: #d4a017; color: #ffd60a; background: rgba(212, 160, 23, .1); }
+.slot-extra[aria-pressed="true"] { background: #ffd60a; border-color: #ffd60a; color: #111; }
+.slot-group-extra h3 small { display: block; font-size: .75rem; font-weight: 600; color: #d4a017; letter-spacing: 0; text-transform: none; margin-top: 2px; }
+.day.has-extra::after { content: "★"; position: absolute; top: 4px; right: 6px; font-size: .625rem; color: #ffd60a; }
+.extra-note { border-color: rgba(255, 214, 10, .5); background: rgba(255, 214, 10, .08); margin-bottom: 14px; line-height: 1.5; }
+.extra-note strong { color: #ffd60a; }
+.espera-link { margin: 14px 0 0; color: var(--muted); font-size: .875rem; }
+.link-inline { background: none; border: 0; padding: 0; color: var(--text); font: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; min-height: 32px; }
+.espera-btn { margin-left: 6px; }
+.espera-modal { border: 1px solid var(--line); border-radius: 18px; background: var(--surface); color: var(--text); padding: 0; width: min(440px, calc(100vw - 32px)); max-height: calc(100dvh - 32px); }
+.espera-modal::backdrop { background: rgba(0, 0, 0, .6); }
+.espera-modal form { padding: 20px; display: grid; gap: 4px; }
+.espera-modal h2 { font-size: 1.375rem; margin: 0; }
+.espera-sub { color: var(--muted); font-size: .9375rem; margin: 2px 0 10px; }
+.espera-label { font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.espera-franjas { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 10px; }
+.chip-opt { min-height: 42px; padding: 0 16px; border-radius: 999px; border: 1.5px solid var(--line); background: none; color: var(--text); font: 600 .9375rem var(--font); cursor: pointer; }
+.chip-opt[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.espera-botones { display: grid; gap: 8px; margin-top: 10px; }
+.espera-hecho { text-align: center; gap: 12px !important; }
+.espera-hecho p { color: #d4d4d8; line-height: 1.5; margin: 0; }
+.espera-hecho .done-icon { margin: 0 auto; font-size: 1.75rem; font-weight: 800; }
+
+/* Fuera de horario: días dorados, aviso y botón */
+.day.has-extra { border-color: #d4a017 !important; opacity: 1 !important; }
+.day.has-extra:not([aria-pressed="true"]) { background: linear-gradient(180deg, rgba(255, 214, 10, .16), rgba(255, 214, 10, .04)); }
+.day.has-extra:not([aria-pressed="true"]) b { color: #ffd60a; }
+.day.has-extra .lvl { background: #ffd60a !important; }
+.day.has-extra::after { content: none; }
+.day.has-extra b::after { content: "★"; font-size: .55em; vertical-align: .55em; margin-left: 2px; color: #ffd60a; }
+.day.has-extra[aria-pressed="true"] b::after { color: inherit; }
+.dot.lvl-fh { background: #ffd60a; box-shadow: 0 0 0 2px rgba(255, 214, 10, .3); }
+.first-free-btns { display: flex; flex-wrap: wrap; gap: 8px; }
+.first-extra { min-height: 44px; text-transform: none; letter-spacing: 0; font-size: .9375rem; font-weight: 700; border: 1.5px solid #ffd60a; color: #ffd60a; background: rgba(255, 214, 10, .08); }
+.first-extra:hover { background: rgba(255, 214, 10, .16); }
+.fh-banner { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 0 0 14px; padding: 14px 16px; border-radius: 16px;
+  border: 1px solid rgba(255, 214, 10, .55); background: linear-gradient(120deg, rgba(255, 214, 10, .16), rgba(212, 160, 23, .06)); }
+.fh-banner[hidden] { display: none; }
+.fh-txt { display: grid; gap: 3px; min-width: 0; line-height: 1.4; font-size: .875rem; color: #e4e4e7; }
+.fh-txt strong { color: #ffd60a; letter-spacing: .12em; text-transform: uppercase; font-size: .75rem; }
+.fh-ver { flex-shrink: 0; background: #ffd60a; color: #111; border: 0; min-height: 40px; }
+.fh-status { color: #ffd60a; font-weight: 700; }
+.espera-privacidad { font-size: .8125rem; margin-top: 8px; }
+.espera-privacidad a { color: var(--text); }
