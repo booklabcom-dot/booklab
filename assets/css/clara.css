@@ -242,3 +242,5 @@ html { scroll-behavior: smooth; }
 .hr-captura { margin: 0; justify-self: center; width: 100%; max-width: 380px; border-radius: 18px; overflow: hidden; box-shadow: 0 0 0 1px #2a2a2a, 0 18px 40px rgba(0,0,0,.22); }
 .hr-capturas { display: grid; gap: 12px; justify-items: center; }
 @media (min-width: 760px) { .hr-captura { width: 340px; } }
+.hr-captura figcaption { padding: 9px 12px 11px; background: #161616; color: #bdbdbd; font-size: .82rem; font-weight: 600; text-align: center; }
+@media (min-width: 760px) { .hr-capturas { grid-template-columns: 1fr 1fr; align-items: start; } .hr-sec:has(.hr-capturas) { grid-template-columns: 1fr; } }
