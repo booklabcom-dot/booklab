@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="assets/css/clara.css?v=20261103k">
   <link rel="stylesheet" href="assets/css/video-portada.css?v=1">
   <link rel="stylesheet" href="assets/css/mano.css?v=1">
-  <link rel="stylesheet" href="assets/css/foto-mano.css?v=16">
+  <link rel="stylesheet" href="assets/css/foto-mano.css?v=17">
 </head>
 <body>
   <header class="nav">
@@ -223,7 +223,7 @@
       if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { lis.concat(lis3).forEach(function (l) { l.classList.add('is-on'); }); b3.classList.add('encendida'); return; }
       function paso() {
         if (n === 0) b3.classList.add('encendida');
-        if (n < cinco) { lis3[n].classList.add('is-on'); if (n >= 3) lis3[n - 3].classList.remove('is-on'); m3.classList.remove('brilla'); void m3.offsetWidth; m3.classList.add('brilla'); lis[n].classList.add('is-on'); lis[n + cinco].dataset.s = n % 3; lis[n + cinco].dataset.l = n % 2; var bq = document.querySelector('.bloqueo'); bq.classList.remove('ping'); void bq.offsetWidth; bq.classList.add('ping'); vibra(); lis[n + cinco].classList.add('is-on'); var max = /estilo-h/.test(document.getElementById('foto-mano').className) ? 2 : 3; if (n >= max) lis[n - max + cinco].classList.remove('is-on'); n++; setTimeout(paso, 1600); } // fuera del móvil, solo los 3 últimos
+        if (n < cinco) { lis3[n].classList.add('is-on'); if (n >= 3) lis3[n - 3].classList.remove('is-on'); m3.classList.remove('brilla'); void m3.offsetWidth; m3.classList.add('brilla'); lis[n].classList.add('is-on'); lis[n + cinco].dataset.s = n % 3; lis[n + cinco].dataset.l = n % 2; var bq = document.querySelector('.bloqueo'); bq.classList.remove('ping'); void bq.offsetWidth; bq.classList.add('ping'); vibra(); lis[n + cinco].classList.add('is-on'); if (n >= 3) lis[n - 3 + cinco].classList.remove('is-on'); n++; setTimeout(paso, 1600); } // fuera del móvil, solo los 3 últimos
         else setTimeout(function () { b3.classList.remove('encendida'); setTimeout(function () { lis.concat(lis3).forEach(function (l) { l.classList.remove('is-on'); }); n = 0; setTimeout(paso, 900); }, 600); }, 3200);
       }
       setTimeout(paso, 600);

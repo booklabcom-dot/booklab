@@ -253,23 +253,22 @@
 .probar { max-width: calc(100vw - 20px); overflow-x: auto; scrollbar-width: none; }
 .probar::-webkit-scrollbar { display: none; }
 
-/* H (versión buena, 03/11): zoom de la G, los avisos caen DENTRO de la pantalla y se quedan, y cada uno sale
-   hacia fuera recto y ordenado (como en la D), más grande que el móvil, a un montón debajo de los de dentro.
-   --sube: distancia desde el montón de fuera hasta el aviso de dentro (en % de la tarjeta). */
-.estilo-h .avisos3 { visibility: visible; }
-.estilo-h .avisos-fuera { top: 47%; --sube: -175%; }
-.estilo-h .avisos-fuera li.is-on { animation: sale-h .9s cubic-bezier(.2,.9,.3,1.12) both, flota-recto 3s ease-in-out .9s infinite alternate; }
-@keyframes sale-h {
-  0%   { opacity: 0; transform: translateY(var(--sube)) scale(.6); transform-origin: 50% 0; box-shadow: none; }
-  25%  { opacity: 1; transform: translateY(var(--sube)) scale(.6); transform-origin: 50% 0; box-shadow: none; }
-  100% { opacity: 1; transform: translateY(0) scale(1); transform-origin: 50% 0; }
+/* H = G + notificaciones de la D (03/11): todo igual que la G (mano3, zoom, se enciende, halo, vibración);
+   solo cambian las notificaciones: nacen pequeñas y oscuras en el sitio de los avisos de la pantalla y crecen
+   hacia fuera hasta quedarse blancas y grandes, rectas y apiladas (como en la D). Se ven las 3 últimas. */
+.estilo-h .avisos3 { visibility: hidden; }
+.estilo-h .avisos-fuera { top: 25.5%; }
+.estilo-h .avisos-fuera li.is-on { animation: sale-del-movil-h 1.1s cubic-bezier(.2,.9,.3,1.15) both; }
+.estilo-h .avisos-fuera li.is-on span { animation: texto-sale 1.1s ease both; }
+@keyframes sale-del-movil-h {
+  0%, 35% { transform: scale(.6); transform-origin: 50% 0; background: rgba(70,70,70,.95); color: #fff; box-shadow: none; }
+  100%    { transform: scale(1); transform-origin: 50% 0; }
 }
-@keyframes flota-recto { from { transform: translateY(0); } to { transform: translateY(-4px); } }
 @media (min-width: 760px) {
-  .estilo-h .avisos-fuera { top: 50%; --sube: -150%; }
-  @keyframes sale-h {
-    0%   { opacity: 0; transform: translateY(var(--sube)) scale(.72); transform-origin: 50% 0; box-shadow: none; }
-    25%  { opacity: 1; transform: translateY(var(--sube)) scale(.72); transform-origin: 50% 0; box-shadow: none; }
-    100% { opacity: 1; transform: translateY(0) scale(1); transform-origin: 50% 0; }
+  .estilo-h .avisos-fuera { top: 27.7%; }
+  @keyframes sale-del-movil-h {
+    0%, 35% { transform: scale(.72); transform-origin: 50% 0; background: rgba(70,70,70,.95); color: #fff; box-shadow: none; }
+    100%    { transform: scale(1); transform-origin: 50% 0; }
   }
 }
+@media (prefers-reduced-motion: reduce) { .estilo-h .avisos-fuera li.is-on, .estilo-h .avisos-fuera li.is-on span { animation: none; } }
