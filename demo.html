@@ -13,7 +13,7 @@
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="preload" as="font" href="assets/fonts/anton.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/img/corte-portada.webp" type="image/webp">
-  <link rel="stylesheet" href="assets/css/portada.css?v=20261103a">
+  <link rel="stylesheet" href="assets/css/portada.css?v=20261103b">
   <script src="config.js?v=20261103a"></script>
 </head>
 <body>
@@ -145,9 +145,24 @@
     </div>
   </footer>
 
-  <!-- En el móvil, el botón de reservar siempre a mano -->
-  <a class="btn btn-rojo reservar-fijo" href="reservar.html">Reservar cita</a>
+  <!-- Barra fija: probar como cliente o ver lo que ve el dueño (en el móvil abajo; en el ordenador, abajo a la derecha) -->
+  <div class="barra-demo" role="navigation" aria-label="Probar la demo">
+    <a class="btn btn-rojo" href="reservar.html">Reservar cita</a>
+    <a class="btn btn-dueno" href="panel.html?demo=1">👀 Panel del dueño</a>
+  </div>
 
-  <script src="assets/js/portada.js?v=20261103a"></script>
+  <!-- Bienvenida: la primera vez que se entra en la demo (en esta visita) -->
+  <div class="bienvenida" id="bienvenida" role="dialog" aria-modal="true" aria-labelledby="bienvenida-titulo" hidden>
+    <div class="bienvenida-caja">
+      <p class="bienvenida-ante">Demo de Book Lab</p>
+      <h2 id="bienvenida-titulo">Esta es la web de una barbería de ejemplo.</h2>
+      <p>Pruébala por los dos lados: como el cliente que reserva y como el dueño que lo controla todo.</p>
+      <a class="bienvenida-op" href="reservar.html"><span>①</span><span><b>Reserva como si fueras un cliente</b><small>Elige servicio, barbero y hora. Un minuto.</small></span></a>
+      <a class="bienvenida-op is-dueno" href="panel.html?demo=1"><span>②</span><span><b>Mira el panel del dueño</b><small>Facturación, caja del iPad, sueldos y recordatorios por WhatsApp.</small></span></a>
+      <button type="button" class="bienvenida-cerrar" id="bienvenida-cerrar">Primero quiero ver la web</button>
+    </div>
+  </div>
+
+  <script src="assets/js/portada.js?v=20261103b"></script>
 </body>
 </html>

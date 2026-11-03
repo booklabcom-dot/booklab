@@ -72,6 +72,17 @@
     $('horario').appendChild(el('dd', tramos.length ? '' : 'is-cerrado', tramos.length ? tramos.map(function (t) { return t[0] + '–' + t[1]; }).join(' · ') : 'Cerrado'));
   }
 
+  // Bienvenida de la demo: una vez por visita (sessionStorage); si no hay almacenamiento, sale igual
+  var bv = $('bienvenida'), visto = false;
+  try { visto = sessionStorage.getItem('demo_bienvenida') === '1'; } catch (x) { visto = false; }
+  if (bv && !visto) {
+    bv.hidden = false;
+    var cerrar = function () { bv.hidden = true; try { sessionStorage.setItem('demo_bienvenida', '1'); } catch (x) { /* nada */ } };
+    $('bienvenida-cerrar').addEventListener('click', cerrar);
+    bv.addEventListener('click', function (ev) { if (ev.target === bv) cerrar(); });
+    bv.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', cerrar); });
+  }
+
   // Cabecera con fondo al bajar
   var nav = $('nav');
   var alBajar = function () { nav.classList.toggle('is-fondo', window.scrollY > 40); };

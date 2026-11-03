@@ -159,9 +159,32 @@ a { color: inherit; }
 .pie .wrap { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: center; }
 .pie-logo { font: 400 1.6rem var(--cartel); color: var(--crema); }
 
-/* Reservar siempre a mano en el móvil */
-.reservar-fijo { position: fixed; left: 16px; right: 16px; bottom: max(14px, env(safe-area-inset-bottom)); z-index: 30; min-height: 54px; box-shadow: 0 10px 30px rgba(0,0,0,.4); }
-@media (min-width: 860px) { .reservar-fijo { display: none; } .pie { padding-bottom: 40px; } }
+/* Barra fija de la demo: reservar o ver el panel del dueño */
+.barra-demo { position: fixed; z-index: 30; left: 12px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom));
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px; border-radius: 14px; background: rgba(17, 17, 17, .92); box-shadow: 0 12px 36px rgba(0,0,0,.45); backdrop-filter: blur(8px); }
+.barra-demo .btn { min-height: 50px; padding: 0 10px; font-size: .98rem; }
+.btn-dueno { background: var(--crema); color: var(--tinta); }
+.btn-dueno:hover { background: #fff; }
+@media (min-width: 860px) {
+  .barra-demo { left: auto; right: 24px; bottom: 24px; grid-template-columns: auto auto; }
+  .barra-demo .btn { padding: 0 20px; }
+  .pie { padding-bottom: 110px; }
+}
+
+/* Bienvenida */
+.bienvenida { position: fixed; inset: 0; z-index: 50; display: flex; align-items: flex-end; justify-content: center; padding: 12px; background: rgba(0, 0, 0, .7); }
+.bienvenida[hidden] { display: none; }
+.bienvenida-caja { width: min(520px, 100%); background: var(--crema); color: var(--tinta); border-radius: 18px; padding: 24px 20px 18px; }
+.bienvenida-ante { margin: 0 0 6px; font-weight: 700; color: var(--rojo); font-size: .9rem; }
+.bienvenida h2 { margin: 0 0 8px; font: 400 2rem/1 var(--cartel); text-transform: uppercase; }
+.bienvenida-caja > p { margin: 0 0 16px; color: #4c4840; }
+.bienvenida-op { display: flex; align-items: center; gap: 14px; margin-top: 10px; padding: 16px; border-radius: 12px; background: var(--rojo); color: #fff; text-decoration: none; }
+.bienvenida-op.is-dueno { background: var(--negro); }
+.bienvenida-op > span:first-child { font: 400 2rem/1 var(--cartel); }
+.bienvenida-op b { display: block; font-size: 1.05rem; }
+.bienvenida-op small { display: block; opacity: .85; }
+.bienvenida-cerrar { display: block; width: 100%; margin-top: 12px; padding: 12px; border: 0; background: none; font: 600 .95rem var(--texto); color: #5d584f; text-decoration: underline; cursor: pointer; }
+@media (min-width: 700px) { .bienvenida { align-items: center; } .bienvenida-caja { padding: 32px; } }
 
 /* Aparición suave */
 .anim .sec .wrap > * { transition: opacity .7s ease, transform .7s ease; }

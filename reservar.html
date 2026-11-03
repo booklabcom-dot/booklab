@@ -16,6 +16,13 @@
   <!-- Datos de la barbería y sus colores: config.js -->
   <script src="config.js?v=20261026"></script>
   <script src="assets/js/tema.js?v=20261026"></script>
+  <style>
+    .demo-dueno { display: flex; align-items: center; gap: 14px; margin: 22px 0 6px; padding: 18px; border-radius: 14px; background: #c4392b; color: #fff; text-decoration: none; }
+    .demo-dueno > span:first-child { font-size: 1.8rem; }
+    .demo-dueno b { display: block; font-size: 1.1rem; }
+    .demo-dueno small { display: block; opacity: .9; margin-top: 2px; }
+    .demo-dueno > span:last-child { margin-left: auto; font-size: 1.4rem; font-weight: 800; }
+  </style>
 </head>
 <body class="demo dx rv">
   <a class="skip" href="#reserva">Saltar a la reserva</a>
@@ -164,6 +171,13 @@
       <h2 class="step-title" id="t5" tabindex="-1">¡Cita reservada!</h2>
       <dl class="recap" id="recap"></dl>
       <p class="done-note" id="done-note"></p>
+
+      <!-- Solo en la demo: después de reservar como cliente, que vea la parte del dueño -->
+      <a class="demo-dueno" href="panel.html?demo=1">
+        <span aria-hidden="true">👀</span>
+        <span><b>Ahora mira cómo le llega al dueño</b><small>Tu cita en el panel, la facturación, la caja del iPad y los recordatorios por WhatsApp.</small></span>
+        <span aria-hidden="true">→</span>
+      </a>
 
       <div class="done-actions">
         <a class="btn btn-primary btn-block" id="gcal" href="#" target="_blank" rel="noopener">Añadir a Google Calendar</a>
