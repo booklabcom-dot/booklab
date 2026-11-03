@@ -322,6 +322,7 @@ strong { font-weight: 800; }
   .cj-total strong { font-size: 1.7rem; }
   .cj-guardar { width: 44%; height: 62px; font-size: 1.15rem; }
   .cj-top { flex-wrap: wrap; padding: 10px 16px; }
+  .cj-brand { white-space: normal; min-width: 0; }
   .cj-jefe .cj-periodos { order: 3; width: 100%; margin: 0; justify-content: space-between; }
   .cj-jefe .cj-periodo { flex: 1; }
   .cj-jefe-scroll { padding: 16px; }
@@ -374,7 +375,9 @@ strong { font-weight: 800; }
   .cj-total { flex-wrap: wrap; }
   .cj-total .cj-pagos { max-width: none; flex-basis: 100%; }
   .cj-total .cj-pago { min-height: 62px; font-size: 1.05rem; }
-  .cj-ef { grid-template-columns: 1fr; padding: 16px; gap: 14px; overflow-y: auto; }
+  .cj-ef { grid-template-columns: minmax(0, 1fr); padding: 16px; gap: 14px; overflow-y: auto; overflow-x: hidden; }
+  .cj-ef-izq, .cj-ef-der { min-width: 0; }
+  .cj-ef-billetes { flex: none; }
   .cj-ef-cambio { min-height: 140px; flex: none; }
   .cj-ef-cambio strong { font-size: 3.6rem; }
   .cj-ef-billetes { grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 72px; }

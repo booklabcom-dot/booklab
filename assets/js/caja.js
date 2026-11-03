@@ -1102,7 +1102,7 @@
   var arrancada = false;
   function arrancar() {
     $('#v-caja').hidden = false;
-    if (DEMO) $('#v-caja .cj-brand span').textContent = 'Caja · modo prueba (no se guarda nada)';
+    if (DEMO) $('#v-caja .cj-brand span').textContent = 'Caja · prueba';
     pintarBarberos(); pintarTicket(); reloj();
     if (!arrancada) { arrancada = true; setInterval(reloj, 20000); }
     cargarHoy();

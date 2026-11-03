@@ -28,6 +28,13 @@ window.BOOKLAB_CONFIG = {
     ejemplo: true
   },
 
+  // ---------- Colores (tema.js los aplica en reservar, panel, cita y agenda) ----------
+  // Solo el color de la marca: el rojo de Navaja, con texto blanco encima.
+  colores: {
+    acento: '#c4392b',
+    textoSobreAcento: '#ffffff'
+  },
+
   // ---------- Datos del negocio ----------
   negocio: {
     // Barbería inventada para la demo (03/11/2026): con nombre y personalidad vende más que «Nombre de tu barbería».

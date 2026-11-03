@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- PRUEBA (03/11/2026): cabecera nueva de getbooklab.com con estilo claro (referencia de Johan: Fabrica, Framer).
+       Si a Johan le gusta, se rehace el resto de la web con este estilo y sustituye a index.html. -->
+  <title>Book Lab · Webs con reservas para barberías</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#f2f2f0">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" href="assets/img/pantallas/1-web.webp" type="image/webp">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261103a">
+</head>
+<body>
+  <header class="nav">
+    <a class="nav-marca" href="./">Book Lab<sup>®</sup></a>
+    <a class="pildora pildora-negra" href="demo.html">Ver la demo</a>
+  </header>
+
+  <main>
+    <section class="portada" aria-labelledby="portada-titulo">
+      <h1 class="marca-gigante" id="portada-titulo">Book Lab<sup>®</sup></h1>
+
+      <div class="portada-fila">
+        <p class="portada-lema">La web de tu barbería, con reservas, recordatorios y caja. Hecha por un barbero.</p>
+        <ul class="portada-lista">
+          <li>Web propia y dominio</li>
+          <li>Reservas 24/7</li>
+          <li>Recordatorios por WhatsApp</li>
+          <li>Panel y caja del iPad</li>
+        </ul>
+      </div>
+
+      <!-- Escaparate: la demo pasando sola dentro de un móvil -->
+      <div class="escaparate">
+        <div class="escaparate-movil" aria-hidden="true">
+          <div class="movil">
+            <div class="movil-pantalla" id="pantallas">
+              <img src="assets/img/pantallas/1-web.webp" alt="" width="600" height="1298" class="is-on">
+              <img src="assets/img/pantallas/2-hora.webp" alt="" width="600" height="1298" loading="lazy">
+              <img src="assets/img/pantallas/3-reservada.webp" alt="" width="600" height="1298" loading="lazy">
+              <img src="assets/img/pantallas/4-panel.webp" alt="" width="600" height="1298" loading="lazy">
+              <img src="assets/img/pantallas/5-hoy.webp" alt="" width="600" height="1298" loading="lazy">
+              <img src="assets/img/pantallas/6-caja.webp" alt="" width="600" height="1298" loading="lazy">
+            </div>
+          </div>
+        </div>
+        <ol class="escaparate-pasos" id="pasos">
+          <li class="is-on"><b>Tu web</b><span>Con tu nombre, tus fotos y tus precios.</span></li>
+          <li><b>Reservan solos</b><span>Eligen servicio, barbero y hora libre.</span></li>
+          <li><b>Cita confirmada</b><span>Le llega el correo y el recordatorio.</span></li>
+          <li><b>Tus números</b><span>Facturación, citas y quién no vino.</span></li>
+          <li><b>Hoy</b><span>Recordar y pedir reseñas por WhatsApp.</span></li>
+          <li><b>La caja</b><span>Cobras y te dice el cambio.</span></li>
+        </ol>
+      </div>
+
+      <!-- Tarjeta personal (la foto de Johan irá aquí cuando la tenga) -->
+      <div class="tarjeta">
+        <div class="tarjeta-foto" aria-hidden="true">J</div>
+        <div class="tarjeta-texto">
+          <small>Barbero desde hace 12 años · fundador</small>
+          <b>Johan</b>
+          <a class="pildora pildora-negra" href="https://wa.me/34625725758?text=Hola%2C%20tengo%20una%20barber%C3%ADa%20y%20me%20interesa%20Book%20Lab" target="_blank" rel="noopener">Hablemos por WhatsApp <i aria-hidden="true"></i></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    /* Escaparate: cambia de pantalla cada 2,8 s; se puede tocar un paso. Con «movimiento reducido», no avanza solo. */
+    (function () {
+      var imgs = document.querySelectorAll('#pantallas img'), pasos = document.querySelectorAll('#pasos li'), i = 0, t;
+      function ir(n) {
+        imgs[i].classList.remove('is-on'); pasos[i].classList.remove('is-on');
+        i = (n + imgs.length) % imgs.length;
+        imgs[i].classList.add('is-on'); pasos[i].classList.add('is-on');
+      }
+      function auto() { clearInterval(t); t = setInterval(function () { ir(i + 1); }, 2800); }
+      pasos.forEach(function (p, n) { p.addEventListener('click', function () { ir(n); auto(); }); });
+      if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) auto();
+    })();
+  </script>
+</body>
+</html>
