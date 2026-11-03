@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="assets/css/clara.css?v=20261103k">
   <link rel="stylesheet" href="assets/css/video-portada.css?v=1">
   <link rel="stylesheet" href="assets/css/mano.css?v=1">
-  <link rel="stylesheet" href="assets/css/foto-mano.css?v=12">
+  <link rel="stylesheet" href="assets/css/foto-mano.css?v=13">
 </head>
 <body>
   <header class="nav">
@@ -25,7 +25,7 @@
   <main>
     <section class="portada" aria-labelledby="portada-titulo">
       <!-- PRUEBA: mano tatuada (creada con IA por Johan) con el móvil del dueño: avisos de Book Lab llegando uno a uno -->
-      <div class="foto-mano estilo-g" id="foto-mano">
+      <div class="foto-mano estilo-h" id="foto-mano">
         <div class="foto-mano-marco">
           <div class="bloqueo" aria-hidden="true">
             <p class="bloqueo-fecha">martes, 3 de noviembre</p>
@@ -193,7 +193,8 @@
     <button type="button" data-e="estilo-sale">D</button>
     <button type="button" data-e="estilo-dispara">E</button>
     <button type="button" data-e="estilo-sube">F</button>
-    <button type="button" data-e="estilo-g" class="is-on">G · Enciende</button>
+    <button type="button" data-e="estilo-g">G</button>
+    <button type="button" data-e="estilo-h" class="is-on">H · G + D</button>
   </div>
 
   <script>
@@ -206,7 +207,7 @@
     });
 
     /* Al llegar un aviso: el móvil tiembla un poco */
-    function vibra() { var m = document.querySelector(document.getElementById('foto-mano').classList.contains('estilo-g') ? '.m3' : '.foto-mano-marco'); m.classList.remove('vibra'); void m.offsetWidth; m.classList.add('vibra'); }
+    function vibra() { var m = document.querySelector(/estilo-[gh]/.test(document.getElementById('foto-mano').className) ? '.m3' : '.foto-mano-marco'); m.classList.remove('vibra'); void m.offsetWidth; m.classList.add('vibra'); }
     /* Al bajar la página: el móvil se inclina y sube un poco, y los avisos se separan */
     (function () {
       if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;

@@ -196,3 +196,24 @@
 .estilo-g.foto-mano { aspect-ratio: 1024 / 1580; }
 @media (min-width: 760px) { .estilo-g.foto-mano { aspect-ratio: 16 / 9; } }
 .probar span { display: none; }
+
+/* ---------- H · G + D: mano3 con la pantalla que se enciende y el halo, y cada aviso sale de la pantalla hacia fuera en grande ---------- */
+.estilo-h .foto-mano-marco:not(.m3) { display: none; }
+.estilo-h .m3 { display: block; width: 150%; top: -1%; left: 50%; }
+.estilo-h.foto-mano { aspect-ratio: 1024 / 1580; }
+.estilo-h .avisos3 { visibility: hidden; }
+.estilo-h .avisos-fuera { display: flex; flex-direction: column-reverse; gap: 10px; position: absolute; z-index: 3; list-style: none; margin: 0; padding: 0;
+  left: 50%; top: 25.5%; width: min(88%, 380px); transform: translateX(-50%); }
+.estilo-h .avisos-fuera li { transition: max-height .45s ease, padding .45s ease, opacity .3s ease; transform: none; }
+.estilo-h .avisos-fuera li.is-on { animation: sale-h .95s cubic-bezier(.2,.9,.3,1.15) both; }
+@keyframes sale-h {
+  0%, 30% { transform: scale(.62); transform-origin: 50% 0; box-shadow: none; }
+  100%    { transform: scale(1); transform-origin: 50% 0; }
+}
+@media (min-width: 760px) {
+  .estilo-h.foto-mano { aspect-ratio: 16 / 9; }
+  .estilo-h .m3 { width: auto; height: 175%; top: -4%; left: 68%; }
+  .estilo-h .avisos-fuera { left: 67.9%; top: 27.7%; width: 400px; }
+  @keyframes sale-h { 0%, 30% { transform: scale(.72); transform-origin: 50% 0; box-shadow: none; } 100% { transform: scale(1); transform-origin: 50% 0; } }
+}
+@media (prefers-reduced-motion: reduce) { .estilo-h .avisos-fuera li.is-on { animation: none; } }
