@@ -1,0 +1,146 @@
+/* Pantallas del carrusel hechas en código (nueva-mano-foto.html), en vez de capturas.
+   Se diseñan a 375×812 (móvil) y 1180×820 (iPad) y se escalan con --k al tamaño del marco.
+   Negro, blanco y el amarillo del logo. Sin el nombre de ninguna barbería real. */
+.ui { --a: #FEDA12; position: absolute; left: 0; top: 0; transform: scale(var(--k)); transform-origin: 0 0;
+  box-sizing: border-box; overflow: hidden; background: #0f0f0f; color: #fff; font: 400 16px/1.35 var(--letra); text-align: left;
+  opacity: 0; transition: opacity .6s ease; }
+.ui.is-on { opacity: 1; }
+.ui-m { width: 375px; height: 812px; padding: 14px 22px 26px; display: flex; flex-direction: column; }
+.ui-i { width: 1180px; height: 820px; display: flex; flex-direction: column; }
+.ui * { box-sizing: border-box; }
+.ui p, .ui h3 { margin: 0; }
+.ui small { font-size: 13px; }
+@media (prefers-reduced-motion: reduce) { .ui { transition: none; } }
+
+/* Piezas comunes */
+.u-barra { display: flex; justify-content: space-between; margin: 0 4px 18px; font-size: 14px; font-weight: 700; }
+.u-mini { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #8d8d8d; }
+.u-mt { margin-top: 18px !important; margin-bottom: 8px !important; }
+.u-h { font-size: 34px; font-weight: 800; letter-spacing: -.03em; line-height: 1.05; margin-bottom: 14px !important; }
+.u-gris { color: #a5a5a5; font-size: 15px; line-height: 1.45; margin-top: 16px !important; }
+.u-roj { color: #ff7a6b !important; }
+.u-verde-t { color: #7fe0a8; }
+.u-amt { color: var(--a); }
+.u-btn-a { display: inline-block; padding: 14px 22px; border-radius: 999px; background: var(--a); color: #111; font-weight: 800; font-size: 16px; text-align: center; }
+.u-ancho { display: block; margin-top: 14px; }
+.u-abajo { margin-top: auto; }
+.u-pill, .u-pill-a { padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 700; border: 1px solid #333; color: #d0d0d0; }
+.u-pill-a { background: var(--a); border-color: var(--a); color: #111; }
+.u-card { padding: 16px 18px; border-radius: 20px; background: #1a1a1a; box-shadow: inset 0 0 0 1px #262626; }
+.u-precio { display: flex; justify-content: space-between; padding: 11px 0; border-top: 1px solid #262626; font-size: 16px; }
+.u-precio:first-of-type { border-top: 0; }
+.u-precio b { color: var(--a); }
+.u-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.u-tags span { padding: 8px 14px; border-radius: 999px; border: 1px solid #333; font-size: 14px; font-weight: 600; color: #d0d0d0; }
+.u-tags .is-on { background: var(--a); border-color: var(--a); color: #111; }
+.u-tags-g span { font-size: 16px; padding: 10px 18px; }
+
+/* 1 · La web */
+.u-web-cab { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+.u-web-cab b { font-size: 18px; letter-spacing: .06em; }
+.u-web-hero { padding: 26px 20px 22px; margin: 0 -6px 16px; border-radius: 24px; background: radial-gradient(120% 90% at 80% 0%, #3a3a3a 0%, #121212 60%); }
+.u-web-hero h3 { margin: 10px 0 18px !important; font-size: 44px; line-height: .98; font-weight: 800; letter-spacing: -.04em; }
+.u-web-hero em { font-style: normal; color: var(--a); }
+.u-est { margin-top: 16px !important; font-size: 13px; color: #c9c9c9; }
+.u-est b { color: #fff; }
+
+/* 2 · Día y hora */
+.u-paso { font-size: 13px; color: #8d8d8d; font-weight: 700; margin-bottom: 4px !important; }
+.u-dias { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 16px; }
+.u-dias span { display: grid; justify-items: center; gap: 2px; padding: 10px 0 9px; border: 1px solid #2f2f2f; border-radius: 14px; font-size: 12px; text-transform: uppercase; color: #a5a5a5; }
+.u-dias b { font-size: 24px; color: #fff; }
+.u-dias i { width: 60%; height: 4px; border-radius: 4px; background: #3fbf7f; margin-top: 4px; }
+.u-dias i.u-am { background: var(--a); }
+.u-dias i.u-ro { background: #ff6b5b; }
+.u-dias .is-on { background: var(--a); border-color: var(--a); color: #111; }
+.u-dias .is-on b { color: #111; }
+.u-horas { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.u-horas span { padding: 13px 0; border: 1px solid #333; border-radius: 12px; text-align: center; font-weight: 700; font-size: 16px; }
+.u-horas .is-on { background: var(--a); border-color: var(--a); color: #111; }
+
+/* 3 · Cita reservada */
+.u-ok { width: 74px; height: 74px; border-radius: 50%; background: var(--a); color: #111; display: grid; place-items: center; font-size: 36px; font-weight: 800; margin: 40px 0 22px; }
+.u-datos div { display: flex; justify-content: space-between; padding: 13px 0; border-top: 1px solid #262626; font-size: 16px; }
+.u-datos div:first-child { border-top: 0; }
+.u-datos span { color: #8d8d8d; }
+
+/* 4 · Pantalla de bloqueo */
+.u-bloqueo { background: radial-gradient(120% 70% at 50% 0%, #3a3a3a 0%, #0f0f0f 70%); }
+.u-fecha { text-align: center; font-size: 17px; color: #d0d0d0; margin-top: 30px !important; }
+.u-hora { text-align: center; font-size: 92px; font-weight: 700; letter-spacing: -.04em; line-height: 1; margin-bottom: 40px !important; }
+.u-noti { display: grid; grid-template-columns: 40px 1fr; gap: 12px; padding: 14px 16px; margin-bottom: 10px; border-radius: 22px; background: rgba(255,255,255,.12); }
+.u-noti i { font-style: normal; width: 40px; height: 40px; border-radius: 11px; background: var(--a); display: grid; place-items: center; font-size: 19px; }
+.u-noti b { font-size: 15px; }
+.u-noti p { font-size: 15px; color: #e6e6e6; line-height: 1.35; margin-top: 2px !important; }
+
+/* 5 · Números */
+.u-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 16px; }
+.u-kpis div { display: grid; gap: 3px; padding: 16px; border-radius: 18px; background: #1a1a1a; box-shadow: inset 0 0 0 1px #262626; }
+.u-kpis small { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #8d8d8d; }
+.u-kpis b { font-size: 26px; letter-spacing: -.03em; }
+.u-kpis i { font-style: normal; font-size: 13px; font-weight: 700; color: #7fe0a8; }
+
+/* 6 · Hoy */
+.u-gordo { display: grid; padding: 18px; margin-bottom: 10px; border-radius: 20px; color: #111; font-weight: 800; font-size: 20px; }
+.u-gordo small { font-weight: 600; font-size: 14px; opacity: .75; }
+.u-verde { background: #62cf74; }
+.u-amar { background: var(--a); }
+.u-lista { margin-top: 6px; border-radius: 20px; background: #1a1a1a; box-shadow: inset 0 0 0 1px #262626; }
+.u-lista div { display: grid; grid-template-columns: 58px 1fr auto; align-items: center; gap: 10px; padding: 13px 16px; border-top: 1px solid #262626; }
+.u-lista div:first-child { border-top: 0; }
+.u-lista b { color: #a5a5a5; font-size: 16px; }
+.u-lista span { display: grid; font-weight: 700; font-size: 16px; }
+.u-lista small { font-weight: 500; color: #8d8d8d; font-size: 13px; }
+.u-lista i { font-style: normal; width: 40px; height: 40px; border-radius: 11px; background: #262626; display: grid; place-items: center; font-size: 17px; }
+.u-lista i.u-wa { background: #62cf74; }
+
+/* iPad: cabecera y cuerpo */
+.u-icab { display: flex; align-items: center; gap: 24px; padding: 24px 34px; border-bottom: 1px solid #222; font-size: 18px; color: #a5a5a5; }
+.u-icab b { color: var(--a); font-size: 22px; letter-spacing: .06em; }
+.u-icab .u-pill { margin-left: auto; font-size: 16px; }
+.u-icab .u-tags { margin-left: auto; }
+.u-icuerpo { flex: 1; display: grid; grid-template-columns: 360px 1fr; }
+.u-ilado { padding: 26px 26px; border-right: 1px solid #222; }
+.u-cita { display: grid; grid-template-columns: 70px 1fr; align-items: center; padding: 16px 18px; margin-bottom: 10px; border-radius: 18px; background: #1a1a1a; font-size: 18px; }
+.u-cita b { font-size: 20px; }
+.u-cita span { display: grid; font-weight: 700; }
+.u-cita small { color: #8d8d8d; font-size: 15px; font-weight: 500; }
+.u-cita.is-on { box-shadow: inset 0 0 0 2px var(--a); }
+.u-imain { display: flex; flex-direction: column; padding: 26px 34px 30px; }
+.u-imain .u-h { font-size: 40px; }
+.u-serv { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.u-serv span { display: grid; gap: 6px; padding: 22px 24px; border-radius: 20px; background: #1a1a1a; box-shadow: inset 0 0 0 1px #2a2a2a; font-weight: 700; font-size: 22px; }
+.u-serv b { color: var(--a); font-size: 30px; }
+.u-serv .is-on { background: var(--a); color: #111; box-shadow: none; }
+.u-serv .is-on b { color: #111; }
+.u-pagos { margin-top: auto; display: grid; grid-template-columns: 1fr 1.2fr 1.2fr 1.2fr; gap: 14px; align-items: stretch; }
+.u-pagos div { display: grid; }
+.u-pagos small { font-size: 14px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #8d8d8d; }
+.u-pagos div b { font-size: 46px; letter-spacing: -.03em; }
+.u-pagos span { display: grid; place-items: center; border-radius: 20px; background: var(--a); color: #111; font-weight: 800; font-size: 24px; }
+
+/* iPad: el cambio */
+.u-cambio { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 30px 34px; }
+.u-cuentas { display: grid; grid-template-rows: auto auto 1fr; gap: 16px; }
+.u-cuentas div { display: flex; justify-content: space-between; align-items: center; padding: 22px 28px; border-radius: 22px; background: #1a1a1a; }
+.u-cuentas small { font-size: 15px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #8d8d8d; }
+.u-cuentas b { font-size: 54px; font-weight: 800; letter-spacing: -.03em; }
+.u-cuentas .u-devuelve { flex-direction: column; justify-content: center; background: var(--a); color: #111; }
+.u-cuentas .u-devuelve small { color: #111; }
+.u-cuentas .u-devuelve b { font-size: 140px; line-height: 1; }
+.u-billetes { display: grid; grid-template-columns: 1fr 1fr; grid-auto-rows: 1fr; gap: 16px; }
+.u-billetes span { display: grid; place-items: center; border-radius: 22px; background: #1a1a1a; box-shadow: inset 0 0 0 1px #2a2a2a; font-size: 40px; font-weight: 800; }
+.u-billetes .is-on { box-shadow: inset 0 0 0 3px var(--a); }
+.u-billetes .u-guardar { grid-column: 1 / -1; background: var(--a); color: #111; font-size: 28px; letter-spacing: .06em; box-shadow: none; }
+
+/* iPad: panel del jefe */
+.u-jefe { flex: 1; display: grid; grid-template-columns: 1.2fr 1fr; grid-template-rows: auto auto auto; gap: 16px; padding: 28px 34px; }
+.u-caja-amar { grid-row: span 2; display: grid; align-content: start; gap: 8px; padding: 28px; border-radius: 24px; background: var(--a); color: #111; }
+.u-caja-amar small { font-size: 18px; font-weight: 700; }
+.u-caja-amar b { font-size: 110px; font-weight: 800; letter-spacing: -.04em; line-height: 1; }
+.u-caja-amar p { font-size: 17px; opacity: .8; }
+.u-jefe .u-card { display: grid; align-content: start; gap: 4px; padding: 20px 24px; }
+.u-jefe .u-card .u-precio { font-size: 17px; padding: 8px 0; }
+.u-big { font-size: 44px; font-weight: 800; letter-spacing: -.03em; line-height: 1.05; }
+.u-jefe .u-card:nth-child(n+3) { padding: 16px 24px; }
+.u-jefe .u-card:nth-child(n+3) .u-big { font-size: 36px; }
