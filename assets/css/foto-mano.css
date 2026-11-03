@@ -123,3 +123,29 @@
 .estilo-dispara .avisos-fuera li[data-s="1"] { top: 31%; }
 .estilo-dispara .avisos-fuera li[data-s="2"] { top: 53%; }
 @media (min-width: 760px) { .estilo-dispara .avisos-fuera li { width: 330px; } .estilo-dispara .avisos-fuera li[data-s="0"] { top: 12%; } .estilo-dispara .avisos-fuera li[data-s="1"] { top: 36%; } .estilo-dispara .avisos-fuera li[data-s="2"] { top: 60%; } }
+
+/* F · Suben: cada aviso hace un destello en la pantalla, sale del móvil y sube flotando hacia un lado hasta desvanecerse */
+.estilo-sube .foto-mano-marco { width: 128%; top: -3%; left: 48%; }
+.estilo-sube .bloqueo .avisos { visibility: hidden; }
+.estilo-sube .bloqueo::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(60% 40% at 50% 55%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%); opacity: 0; }
+.estilo-sube .bloqueo.ping::after { animation: destello .7s ease-out; }
+@keyframes destello { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: 0; } }
+.estilo-sube .avisos-fuera { display: block; position: absolute; z-index: 3; inset: 0; list-style: none; margin: 0; padding: 0; }
+.estilo-sube .avisos-fuera li { position: absolute; left: 47.6%; top: 36%; width: min(76%, 310px); max-height: none; padding: 10px 12px; grid-template-columns: 34px 1fr; column-gap: 10px;
+  transition: none; opacity: 0; --lado: -18%; --giro: -3deg; }
+.estilo-sube .avisos-fuera li[data-l="1"] { --lado: -82%; --giro: 3deg; }
+.estilo-sube .avisos-fuera li::before { width: 34px; height: 34px; border-radius: 10px; font-size: .74rem; }
+.estilo-sube .avisos-fuera b { font-size: .92rem; }
+.estilo-sube .avisos-fuera span { font-size: .8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.estilo-sube .avisos-fuera li.is-on { animation: sube 5s cubic-bezier(.25,.8,.35,1) both; }
+@keyframes sube {
+  0%   { opacity: 0; transform: translate(-50%, 0) scale(.3); }
+  12%  { opacity: 1; transform: translate(-50%, -40%) scale(1.04) rotate(0deg); }
+  18%  { transform: translate(-50%, -55%) scale(1); }
+  100% { opacity: 0; transform: translate(var(--lado), -420%) scale(.92) rotate(var(--giro)); }
+}
+@media (min-width: 760px) {
+  .estilo-sube .foto-mano-marco { width: auto; height: 165%; top: -5%; left: 68%; }
+  .estilo-sube .avisos-fuera li { left: 67.8%; top: 40%; width: 330px; }
+}
+@media (prefers-reduced-motion: reduce) { .estilo-sube .avisos-fuera li.is-on { animation: none; opacity: 1; transform: translate(-50%, -60%); } }
