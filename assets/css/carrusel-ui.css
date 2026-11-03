@@ -1,4 +1,4 @@
-/* Pantallas del carrusel hechas en código (nueva-mano-foto.html), en vez de capturas.
+/* Pantallas del carrusel hechas en código (index.html), en vez de capturas.
    Se diseñan a 375×812 (móvil) y 1180×820 (iPad) y se escalan con --k al tamaño del marco.
    Negro, blanco y el amarillo del logo. Sin el nombre de ninguna barbería real. */
 .ui { --a: #FEDA12; position: absolute; left: 0; top: 0; transform: scale(var(--k)); transform-origin: 0 0;

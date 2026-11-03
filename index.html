@@ -3,18 +3,23 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Book Lab · Webs para barberías con dominio propio, SEO y reservas online</title>
-  <meta name="description" content="Webs a medida para barberías: dominio propio, SEO local para salir en Google y reservas online 24/7 conectadas a Google Calendar, con recordatorios y reseñas automáticas.">
+  <title>Book Lab · Webs con reservas para barberías, hechas por un barbero</title>
+  <meta name="description" content="Web propia para tu barbería con reservas online 24/7, recordatorios por WhatsApp y correo, bloqueo de clientes que fallan, más reseñas en Google, lista de espera y caja con reparto automático. Hecho por un barbero.">
   <link rel="canonical" href="https://getbooklab.com/">
-  <meta name="theme-color" content="#0a0a0b">
+  <meta name="theme-color" content="#f2f2f0">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://getbooklab.com/">
-  <meta property="og:title" content="Book Lab · ¿Cuántas horas pierdes contestando WhatsApps? Te las devuelvo.">
-  <meta property="og:description" content="Tu barbería con web propia, dominio, SEO local y reservas online 24/7. Hecho por un barbero, para barberos.">
+  <meta property="og:title" content="Book Lab · Tu barbería trabaja sola. Tú vuelves a tener vida.">
+  <meta property="og:description" content="Web propia, reservas 24/7, recordatorios, reseñas, lista de espera y caja. Hecho por un barbero, para barberos.">
   <meta property="og:image" content="https://getbooklab.com/assets/img/og.jpg">
-  <link rel="preload" as="image" href="assets/img/hero-sillon-hd.webp" type="image/webp">
-  <link rel="preload" as="font" href="assets/fonts/anton.woff2" type="font/woff2" crossorigin>
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" href="assets/img/mano-tatuada-3.webp" type="image/webp">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261103s">
+  <link rel="stylesheet" href="assets/css/foto-mano.css?v=19">
+  <link rel="stylesheet" href="assets/css/carrusel-ui.css?v=7">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -22,454 +27,302 @@
     "name": "Book Lab",
     "url": "https://getbooklab.com/",
     "logo": "https://getbooklab.com/assets/img/logo.webp",
-    "description": "Webs para barberías con dominio propio, SEO local y sistema de reservas online.",
+    "description": "Webs para barberías con dominio propio, SEO local, reservas online, recordatorios y caja.",
     "email": "booklab.com@gmail.com",
     "telephone": "+34746045607",
     "areaServed": "ES",
     "sameAs": ["https://www.instagram.com/xffade/"]
   }
   </script>
-  <script>
-    // Animaciones solo si el usuario no ha pedido movimiento reducido.
-    // Si editorial.js no llega a cargar, a los 2,5 s se quita la clase y todo queda visible.
-    (function (d) {
-      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      d.classList.add('anim');
-      setTimeout(function () { if (!window.__ed) d.classList.remove('anim'); }, 2500);
-    })(document.documentElement);
-  </script>
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
-  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
-  <link rel="preload" as="image" href="assets/img/logo.webp" type="image/webp">
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <link rel="stylesheet" href="assets/css/editorial.css?v=20261103a">
 </head>
-<body class="ed">
-  <a class="skip" href="#main">Saltar al contenido</a>
-
-  <!-- 1. Cabecera -->
-  <header class="header" id="top">
-    <div class="wrap">
-      <a class="logo" href="./" aria-label="Book Lab, inicio">
-        <img src="assets/img/logo.webp" width="66" height="40" alt="Book Lab">
-      </a>
-      <span class="hdr-tag" aria-hidden="true">Webs para barberías</span>
-      <nav class="header-nav" aria-label="Principal">
-        <a class="btn btn-ghost btn-sm" href="demo.html">Ver demo</a>
-      </nav>
-    </div>
-    <span class="hdr-progress" aria-hidden="true"></span>
+<body>
+  <header class="nav">
+    <a class="nav-marca" href="./">Book Lab<sup>®</sup></a>
+    <a class="pildora pildora-negra" href="demo.html">Ver la demo</a>
   </header>
 
-  <main id="main">
-    <!-- 2. Hero: composición editorial (texto real + sillón) -->
-    <section class="hero ed-hero" aria-labelledby="hero-title">
-      <div class="hero-photo" aria-hidden="true">
-        <img src="assets/img/hero-sillon-hd.webp" width="514" height="1254" alt="" fetchpriority="high" decoding="async">
-        <p class="hero-tech">Hecho por un barbero, para barberos</p>
-      </div>
-      <div class="hero-a">
-        <h1 id="hero-title" class="hero-h1">
-          <span class="ed-line"><span class="ed-line-in f-cond">¿Cuántas horas pierdes</span></span>
-          <span class="ed-line"><span class="ed-line-in f-cond">contestando <span class="accent">WhatsApps?</span></span></span>
-        </h1>
-      </div>
-
-      <div class="hero-c">
-        <p class="hero-answer">Te las devuelvo.</p>
-        <p class="hero-sub">Tu barbería funcionando,<br>tu agenda trabajando 24h<br>sin llamadas ni mensajes.</p>
-        <div class="hero-ctas">
-          <a class="btn btn-primary" href="demo.html">Ver la demo</a>
-          <a class="btn btn-ghost" href="#web">Descubre cómo</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- 2b. Qué hacemos -->
-    <section class="section intro" id="web" aria-labelledby="intro-title">
-      <div class="wrap">
-        <h2 id="intro-title" class="eyebrow" data-reveal="left">Webs para barberías con reservas online</h2>
-        <p class="intro-statement">
-          <span class="ed-line"><span class="ed-line-in f-cond">Tu barbería en Google,</span></span>
-          <span class="ed-line"><span class="ed-line-in f-light">con <span class="accent">web propia</span> y una agenda que se llena sola.</span></span>
-        </p>
-        <div class="intro-side" data-reveal="up">
-          <p class="lead">Diseño a medida, dominio propio, SEO local, sistema de citas y un panel de control con tu facturación y tus clientes.</p>
-          <div class="hero-ctas">
-            <a class="btn btn-primary" href="demo.html">Ver la demo</a>
-            <a class="btn btn-ghost" href="#contacto">Quiero mi web</a>
+  <main>
+    <section class="portada" aria-labelledby="portada-titulo">
+      <!-- Portada: mano tatuada (imagen creada con IA por Johan) con el móvil del dueño. La pantalla se enciende
+           y los avisos de Book Lab nacen en ella y salen hacia fuera, grandes y apilados. -->
+      <div class="foto-mano" id="foto-mano">
+        <div class="foto-mano-marco" id="mano-marco">
+          <div class="bloqueo" id="bloqueo" aria-hidden="true">
+            <p class="bloqueo-fecha">martes, 3 de noviembre</p>
+            <p class="bloqueo-hora">10:58</p>
           </div>
+          <img class="foto-mano-img" src="assets/img/mano-tatuada-3.webp?v=1" alt="" width="1024" height="1536" aria-hidden="true">
         </div>
-      </div>
-    </section>
-
-    <!-- 3. Todo incluido -->
-    <section class="section incluye" id="incluye" aria-labelledby="incluye-title">
-      <div class="wrap">
-        <span class="eyebrow" data-reveal="left">Todo incluido</span>
-        <h2 class="h2 ed-h" id="incluye-title">
-          <span class="ed-line"><span class="ed-line-in f-cond">Una web de verdad.</span></span>
-          <span class="ed-line"><span class="ed-line-in f-light accent">No solo un botón de reservas.</span></span>
-        </h2>
-        <div class="cards cards-6" data-stagger>
-          <article class="card">
-            <h3>Web a medida</h3>
-            <p>Tus fotos, tus precios, tu equipo y tus reseñas de Google, con un diseño premium que da ganas de entrar y reservar.</p>
-          </article>
-          <article class="card">
-            <h3>Tu propio dominio</h3>
-            <p><b>tubarberia.com</b>. Nada de enlaces raros de plataformas: tu marca, tu dirección.</p>
-          </article>
-          <article class="card">
-            <h3>SEO local</h3>
-            <p>Preparada para que te encuentren cuando buscan «barbería en tu ciudad»: textos optimizados, datos para Google y conexión con tu ficha de Google Maps.</p>
-          </article>
-          <article class="card">
-            <h3>Reservas 24/7</h3>
-            <p>Tus clientes eligen servicio, barbero, día y hora desde el móvil. Directo a tu Google Calendar, sin dobles reservas ni huecos sueltos.</p>
-          </article>
-          <article class="card">
-            <h3>Recordatorios y reseñas</h3>
-            <p>Confirmación al reservar y avisos antes de la cita (24 h y 3 h, o cuando tú quieras). Tras el corte, un correo para que cuenten su experiencia con una reseña en Google. Menos plantones, más estrellas.</p>
-          </article>
-          <article class="card">
-            <h3>Pensada para el móvil</h3>
-            <p>Tus clientes reservan desde el móvil en menos de un minuto: eligen, tocan y listo. Sin descargar apps ni crear cuentas.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Hecho por un barbero -->
-    <section class="section founder" aria-labelledby="founder-title">
-      <div class="wrap">
-        <div class="founder-card">
-          <span class="eyebrow" data-reveal="left">De barbero a barbero</span>
-          <h2 class="h2 ed-h" id="founder-title">
-            <span class="ed-line"><span class="ed-line-in f-light founder-pre">Esto no lo ha diseñado un informático.</span></span>
-            <span class="ed-line"><span class="ed-line-in f-cond">Lo ha diseñado <span class="accent">un barbero.</span></span></span>
-          </h2>
-          <div class="founder-body" data-reveal="right">
-            <p>Llevo más de 12 años detrás del sillón. Sé lo que es contestar WhatsApps con las manos llenas de espuma, cuadrar citas entre corte y corte y quedarte mirando un hueco vacío porque alguien no apareció.</p>
-            <p>Y lo peor: pasar tu tiempo libre pegado al móvil, organizando la agenda. Tu tiempo libre es para disfrutar y desconectar, no para contestar mensajes.</p>
-            <p>Probé agendas, apps y programas. Todos estaban pensados para cualquier negocio menos para el nuestro. Así que hice el mío: sencillo, rápido y hecho para cómo se trabaja de verdad en una barbería.</p>
-            <p>Book Lab es lo que yo necesitaba. Ahora también es para ti.</p>
-          </div>
-          <ul class="founder-stats" data-stagger>
-            <li><b>+12</b><span>años en el oficio</span></li>
-            <li><b>1 a 1</b><span>hablas conmigo, no con un call center</span></li>
-            <li><b>100%</b><span>a medida de tu barbería</span></li>
-          </ul>
-          <a class="founder-sign" href="https://www.instagram.com/xffade/" target="_blank" rel="noopener">@xffade · fundador de Book Lab</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Panel de control -->
-    <section class="section panel-sec" id="panel" aria-labelledby="pc-title">
-      <div class="wrap">
-        <div class="pc-head">
-          <span class="eyebrow" data-reveal="left">Tu panel de control</span>
-          <h2 class="h2 ed-h" id="pc-title">
-            <span class="ed-line"><span class="ed-line-in f-light">Toda tu barbería,</span></span>
-            <span class="ed-line"><span class="ed-line-in f-cond accent pc-big">en números.</span></span>
-          </h2>
-          <p class="ns-lead" data-reveal="up">Cuánto facturas, qué barbero rinde más, qué días se llenan y qué clientes no vuelven. Al momento, desde el móvil y sin hojas de cálculo. Solo entras tú.</p>
-        </div>
-
-        <div class="pc-stage">
-          <div class="pc-window" data-reveal="left" role="img" aria-label="Panel de control de ejemplo: 14.400 € facturados en septiembre, 13 % más que el mes anterior, 859 citas, ticket medio de 17,43 € y 56 % de ocupación, con la facturación de cada barbero.">
-            <div class="pc-bar"><i></i><i></i><i></i><span>Barbería Fade · Panel</span></div>
-            <div class="pc-body">
-              <div class="pc-top">
-                <b class="pc-h">Tus números</b>
-                <span class="pc-month">Septiembre 2026</span>
-              </div>
-              <div class="pc-chips"><span class="is-on">Todos</span><span>Marcos</span><span>Lucía</span><span>Diego</span></div>
-              <div class="pc-kpis">
-                <div><small>Facturado</small><b>14.400 €</b><em class="up">▲ 13 %</em></div>
-                <div><small>Citas</small><b>859</b><em class="up">▲ 14 %</em></div>
-                <div><small>Ticket medio</small><b>17,43 €</b><em>por cita</em></div>
-                <div><small>Ocupación</small><b>56 %</b><em>de la agenda</em></div>
-              </div>
-              <div class="pc-cards">
-                <div class="pc-card">
-                  <small>Evolución de la facturación</small>
-                  <div class="pc-cols">
-                    <span style="--h:78%"><i></i>Abr</span>
-                    <span style="--h:86%"><i></i>May</span>
-                    <span style="--h:86%"><i></i>Jun</span>
-                    <span style="--h:90%"><i></i>Jul</span>
-                    <span style="--h:82%"><i></i>Ago</span>
-                    <span class="is-on" style="--h:100%"><i></i>Sep</span>
-                  </div>
-                </div>
-                <div class="pc-card">
-                  <small>Por barbero</small>
-                  <div class="pc-rows">
-                    <p><span>Marcos</span><i style="--w:100%"></i><b>5.823 €</b></p>
-                    <p><span>Lucía</span><i style="--w:77%"></i><b>4.508 €</b></p>
-                    <p><span>Diego</span><i style="--w:70%"></i><b>4.069 €</b></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="pc-phone" data-reveal="right" role="img" aria-label="Clientes del día en el móvil: los que vinieron aparecen como pagados y quien no vino, marcado en rojo.">
-            <div class="pc-notch"></div>
-            <b class="pc-h">Clientes del día</b>
-            <div class="pc-res"><div><b>22</b><small>vinieron</small></div><div><b>366 €</b><small>cobrado</small></div></div>
-            <ul class="pc-list">
-              <li><span>09:00</span><div><b>Raúl Díaz</b><small>Corte + barba</small></div><em class="ok">Pagado ✓</em></li>
-              <li class="is-off"><span>09:30</span><div><b>Pablo Romero</b><small>Corte clásico</small></div><em class="ko">No vino</em></li>
-              <li><span>10:00</span><div><b>Sergio García</b><small>Degradado</small></div><em class="ok">Pagado ✓</em></li>
-              <li><span>10:30</span><div><b>Nico Pérez</b><small>Arreglo de barba</small></div><em class="ok">Pagado ✓</em></li>
-            </ul>
-          </div>
-        </div>
-
-        <ul class="pc-feats" data-stagger>
-          <li>Facturación por barbero</li>
-          <li>Evolución mes a mes</li>
-          <li>Servicios más pedidos</li>
-          <li>Días y horas punta</li>
-          <li>Mejores clientes</li>
-          <li>Clientes que no vuelven</li>
-          <li>Descarga en Excel</li>
+        <ul class="avisos-fuera" id="avisos" aria-hidden="true">
+          <li><b>Nueva reserva</b><span>Carlos · Skinfade · mañana 11:00</span></li>
+          <li><b>Recordatorios enviados</b><span>6 clientes de hoy, con un toque</span></li>
+          <li><b>Hueco recuperado</b><span>Iván cogió la cita que se canceló</span></li>
+          <li><b>Nueva reseña en Google</b><span>★★★★★ «El mejor fade de la zona»</span></li>
+          <li><b>Caja de hoy</b><span>Llevas <em>412</em> € · 23 cobros</span></li>
         </ul>
-        <a class="btn btn-primary pc-cta" href="panel.html?demo=1">Probar el panel de ejemplo</a>
-      </div>
-    </section>
-
-    <!-- 4. Cómo funcionan las reservas (superficie clara) -->
-    <section class="section light" aria-labelledby="como-title">
-      <span class="light-bg" aria-hidden="true"></span>
-      <div class="wrap">
-        <span class="eyebrow" data-reveal="left">El sistema de citas</span>
-        <h2 class="h2 ed-h" id="como-title">
-          <span class="ed-line"><span class="ed-line-in f-cond">Tu agenda se gestiona sola.</span></span>
-          <span class="ed-line"><span class="ed-line-in f-light">Tus cuentas, también.</span></span>
-          <span class="ed-line"><span class="ed-line-in f-cond"><mark>Tú solo cortas.</mark></span></span>
-        </h2>
-        <ol class="steps" data-stagger>
-          <li>
-            <div>
-              <h3>El cliente elige</h3>
-              <p>Servicio, barbero, día y hora. Desde el móvil, en menos de un minuto.</p>
-            </div>
-          </li>
-          <li>
-            <div>
-              <h3>Se agenda solo</h3>
-              <p>La cita aparece en el Google Calendar del barbero. Sin dobles reservas.</p>
-            </div>
-          </li>
-          <li>
-            <div>
-              <h3>Recordatorios automáticos</h3>
-              <p>Confirmación al momento y avisos 24 h y 3 h antes. Menos clientes que no aparecen.</p>
-            </div>
-          </li>
-          <li>
-            <div>
-              <h3>Todo es automático</h3>
-              <p>Citas, cambios, cancelaciones y facturación se actualizan solos. Tú solo miras tus números en el panel.</p>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- Gestión de clientes -->
-    <section class="section" id="no-shows" aria-labelledby="ns-title">
-      <div class="wrap ns">
-        <div class="ns-text">
-          <span class="eyebrow" data-reveal="left">Gestión de clientes</span>
-          <h2 class="h2 ed-h" id="ns-title">
-            <span class="ed-line"><span class="ed-line-in f-light">Tus clientes, tus reglas.</span></span>
-            <span class="ed-line"><span class="ed-line-in f-cond accent ns-big">Tú decides.</span></span>
-          </h2>
-          <p class="ns-lead" data-reveal="up">Desde tu <b>panel de control</b> ves quién viene, quién falla y qué hacer con cada uno. Cobrar los no shows o no, avisar o dejarlo pasar: cada barbería trabaja a su manera y Book Lab se adapta a la tuya.</p>
-          <ul class="ns-list" data-stagger>
-            <li><b>Tu día, de un vistazo.</b> Todos los clientes del día con su servicio y su barbero. Si alguien no aparece, lo marcas con un toque y tus números se ajustan solos.</li>
-            <li><b>Un bot avisa por ti.</b> Si quieres, envías por WhatsApp un aviso automático de Book Lab con los datos de la cita. Educado y claro, y sin que te dé apuro.</li>
-            <li><b>Sabes quién falla.</b> Historial de citas perdidas y cuántas veces ha fallado cada cliente. Y si decides cobrarlas, también ves quién ha pagado.</li>
-            <li><b>Bloquea a los clientes problemáticos.</b> Si alguien falla una y otra vez, con un clic desde tu panel deja de poder reservar online. Y lo desbloqueas cuando quieras.</li>
-          </ul>
-          <a class="btn btn-ghost ns-cta" href="panel.html?demo=1">Ver el panel de control</a>
-        </div>
-        <div class="ns-visual" data-reveal="right" aria-hidden="true">
-          <div class="ns-chat">
-            <div class="ns-chat-head"><span class="ns-bot">🤖</span><div><b>Book Lab</b><small>Asistente automático</small></div></div>
-            <div class="ns-bubble">
-              <b>Hola, Carlos:</b>
-              <p>Te informamos de que no acudiste a tu cita y no recibimos ningún aviso de cancelación.</p>
-              <p>📅 Viernes 16 de octubre · 20:00<br>✂️ Corte + barba con Diego</p>
-              <p>Si no puedes venir a una cita, avísanos con antelación. Para cualquier consulta, responde a este mensaje.</p>
-              <span class="ns-time">20:31 ✓✓</span>
-            </div>
-          </div>
-          <div class="ns-block">
-            <span class="ns-lock">⛔</span>
-            <div>
-              <b>Reserva online bloqueada</b>
-              <p>Para volver a reservar, ponte en contacto con la barbería.</p>
-            </div>
-          </div>
+        <div class="foto-mano-texto">
+          <h1 class="marca-gigante" id="portada-titulo">Book <span class="amarillo">Lab</span><sup>®</sup></h1>
+          <p class="video-lema">Tu barbería trabaja sola.<br><span class="amarillo">Tú vuelves a tener vida.</span></p>
         </div>
       </div>
-    </section>
 
-    <!-- 5. Cómo trabajamos -->
-    <section class="section proceso" aria-labelledby="proceso-title">
-      <div class="wrap">
-        <span class="eyebrow" data-reveal="left">Cómo trabajamos</span>
-        <h2 class="h2 ed-h" id="proceso-title">
-          <span class="ed-line"><span class="ed-line-in f-cond">Tu web,</span></span>
-          <span class="ed-line"><span class="ed-line-in f-light accent">en tres pasos.</span></span>
-        </h2>
-        <ol class="steps steps-3" data-stagger>
-          <li>
-            <div>
-              <h3>Me cuentas</h3>
-              <p>Tus servicios, precios, horario y fotos.</p>
+      <div class="portada-fila">
+        <p class="portada-lema">La web de tu barbería, con reservas, recordatorios y caja. Hecha por un barbero.</p>
+        <ul class="portada-lista">
+          <li><a href="herramientas.html#web">Web propia y dominio</a></li>
+          <li><a href="herramientas.html#reservas">Reservas 24/7</a></li>
+          <li><a href="herramientas.html#recordatorios">Recordatorios por WhatsApp</a></li>
+          <li><a href="herramientas.html#caja">Panel y caja del iPad</a></li>
+        </ul>
+      </div>
+
+      <!-- Escaparate: la demo pasando sola dentro de un móvil -->
+      <div class="escaparate">
+        <!-- Pantallas del móvil y de la caja en un iPad en horizontal, en el mismo orden que los pasos -->
+        <div class="escaparate-movil" id="aparato">
+          <button type="button" class="flecha flecha-ant" id="ant" aria-label="Pantalla anterior">‹</button>
+          <button type="button" class="flecha flecha-sig" id="sig" aria-label="Pantalla siguiente">›</button>
+          <div class="movil" aria-hidden="true">
+            <div class="movil-pantalla">
+              <div class="ui ui-m is-on u-webv">
+                <div class="u-wv-foto" style="background-image:url('assets/img/corte-portada.webp')">
+                  <div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
+                  <div class="u-wv-nav"><b>NORTE<small>Barber Club</small></b><span class="u-wv-menu"><i></i><i></i></span></div>
+                  <div class="u-wv-hero"><p class="u-wv-lugar">Malasaña · Madrid · desde 2014</p><h3>Fades que<br>hablan <em>solos.</em></h3>
+                    <div class="u-wv-ctas"><span class="u-btn-a">Reservar cita</span><span class="u-wv-borde">Ver precios</span></div>
+                    <p class="u-est">★★★★★ <b>4,9</b> en Google · 128 reseñas</p></div>
+                </div>
+                <div class="u-wv-cuerpo">
+                  <p class="u-mini">El trabajo habla solo</p>
+                  <div class="u-wv-galeria"><span style="background-image:url('assets/img/corte-1.webp')"></span><span style="background-image:url('assets/img/corte-2.webp')"></span><span style="background-image:url('assets/img/corte-3.webp')"></span></div>
+                  <div class="u-precio"><span>Skinfade</span><b>17 €</b></div><div class="u-precio"><span>Corte + barba</span><b>20 €</b></div>
+                </div>
+              </div>
+              <div class="ui ui-m"><div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
+                <p class="u-paso">Paso 3 de 4</p><h3 class="u-h">Día y hora</h3>
+                <div class="u-tags"><span>Skinfade · 17 €</span><span>Con Dani</span></div>
+                <span class="u-btn-a u-ancho">⚡ Primera hora libre</span>
+                <div class="u-dias"><span><b>3</b>hoy<i class="u-am"></i></span><span class="is-on"><b>4</b>mañana<i></i></span><span><b>5</b>jue<i></i></span><span><b>6</b>vie<i class="u-ro"></i></span></div>
+                <p class="u-mini u-mt">Mañana</p><div class="u-horas"><span>09:30</span><span>10:30</span><span class="is-on">11:00</span><span>12:30</span></div>
+                <p class="u-mini u-mt">Tarde</p><div class="u-horas"><span>16:00</span><span>17:30</span><span>19:00</span><span>20:00</span></div>
+                <span class="u-btn-a u-ancho u-abajo">Continuar</span>
+              </div>
+              <div class="ui ui-m u-bloqueo"><div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
+                <p class="u-fecha">miércoles, 4 de noviembre</p><p class="u-hora">08:00</p>
+                <div class="u-noti"><i>💬</i><div><b>WhatsApp · Norte Barber Club</b><p>Hola, Carlos 👋 Te recordamos tu cita de hoy a las 11:00 con Dani.</p></div></div>
+                <div class="u-noti"><i>✉️</i><div><b>Correo · Cita confirmada</b><p>Skinfade con Dani · miércoles 4, 11:00. Puedes cambiarla desde aquí.</p></div></div>
+              </div>
+              <div class="ui ui-m"><div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
+                <h3 class="u-h">No vinieron</h3>
+                <div class="u-card"><p class="u-nom">Iván López <small>29/10 · 12:00</small></p><p class="u-gr">Arreglo de barba · 12 €</p><p class="u-roj u-b">Ha fallado 2 veces</p>
+                  <div class="u-fila-b"><span class="u-ok-b">🤖 Aviso enviado ✓</span><span class="u-bloq">Bloquear</span></div></div>
+                <div class="u-wab"><p>🤖 <b>Book Lab · Asistente de Norte Barber Club</b><br><i>Mensaje automático</i></p><p>Hola, Iván: te informamos de que no acudiste a tu cita y no recibimos ningún aviso de cancelación.</p><p>💶 Importe: <b>12,00 €</b></p></div>
+                <div class="u-card u-mt2"><p class="u-mini">Bloqueados</p><p class="u-nom">Javier M. <small>No vino 3 veces</small></p></div>
+              </div>
+              <div class="ui ui-m"><div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
+                <div class="u-mail"><p class="u-mail-de">Correo · Norte Barber Club</p><p class="u-mail-t">¿Qué tal tu corte, Carlos?</p>
+                  <p class="u-estrellas">★★★★★</p>
+                  <p class="u-mail-p">Esperamos que hayas salido con el resultado que buscabas. Si te ha gustado, nos encantaría conocer tu opinión: te llevará menos de un minuto.</p>
+                  <span class="u-btn-n">Dejar mi reseña en Google</span></div>
+                <div class="u-google"><b>Norte Barber Club</b><p><span>★★★★★</span> 4,9 · 128 reseñas</p></div>
+              </div>
+              <div class="ui ui-m"><div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
+                <div class="u-card u-espera"><p class="u-mini">Lista de espera · martes 3</p><p class="u-nom">2 personas esperando hueco</p></div>
+                <div class="u-mail"><p class="u-mail-de">Correo · ¡Hueco libre!</p><p class="u-mail-t">¡Se ha quedado un hueco libre!</p>
+                  <p class="u-mail-p">Hola Carlos, estabas en nuestra lista de espera para el martes 3. Ahora hay hora libre:</p>
+                  <div class="u-horas-o"><span>17:00</span><span>17:30</span></div><p class="u-mail-p">Con Dani</p>
+                  <span class="u-btn-n">Reservar ahora</span></div>
+              </div>
+              <div class="ui ui-m"><div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
+                <h3 class="u-h">Tus números</h3><div class="u-tags"><span class="is-on">Octubre</span><span>Todos</span><span>Álex</span><span>Dani</span></div>
+                <div class="u-kpis"><div><small>Facturado</small><b>14.543 €</b><i>▲ 8 %</i></div><div><small>Citas</small><b>866</b><i>▲ 9 %</i></div><div><small>Ticket medio</small><b>17,31 €</b></div><div><small>Ocupación</small><b>56 %</b></div><div><small>Clientes nuevos</small><b>19</b></div><div><small>No vinieron</small><b>26</b><i class="u-roj">199 € por cobrar</i></div></div>
+              </div>
             </div>
-          </li>
-          <li>
-            <div>
-              <h3>La preparo</h3>
-              <p>Diseño tu web y te la enseño antes de publicarla.</p>
+          </div>
+          <div class="ipad" aria-hidden="true">
+            <div class="ipad-pantalla">
+              <div class="ui ui-i">
+                <div class="u-icab"><b>💵 EFECTIVO</b><span>Óscar F. · Álex</span></div>
+                <div class="u-cambio"><div class="u-cuentas"><div><small>Total</small><b>17 €</b></div><div><small>Te da</small><b>20 €</b></div><div class="u-devuelve"><small>Devuélvele</small><b>3 €</b></div></div>
+                <div class="u-billetes"><span>50 €</span><span class="is-on">20 €</span><span>10 €</span><span>5 €</span><span>2 €</span><span>1 €</span><span class="u-guardar">GUARDAR</span></div></div>
+              </div>
             </div>
-          </li>
-          <li>
-            <div>
-              <h3>A reservar</h3>
-              <p>Online con tu dominio, lista para compartir en Instagram y Google.</p>
-            </div>
-          </li>
+          </div>
+        </div>
+        <button type="button" class="pausa" id="pausa" aria-pressed="false">❚❚ Pausa</button>
+        <ol class="escaparate-pasos" id="pasos">
+          <li class="is-on"><b>Tu web</b><span>Con tu nombre, tus fotos y tus precios.</span></li>
+          <li><b>Reservan solos</b><span>Eligen servicio, barbero y hora libre. A cualquier hora.</span></li>
+          <li><b>Menos citas perdidas</b><span>Confirmación por correo y recordatorio por WhatsApp.</span></li>
+          <li><b>Adiós a los plantones</b><span>Aviso del bot al que no vino. Y si repite, bloqueado.</span></li>
+          <li><b>Más reseñas en Google</b><span>Después del corte le llega el recordatorio para valorarte.</span></li>
+          <li><b>Lista de espera</b><span>Si alguien cancela, el hueco se llena solo.</span></li>
+          <li><b>Tus números</b><span>Facturación, citas, ocupación y mucho más.</span></li>
+          <li><b>La caja del iPad</b><span>Cobra, te dice el cambio y hace el reparto.</span></li>
         </ol>
       </div>
-    </section>
 
-    <!-- 5b. Precios (oferta de lanzamiento) -->
-    <section class="section precios" id="precios" aria-labelledby="precios-title">
-      <div class="wrap">
-        <span class="eyebrow" data-reveal="left">Precios</span>
-        <h2 class="h2 ed-h" id="precios-title">
-          <span class="ed-line"><span class="ed-line-in f-cond">Precio de lanzamiento.</span></span>
-          <span class="ed-line"><span class="ed-line-in f-light accent">Sin letra pequeña.</span></span>
-        </h2>
-        <p class="lead" data-reveal="up">Oferta de salida para las 10 primeras barberías que confíen en Book Lab.</p>
+      <!-- Funciones: lo que más vende, en orden -->
+      <section class="funciones" aria-labelledby="funciones-titulo">
+        <h2 id="funciones-titulo">Todo lo que hace por ti</h2>
+        <ol class="funciones-lista">
+          <li><a href="herramientas.html#recordatorios"><b>Menos citas perdidas</b><span>Recordatorios automáticos el día antes y 3 horas antes, o cuando tú quieras. Y avisos por WhatsApp con un solo toque.</span></a></li>
+          <li><a href="herramientas.html#bloqueos"><b>Bloquea a los que te dejan tirado</b><span>Con un toque, ese cliente ya no puede volver a reservar.</span></a></li>
+          <li><a href="herramientas.html#resenas"><b>Más reseñas en Google</b><span>Después de cada corte le llega un recordatorio automático para dejar su reseña. Y si quieres, se lo recuerdas tú por WhatsApp con un solo toque.</span></a></li>
+          <li><a href="herramientas.html#caja"><b>Caja con reparto automático</b><span>Lo que factura cada barbero, lo que le toca cobrar y lo que queda para ti. Sin hacer cuentas.</span></a></li>
+          <li><a href="herramientas.html#espera"><b>Lista de espera</b><span>Si no hay hueco, el cliente se apunta. Si alguien cancela, le avisa sola y el hueco se llena.</span></a></li>
+          <li><a href="herramientas.html#cliente"><b>El cliente se gestiona solo</b><span>Cambia o cancela su cita desde el correo, sin llamarte.</span></a></li>
+          <li><a href="herramientas.html#mostrador"><b>Agenda de mostrador</b><span>¿Entra alguien sin cita? Tres toques y apuntado.</span></a></li>
+          <li><a href="herramientas.html#numeros"><b>Tus números claros</b><span>Facturación, ocupación, horas punta y mejores clientes. Y todo a Excel.</span></a></li>
+        </ol>
+        <!-- Cierre de las funciones: hay mucho más -->
+        <div class="iceberg">
+          <p>Y esto es solo la punta del iceberg. <span>Hacemos mucho más.</span></p>
+          <a class="final-herramientas" href="herramientas.html">Descubre todas nuestras herramientas <span aria-hidden="true">→</span></a>
+        </div>
+      </section>
 
-        <div class="pricing" data-stagger>
-          <article class="price-card">
-            <span class="price-badge">Para las 10 primeras barberías</span>
+      <!-- Precios (oferta de lanzamiento; mismos precios que index.html) -->
+      <section class="precios" id="precios" aria-labelledby="precios-titulo">
+        <h2 id="precios-titulo">Precios</h2>
+        <p class="precios-sub">Precio de lanzamiento para las 10 primeras barberías. Después, 24,90 €/mes.</p>
+        <div class="precios-planes">
+          <article class="plan">
             <h3>Mensual</h3>
-            <p class="price-amount"><s class="price-old">24,90 €</s> <b>19,90 €</b><span>/mes</span></p>
-            <p class="price-note">Pagas mes a mes. Precio normal: 24,90 €/mes.</p>
+            <p class="plan-precio"><s>24,90 €</s> <b>19,90 €</b><span>/mes</span></p>
+            <p class="plan-nota">Pagas mes a mes.</p>
           </article>
-          <article class="price-card is-featured">
-            <span class="price-badge">El más elegido · 2 meses gratis</span>
+          <article class="plan plan-destacado">
+            <span class="plan-etiqueta">1 mes gratis</span>
             <h3>Anual</h3>
-            <p class="price-amount"><s class="price-old">299 €</s> <b>199 €</b><span>/año</span></p>
-            <p class="price-note">Equivale a 16,58 € al mes.</p>
+            <p class="plan-precio"><s>274 €</s> <b>219 €</b><span>/año</span></p>
+            <p class="plan-nota">Sale a 18,25 € al mes.</p>
           </article>
         </div>
-
-        <div class="price-setup" data-reveal="up">
-          <div>
-            <h3>Alta y puesta en marcha</h3>
-            <p>Diseño a medida, dominio, Google Calendar, correos automáticos y SEO local. Un único pago.</p>
-          </div>
-          <p class="price-amount"><s class="price-old">199 €</s> <b>99 €</b></p>
-        </div>
-
-        <ul class="price-includes" aria-label="Qué incluye" data-stagger>
-          <li>Web a medida con tu propio dominio</li>
-          <li>Reservas online 24/7, sin límite de citas</li>
-          <li>Recordatorios y correos para que tus clientes cuenten su experiencia con una reseña en Google</li>
-          <li>Tus clientes cancelan o cambian su cita solos</li>
-          <li>Panel de control: facturación por barbero y por mes · <a href="panel.html?demo=1">ver ejemplo</a></li>
-          <li>Gestión de clientes: no shows, avisos automáticos y bloqueo de clientes problemáticos</li>
-          <li>SEO local y conexión con Google Maps</li>
-          <li>Alojamiento, mantenimiento y cambios incluidos</li>
-          <li>Sin comisiones por reserva ni coste por barbero</li>
+        <ul class="precios-incluye">
+          <li>Mantenimiento y cambios incluidos</li>
+          <li>Sin comisiones por reserva</li>
+          <li>Sin coste por barbero</li>
+          <li>🤝 Trae a otra barbería: 1 mes gratis</li>
         </ul>
+        <a class="pildora pildora-negra precios-cta" href="https://wa.me/34746045607?text=Hola%2C%20quiero%20la%20oferta%20de%20lanzamiento%20de%20Book%20Lab" target="_blank" rel="noopener">Quiero la oferta <i aria-hidden="true"></i></a>
+        <p class="precios-legal">Precios sin IVA. El precio que contrates se mantiene mientras sigas con nosotros.</p>
+      </section>
 
-        <div class="referral" data-reveal="scale">
-          <span class="referral-icon" aria-hidden="true">🤝</span>
-          <div>
-            <h3>Trae a otra barbería y te regalo un mes</h3>
-            <p>Por cada barbería que se apunte gracias a ti, tienes <b>1 mes gratis</b>. Sin límite.</p>
-          </div>
+      <!-- Llamada final: probar la demo -->
+      <section class="final" aria-label="Pruébalo">
+        <div class="final-demo">
+          <p>Pruébalo como si fueras tu cliente y mira lo que verías tú.</p>
+          <a class="pildora pildora-negra pildora-grande" href="demo.html">Probar la demo <i aria-hidden="true"></i></a>
         </div>
-        <p class="price-legal">Precios sin IVA. Oferta de lanzamiento para las 10 primeras barberías; el precio que contrates se mantiene mientras sigas con nosotros.</p>
-        <div class="hero-ctas">
-          <a class="btn btn-primary" href="https://wa.me/34746045607?text=Hola%2C%20quiero%20la%20oferta%20de%20lanzamiento%20de%20Book%20Lab" target="_blank" rel="noopener">Quiero la oferta</a>
-          <a class="btn btn-ghost" href="demo.html">Ver la demo</a>
-        </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- 6. Llamada a la acción (franja amarilla) -->
-    <section class="cta-sec" aria-labelledby="cta-title">
-      <div class="cta">
-        <div class="wrap">
-          <h2 id="cta-title"><span class="cta-word">Mira cómo</span> <span class="cta-word cta-word-2">funciona.</span></h2>
-          <div class="cta-row">
-            <p>Una barbería de ejemplo con web, precios, reseñas, equipo y reservas. La tuya no será igual: se diseña a medida, con tus colores, tu estilo, tus fotos y tus textos.</p>
-            <div class="cta-actions">
-              <a class="btn" href="demo.html">Ver la demo</a>
-              <a class="btn btn-cta-ghost" href="panel.html?demo=1">Ver el panel del jefe (ejemplo)</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 7. Contacto -->
-    <section class="section" id="contacto" aria-labelledby="contacto-title">
-      <div class="wrap contact">
-        <div>
-          <span class="eyebrow" data-reveal="left">Contacto</span>
-          <h2 class="h2 ed-h" id="contacto-title">
-            <span class="ed-line"><span class="ed-line-in f-light">¿Hablamos de</span></span>
-            <span class="ed-line"><span class="ed-line-in f-cond accent">tu barbería?</span></span>
-          </h2>
-          <p class="lead" data-reveal="up">Cuéntame cómo se llama tu barbería y cómo trabajáis. Te respondo yo, en persona, y te digo cómo quedaría tu web.</p>
-        </div>
-        <div class="contact-list" data-stagger>
-          <a class="contact-item" href="https://wa.me/34746045607?text=Hola%2C%20tengo%20una%20barber%C3%ADa%20y%20me%20interesa%20Book%20Lab" target="_blank" rel="noopener">
-            <span class="contact-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.3c0-.1-.2-.2-.5-.3Z"/></svg></span>
-            <span><small>WhatsApp</small>746 045 607</span>
-          </a>
-          <a class="contact-item" href="https://www.instagram.com/xffade/" target="_blank" rel="noopener">
-            <span class="contact-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
-            <span><small>Instagram</small>@xffade</span>
-          </a>
-          <a class="contact-item" href="mailto:booklab.com@gmail.com?subject=Quiero%20una%20web%20con%20reservas">
-            <span class="contact-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m4 7 8 6 8-6"/></svg></span>
-            <span><small>Correo</small>booklab.com@gmail.com</span>
-          </a>
+      <!-- Tarjeta personal (la foto de Johan irá aquí cuando la tenga) -->
+      <div class="tarjeta">
+        <div class="tarjeta-foto" aria-hidden="true">J</div>
+        <div class="tarjeta-texto">
+          <small>Barbero desde hace 12 años · fundador</small>
+          <b>Johan</b>
+          <a class="pildora pildora-negra" href="https://wa.me/34746045607?text=Hola%2C%20tengo%20una%20barber%C3%ADa%20y%20me%20interesa%20Book%20Lab" target="_blank" rel="noopener">Hablemos por WhatsApp <i aria-hidden="true"></i></a>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- 7. Pie -->
-  <footer class="footer">
-    <div class="wrap">
-      <span>© 2026 Book Lab</span>
-      <a href="demo.html">Demo</a>
-      <a href="https://wa.me/34746045607" target="_blank" rel="noopener">WhatsApp</a>
-      <a href="https://www.instagram.com/xffade/" target="_blank" rel="noopener">Instagram</a>
-      <a href="legal.html#aviso-legal">Aviso legal</a>
-      <a href="legal.html#privacidad">Privacidad</a>
-      <a href="#top">Volver arriba ↑</a>
-    </div>
+  <footer class="pie">
+    <span>© 2026 Book Lab · Webs con reservas para barberías</span>
+    <nav aria-label="Legal"><a href="legal.html#aviso-legal">Aviso legal</a><a href="legal.html#privacidad">Privacidad</a><a href="legal.html#cookies">Cookies</a></nav>
   </footer>
 
-  <script src="assets/js/editorial.js?v=20261103a" defer></script>
+  <script>
+    /* Portada: la pantalla se enciende, llegan los avisos uno a uno (cada uno con halo amarillo y una vibración),
+       se ven los 3 últimos; al acabar, la pantalla se apaga y vuelve a empezar. */
+    (function () {
+      var lis = document.querySelectorAll('#avisos li'), marco = document.getElementById('mano-marco'), pantalla = document.getElementById('bloqueo'), n = 0;
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        pantalla.classList.add('encendida'); for (var k = 2; k < lis.length; k++) lis[k].classList.add('is-on'); return;
+      }
+      function repite(el, clase) { el.classList.remove(clase); void el.offsetWidth; el.classList.add(clase); }
+      function paso() {
+        if (n === 0) pantalla.classList.add('encendida');
+        if (n < lis.length) {
+          lis[n].classList.add('is-on'); if (n >= 3) lis[n - 3].classList.remove('is-on');
+          repite(marco, 'brilla'); repite(marco, 'vibra');
+          n++; setTimeout(paso, 1600);
+        } else setTimeout(function () {
+          pantalla.classList.remove('encendida');
+          setTimeout(function () { lis.forEach(function (l) { l.classList.remove('is-on'); }); n = 0; setTimeout(paso, 900); }, 600);
+        }, 3200);
+      }
+      setTimeout(paso, 600);
+    })();
+
+    /* Pantallas del carrusel: están diseñadas a 375 px (móvil) y 1180 px (iPad); se escalan al tamaño del marco */
+    (function () {
+      function escala() {
+        document.querySelectorAll('.movil-pantalla, .ipad-pantalla').forEach(function (p) {
+          p.style.setProperty('--k', p.clientWidth / (p.classList.contains('ipad-pantalla') ? 1180 : 375));
+        });
+      }
+      escala(); addEventListener('resize', escala);
+      if (window.ResizeObserver) document.querySelectorAll('.movil-pantalla, .ipad-pantalla').forEach(function (p) { new ResizeObserver(escala).observe(p); });
+    })();
+
+    /* Escaparate: pasa solo (2,8 s en el móvil, 5 s en el iPad). Se puede deslizar con el dedo, tocar un lado
+       de la pantalla o tocar un paso; al hacerlo, el tiempo vuelve a empezar. Con «movimiento reducido», no avanza solo. */
+    (function () {
+      var aparato = document.getElementById('aparato'), pasos = document.querySelectorAll('#pasos li'), i = 0, t;
+      var imgs = aparato.querySelectorAll('.ui');
+      var solo = !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+      function ir(n) {
+        imgs[i].classList.remove('is-on'); pasos[i].classList.remove('is-on');
+        i = (n + imgs.length) % imgs.length;
+        imgs[i].classList.add('is-on'); pasos[i].classList.add('is-on');
+        // Las pantallas de la caja van en el iPad: se esconde el móvil y aparece el iPad
+        aparato.classList.toggle('is-ipad', !!imgs[i].closest('.ipad'));
+      }
+      var visto = false, pausa = false, mantiene = false, largo = false, tMant; // visto: a la vista · pausa: botón · mantiene: dedo pulsado
+      function auto() { clearTimeout(t); if (solo && visto && !pausa && !mantiene) t = setTimeout(function () { ir(i + 1); auto(); }, imgs[i].closest('.ipad') ? 5000 : 2800); }
+      function mover(d) { ir(i + d); auto(); }
+      pasos.forEach(function (p, n) { p.addEventListener('click', function () { ir(n); auto(); }); });
+      var bp = document.getElementById('pausa');
+      bp.addEventListener('click', function () {
+        pausa = !pausa; bp.setAttribute('aria-pressed', String(pausa)); bp.textContent = pausa ? '▶ Seguir' : '❚❚ Pausa';
+        if (pausa) clearTimeout(t); else auto();
+      });
+      // Mantener el dedo (o el clic) sobre la pantalla: se queda quieta mientras está pulsada
+      aparato.addEventListener('pointerdown', function (e) {
+        if (e.target.closest('.flecha')) return;
+        clearTimeout(t); // quieto desde que se pone el dedo
+        tMant = setTimeout(function () { mantiene = largo = true; clearTimeout(t); aparato.classList.add('en-pausa'); }, 280);
+      });
+      ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) {
+        aparato.addEventListener(ev, function () { clearTimeout(tMant); if (mantiene) { mantiene = false; aparato.classList.remove('en-pausa'); } auto(); });
+      });
+      document.getElementById('ant').addEventListener('click', function () { mover(-1); });
+      document.getElementById('sig').addEventListener('click', function () { mover(1); });
+      // Deslizar: más de 40 px en horizontal (y más que en vertical, para no molestar al bajar la página)
+      var x0 = null, y0 = 0;
+      aparato.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+      aparato.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) mover(dx < 0 ? 1 : -1);
+      }, { passive: true });
+      // Tocar la pantalla: mitad izquierda = anterior, mitad derecha = siguiente
+      aparato.addEventListener('click', function (e) {
+        if (e.target.closest('.flecha')) return;
+        if (largo) { largo = false; return; }
+        var r = aparato.getBoundingClientRect();
+        mover(e.clientX < r.left + r.width / 2 ? -1 : 1);
+      });
+      // Empieza cuando el cliente baja hasta el carrusel; se para si lo deja atrás y sigue al volver
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          visto = es[0].isIntersecting; if (visto) auto(); else clearTimeout(t);
+        }, { threshold: .5 }).observe(aparato);
+      } else { visto = true; auto(); }
+    })();
+  </script>
 </body>
 </html>
