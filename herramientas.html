@@ -11,16 +11,16 @@
   <meta name="theme-color" content="#f2f2f0">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/clara.css?v=20261103p">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261103r">
 </head>
 <body>
   <header class="nav">
-    <a class="nav-marca" href="nueva.html">Book Lab<sup>®</sup></a>
+    <a class="nav-marca" href="nueva-mano-foto.html">Book Lab<sup>®</sup></a>
     <a class="pildora pildora-negra" href="demo.html">Ver la demo</a>
   </header>
 
   <main class="hr">
-    <a class="hr-volver" href="nueva.html">← Volver</a>
+    <a class="hr-volver" href="nueva-mano-foto.html">← Volver</a>
     <h1 class="hr-titulo">Todas las herramientas</h1>
     <p class="hr-lema">Todo lo que lleva tu web de Book Lab. Toca una para ir directo o baja para verlas todas.</p>
 
@@ -50,7 +50,18 @@
           <li>Web ligera y rápida, algo que Google tiene en cuenta.</li>
         </ul>
       </div>
-      <figure class="hr-movil"><img src="assets/img/pantallas/1-web.webp?v=20261103b" alt="Portada de la web de una barbería en el móvil" width="600" height="1298" loading="lazy"></figure>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp rp-claro">
+          <p class="rp-mini">Google · barbería cerca de mí</p>
+          <div class="rp-google">
+            <p class="rp-g-url">tubarberia.com</p>
+            <p class="rp-g-tit">Tu Barbería · Barbería en tu ciudad · Reserva online</p>
+            <p class="rp-g-est"><span>★★★★★</span> 4,9 · 128 reseñas</p>
+            <p class="rp-gris-o">Cortes, degradados y barba. Reserva tu cita en un minuto, 24 horas.</p>
+            <div class="rp-botones"><span class="rp-boton rp-amarillo">Reservar cita</span><span class="rp-boton rp-boton-o">Cómo llegar</span></div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Reservas -->
@@ -70,7 +81,15 @@
           <li>Sin comisiones por reserva ni límite de citas.</li>
         </ul>
       </div>
-      <figure class="hr-movil"><img src="assets/img/pantallas/2-hora.webp?v=20261103b" alt="Elegir día y hora en la reserva" width="600" height="1298" loading="lazy"></figure>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Día y hora</p>
+          <span class="rp-boton rp-amarillo rp-bloque">⚡ Primera hora libre</span>
+          <div class="rp-dias"><span><b>3</b>hoy<i class="rp-pocas"></i></span><span class="is-on"><b>4</b>mañana<i></i></span><span><b>5</b>jue<i></i></span><span><b>6</b>vie<i class="rp-llena"></i></span></div>
+          <div class="rp-horas"><span>10:00</span><span class="is-on">11:00</span><span>12:30</span><span>16:00</span><span>17:30</span><span>19:00</span></div>
+          <p class="rp-nota">Solo salen las horas libres de verdad.</p>
+        </div>
+      </div>
     </section>
 
     <!-- Política de reserva -->
@@ -84,6 +103,13 @@
           <li>Casilla obligatoria «He leído y acepto la política de reservas».</li>
           <li>Queda en el resumen de la cita, para que nadie diga que no lo sabía.</li>
         </ul>
+      </div>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Política de reservas</p>
+          <ul class="rp-lista"><li><b>Cancelaciones:</b> avísanos con al menos 2 horas de antelación.</li><li><b>Citas no asistidas:</b> se abonan al 50 %.</li></ul>
+          <p class="rp-check"><span>✓</span>He leído y acepto la política de reservas.</p>
+        </div>
       </div>
     </section>
 
@@ -99,7 +125,14 @@
           <li>Panel «Hoy»: con el botón «Recordar a todos» mandas el recordatorio por WhatsApp a los clientes del día, uno detrás de otro, con un toque.</li>
         </ul>
       </div>
-      <figure class="hr-movil"><img src="assets/img/pantallas/3b-avisos.webp?v=20261103b" alt="Recordatorio por WhatsApp y correo de cita confirmada en el móvil del cliente" width="600" height="1298" loading="lazy"></figure>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Al cliente le llega</p>
+          <div class="rp-noti"><span class="rp-ico">✉️</span><div><b>Cita confirmada</b><p class="rp-gris">Skinfade con Dani · miércoles 4, 11:00</p></div><small>ahora</small></div>
+          <div class="rp-noti"><span class="rp-ico">🔔</span><div><b>Recordatorio · mañana</b><p class="rp-gris">Te esperamos a las 11:00</p></div><small>24 h antes</small></div>
+          <div class="rp-noti"><span class="rp-ico">🔔</span><div><b>Recordatorio · hoy</b><p class="rp-gris">Tu cita es a las 11:00</p></div><small>3 h antes</small></div>
+        </div>
+      </div>
     </section>
 
     <!-- Por qué WhatsApp va con un toque -->
@@ -116,7 +149,13 @@
         </ul>
         <p class="hr-nota">Lo que sí es 100 % automático son los correos: confirmación, recordatorios, reseñas y cancelaciones.</p>
       </div>
-      <figure class="hr-captura"><img src="assets/img/pantallas/wa-recordatorio.webp?v=1" alt="Recordatorio de la cita por WhatsApp, con el nombre del cliente, el día, el servicio y el barbero" width="600" height="884" loading="lazy"><figcaption>Así le llega: con su nombre y su cita</figcaption></figure>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Recordar a todos</p>
+          <p class="rp-gris">Toca y se abre WhatsApp con el mensaje ya escrito:</p>
+          <div class="rp-wa"><p class="rp-wa-de">Solo darle a enviar</p><p class="rp-wa-txt">🤖 <b>Book Lab · Asistente de tu barbería</b><br><i>Recordatorio automático</i><br><br>Hola, Carlos:<br>Te recordamos que mañana tienes cita con nosotros:<br><br>📅 Miércoles 4 de noviembre a las 11:00<br>✂️ Skinfade con Dani<br><br>Si no puedes venir, avísanos respondiendo a este mensaje para poder ofrecer tu hueco a otro cliente.<br><br>¡Te esperamos! 💈</p></div>
+        </div>
+      </div>
     </section>
 
     <!-- No shows -->
@@ -145,7 +184,6 @@
         </ul>
       </div>
       <div class="hr-paneles" aria-hidden="true">
-        <!-- Paneles rehechos en código (no capturas): el cliente que no vino y el WhatsApp que le llega -->
         <div class="rp">
           <p class="rp-titulo">No vinieron este mes</p>
           <div class="rp-fila">
@@ -154,19 +192,12 @@
             <p class="rp-rojo">Ha fallado 2 veces</p>
             <div class="rp-botones"><span class="rp-boton rp-amarillo">🤖 Enviar aviso del bot</span><span class="rp-boton">Marcar pagado</span></div>
           </div>
-          <div class="rp-wa">
-            <p class="rp-wa-de">Le llega por WhatsApp</p>
-            <p>Hola, Iván: no acudiste a tu cita del jueves a las 12:00 y no nos avisaste. Importe: <b>12 €</b>. Responde y te decimos cómo pagarlo.</p>
-          </div>
+          <div class="rp-wa"><p class="rp-wa-de">Le llega por WhatsApp</p><p class="rp-wa-txt">🤖 <b>Book Lab · Asistente de tu barbería</b><br><i>Mensaje automático</i><br><br>Hola, Iván:<br>Te informamos de que no acudiste a tu cita y no recibimos ningún aviso de cancelación.<br><br>📅 Jueves 29 de octubre a las 12:00<br>✂️ Arreglo de barba con Sara<br>💶 Importe: <b>12,00 €</b><br><br>Según nuestra política de cancelaciones, las citas no anuladas con antelación se abonan, ya que ese tiempo queda reservado exclusivamente para ti.<br><br>Para regularizar el pago, responde a este mensaje y te indicamos cómo hacerlo.<br><br>Gracias por tu comprensión.</p></div>
         </div>
-        <!-- La lista de bloqueados -->
         <div class="rp">
           <p class="rp-titulo">Clientes bloqueados</p>
           <div class="rp-fila rp-fila-linea">
-            <div>
-              <p class="rp-nombre">Javier Moreno</p>
-              <p class="rp-gris">No vino 3 veces · desde el 03/11</p>
-            </div>
+            <div><p class="rp-nombre">Javier Moreno</p><p class="rp-gris">No vino 3 veces · desde el 03/11</p></div>
             <span class="rp-boton">Desbloquear</span>
           </div>
           <p class="rp-nota">No puede reservar por la web: le sale un aviso para que hable con la barbería.</p>
@@ -188,7 +219,16 @@
           <li>El hueco vuelve a quedar libre en la web al momento.</li>
         </ul>
       </div>
-      <div class="hr-capturas"><figure class="hr-captura"><img src="assets/img/pantallas/det-cancelar.webp?v=1" alt="Cancelar una cita eligiendo el motivo y avisando al cliente por correo" width="700" height="877" loading="lazy"><figcaption>Lo que ves tú</figcaption></figure><figure class="hr-captura"><img src="assets/img/pantallas/wa-cancelada.webp?v=1" alt="WhatsApp que recibe el cliente con el motivo de la cancelación y el enlace para reservar otra cita" width="600" height="884" loading="lazy"><figcaption>Lo que le llega al cliente</figcaption></figure></div>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Cancelar cita</p>
+          <p class="rp-gris">Carlos Martín · martes 3, 19:00 · Skinfade</p>
+          <p class="rp-mini rp-mini-o">Motivo</p>
+          <div class="rp-chips"><span class="is-on">Barbero enfermo</span><span>Imprevisto en la barbería</span><span>Cierre del local</span></div>
+          <p class="rp-check"><span>✓</span>Avisar al cliente por correo con el motivo y un botón para reservar otra cita</p>
+          <div class="rp-wa"><p class="rp-wa-de">Y el WhatsApp, ya escrito</p><p class="rp-wa-txt">🤖 <b>Book Lab · Asistente de tu barbería</b><br><i>Mensaje automático</i><br><br>Hola, Carlos:<br>Sentimos comunicarte que hemos tenido que cancelar tu cita:<br><br>📅 Martes 3 de noviembre a las 19:00<br>✂️ Skinfade con Álex<br>📝 Motivo: Barbero enfermo<br><br>Puedes reservar otra cita cuando quieras aquí: tubarberia.com/reservar<br><br>Disculpa las molestias.</p></div>
+        </div>
+      </div>
     </section>
 
     <!-- Reseñas -->
@@ -203,7 +243,14 @@
           <li>Con tu propio mensaje y el enlace directo a tu ficha de Google.</li>
         </ul>
       </div>
-      <figure class="hr-movil"><img src="assets/img/pantallas/5-hoy.webp?v=20261103b" alt="Panel Hoy con los botones de recordar y reseñas" width="600" height="1298" loading="lazy"></figure>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Hoy</p>
+          <span class="rp-gordo rp-verde">💬 Recordar a todos <small>2 por recordar</small></span>
+          <span class="rp-gordo rp-amarillo">⭐ Reseñas en Google <small>4 listas para enviar</small></span>
+          <div class="rp-fila rp-fila-linea"><div><p class="rp-nombre">Hugo P. <small>10:00</small></p><p class="rp-verde-t">Cobrado</p></div><span class="rp-boton">⭐</span></div>
+        </div>
+      </div>
     </section>
 
     <!-- Gestionar mi cita -->
@@ -219,7 +266,15 @@
           <li>Puede copiar el resumen de su cita con un toque.</li>
         </ul>
       </div>
-      <figure class="hr-movil"><img src="assets/img/pantallas/3-reservada.webp?v=20261103b" alt="Cita reservada con su resumen" width="600" height="1298" loading="lazy"></figure>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp rp-claro">
+          <p class="rp-mini">Correo · Cita confirmada</p>
+          <p class="rp-nombre-o">¡Cita confirmada!</p>
+          <ul class="rp-datos"><li><span>Servicio</span>Skinfade</li><li><span>Barbero</span>Dani</li><li><span>Día</span>Miércoles 4 de noviembre</li><li><span>Hora</span>11:00</li></ul>
+          <div class="rp-botones"><span class="rp-boton rp-negro">Cambiar la cita</span><span class="rp-boton rp-boton-o">Cancelar</span></div>
+          <p class="rp-nota-o">Hasta 2 horas antes · máximo 2 cambios</p>
+        </div>
+      </div>
     </section>
 
     <!-- Lista de espera -->
@@ -234,7 +289,16 @@
           <li>Cada barbero ve en su agenda cuánta gente espera cada día.</li>
         </ul>
       </div>
-      <figure class="hr-captura"><img src="assets/img/pantallas/det-espera.webp?v=1" alt="Formulario para apuntarse a la lista de espera" width="700" height="1012" loading="lazy"></figure>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Lista de espera</p>
+          <p class="rp-gris">Martes 3 · Skinfade · con Dani</p>
+          <p class="rp-mini rp-mini-o">¿Qué franja te va bien?</p>
+          <div class="rp-chips"><span>Mañana</span><span class="is-on">Tarde</span><span>Me da igual</span></div>
+          <span class="rp-boton rp-amarillo rp-bloque">Apuntarme</span>
+          <p class="rp-nota">Si alguien cancela, te avisamos al momento.</p>
+        </div>
+      </div>
     </section>
 
     <!-- Agenda de mostrador -->
@@ -252,7 +316,15 @@
           <li>Se instala en el móvil como una app, con su icono.</li>
         </ul>
       </div>
-      <figure class="hr-captura"><img src="assets/img/pantallas/det-mostrador.webp?v=1" alt="Agenda de mostrador del barbero: servicio y día" width="700" height="722" loading="lazy"></figure>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Apuntar cliente <small class="rp-quien">Álex</small></p>
+          <div class="rp-servicios"><span class="is-on">Skinfade<b>17 €</b></span><span>Corte<b>16 €</b></span><span>Corte + barba<b>20 €</b></span><span>Barba<b>12 €</b></span></div>
+          <div class="rp-horas"><span class="is-on">Ahora</span><span>12:30</span><span>13:00</span></div>
+          <p class="rp-entrada">Nombre: <b>Rubén</b></p>
+          <span class="rp-boton rp-amarillo rp-bloque">Apuntar</span>
+        </div>
+      </div>
     </section>
 
     <!-- Kiosco -->
@@ -285,7 +357,17 @@
           <li>El botón del panel solo sale en tu móvil; tus clientes no lo ven.</li>
         </ul>
       </div>
-      <figure class="hr-movil"><img src="assets/img/pantallas/4-panel.webp?v=20261103b" alt="Panel con facturación, citas, ticket medio y ocupación" width="600" height="1298" loading="lazy"></figure>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Tus números · octubre</p>
+          <div class="rp-kpis">
+            <div><small>Facturado</small><b>14.543 €</b><i>▲ 8 %</i></div>
+            <div><small>Citas</small><b>866</b><i>▲ 9 %</i></div>
+            <div><small>Ticket medio</small><b>17,31 €</b></div>
+            <div><small>Ocupación</small><b>56 %</b></div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Caja -->
@@ -308,9 +390,20 @@
         </ul>
         <p class="hr-nota">Es un registro interno de cobros: no emite tickets ni facturas.</p>
       </div>
-      <div class="hr-ipads">
-        <figure class="hr-ipad"><img src="assets/img/pantallas/ipad-1-cobro.webp?v=20261103b" alt="Caja: cliente, servicios y formas de pago" width="1400" height="973" loading="lazy"></figure>
-        <figure class="hr-ipad"><img src="assets/img/pantallas/ipad-3-jefe.webp?v=20261103b" alt="Panel del jefe: efectivo en caja, cobrado y reparto por barbero" width="1400" height="973" loading="lazy"></figure>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Cobrar · Óscar F. <small class="rp-quien">Álex</small></p>
+          <div class="rp-chips"><span class="is-on">Skinfade · 17 €</span><span>Corte · 16 €</span><span>Barba · 12 €</span></div>
+          <div class="rp-pago"><span>💵 Efectivo</span><span>💳 Tarjeta</span><span>📱 Bizum</span></div>
+          <div class="rp-cambio"><div><small>Te da</small><b>20 €</b></div><div class="rp-amarillo"><small>Devuélvele</small><b>3 €</b></div></div>
+        </div>
+        <div class="rp">
+          <p class="rp-titulo">Reparto · hoy</p>
+          <div class="rp-fila rp-fila-linea"><p class="rp-gris">Le pagas a Dani (40 %)</p><b>27,20 €</b></div>
+          <div class="rp-fila rp-fila-linea"><p class="rp-gris">Le pagas a Sara (50 %)</p><b>24 €</b></div>
+          <div class="rp-fila rp-fila-linea"><p>Para ti</p><b class="rp-amarillo-t">175,80 €</b></div>
+          <p class="rp-nota">Efectivo que tiene que haber en caja: <b>210 €</b></p>
+        </div>
       </div>
     </section>
 
@@ -335,7 +428,7 @@
         <p>Pruébalo como si fueras tu cliente y mira lo que verías tú.</p>
         <a class="pildora pildora-negra pildora-grande" href="demo.html">Probar la demo <i aria-hidden="true"></i></a>
       </div>
-      <a class="final-herramientas" href="nueva.html#precios">Ver precios <span aria-hidden="true">→</span></a>
+      <a class="final-herramientas" href="nueva-mano-foto.html#precios">Ver precios <span aria-hidden="true">→</span></a>
     </section>
   </main>
 
