@@ -361,3 +361,16 @@ html { scroll-behavior: smooth; }
 .hr-sec .rp .rp-lista { padding-left: 18px; list-style: disc; }
 .hr-sec .rp .rp-lista li { color: #d0d0d0; }
 .hr-sec .rp-claro li { color: #111; }
+/* Botón de WhatsApp al lado de cada cliente */
+.rp-wa-btn { flex: 0 0 auto; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center; background: #62cf74; font-size: 1.1rem; }
+.rp-wa-btn.is-hecho { background: #1f3a2a; color: #7fe0a8; font-weight: 800; }
+.rp-horas-o span { border-color: #d6d5d1; color: #111; }
+/* Enlace al «* a saber» y nota al final de la página */
+.hr-asterisco { margin: 14px 0 0; font-size: .92rem; }
+.hr-asterisco a { color: inherit; opacity: .75; }
+.hr-asaber { scroll-margin-top: 14px; margin-top: 28px; padding: 22px 20px; border-top: 1px solid var(--linea); color: var(--gris); font-size: .9rem; line-height: 1.5; }
+.hr-asaber h2 { margin: 0 0 10px; font-size: 1rem; color: var(--negro); letter-spacing: -.01em; }
+.hr-asaber ul { margin: 0; padding-left: 18px; display: grid; gap: 6px; }
+.hr-asaber b { color: #333; }
+.hr-asaber .hr-nota { margin-top: 10px; }
+@media (min-width: 760px) { .hr-asaber { padding: 26px 44px; } }
