@@ -11,7 +11,7 @@
   <meta name="theme-color" content="#f2f2f0">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/clara.css?v=20261103o">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261103p">
 </head>
 <body>
   <header class="nav">
@@ -144,28 +144,34 @@
           <li>Lista de bloqueados con el motivo y la fecha. Lo desbloqueas cuando quieras.</li>
         </ul>
       </div>
-      <div class="hr-capturas">
-        <!-- Mini animación con la pantalla real: tocar «Enviar aviso del bot» → llega el WhatsApp → «Pagado ✓» -->
-        <div class="vivo vivo-noshow" aria-hidden="true">
-          <div class="vivo-panel">
-            <p class="vivo-titulo">No vinieron este mes</p>
-            <div class="vivo-cliente">
-              <p class="vivo-nombre">Iván López <small>29/10 · 12:00</small></p>
-              <p class="vivo-servicio">Arreglo de barba · 12 €</p>
-              <p class="vivo-falla">Ha fallado 2 veces</p>
-              <div class="vivo-botones">
-                <span class="vivo-bot">🤖 Enviar aviso del bot<i class="vivo-dedo"></i></span>
-                <span class="vivo-pagar">Marcar pagado</span>
-              </div>
-            </div>
+      <div class="hr-paneles" aria-hidden="true">
+        <!-- Paneles rehechos en código (no capturas): el cliente que no vino y el WhatsApp que le llega -->
+        <div class="rp">
+          <p class="rp-titulo">No vinieron este mes</p>
+          <div class="rp-fila">
+            <p class="rp-nombre">Iván López <small>29/10 · 12:00</small></p>
+            <p class="rp-gris">Arreglo de barba · 12 €</p>
+            <p class="rp-rojo">Ha fallado 2 veces</p>
+            <div class="rp-botones"><span class="rp-boton rp-amarillo">🤖 Enviar aviso del bot</span><span class="rp-boton">Marcar pagado</span></div>
           </div>
-          <div class="vivo-wa">
-            <p class="vivo-wa-de">WhatsApp · a Iván</p>
-            <p class="vivo-wa-texto">Hola, Iván: no acudiste a tu cita del jueves a las 12:00 y no nos avisaste. Importe: <b>12 €</b>. Responde y te decimos cómo pagarlo.</p>
-            <p class="vivo-wa-ok">Enviado ✓✓</p>
+          <div class="rp-wa">
+            <p class="rp-wa-de">Le llega por WhatsApp</p>
+            <p>Hola, Iván: no acudiste a tu cita del jueves a las 12:00 y no nos avisaste. Importe: <b>12 €</b>. Responde y te decimos cómo pagarlo.</p>
           </div>
         </div>
-        <figure class="hr-captura"><img src="assets/img/pantallas/det-bloqueados.webp?v=1" alt="Clientes bloqueados con el motivo y el botón de desbloquear" width="700" height="451" loading="lazy"></figure></div>
+        <!-- La lista de bloqueados -->
+        <div class="rp">
+          <p class="rp-titulo">Clientes bloqueados</p>
+          <div class="rp-fila rp-fila-linea">
+            <div>
+              <p class="rp-nombre">Javier Moreno</p>
+              <p class="rp-gris">No vino 3 veces · desde el 03/11</p>
+            </div>
+            <span class="rp-boton">Desbloquear</span>
+          </div>
+          <p class="rp-nota">No puede reservar por la web: le sale un aviso para que hable con la barbería.</p>
+        </div>
+      </div>
     </section>
 
     <!-- Cancelar con motivo -->
@@ -337,22 +343,5 @@
     <span>© 2026 Book Lab · Webs con reservas para barberías</span>
     <nav aria-label="Legal"><a href="legal.html#aviso-legal">Aviso legal</a><a href="legal.html#privacidad">Privacidad</a><a href="legal.html#cookies">Cookies</a></nav>
   </footer>
-  <script>
-    /* Mini animaciones de herramientas: van por pasos (paso-1, paso-2…) en bucle, solo mientras se ven */
-    (function () {
-      var vivos = document.querySelectorAll('.vivo');
-      if (!vivos.length) return;
-      var quieto = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-      vivos.forEach(function (v) {
-        var pasos = [0, 1, 2, 3], tiempos = [1400, 1300, 2600, 2600], k = 0, t = null;
-        function pon(n) { v.className = v.className.replace(/\s?paso-\d/g, '') + ' paso-' + n; }
-        if (quieto) { pon(3); return; }
-        function sigue() { pon(pasos[k]); t = setTimeout(function () { k = (k + 1) % pasos.length; sigue(); }, tiempos[k]); }
-        new IntersectionObserver(function (es) {
-          es.forEach(function (e) { if (e.isIntersecting && !t) sigue(); else if (!e.isIntersecting && t) { clearTimeout(t); t = null; k = 0; pon(0); } });
-        }, { threshold: .35 }).observe(v);
-      });
-    })();
-  </script>
 </body>
 </html>
