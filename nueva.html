@@ -11,7 +11,7 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/img/pantallas/1-web.webp" type="image/webp">
-  <link rel="stylesheet" href="assets/css/clara.css?v=20261103a">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261103c">
 </head>
 <body>
   <header class="nav">
@@ -35,25 +35,36 @@
 
       <!-- Escaparate: la demo pasando sola dentro de un móvil -->
       <div class="escaparate">
-        <div class="escaparate-movil" aria-hidden="true">
+        <!-- Pantallas del móvil y de la caja en un iPad en horizontal, en el mismo orden que los pasos -->
+        <div class="escaparate-movil" id="aparato" aria-hidden="true">
           <div class="movil">
-            <div class="movil-pantalla" id="pantallas">
-              <img src="assets/img/pantallas/1-web.webp" alt="" width="600" height="1298" class="is-on">
-              <img src="assets/img/pantallas/2-hora.webp" alt="" width="600" height="1298" loading="lazy">
-              <img src="assets/img/pantallas/3-reservada.webp" alt="" width="600" height="1298" loading="lazy">
-              <img src="assets/img/pantallas/4-panel.webp" alt="" width="600" height="1298" loading="lazy">
-              <img src="assets/img/pantallas/5-hoy.webp" alt="" width="600" height="1298" loading="lazy">
-              <img src="assets/img/pantallas/6-caja.webp" alt="" width="600" height="1298" loading="lazy">
+            <div class="movil-pantalla">
+              <img src="assets/img/pantallas/1-web.webp?v=20261103b" alt="" width="600" height="1298" class="is-on">
+              <img src="assets/img/pantallas/2-hora.webp?v=20261103b" alt="" width="600" height="1298" loading="lazy">
+              <img src="assets/img/pantallas/3-reservada.webp?v=20261103b" alt="" width="600" height="1298" loading="lazy">
+              <img src="assets/img/pantallas/3b-avisos.webp?v=20261103b" alt="" width="600" height="1298" loading="lazy">
+              <img src="assets/img/pantallas/4-panel.webp?v=20261103b" alt="" width="600" height="1298" loading="lazy">
+              <img src="assets/img/pantallas/5-hoy.webp?v=20261103b" alt="" width="600" height="1298" loading="lazy">
+            </div>
+          </div>
+          <div class="ipad">
+            <div class="ipad-pantalla">
+              <img src="assets/img/pantallas/ipad-1-cobro.webp?v=20261103b" alt="" width="1400" height="973" loading="lazy">
+              <img src="assets/img/pantallas/ipad-2-cambio.webp?v=20261103b" alt="" width="1400" height="973" loading="lazy">
+              <img src="assets/img/pantallas/ipad-3-jefe.webp?v=20261103b" alt="" width="1400" height="973" loading="lazy">
             </div>
           </div>
         </div>
         <ol class="escaparate-pasos" id="pasos">
           <li class="is-on"><b>Tu web</b><span>Con tu nombre, tus fotos y tus precios.</span></li>
           <li><b>Reservan solos</b><span>Eligen servicio, barbero y hora libre.</span></li>
-          <li><b>Cita confirmada</b><span>Le llega el correo y el recordatorio.</span></li>
+          <li><b>Cita confirmada</b><span>En un minuto y sin llamar.</span></li>
+          <li><b>Le llega todo</b><span>Correo de confirmación y recordatorio por WhatsApp.</span></li>
           <li><b>Tus números</b><span>Facturación, citas y quién no vino.</span></li>
-          <li><b>Hoy</b><span>Recordar y pedir reseñas por WhatsApp.</span></li>
-          <li><b>La caja</b><span>Cobras y te dice el cambio.</span></li>
+          <li><b>Hoy</b><span>Recordatorios y reseñas por WhatsApp.</span></li>
+          <li><b>La caja del iPad</b><span>Toca el cliente, el servicio y cómo paga.</span></li>
+          <li><b>El cambio</b><span>Te da 20 € y te dice cuánto devolver.</span></li>
+          <li><b>Tus cuentas</b><span>Lo que hay en caja, lo de cada barbero y lo tuyo.</span></li>
         </ol>
       </div>
 
@@ -72,15 +83,20 @@
   <script>
     /* Escaparate: cambia de pantalla cada 2,8 s; se puede tocar un paso. Con «movimiento reducido», no avanza solo. */
     (function () {
-      var imgs = document.querySelectorAll('#pantallas img'), pasos = document.querySelectorAll('#pasos li'), i = 0, t;
-      // Prueba: ?o=1 enseña la web y la reserva de Olympo (solo páginas públicas) en vez de las de la demo
-      if (/[?&]o=1/.test(location.search)) { imgs[0].src = 'assets/img/pantallas/o1-web.webp'; imgs[1].src = 'assets/img/pantallas/o2-hora.webp'; }
+      var aparato = document.getElementById('aparato'), pasos = document.querySelectorAll('#pasos li'), i = 0, t;
+      var imgs = aparato.querySelectorAll('img');
       function ir(n) {
         imgs[i].classList.remove('is-on'); pasos[i].classList.remove('is-on');
         i = (n + imgs.length) % imgs.length;
         imgs[i].classList.add('is-on'); pasos[i].classList.add('is-on');
+        // Las pantallas de la caja van en el iPad: se esconde el móvil y aparece el iPad
+        var ipad = !!imgs[i].closest('.ipad');
+        aparato.classList.toggle('is-ipad', ipad);
+        // Reinicia el paseo del iPad (móvil) en cada pantalla
+        if (ipad) { var p = aparato.querySelector('.ipad'); p.style.animation = 'none'; void p.offsetWidth; p.style.animation = ''; }
       }
-      function auto() { clearInterval(t); t = setInterval(function () { ir(i + 1); }, 2800); }
+      // Las pantallas del iPad se quedan más tiempo: tienen más que leer
+      function auto() { clearTimeout(t); t = setTimeout(function () { ir(i + 1); auto(); }, imgs[i].closest('.ipad') ? 5000 : 2800); }
       pasos.forEach(function (p, n) { p.addEventListener('click', function () { ir(n); auto(); }); });
       if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) auto();
     })();

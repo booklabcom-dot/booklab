@@ -46,7 +46,16 @@ a { color: inherit; }
 /* Escaparate: tarjeta grande con el móvil y los pasos */
 .escaparate { position: relative; display: grid; gap: 20px; padding: 26px 18px 22px; border-radius: var(--radio); background: var(--negro); color: #fff; overflow: hidden; }
 .escaparate::before { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 70% at 50% 0%, #2a2a2a 0%, rgba(17,17,17,0) 60%); pointer-events: none; }
-.escaparate-movil { position: relative; display: flex; justify-content: center; }
+/* Móvil e iPad ocupan el mismo sitio; con .is-ipad se cambia uno por otro */
+.escaparate-movil { position: relative; display: grid; place-items: center; }
+.escaparate-movil > * { grid-area: 1 / 1; transition: opacity .5s ease, transform .6s ease; }
+.ipad { width: 100%; max-width: 640px; padding: 10px; border-radius: 26px; background: #000; box-shadow: 0 0 0 1.5px #3a3a3a, 0 30px 60px rgba(0,0,0,.5);
+  opacity: 0; transform: scale(.94); pointer-events: none; }
+.ipad-pantalla { position: relative; aspect-ratio: 1400 / 973; border-radius: 16px; overflow: hidden; background: #111; }
+.ipad-pantalla img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .5s ease; }
+.ipad-pantalla img.is-on { opacity: 1; }
+.is-ipad .ipad { opacity: 1; transform: none; }
+.is-ipad .movil { opacity: 0; transform: scale(.94); }
 .movil { width: min(250px, 66vw); padding: 9px; border-radius: 42px; background: #000; box-shadow: 0 0 0 1.5px #3a3a3a, 0 30px 60px rgba(0,0,0,.5); }
 .movil-pantalla { position: relative; aspect-ratio: 600 / 1298; border-radius: 34px; overflow: hidden; background: #111; }
 .movil-pantalla img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transform: scale(1.03); transition: opacity .6s ease, transform 1.2s ease; }
@@ -61,6 +70,9 @@ a { color: inherit; }
 .escaparate-pasos li.is-on span { color: #c9c9c9; }
 /* En el móvil solo se ve el paso activo, debajo del teléfono */
 @media (max-width: 759px) {
+  /* El iPad, más grande que la tarjeta y moviéndose despacio de un lado a otro, para que se lean los botones */
+  .ipad { width: 175%; max-width: none; }
+  .is-ipad .ipad { animation: ipad-paseo 4.8s ease-in-out both; }
   .escaparate-pasos li:not(.is-on) { display: none; }
   .escaparate-pasos li.is-on { background: transparent; text-align: center; grid-template-columns: 1fr; }
   .escaparate-pasos li.is-on::before { display: none; }
@@ -89,4 +101,6 @@ a { color: inherit; }
   .portada { max-width: 1440px; margin: 0 auto; }
   .escaparate { grid-template-columns: 1.1fr 1fr; padding: 56px 72px; }
 }
-@media (prefers-reduced-motion: reduce) { .movil-pantalla img { transition: none; } }
+@keyframes ipad-paseo { 0%, 12% { transform: translateX(19%); } 88%, 100% { transform: translateX(-19%); } }
+@media (prefers-reduced-motion: reduce) { .is-ipad .ipad { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .movil-pantalla img, .ipad-pantalla img, .escaparate-movil > * { transition: none; } }
