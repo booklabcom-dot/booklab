@@ -252,3 +252,24 @@
 /* Barrita de pruebas: si no cabe, se desliza */
 .probar { max-width: calc(100vw - 20px); overflow-x: auto; scrollbar-width: none; }
 .probar::-webkit-scrollbar { display: none; }
+
+/* H (versión buena, 03/11): zoom de la G, los avisos caen DENTRO de la pantalla y se quedan, y cada uno sale
+   hacia fuera recto y ordenado (como en la D), más grande que el móvil, a un montón debajo de los de dentro.
+   --sube: distancia desde el montón de fuera hasta el aviso de dentro (en % de la tarjeta). */
+.estilo-h .avisos3 { visibility: visible; }
+.estilo-h .avisos-fuera { top: 47%; --sube: -175%; }
+.estilo-h .avisos-fuera li.is-on { animation: sale-h .9s cubic-bezier(.2,.9,.3,1.12) both, flota-recto 3s ease-in-out .9s infinite alternate; }
+@keyframes sale-h {
+  0%   { opacity: 0; transform: translateY(var(--sube)) scale(.6); transform-origin: 50% 0; box-shadow: none; }
+  25%  { opacity: 1; transform: translateY(var(--sube)) scale(.6); transform-origin: 50% 0; box-shadow: none; }
+  100% { opacity: 1; transform: translateY(0) scale(1); transform-origin: 50% 0; }
+}
+@keyframes flota-recto { from { transform: translateY(0); } to { transform: translateY(-4px); } }
+@media (min-width: 760px) {
+  .estilo-h .avisos-fuera { top: 50%; --sube: -150%; }
+  @keyframes sale-h {
+    0%   { opacity: 0; transform: translateY(var(--sube)) scale(.72); transform-origin: 50% 0; box-shadow: none; }
+    25%  { opacity: 1; transform: translateY(var(--sube)) scale(.72); transform-origin: 50% 0; box-shadow: none; }
+    100% { opacity: 1; transform: translateY(0) scale(1); transform-origin: 50% 0; }
+  }
+}
