@@ -252,3 +252,7 @@ html { scroll-behavior: smooth; }
 .iceberg .final-herramientas { font-size: clamp(2rem, 9.5vw, 4.4rem); }
 @media (min-width: 760px) { .iceberg { margin-top: 34px; padding: 40px 44px 44px; } }
 .final { margin-top: 40px; }
+/* Imágenes de anuncio hechas a medida (herramientas) */
+.hr-imagen { margin: 0; justify-self: center; width: 100%; max-width: 460px; border-radius: 22px; overflow: hidden; box-shadow: 0 18px 40px rgba(0,0,0,.18); }
+.hr-sec:has(.hr-imagen) { grid-template-columns: 1fr; }
+@media (min-width: 760px) { .hr-sec:has(.hr-imagen) { grid-template-columns: 1fr auto; } .hr-imagen { width: 420px; } }
