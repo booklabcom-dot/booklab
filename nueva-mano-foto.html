@@ -5,16 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <!-- PRUEBA (03/11/2026): cabecera nueva de getbooklab.com con estilo claro (referencia de Johan: Fabrica, Framer).
        Si a Johan le gusta, se rehace el resto de la web con este estilo y sustituye a index.html. -->
-  <title>Book Lab · Webs con reservas para barberías (prueba con mano)</title>
+  <title>Book Lab · Webs con reservas para barberías</title>
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#f2f2f0">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/img/pantallas/1-web.webp" type="image/webp">
-  <link rel="stylesheet" href="assets/css/clara.css?v=20261103k">
-  <link rel="stylesheet" href="assets/css/video-portada.css?v=1">
-  <link rel="stylesheet" href="assets/css/mano.css?v=1">
-  <link rel="stylesheet" href="assets/css/foto-mano.css?v=17">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261103l">
+  <link rel="stylesheet" href="assets/css/foto-mano.css?v=18">
 </head>
 <body>
   <header class="nav">
@@ -24,44 +22,22 @@
 
   <main>
     <section class="portada" aria-labelledby="portada-titulo">
-      <!-- PRUEBA: mano tatuada (creada con IA por Johan) con el móvil del dueño: avisos de Book Lab llegando uno a uno -->
-      <div class="foto-mano estilo-h" id="foto-mano">
-        <div class="foto-mano-marco">
-          <div class="bloqueo" aria-hidden="true">
+      <!-- Portada: mano tatuada (imagen creada con IA por Johan) con el móvil del dueño. La pantalla se enciende
+           y los avisos de Book Lab nacen en ella y salen hacia fuera, grandes y apilados. -->
+      <div class="foto-mano" id="foto-mano">
+        <div class="foto-mano-marco" id="mano-marco">
+          <div class="bloqueo" id="bloqueo" aria-hidden="true">
             <p class="bloqueo-fecha">martes, 3 de noviembre</p>
             <p class="bloqueo-hora">10:58</p>
-            <ul class="avisos" id="avisos">
-              <li><b>Nueva reserva</b><span>Carlos · Skinfade · mañana 11:00</span></li>
-              <li><b>Recordatorios enviados</b><span>6 clientes de hoy, con un toque</span></li>
-              <li><b>Hueco recuperado</b><span>Iván cogió la cita que se canceló</span></li>
-              <li><b>Nueva reseña en Google</b><span>★★★★★ «El mejor fade de la zona»</span></li>
-              <li><b>Caja de hoy</b><span>Llevas <em data-cuenta="412">412</em> € · 23 cobros</span></li>
-            </ul>
-          </div>
-          <img class="foto-mano-img" src="assets/img/mano-tatuada.webp?v=1" alt="" width="1024" height="1536" aria-hidden="true">
-        </div>
-        <!-- G · Se enciende: mano3 (más brazo y tatuajes). Pantalla que se enciende y avisos grandes cayendo dentro -->
-        <div class="foto-mano-marco m3">
-          <div class="bloqueo b3" aria-hidden="true">
-            <p class="bloqueo-fecha">martes, 3 de noviembre</p>
-            <p class="bloqueo-hora">10:58</p>
-            <ul class="avisos avisos3" id="avisos3">
-              <li><b>Nueva reserva</b><span>Carlos · Skinfade · 11:00</span></li>
-              <li><b>Recordatorios enviados</b><span>6 clientes de hoy</span></li>
-              <li><b>Hueco recuperado</b><span>De la lista de espera</span></li>
-              <li><b>Nueva reseña en Google</b><span>★★★★★ «El mejor fade»</span></li>
-              <li><b>Caja de hoy</b><span>Llevas <em>412</em> €</span></li>
-            </ul>
           </div>
           <img class="foto-mano-img" src="assets/img/mano-tatuada-3.webp?v=1" alt="" width="1024" height="1536" aria-hidden="true">
         </div>
-        <!-- Los mismos avisos, grandes y flotando fuera del móvil (pruebas B y C) -->
-        <ul class="avisos-fuera" aria-hidden="true">
+        <ul class="avisos-fuera" id="avisos" aria-hidden="true">
           <li><b>Nueva reserva</b><span>Carlos · Skinfade · mañana 11:00</span></li>
           <li><b>Recordatorios enviados</b><span>6 clientes de hoy, con un toque</span></li>
           <li><b>Hueco recuperado</b><span>Iván cogió la cita que se canceló</span></li>
           <li><b>Nueva reseña en Google</b><span>★★★★★ «El mejor fade de la zona»</span></li>
-          <li><b>Caja de hoy</b><span>Llevas <em data-cuenta="412">412</em> € · 23 cobros</span></li>
+          <li><b>Caja de hoy</b><span>Llevas <em>412</em> € · 23 cobros</span></li>
         </ul>
         <div class="foto-mano-texto">
           <h1 class="marca-gigante" id="portada-titulo">Book <span class="amarillo">Lab</span><sup>®</sup></h1>
@@ -129,6 +105,11 @@
           <li><a href="herramientas.html#mostrador"><b>Agenda de mostrador</b><span>¿Entra alguien sin cita? Tres toques y apuntado.</span></a></li>
           <li><a href="herramientas.html#numeros"><b>Tus números claros</b><span>Facturación, ocupación, horas punta y mejores clientes. Y todo a Excel.</span></a></li>
         </ol>
+        <!-- Cierre de las funciones: hay mucho más -->
+        <div class="iceberg">
+          <p>Y esto es solo la punta del iceberg. <span>Hacemos mucho más.</span></p>
+          <a class="final-herramientas" href="herramientas.html">Descubre todas nuestras herramientas <span aria-hidden="true">→</span></a>
+        </div>
       </section>
 
       <!-- Precios (oferta de lanzamiento; mismos precios que index.html) -->
@@ -158,9 +139,8 @@
         <p class="precios-legal">Precios sin IVA. El precio que contrates se mantiene mientras sigas con nosotros.</p>
       </section>
 
-      <!-- Llamadas finales: probar la demo y ver todas las herramientas -->
+      <!-- Llamada final: probar la demo -->
       <section class="final" aria-label="Pruébalo">
-        <a class="final-herramientas" href="herramientas.html">Descubre todas nuestras herramientas <span aria-hidden="true">→</span></a>
         <div class="final-demo">
           <p>Pruébalo como si fueras tu cliente y mira lo que verías tú.</p>
           <a class="pildora pildora-negra pildora-grande" href="demo.html">Probar la demo <i aria-hidden="true"></i></a>
@@ -184,47 +164,25 @@
     <nav aria-label="Legal"><a href="legal.html#aviso-legal">Aviso legal</a><a href="legal.html#privacidad">Privacidad</a><a href="legal.html#cookies">Cookies</a></nav>
   </footer>
 
-  <!-- SOLO PARA PROBAR: cambiar entre las tres ideas -->
-  <div class="probar" role="group" aria-label="Probar estilos">
-    <span>Prueba:</span>
-    <button type="button" data-e="estilo-zoom">A</button>
-    <button type="button" data-e="estilo-flotan">B</button>
-    <button type="button" data-e="estilo-mix">C</button>
-    <button type="button" data-e="estilo-sale">D</button>
-    <button type="button" data-e="estilo-dispara">E</button>
-    <button type="button" data-e="estilo-sube">F</button>
-    <button type="button" data-e="estilo-g">G</button>
-    <button type="button" data-e="estilo-h" class="is-on">H · G + D</button>
-  </div>
-
   <script>
-    /* Pruebas: cambia la clase de la portada */
-    document.querySelectorAll('.probar button').forEach(function (b) {
-      b.addEventListener('click', function () {
-        var f = document.getElementById('foto-mano'); f.className = 'foto-mano ' + b.dataset.e;
-        document.querySelectorAll('.probar button').forEach(function (x) { x.classList.toggle('is-on', x === b); });
-      });
-    });
-
-    /* Al llegar un aviso: el móvil tiembla un poco */
-    function vibra() { var m = document.querySelector(/estilo-[ghi]/.test(document.getElementById('foto-mano').className) ? '.m3' : '.foto-mano-marco'); m.classList.remove('vibra'); void m.offsetWidth; m.classList.add('vibra'); }
-    /* Al bajar la página: el móvil se inclina y sube un poco, y los avisos se separan */
+    /* Portada: la pantalla se enciende, llegan los avisos uno a uno (cada uno con halo amarillo y una vibración),
+       se ven los 3 últimos; al acabar, la pantalla se apaga y vuelve a empezar. */
     (function () {
-      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      var f = document.getElementById('foto-mano'), pend = false;
-      function pinta() { pend = false; var p = Math.max(0, Math.min(1, scrollY / (f.offsetHeight * .8)));
-        f.style.setProperty('--sy', (-p * 60) + 'px'); f.style.setProperty('--rot', (-p * 5) + 'deg'); f.style.setProperty('--sep', p.toFixed(3)); }
-      addEventListener('scroll', function () { if (!pend) { pend = true; requestAnimationFrame(pinta); } }, { passive: true });
-    })();
-
-    /* Portada: los avisos llegan uno a uno (el más nuevo arriba) y vuelven a empezar */
-    (function () {
-      var lis = [].slice.call(document.querySelectorAll('#avisos li, .avisos-fuera li')), lis3 = [].slice.call(document.querySelectorAll('#avisos3 li')), b3 = document.querySelector('.b3'), m3 = document.querySelector('.m3'), n = 0, cinco = 5;
-      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { lis.concat(lis3).forEach(function (l) { l.classList.add('is-on'); }); b3.classList.add('encendida'); return; }
+      var lis = document.querySelectorAll('#avisos li'), marco = document.getElementById('mano-marco'), pantalla = document.getElementById('bloqueo'), n = 0;
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        pantalla.classList.add('encendida'); for (var k = 2; k < lis.length; k++) lis[k].classList.add('is-on'); return;
+      }
+      function repite(el, clase) { el.classList.remove(clase); void el.offsetWidth; el.classList.add(clase); }
       function paso() {
-        if (n === 0) b3.classList.add('encendida');
-        if (n < cinco) { lis3[n].classList.add('is-on'); if (n >= 3) lis3[n - 3].classList.remove('is-on'); m3.classList.remove('brilla'); void m3.offsetWidth; m3.classList.add('brilla'); lis[n].classList.add('is-on'); lis[n + cinco].dataset.s = n % 3; lis[n + cinco].dataset.l = n % 2; var bq = document.querySelector('.bloqueo'); bq.classList.remove('ping'); void bq.offsetWidth; bq.classList.add('ping'); vibra(); lis[n + cinco].classList.add('is-on'); if (n >= 3) lis[n - 3 + cinco].classList.remove('is-on'); n++; setTimeout(paso, 1600); } // fuera del móvil, solo los 3 últimos
-        else setTimeout(function () { b3.classList.remove('encendida'); setTimeout(function () { lis.concat(lis3).forEach(function (l) { l.classList.remove('is-on'); }); n = 0; setTimeout(paso, 900); }, 600); }, 3200);
+        if (n === 0) pantalla.classList.add('encendida');
+        if (n < lis.length) {
+          lis[n].classList.add('is-on'); if (n >= 3) lis[n - 3].classList.remove('is-on');
+          repite(marco, 'brilla'); repite(marco, 'vibra');
+          n++; setTimeout(paso, 1600);
+        } else setTimeout(function () {
+          pantalla.classList.remove('encendida');
+          setTimeout(function () { lis.forEach(function (l) { l.classList.remove('is-on'); }); n = 0; setTimeout(paso, 900); }, 600);
+        }, 3200);
       }
       setTimeout(paso, 600);
     })();

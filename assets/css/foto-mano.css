@@ -1,274 +1,66 @@
-/* PRUEBA (nueva-mano-foto.html): mano tatuada en blanco y negro (imagen creada con IA por Johan) con el hueco
-   de la pantalla transparente. Debajo, en el hueco, la pantalla de bloqueo del dueño con los avisos de Book Lab.
-   El marco tiene las proporciones de la foto (1024×1536); el hueco está en % del marco. Todo en blanco y negro. */
-.foto-mano { position: relative; overflow: hidden; margin: 0 calc(var(--lado) * -1); background: #b4b4b4; aspect-ratio: 1024 / 1430; }
-.foto-mano-marco { position: absolute; left: 50%; top: -2%; width: 100%; aspect-ratio: 1024 / 1536; transform: translateX(-50%); }
+/* Portada con la mano (nueva-mano-foto.html). Mano tatuada en blanco y negro (imagen creada con IA por Johan)
+   con el hueco de la pantalla transparente; debajo, en el hueco, la pantalla de bloqueo del dueño.
+   Los avisos de Book Lab nacen pequeños y oscuros en la pantalla y salen hacia fuera, grandes y blancos.
+   El marco tiene las proporciones de la foto (1024×1536); el hueco y los avisos van en % para este encuadre. */
+.foto-mano { --amarillo: #FEDA12; position: relative; overflow: hidden; margin: 0 calc(var(--lado) * -1); background: #b4b4b4; aspect-ratio: 1024 / 1580; }
+.foto-mano .amarillo { color: var(--amarillo); }
+.foto-mano-marco { position: absolute; left: 50%; top: -1%; width: 150%; aspect-ratio: 1024 / 1536; transform: translateX(-50%); }
 .foto-mano-img { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
 
-/* Pantalla de bloqueo, en el hueco del móvil */
-.bloqueo { position: absolute; z-index: 0; left: 34.96%; top: 5.08%; width: 29.4%; height: 40.69%; container-type: size; overflow: hidden;
-  border-radius: 13% / 6.3%; background: radial-gradient(120% 80% at 50% 0%, #3a3a3a 0%, #111 70%); color: #fff; text-align: center; }
-.bloqueo-fecha { margin: 15cqh 0 0; font-size: 5.6cqw; font-weight: 500; opacity: .85; }
-.bloqueo-hora { margin: 0; font-size: 26cqw; font-weight: 700; letter-spacing: -.04em; line-height: 1; }
-.avisos { list-style: none; margin: 8cqh 4.5cqw 0; padding: 0; display: flex; flex-direction: column-reverse; gap: 2.4cqw; text-align: left; }
-.avisos li { display: grid; grid-template-columns: 9cqw 1fr; column-gap: 3cqw; padding: 3cqw 3.6cqw; border-radius: 5.5cqw; background: rgba(255,255,255,.14);
-  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); opacity: 0; transform: translateY(-14cqw) scale(.96); max-height: 0; overflow: hidden;
-  transition: opacity .45s ease, transform .55s cubic-bezier(.2,.9,.3,1.2), max-height .45s ease; }
-.avisos li.is-on { opacity: 1; transform: none; max-height: 30cqw; }
-.avisos li::before { content: "BL"; grid-row: 1 / 3; align-self: center; display: grid; place-items: center; width: 9cqw; height: 9cqw; border-radius: 2.4cqw; background: #fff; color: #111; font-size: 3.6cqw; font-weight: 800; letter-spacing: -.04em; }
-.avisos b { font-size: 4.3cqw; font-weight: 700; }
-.avisos span { font-size: 3.9cqw; line-height: 1.25; opacity: .85; }
+/* Pantalla del móvil: empieza apagada y se enciende con la hora */
+.bloqueo { position: absolute; z-index: 0; left: 31.05%; top: 2.54%; width: 37.6%; height: 50.72%; container-type: size; overflow: hidden;
+  border-radius: 12% / 6%; background: #000; color: #fff; text-align: center; transition: background-color .6s ease; }
+.bloqueo > * { opacity: 0; transition: opacity .6s ease; }
+.bloqueo.encendida { background: radial-gradient(120% 80% at 50% 0%, #3a3a3a 0%, #111 70%); }
+.bloqueo.encendida > * { opacity: 1; }
+.bloqueo-fecha { margin: 11cqh 0 0; font-size: 5.4cqw; font-weight: 500; opacity: .85; }
+.bloqueo-hora { margin: 0; font-size: 23cqw; font-weight: 700; letter-spacing: -.04em; line-height: 1; }
 
+/* Halo amarillo alrededor del móvil y vibración al llegar cada aviso */
+.foto-mano-marco::before { content: ""; position: absolute; left: 29%; top: 1.6%; width: 41.6%; height: 52.6%; border-radius: 14% / 7%; pointer-events: none; }
+.foto-mano-marco.brilla::before { animation: halo .9s ease-out; }
+@keyframes halo { 0% { box-shadow: 0 0 0 0 rgba(254,218,18,.75); } 100% { box-shadow: 0 0 0 26px rgba(254,218,18,0); } }
+.foto-mano-marco.vibra { animation: vibra .38s linear; }
+@keyframes vibra { 0%, 100% { translate: 0 0; } 15% { translate: -2px 0; } 30% { translate: 2px 0; } 45% { translate: -2px 0; } 60% { translate: 1px 0; } 75% { translate: -1px 0; } }
+
+/* Avisos: nacen en la pantalla (pequeños y oscuros) y salen hacia fuera hasta quedarse grandes y blancos, apilados */
+.avisos-fuera { display: flex; flex-direction: column-reverse; gap: 10px; position: absolute; z-index: 3; list-style: none; margin: 0; padding: 0;
+  left: 50%; top: 25.5%; width: min(88%, 380px); transform: translateX(-50%); }
+.avisos-fuera li { display: grid; grid-template-columns: 40px 1fr; column-gap: 12px; padding: 0 14px; border-radius: 20px; background: rgba(255,255,255,.92); color: #111;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 18px 40px rgba(0,0,0,.28);
+  opacity: 0; max-height: 0; overflow: hidden; transition: max-height .45s ease, padding .45s ease, opacity .3s ease; }
+.avisos-fuera li.is-on { opacity: 1; max-height: 90px; padding-top: 12px; padding-bottom: 12px; animation: sale-del-movil 1.1s cubic-bezier(.2,.9,.3,1.15) both; }
+.avisos-fuera li::before { content: "BL"; grid-row: 1 / 3; align-self: center; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 11px; background: var(--amarillo); color: #111; font-size: .82rem; font-weight: 800; }
+.avisos-fuera b { font-size: 1rem; font-weight: 700; }
+.avisos-fuera span { font-size: .9rem; color: #444; line-height: 1.3; }
+.avisos-fuera em { font-style: normal; font-weight: 700; color: #111; }
+.avisos-fuera li.is-on span { animation: texto-sale 1.1s ease both; }
+@keyframes sale-del-movil {
+  0%, 35% { transform: scale(.6); transform-origin: 50% 0; background: rgba(70,70,70,.95); color: #fff; box-shadow: none; }
+  100%    { transform: scale(1); transform-origin: 50% 0; }
+}
+@keyframes texto-sale { 0%, 35% { color: #ddd; } 100% { color: #444; } }
+
+/* Texto de la portada, sobre un degradado para que se lea */
 .foto-mano::after { content: ""; position: absolute; inset: 0; z-index: 2; background: linear-gradient(180deg, rgba(11,11,11,0) 50%, rgba(11,11,11,.82) 100%); pointer-events: none; }
 .foto-mano-texto { position: absolute; z-index: 3; left: var(--lado); right: var(--lado); bottom: 22px; color: #fff; }
 .foto-mano-texto .marca-gigante { color: #fff; }
+.video-lema { margin: 14px 0 0; font: 600 clamp(1.15rem, 4.6vw, 1.8rem)/1.2 var(--letra); letter-spacing: -.02em; color: #e6e6e6; }
+
+/* Ordenador: la mano a la derecha y el texto a la izquierda */
 @media (min-width: 760px) {
-  /* Ordenador: la mano a la derecha y el texto a la izquierda */
   .foto-mano { margin: 0; border-radius: var(--radio); aspect-ratio: 16 / 9; }
-  .foto-mano-marco { width: auto; height: 150%; top: -4%; left: 68%;
+  .foto-mano-marco { width: auto; height: 175%; top: -4%; left: 68%;
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 82%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 82%, transparent 100%); }
+  .avisos-fuera { left: 67.9%; top: 27.7%; width: 400px; }
+  @keyframes sale-del-movil {
+    0%, 35% { transform: scale(.72); transform-origin: 50% 0; background: rgba(70,70,70,.95); color: #fff; box-shadow: none; }
+    100%    { transform: scale(1); transform-origin: 50% 0; }
+  }
   .foto-mano::after { background: linear-gradient(90deg, rgba(11,11,11,.85) 0%, rgba(11,11,11,.45) 45%, rgba(11,11,11,0) 70%); }
   .foto-mano-texto { left: 48px; right: auto; bottom: 48px; max-width: 52%; }
   .foto-mano-texto .marca-gigante { font-size: clamp(4.5rem, 10vw, 9.5rem); }
 }
-@media (prefers-reduced-motion: reduce) { .avisos li { transition: none; } }
-
-/* ---------- Pruebas (03/11): A zoom · B avisos flotando fuera · C mezcla ---------- */
-.avisos-fuera { display: none; }
-/* A · Zoom: el móvil mucho más grande (en el móvil se corta el brazo, no pasa nada) */
-.estilo-zoom .foto-mano-marco, .estilo-mix .foto-mano-marco { width: 168%; top: -5%; left: 46%; }
-.estilo-mix .foto-mano-marco { width: 128%; top: -3%; left: 48%; }
-/* B y C · Avisos grandes y blancos que salen del móvil hacia fuera */
-.estilo-flotan .avisos-fuera, .estilo-mix .avisos-fuera { display: flex; flex-direction: column-reverse; gap: 10px; position: absolute; z-index: 3; list-style: none; margin: 0; padding: 0;
-  left: 50%; top: 22%; width: min(86%, 380px); transform: translateX(-50%); }
-.estilo-flotan .bloqueo .avisos, .estilo-mix .bloqueo .avisos { visibility: hidden; }
-.avisos-fuera li { display: grid; grid-template-columns: 40px 1fr; column-gap: 12px; padding: 12px 14px; border-radius: 20px; background: rgba(255,255,255,.92); color: #111;
-  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 18px 40px rgba(0,0,0,.28);
-  opacity: 0; transform: scale(.55) translateY(40px); max-height: 0; padding-top: 0; padding-bottom: 0; overflow: hidden;
-  transition: opacity .45s ease, transform .6s cubic-bezier(.2,.9,.3,1.25), max-height .45s ease, padding .45s ease; }
-.avisos-fuera li.is-on { opacity: 1; transform: none; max-height: 90px; padding-top: 12px; padding-bottom: 12px; }
-.avisos-fuera li::before { content: "BL"; grid-row: 1 / 3; align-self: center; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 11px; background: #111; color: #fff; font-size: .82rem; font-weight: 800; }
-.avisos-fuera b { font-size: 1rem; font-weight: 700; }
-.avisos-fuera span { font-size: .9rem; color: #444; line-height: 1.3; }
-.estilo-mix .avisos-fuera { top: 18%; }
-@media (min-width: 760px) {
-  .estilo-zoom .foto-mano-marco { width: auto; height: 190%; top: -6%; left: 68%; }
-  .estilo-mix .foto-mano-marco { width: auto; height: 165%; top: -5%; left: 68%; }
-  .estilo-flotan .avisos-fuera, .estilo-mix .avisos-fuera { left: 68%; top: 16%; width: 400px; }
+@media (prefers-reduced-motion: reduce) {
+  .avisos-fuera li, .avisos-fuera li.is-on, .avisos-fuera li.is-on span, .foto-mano-marco.brilla::before, .foto-mano-marco.vibra { animation: none; transition: none; }
 }
-
-/* Botones para cambiar de prueba (solo en esta página de pruebas) */
-.probar { position: fixed; z-index: 50; left: 50%; bottom: 14px; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #111; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.3); font: 600 .82rem/1 var(--letra); white-space: nowrap; }
-.probar span { padding: 0 6px 0 8px; opacity: .7; }
-.probar button { border: 0; border-radius: 999px; padding: 9px 12px; background: #2a2a2a; color: #fff; font: inherit; cursor: pointer; }
-.probar button.is-on { background: #fff; color: #111; }
-
-/* D · Salen del móvil: misma mano que C (se ven los tatuajes). Cada aviso nace pequeño y oscuro justo donde
-   aparece la notificación dentro de la pantalla, y crece hacia fuera hasta quedarse como tarjeta blanca grande.
-   left/top = posición de las notificaciones de la pantalla, calculada para este encuadre. */
-.estilo-sale .foto-mano-marco { width: 128%; top: -3%; left: 48%; }
-.estilo-sale .avisos-fuera { display: flex; flex-direction: column-reverse; gap: 10px; position: absolute; z-index: 3; list-style: none; margin: 0; padding: 0;
-  left: 47.6%; top: 25.7%; width: min(86%, 380px); transform: translateX(-50%); }
-.estilo-sale .avisos-fuera li { transition: max-height .45s ease, padding .45s ease, opacity .3s ease; transform: none; }
-.estilo-sale .avisos-fuera li.is-on { animation: sale-del-movil 1.1s cubic-bezier(.2,.9,.3,1.15) both; }
-@keyframes sale-del-movil {
-  0%   { transform: scale(.4); transform-origin: 50% 0; background: rgba(70,70,70,.95); color: #fff; box-shadow: none; }
-  35%  { transform: scale(.4); transform-origin: 50% 0; background: rgba(70,70,70,.95); color: #fff; box-shadow: none; }
-  100% { transform: scale(1); transform-origin: 50% 0; }
-}
-.estilo-sale .avisos-fuera li.is-on span { animation: texto-sale 1.1s ease both; }
-@keyframes texto-sale { 0%, 35% { color: #ddd; } 100% { color: #444; } }
-@media (min-width: 760px) {
-  .estilo-sale .foto-mano-marco { width: auto; height: 165%; top: -5%; left: 68%; }
-  .estilo-sale .avisos-fuera { left: 67.8%; top: 29.3%; width: 400px; }
-  @keyframes sale-del-movil {
-    0%, 35% { transform: scale(.5); transform-origin: 50% 0; background: rgba(70,70,70,.95); color: #fff; box-shadow: none; }
-    100% { transform: scale(1); transform-origin: 50% 0; }
-  }
-}
-@media (prefers-reduced-motion: reduce) { .estilo-sale .avisos-fuera li.is-on, .estilo-sale .avisos-fuera li.is-on span { animation: none; } }
-.probar button { padding: 9px 11px; }
-
-/* E · Disparo: misma mano que C/D. Cada aviso sale disparado desde la pantalla hacia un sitio distinto
-   (s0 arriba izquierda, s1 derecha, s2 abajo izquierda), un poco girado, y luego se queda flotando.
-   --dx/--dy: distancia (en % de la propia tarjeta) desde su sitio hasta la pantalla del móvil. */
-.estilo-dispara .foto-mano-marco { width: 128%; top: -3%; left: 48%; }
-.estilo-dispara .avisos-fuera { display: block; position: absolute; z-index: 3; inset: 0; list-style: none; margin: 0; padding: 0; }
-.estilo-dispara .avisos-fuera li { position: absolute; width: min(70%, 300px); max-height: none; padding: 12px 14px; transition: none; opacity: 0; }
-.estilo-dispara .avisos-fuera li[data-s="0"] { left: 4%; top: 14%; --r: -4deg; --dx: 12%; --dy: 70%; }
-.estilo-dispara .avisos-fuera li[data-s="1"] { right: 4%; top: 34%; --r: 3deg; --dx: -19%; --dy: -94%; }
-.estilo-dispara .avisos-fuera li[data-s="2"] { left: 6%; top: 54%; --r: -2deg; --dx: 10%; --dy: -256%; }
-.estilo-dispara .avisos-fuera li.is-on { opacity: 1; animation: disparo .75s cubic-bezier(.15,.9,.25,1.3) both, flota 3.2s ease-in-out .75s infinite alternate; }
-@keyframes disparo {
-  0%   { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(.15) rotate(0deg); }
-  25%  { opacity: 1; }
-  100% { opacity: 1; transform: translate(0, 0) scale(1) rotate(var(--r)); }
-}
-@keyframes flota { from { transform: rotate(var(--r)) translateY(0); } to { transform: rotate(var(--r)) translateY(-6px); } }
-@media (min-width: 760px) {
-  .estilo-dispara .foto-mano-marco { width: auto; height: 165%; top: -5%; left: 68%; }
-  .estilo-dispara .avisos-fuera { left: 42%; }
-  .estilo-dispara .avisos-fuera li { width: 330px; }
-  .estilo-dispara .avisos-fuera li[data-s="0"] { left: 0; top: 12%; --dx: 60%; --dy: 150%; }
-  .estilo-dispara .avisos-fuera li[data-s="1"] { right: 2%; top: 36%; --dx: -45%; --dy: -40%; }
-  .estilo-dispara .avisos-fuera li[data-s="2"] { left: 4%; top: 60%; --dx: 55%; --dy: -230%; }
-}
-@media (prefers-reduced-motion: reduce) { .estilo-dispara .avisos-fuera li.is-on { animation: none; transform: rotate(var(--r)); } }
-/* E · ajuste: más separadas y en dos líneas */
-.estilo-dispara .avisos-fuera li { width: min(76%, 310px); padding: 10px 12px; grid-template-columns: 34px 1fr; column-gap: 10px; }
-.estilo-dispara .avisos-fuera li::before { width: 34px; height: 34px; border-radius: 10px; font-size: .74rem; }
-.estilo-dispara .avisos-fuera b { font-size: .92rem; }
-.estilo-dispara .avisos-fuera span { font-size: .8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.estilo-dispara .avisos-fuera li[data-s="0"] { top: 9%; }
-.estilo-dispara .avisos-fuera li[data-s="1"] { top: 31%; }
-.estilo-dispara .avisos-fuera li[data-s="2"] { top: 53%; }
-@media (min-width: 760px) { .estilo-dispara .avisos-fuera li { width: 330px; } .estilo-dispara .avisos-fuera li[data-s="0"] { top: 12%; } .estilo-dispara .avisos-fuera li[data-s="1"] { top: 36%; } .estilo-dispara .avisos-fuera li[data-s="2"] { top: 60%; } }
-
-/* F · Suben: cada aviso hace un destello en la pantalla, sale del móvil y sube flotando hacia un lado hasta desvanecerse */
-.estilo-sube .foto-mano-marco { width: 128%; top: -3%; left: 48%; }
-.estilo-sube .bloqueo .avisos { visibility: hidden; }
-.estilo-sube .bloqueo::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: radial-gradient(60% 40% at 50% 55%, rgba(255,255,255,.55), rgba(255,255,255,0) 70%); opacity: 0; }
-.estilo-sube .bloqueo.ping::after { animation: destello .7s ease-out; }
-@keyframes destello { 0% { opacity: 0; } 30% { opacity: 1; } 100% { opacity: 0; } }
-.estilo-sube .avisos-fuera { display: block; position: absolute; z-index: 3; inset: 0; list-style: none; margin: 0; padding: 0; }
-.estilo-sube .avisos-fuera li { position: absolute; left: 47.6%; top: 36%; width: min(76%, 310px); max-height: none; padding: 10px 12px; grid-template-columns: 34px 1fr; column-gap: 10px;
-  transition: none; opacity: 0; --lado: -18%; --giro: -3deg; }
-.estilo-sube .avisos-fuera li[data-l="1"] { --lado: -82%; --giro: 3deg; }
-.estilo-sube .avisos-fuera li::before { width: 34px; height: 34px; border-radius: 10px; font-size: .74rem; }
-.estilo-sube .avisos-fuera b { font-size: .92rem; }
-.estilo-sube .avisos-fuera span { font-size: .8rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.estilo-sube .avisos-fuera li.is-on { animation: sube 5s cubic-bezier(.25,.8,.35,1) both; }
-@keyframes sube {
-  0%   { opacity: 0; transform: translate(-50%, 0) scale(.3); }
-  12%  { opacity: 1; transform: translate(-50%, -40%) scale(1.04) rotate(0deg); }
-  18%  { transform: translate(-50%, -55%) scale(1); }
-  100% { opacity: 0; transform: translate(var(--lado), -420%) scale(.92) rotate(var(--giro)); }
-}
-@media (min-width: 760px) {
-  .estilo-sube .foto-mano-marco { width: auto; height: 165%; top: -5%; left: 68%; }
-  .estilo-sube .avisos-fuera li { left: 67.8%; top: 40%; width: 330px; }
-}
-@media (prefers-reduced-motion: reduce) { .estilo-sube .avisos-fuera li.is-on { animation: none; opacity: 1; transform: translate(-50%, -60%); } }
-
-/* ---------- Detalles sobre la D (03/11): color del logo, vibración, contador y scroll ---------- */
-.foto-mano { --amarillo: #FEDA12; --sy: 0px; --rot: 0deg; --sep: 0; }
-.foto-mano .amarillo { color: var(--amarillo); }
-.avisos li::before { background: var(--amarillo); color: #111; }
-.avisos-fuera li::before { background: var(--amarillo); color: #111; }
-.avisos-fuera em, .avisos em { font-style: normal; font-weight: 700; color: #111; }
-.avisos em { color: #fff; }
-/* Scroll: el marco sube e inclina (top y rotate van aparte de transform, que ya centra el marco) */
-.estilo-sale .foto-mano-marco { top: calc(-3% + var(--sy)); rotate: var(--rot); transition: rotate .1s linear; }
-.estilo-sale .avisos-fuera { margin-top: calc(var(--sy) * .6); gap: calc(10px + var(--sep) * 26px); }
-/* Vibración al llegar un aviso */
-.foto-mano-marco.vibra { animation: vibra .38s linear; }
-@keyframes vibra { 0%, 100% { translate: 0 0; } 15% { translate: -2px 0; } 30% { translate: 2px 0; } 45% { translate: -2px 0; } 60% { translate: 1px 0; } 75% { translate: -1px 0; } }
-@media (min-width: 760px) { .estilo-sale .foto-mano-marco { top: calc(-5% + var(--sy)); } }
-@media (prefers-reduced-motion: reduce) { .foto-mano-marco.vibra { animation: none; } }
-
-/* ---------- G · Se enciende (mano3): la pantalla se enciende, los avisos caen dentro, halo amarillo en cada uno ---------- */
-.m3 { display: none; }
-.estilo-g .foto-mano-marco:not(.m3), .estilo-g .avisos-fuera { display: none; }
-.estilo-g .m3 { display: block; width: 150%; top: -1%; left: 50%; }
-.b3 { left: 31.05%; top: 2.54%; width: 37.6%; height: 50.72%; border-radius: 12% / 6%; background: #000; transition: background-color .6s ease; }
-.b3 > * { opacity: 0; transition: opacity .6s ease; }
-.b3.encendida { background: radial-gradient(120% 80% at 50% 0%, #3a3a3a 0%, #111 70%); }
-.b3.encendida > * { opacity: 1; }
-.b3 .bloqueo-fecha { margin-top: 11cqh; font-size: 5.4cqw; }
-.b3 .bloqueo-hora { font-size: 23cqw; }
-.avisos3 { flex-direction: column-reverse; margin: 5cqh 4cqw 0; gap: 3cqw; }
-.avisos3 li { grid-template-columns: 13cqw 1fr; column-gap: 3.4cqw; padding: 3.6cqw 4cqw; border-radius: 6cqw; background: rgba(255,255,255,.94); color: #111;
-  transform: translateY(-60cqw) scale(.9); transition: opacity .35s ease, transform .6s cubic-bezier(.2,1.1,.3,1.15), max-height .4s ease, padding .4s ease; }
-.avisos3 li.is-on { max-height: 40cqw; }
-.avisos3 li::before { width: 13cqw; height: 13cqw; border-radius: 3.6cqw; font-size: 4.6cqw; background: var(--amarillo); }
-.avisos3 b { font-size: 6.2cqw; letter-spacing: -.01em; }
-.avisos3 span { font-size: 5.2cqw; color: #555; opacity: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.avisos3 em { color: #111; }
-/* Halo amarillo del logo alrededor del móvil al llegar cada aviso */
-.m3::before { content: ""; position: absolute; left: 29%; top: 1.6%; width: 41.6%; height: 52.6%; border-radius: 14% / 7%; box-shadow: 0 0 0 0 rgba(254,218,18,0); pointer-events: none; z-index: 0; }
-.m3.brilla::before { animation: halo .9s ease-out; }
-@keyframes halo { 0% { box-shadow: 0 0 0 0 rgba(254,218,18,.75); } 100% { box-shadow: 0 0 0 26px rgba(254,218,18,0); } }
-.estilo-g .m3.vibra { animation: vibra .38s linear; }
-@media (min-width: 760px) { .estilo-g .m3 { width: auto; height: 175%; top: -4%; left: 68%; } }
-@media (prefers-reduced-motion: reduce) { .avisos3 li { transition: none; } .m3.brilla::before { animation: none; } }
-/* G · ajustes: títulos en una línea, cabecera más alta en el móvil para que asomen los tatuajes */
-.avisos3 b { font-size: 5.6cqw; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.estilo-g.foto-mano { aspect-ratio: 1024 / 1580; }
-@media (min-width: 760px) { .estilo-g.foto-mano { aspect-ratio: 16 / 9; } }
-.probar span { display: none; }
-
-/* ---------- H · G + D: mano3 con la pantalla que se enciende y el halo, y cada aviso sale de la pantalla hacia fuera en grande ---------- */
-.estilo-h .foto-mano-marco:not(.m3) { display: none; }
-.estilo-h .m3 { display: block; width: 150%; top: -1%; left: 50%; }
-.estilo-h.foto-mano { aspect-ratio: 1024 / 1580; }
-.estilo-h .avisos3 { visibility: hidden; }
-.estilo-h .avisos-fuera { display: flex; flex-direction: column-reverse; gap: 10px; position: absolute; z-index: 3; list-style: none; margin: 0; padding: 0;
-  left: 50%; top: 25.5%; width: min(88%, 380px); transform: translateX(-50%); }
-.estilo-h .avisos-fuera li { transition: max-height .45s ease, padding .45s ease, opacity .3s ease; transform: none; }
-.estilo-h .avisos-fuera li.is-on { animation: sale-h .95s cubic-bezier(.2,.9,.3,1.15) both; }
-@keyframes sale-h {
-  0%, 30% { transform: scale(.62); transform-origin: 50% 0; box-shadow: none; }
-  100%    { transform: scale(1); transform-origin: 50% 0; }
-}
-@media (min-width: 760px) {
-  .estilo-h.foto-mano { aspect-ratio: 16 / 9; }
-  .estilo-h .m3 { width: auto; height: 175%; top: -4%; left: 68%; }
-  .estilo-h .avisos-fuera { left: 67.9%; top: 27.7%; width: 400px; }
-  @keyframes sale-h { 0%, 30% { transform: scale(.72); transform-origin: 50% 0; box-shadow: none; } 100% { transform: scale(1); transform-origin: 50% 0; } }
-}
-@media (prefers-reduced-motion: reduce) { .estilo-h .avisos-fuera li.is-on { animation: none; } }
-
-/* ---------- I · G + avisos que salen del móvil y se quedan flotando fuera, a los lados ----------
-   Dentro de la pantalla siguen cayendo los avisos (como en la G). Además, cada uno sale disparado desde la
-   pantalla hasta un sitio a un lado del móvil (s0 derecha arriba, s1 izquierda, s2 derecha abajo) y flota. */
-.estilo-i .foto-mano-marco:not(.m3) { display: none; }
-.estilo-i .m3 { display: block; width: 118%; top: 0; left: 50%; }
-.estilo-i.foto-mano { aspect-ratio: 1024 / 1580; }
-.estilo-i .avisos-fuera { display: block; position: absolute; z-index: 3; inset: 0; list-style: none; margin: 0; padding: 0; }
-.estilo-i .avisos-fuera li { position: absolute; width: 50%; max-height: none; padding: 9px 11px; grid-template-columns: 30px 1fr; column-gap: 9px; transition: none; opacity: 0; }
-.estilo-i .avisos-fuera li::before { width: 30px; height: 30px; border-radius: 9px; font-size: .68rem; }
-.estilo-i .avisos-fuera b { font-size: .84rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.estilo-i .avisos-fuera span { font-size: .74rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.estilo-i .avisos-fuera li[data-s="0"] { left: 49%; top: 11%; --r: 4deg;  --dx: -54%; --dy: 84%; }
-.estilo-i .avisos-fuera li[data-s="1"] { left: 1%;  top: 31%; --r: -4deg; --dx: 46%;  --dy: -89%; }
-.estilo-i .avisos-fuera li[data-s="2"] { left: 49%; top: 49%; --r: 3deg;  --dx: -50%; --dy: -262%; }
-.estilo-i .avisos-fuera li.is-on { opacity: 1; animation: disparo .8s cubic-bezier(.15,.9,.25,1.25) .35s both, flota 3.2s ease-in-out 1.15s infinite alternate; }
-@media (min-width: 760px) {
-  .estilo-i.foto-mano { aspect-ratio: 16 / 9; }
-  .estilo-i .m3 { width: auto; height: 150%; top: -2%; left: 68%; }
-  .estilo-i .avisos-fuera { left: 44%; }
-  .estilo-i .avisos-fuera li { width: 280px; }
-  .estilo-i .avisos-fuera li[data-s="0"] { left: 62%; top: 12%; --dx: -60%; --dy: 120%; }
-  .estilo-i .avisos-fuera li[data-s="1"] { left: 0;   top: 34%; --dx: 75%;  --dy: -60%; }
-  .estilo-i .avisos-fuera li[data-s="2"] { left: 62%; top: 58%; --dx: -60%; --dy: -230%; }
-}
-@media (prefers-reduced-motion: reduce) { .estilo-i .avisos-fuera li.is-on { animation: none; transform: rotate(var(--r)); } }
-/* I · ajuste: tarjetas de fuera más anchas para que se lea el texto */
-.estilo-i .avisos-fuera li { width: 60%; }
-.estilo-i .avisos-fuera li[data-s="0"] { left: 39%; --dx: -46%; }
-.estilo-i .avisos-fuera li[data-s="1"] { left: 1%; --dx: 36%; }
-.estilo-i .avisos-fuera li[data-s="2"] { left: 39%; --dx: -42%; }
-@media (min-width: 760px) { .estilo-i .avisos-fuera li { width: 300px; } .estilo-i .avisos-fuera li[data-s="0"], .estilo-i .avisos-fuera li[data-s="2"] { left: 58%; } }
-/* Barrita de pruebas: si no cabe, se desliza */
-.probar { max-width: calc(100vw - 20px); overflow-x: auto; scrollbar-width: none; }
-.probar::-webkit-scrollbar { display: none; }
-
-/* H = G + notificaciones de la D (03/11): todo igual que la G (mano3, zoom, se enciende, halo, vibración);
-   solo cambian las notificaciones: nacen pequeñas y oscuras en el sitio de los avisos de la pantalla y crecen
-   hacia fuera hasta quedarse blancas y grandes, rectas y apiladas (como en la D). Se ven las 3 últimas. */
-.estilo-h .avisos3 { visibility: hidden; }
-.estilo-h .avisos-fuera { top: 25.5%; }
-.estilo-h .avisos-fuera li.is-on { animation: sale-del-movil-h 1.1s cubic-bezier(.2,.9,.3,1.15) both; }
-.estilo-h .avisos-fuera li.is-on span { animation: texto-sale 1.1s ease both; }
-@keyframes sale-del-movil-h {
-  0%, 35% { transform: scale(.6); transform-origin: 50% 0; background: rgba(70,70,70,.95); color: #fff; box-shadow: none; }
-  100%    { transform: scale(1); transform-origin: 50% 0; }
-}
-@media (min-width: 760px) {
-  .estilo-h .avisos-fuera { top: 27.7%; }
-  @keyframes sale-del-movil-h {
-    0%, 35% { transform: scale(.72); transform-origin: 50% 0; background: rgba(70,70,70,.95); color: #fff; box-shadow: none; }
-    100%    { transform: scale(1); transform-origin: 50% 0; }
-  }
-}
-@media (prefers-reduced-motion: reduce) { .estilo-h .avisos-fuera li.is-on, .estilo-h .avisos-fuera li.is-on span { animation: none; } }
