@@ -73,6 +73,8 @@
     /* Escaparate: cambia de pantalla cada 2,8 s; se puede tocar un paso. Con «movimiento reducido», no avanza solo. */
     (function () {
       var imgs = document.querySelectorAll('#pantallas img'), pasos = document.querySelectorAll('#pasos li'), i = 0, t;
+      // Prueba: ?o=1 enseña la web y la reserva de Olympo (solo páginas públicas) en vez de las de la demo
+      if (/[?&]o=1/.test(location.search)) { imgs[0].src = 'assets/img/pantallas/o1-web.webp'; imgs[1].src = 'assets/img/pantallas/o2-hora.webp'; }
       function ir(n) {
         imgs[i].classList.remove('is-on'); pasos[i].classList.remove('is-on');
         i = (n + imgs.length) % imgs.length;
