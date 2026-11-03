@@ -237,3 +237,4 @@ html { scroll-behavior: smooth; }
 @media (min-width: 1100px) { .hr { max-width: 1240px; margin: 0 auto; } .hr-sec { padding: 56px 64px; } .hr-sec-ancha { grid-template-columns: .9fr 1.1fr; } .hr-ipads { grid-template-columns: 1fr; } }
 /* En el móvil, el iPad deja sitio a las flechas */
 @media (max-width: 759px) { .ipad { width: calc(100% - 64px); } .flecha-ant { left: -8px; } .flecha-sig { right: -8px; } }
+.hr-pronto { display: inline-block; vertical-align: middle; margin-left: 6px; padding: 5px 10px; border-radius: 999px; background: #FFE14D; color: var(--negro); font-size: .8rem; font-weight: 700; letter-spacing: 0; }

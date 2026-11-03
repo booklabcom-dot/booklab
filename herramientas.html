@@ -11,7 +11,7 @@
   <meta name="theme-color" content="#f2f2f0">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/clara.css?v=20261103i">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261103j">
 </head>
 <body>
   <header class="nav">
@@ -25,12 +25,12 @@
     <p class="hr-lema">Todo lo que lleva tu web de Book Lab. Toca una para ir directo o baja para verlas todas.</p>
 
     <nav class="hr-indice" aria-label="Herramientas">
-      <a href="#web">Web y SEO</a><a href="#reservas">Reservas</a><a href="#recordatorios">Recordatorios</a><a href="#bloqueos">No shows y bloqueos</a>
-      <a href="#resenas">Reseñas</a><a href="#cliente">Gestionar mi cita</a><a href="#espera">Lista de espera</a><a href="#mostrador">Agenda de mostrador</a>
+      <a href="#web">Web y SEO</a><a href="#reservas">Reservas</a><a href="#politica">Política de reserva</a><a href="#recordatorios">Recordatorios</a><a href="#bloqueos">No shows y bloqueos</a><a href="#cancelar">Cancelar con motivo</a>
+      <a href="#resenas">Reseñas</a><a href="#cliente">Gestionar mi cita</a><a href="#espera">Lista de espera</a><a href="#mostrador">Agenda de mostrador</a><a href="#kiosco">Kiosco</a>
       <a href="#numeros">Panel y números</a><a href="#caja">Caja del iPad</a><a href="#privacidad">Datos y privacidad</a>
     </nav>
 
-    <!-- 01 Web -->
+    <!-- Web -->
     <section class="hr-sec" id="web" aria-labelledby="t-web">
       <div class="hr-texto">
         <p class="hr-num">01</p>
@@ -53,7 +53,7 @@
       <figure class="hr-movil"><img src="assets/img/pantallas/1-web.webp?v=20261103b" alt="Portada de la web de una barbería en el móvil" width="600" height="1298" loading="lazy"></figure>
     </section>
 
-    <!-- 02 Reservas -->
+    <!-- Reservas -->
     <section class="hr-sec" id="reservas" aria-labelledby="t-reservas">
       <div class="hr-texto">
         <p class="hr-num">02</p>
@@ -73,10 +73,24 @@
       <figure class="hr-movil"><img src="assets/img/pantallas/2-hora.webp?v=20261103b" alt="Elegir día y hora en la reserva" width="600" height="1298" loading="lazy"></figure>
     </section>
 
-    <!-- 03 Recordatorios -->
-    <section class="hr-sec" id="recordatorios" aria-labelledby="t-recordatorios">
+    <!-- Política de reserva -->
+    <section class="hr-sec" id="politica" aria-labelledby="t-politica">
       <div class="hr-texto">
         <p class="hr-num">03</p>
+        <h2 id="t-politica">Tu política de reserva</h2>
+        <p class="hr-intro">Tus normas, claras desde el principio. El cliente las lee y las acepta antes de reservar.</p>
+        <ul>
+          <li>Tú decides las normas: con cuánta antelación se cancela, qué pasa si no viene (por ejemplo, que se abona el 50 % de la cita)…</li>
+          <li>Casilla obligatoria «He leído y acepto la política de reservas».</li>
+          <li>Queda en el resumen de la cita, para que nadie diga que no lo sabía.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Recordatorios -->
+    <section class="hr-sec" id="recordatorios" aria-labelledby="t-recordatorios">
+      <div class="hr-texto">
+        <p class="hr-num">04</p>
         <h2 id="t-recordatorios">Recordatorios automáticos</h2>
         <p class="hr-intro">Menos citas perdidas sin que tengas que estar pendiente.</p>
         <ul>
@@ -88,26 +102,42 @@
       <figure class="hr-movil"><img src="assets/img/pantallas/3b-avisos.webp?v=20261103b" alt="Recordatorio por WhatsApp y correo de cita confirmada en el móvil del cliente" width="600" height="1298" loading="lazy"></figure>
     </section>
 
-    <!-- 04 No shows -->
+    <!-- No shows -->
     <section class="hr-sec" id="bloqueos" aria-labelledby="t-bloqueos">
       <div class="hr-texto">
-        <p class="hr-num">04</p>
+        <p class="hr-num">05</p>
         <h2 id="t-bloqueos">No shows y bloqueos</h2>
-        <p class="hr-intro">Para los que te dejan la silla vacía.</p>
+        <p class="hr-intro">Para los que te dejan la silla vacía, sin pasar el mal rato de escribirles tú.</p>
         <ul>
           <li>Marca «No vino» y la facturación se recalcula sola.</li>
-          <li>Con un toque, el bot le manda un aviso por WhatsApp.</li>
-          <li>«Marcar pagado» si después te paga la cita perdida.</li>
-          <li>Bloquea por correo o teléfono: ese cliente ya no puede reservar y ve un aviso.</li>
+          <li>Ves cuántos no vinieron en el mes y cuánto dinero tienes por cobrar.</li>
+          <li>Con un toque, el asistente le manda un WhatsApp ya escrito: el día, el servicio, el importe y tu política de reservas.</li>
+          <li>«Marcar pagado» cuando te pague la cita perdida.</li>
+          <li>Bloquea al que siempre falla o al cliente conflictivo, por correo o teléfono y con el motivo. Ya no puede reservar y ve un aviso.</li>
           <li>Desbloquéalo cuando quieras.</li>
         </ul>
       </div>
     </section>
 
-    <!-- 05 Reseñas -->
+    <!-- Cancelar con motivo -->
+    <section class="hr-sec" id="cancelar" aria-labelledby="t-cancelar">
+      <div class="hr-texto">
+        <p class="hr-num">06</p>
+        <h2 id="t-cancelar">Cancelar sin malos ratos</h2>
+        <p class="hr-intro">¿Estás malo en la cama o te ha surgido un imprevisto? Cancelar una cita es cosa de dos toques.</p>
+        <ul>
+          <li>Botonera de motivos: barbero enfermo, imprevisto en la barbería, cierre del local… o escribes el tuyo.</li>
+          <li>Al cliente le llega un correo automático con el motivo y un botón para reservar otra cita.</li>
+          <li>Y el WhatsApp ya escrito, con su nombre, la hora y el motivo: solo le das a enviar.</li>
+          <li>El hueco vuelve a quedar libre en la web al momento.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Reseñas -->
     <section class="hr-sec" id="resenas" aria-labelledby="t-resenas">
       <div class="hr-texto">
-        <p class="hr-num">05</p>
+        <p class="hr-num">07</p>
         <h2 id="t-resenas">Más reseñas en Google</h2>
         <p class="hr-intro">Las reseñas te traen clientes nuevos. Book Lab hace que lleguen más.</p>
         <ul>
@@ -119,10 +149,10 @@
       <figure class="hr-movil"><img src="assets/img/pantallas/5-hoy.webp?v=20261103b" alt="Panel Hoy con los botones de recordar y reseñas" width="600" height="1298" loading="lazy"></figure>
     </section>
 
-    <!-- 06 Gestionar mi cita -->
+    <!-- Gestionar mi cita -->
     <section class="hr-sec" id="cliente" aria-labelledby="t-cliente">
       <div class="hr-texto">
-        <p class="hr-num">06</p>
+        <p class="hr-num">08</p>
         <h2 id="t-cliente">El cliente se gestiona solo</h2>
         <p class="hr-intro">Nada de llamadas para cambiar la hora.</p>
         <ul>
@@ -135,10 +165,10 @@
       <figure class="hr-movil"><img src="assets/img/pantallas/3-reservada.webp?v=20261103b" alt="Cita reservada con su resumen" width="600" height="1298" loading="lazy"></figure>
     </section>
 
-    <!-- 07 Lista de espera -->
+    <!-- Lista de espera -->
     <section class="hr-sec" id="espera" aria-labelledby="t-espera">
       <div class="hr-texto">
-        <p class="hr-num">07</p>
+        <p class="hr-num">09</p>
         <h2 id="t-espera">Lista de espera</h2>
         <p class="hr-intro">Un hueco libre es dinero que se escapa.</p>
         <ul>
@@ -149,10 +179,10 @@
       </div>
     </section>
 
-    <!-- 08 Agenda de mostrador -->
+    <!-- Agenda de mostrador -->
     <section class="hr-sec" id="mostrador" aria-labelledby="t-mostrador">
       <div class="hr-texto">
-        <p class="hr-num">08</p>
+        <p class="hr-num">10</p>
         <h2 id="t-mostrador">Agenda de mostrador</h2>
         <p class="hr-intro">Para el que entra por la puerta o pide cita en persona.</p>
         <ul>
@@ -160,14 +190,30 @@
           <li>Tres toques: servicio, hora libre (o «Ahora») y nombre.</li>
           <li>Va a su calendario y cuenta en la facturación.</li>
           <li>Botón «Deshacer» por si se equivoca.</li>
+          <li>Abre citas fuera de horario a precio especial, si lo activas.</li>
+          <li>Se instala en el móvil como una app, con su icono.</li>
         </ul>
       </div>
     </section>
 
-    <!-- 09 Panel -->
+    <!-- Kiosco -->
+    <section class="hr-sec" id="kiosco" aria-labelledby="t-kiosco">
+      <div class="hr-texto">
+        <p class="hr-num">11</p>
+        <h2 id="t-kiosco">Kiosco en el local <span class="hr-pronto">Próximamente</span></h2>
+        <p class="hr-intro">Un iPad en la entrada para que el cliente coja cita él solo, sin molestarte mientras cortas.</p>
+        <ul>
+          <li>Botones enormes y pocos pasos: barbero, servicio y la próxima hora libre.</li>
+          <li>Escribe su nombre y teléfono, y la cita entra en la agenda del barbero.</li>
+          <li>Al terminar se borra todo y vuelve al inicio, para el siguiente.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Panel -->
     <section class="hr-sec" id="numeros" aria-labelledby="t-numeros">
       <div class="hr-texto">
-        <p class="hr-num">09</p>
+        <p class="hr-num">12</p>
         <h2 id="t-numeros">Panel y números</h2>
         <p class="hr-intro">Tu barbería en números, en el móvil. Privado: solo entras tú.</p>
         <ul>
@@ -175,16 +221,18 @@
           <li>Citas, ocupación, ticket medio y horas punta.</li>
           <li>Clientes nuevos y mejores clientes.</li>
           <li>Huecos libres de hoy y quién ha reservado, cambiado o cancelado.</li>
+          <li>Cuántos no vinieron y cuánto tienes por cobrar.</li>
           <li>Exporta todo a Excel cuando quieras.</li>
+          <li>El botón del panel solo sale en tu móvil; tus clientes no lo ven.</li>
         </ul>
       </div>
       <figure class="hr-movil"><img src="assets/img/pantallas/4-panel.webp?v=20261103b" alt="Panel con facturación, citas, ticket medio y ocupación" width="600" height="1298" loading="lazy"></figure>
     </section>
 
-    <!-- 10 Caja -->
+    <!-- Caja -->
     <section class="hr-sec hr-sec-ancha" id="caja" aria-labelledby="t-caja">
       <div class="hr-texto">
-        <p class="hr-num">10</p>
+        <p class="hr-num">13</p>
         <h2 id="t-caja">Caja del iPad</h2>
         <p class="hr-intro">Cobra en el mostrador con un iPad en horizontal. Botones grandes y sin complicaciones.</p>
         <ul>
@@ -194,6 +242,7 @@
           <li>Panel del jefe con PIN: hoy, semana y mes.</li>
           <li>Efectivo que tiene que haber en caja, con tu fondo.</li>
           <li>Reparto automático: lo que factura cada barbero, lo que le toca cobrar y lo que queda para ti.</li>
+          <li>Resumen de cada barbero por semana y por mes: lo que ha hecho, su sueldo y lo de la empresa.</li>
           <li>Productos y servicios más vendidos, y quién vende más.</li>
           <li>Corrige o anula un cobro y queda el historial.</li>
           <li>Todo pasa a una hoja de Google con tu contabilidad.</li>
@@ -206,10 +255,10 @@
       </div>
     </section>
 
-    <!-- 11 Privacidad -->
+    <!-- Privacidad -->
     <section class="hr-sec" id="privacidad" aria-labelledby="t-privacidad">
       <div class="hr-texto">
-        <p class="hr-num">11</p>
+        <p class="hr-num">14</p>
         <h2 id="t-privacidad">Tus datos, en orden</h2>
         <p class="hr-intro">Las citas y los datos de tus clientes son tuyos.</p>
         <ul>
