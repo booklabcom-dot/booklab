@@ -119,3 +119,32 @@ a { color: inherit; }
 @keyframes ipad-paseo { 0%, 12% { transform: translateX(19%); } 88%, 100% { transform: translateX(-19%); } }
 @media (prefers-reduced-motion: reduce) { .is-ipad .ipad { animation: none; } }
 @media (prefers-reduced-motion: reduce) { .movil-pantalla img, .ipad-pantalla img, .escaparate-movil > * { transition: none; } }
+
+/* Precios */
+.precios { margin-top: 56px; }
+.precios h2 { margin: 0; font: 700 clamp(2rem, 9vw, 4.2rem)/.95 var(--letra); letter-spacing: -.045em; }
+.precios-sub { margin: 10px 0 18px; color: var(--gris); }
+.precios-planes { display: grid; gap: 8px; }
+.plan { position: relative; padding: 20px 20px 22px; border-radius: 18px; background: var(--tarjeta); }
+.plan h3 { margin: 0; font-size: 1.05rem; font-weight: 650; }
+.plan-precio { margin: 8px 0 4px; display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.plan-precio s { color: var(--gris); font-size: 1rem; }
+.plan-precio b { font: 700 2.6rem/1 var(--letra); letter-spacing: -.04em; }
+.plan-precio span { color: var(--gris); }
+.plan-nota { margin: 0; color: var(--gris); font-size: .93rem; line-height: 1.4; }
+.plan-destacado { background: var(--negro); color: #fff; }
+.plan-destacado .plan-precio s, .plan-destacado .plan-precio span, .plan-destacado .plan-nota { color: #a5a5a5; }
+.plan-etiqueta { position: absolute; top: 18px; right: 18px; padding: 5px 10px; border-radius: 999px; background: #fff; color: var(--negro); font-size: .78rem; font-weight: 700; }
+.plan-alta { margin-top: 8px; display: grid; gap: 4px; }
+.plan-alta .plan-precio { margin: 6px 0 0; }
+.plan-alta .plan-precio b { font-size: 2rem; }
+.precios-incluye { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.precios-incluye li { padding: 7px 13px; border: 1px solid var(--linea); border-radius: 999px; font-size: .88rem; font-weight: 500; color: #333; background: rgba(255,255,255,.5); }
+.precios-cta { margin-top: 20px; min-height: 52px; font-size: 1.02rem; }
+.precios-legal { margin: 12px 0 0; color: var(--gris); font-size: .8rem; }
+@media (min-width: 760px) {
+  .precios { margin-top: 88px; }
+  .precios-planes { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .plan { padding: 28px; }
+  .plan-alta { grid-template-columns: 1fr auto; align-items: center; gap: 24px; margin-top: 10px; }
+}
