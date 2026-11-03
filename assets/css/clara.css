@@ -374,3 +374,5 @@ html { scroll-behavior: smooth; }
 .hr-asaber b { color: #333; }
 .hr-asaber .hr-nota { margin-top: 10px; }
 @media (min-width: 760px) { .hr-asaber { padding: 26px 44px; } }
+/* «+ IVA» junto al precio, bien visible */
+.plan-precio .iva { font-style: normal; font-weight: 800; color: #111; background: #FEDA12; padding: 2px 7px; border-radius: 6px; margin-left: 4px; font-size: .8rem; }
