@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="assets/css/clara.css?v=20261103k">
   <link rel="stylesheet" href="assets/css/video-portada.css?v=1">
   <link rel="stylesheet" href="assets/css/mano.css?v=1">
-  <link rel="stylesheet" href="assets/css/foto-mano.css?v=10">
+  <link rel="stylesheet" href="assets/css/foto-mano.css?v=12">
 </head>
 <body>
   <header class="nav">
@@ -25,7 +25,7 @@
   <main>
     <section class="portada" aria-labelledby="portada-titulo">
       <!-- PRUEBA: mano tatuada (creada con IA por Johan) con el móvil del dueño: avisos de Book Lab llegando uno a uno -->
-      <div class="foto-mano estilo-sale" id="foto-mano">
+      <div class="foto-mano estilo-g" id="foto-mano">
         <div class="foto-mano-marco">
           <div class="bloqueo" aria-hidden="true">
             <p class="bloqueo-fecha">martes, 3 de noviembre</p>
@@ -39,6 +39,21 @@
             </ul>
           </div>
           <img class="foto-mano-img" src="assets/img/mano-tatuada.webp?v=1" alt="" width="1024" height="1536" aria-hidden="true">
+        </div>
+        <!-- G · Se enciende: mano3 (más brazo y tatuajes). Pantalla que se enciende y avisos grandes cayendo dentro -->
+        <div class="foto-mano-marco m3">
+          <div class="bloqueo b3" aria-hidden="true">
+            <p class="bloqueo-fecha">martes, 3 de noviembre</p>
+            <p class="bloqueo-hora">10:58</p>
+            <ul class="avisos avisos3" id="avisos3">
+              <li><b>Nueva reserva</b><span>Carlos · Skinfade · 11:00</span></li>
+              <li><b>Recordatorios enviados</b><span>6 clientes de hoy</span></li>
+              <li><b>Hueco recuperado</b><span>De la lista de espera</span></li>
+              <li><b>Nueva reseña en Google</b><span>★★★★★ «El mejor fade»</span></li>
+              <li><b>Caja de hoy</b><span>Llevas <em>412</em> €</span></li>
+            </ul>
+          </div>
+          <img class="foto-mano-img" src="assets/img/mano-tatuada-3.webp?v=1" alt="" width="1024" height="1536" aria-hidden="true">
         </div>
         <!-- Los mismos avisos, grandes y flotando fuera del móvil (pruebas B y C) -->
         <ul class="avisos-fuera" aria-hidden="true">
@@ -175,9 +190,10 @@
     <button type="button" data-e="estilo-zoom">A</button>
     <button type="button" data-e="estilo-flotan">B</button>
     <button type="button" data-e="estilo-mix">C</button>
-    <button type="button" data-e="estilo-sale" class="is-on">D · Salen</button>
+    <button type="button" data-e="estilo-sale">D</button>
     <button type="button" data-e="estilo-dispara">E</button>
     <button type="button" data-e="estilo-sube">F</button>
+    <button type="button" data-e="estilo-g" class="is-on">G · Enciende</button>
   </div>
 
   <script>
@@ -190,13 +206,7 @@
     });
 
     /* Al llegar un aviso: el móvil tiembla un poco */
-    function vibra() { var m = document.querySelector('.foto-mano-marco'); m.classList.remove('vibra'); void m.offsetWidth; m.classList.add('vibra'); }
-    /* «Caja de hoy»: el dinero sube de 0 a la cifra */
-    function cuenta(li) {
-      var em = li.querySelector('[data-cuenta]'); if (!em) return;
-      var fin = +em.dataset.cuenta, t0 = performance.now();
-      (function f(t) { var k = Math.min(1, (t - t0) / 1200); em.textContent = Math.round(fin * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(f); })(t0);
-    }
+    function vibra() { var m = document.querySelector(document.getElementById('foto-mano').classList.contains('estilo-g') ? '.m3' : '.foto-mano-marco'); m.classList.remove('vibra'); void m.offsetWidth; m.classList.add('vibra'); }
     /* Al bajar la página: el móvil se inclina y sube un poco, y los avisos se separan */
     (function () {
       if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -208,11 +218,12 @@
 
     /* Portada: los avisos llegan uno a uno (el más nuevo arriba) y vuelven a empezar */
     (function () {
-      var lis = [].slice.call(document.querySelectorAll('#avisos li, .avisos-fuera li')), n = 0, cinco = 5;
-      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { lis.forEach(function (l) { l.classList.add('is-on'); }); return; }
+      var lis = [].slice.call(document.querySelectorAll('#avisos li, .avisos-fuera li')), lis3 = [].slice.call(document.querySelectorAll('#avisos3 li')), b3 = document.querySelector('.b3'), m3 = document.querySelector('.m3'), n = 0, cinco = 5;
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { lis.concat(lis3).forEach(function (l) { l.classList.add('is-on'); }); b3.classList.add('encendida'); return; }
       function paso() {
-        if (n < cinco) { lis[n].classList.add('is-on'); lis[n + cinco].dataset.s = n % 3; lis[n + cinco].dataset.l = n % 2; var bq = document.querySelector('.bloqueo'); bq.classList.remove('ping'); void bq.offsetWidth; bq.classList.add('ping'); vibra(); cuenta(lis[n + cinco]); cuenta(lis[n]); lis[n + cinco].classList.add('is-on'); if (n >= 3) lis[n - 3 + cinco].classList.remove('is-on'); n++; setTimeout(paso, 1600); } // fuera del móvil, solo los 3 últimos
-        else setTimeout(function () { lis.forEach(function (l) { l.classList.remove('is-on'); }); n = 0; setTimeout(paso, 700); }, 3200);
+        if (n === 0) b3.classList.add('encendida');
+        if (n < cinco) { lis3[n].classList.add('is-on'); if (n >= 3) lis3[n - 3].classList.remove('is-on'); m3.classList.remove('brilla'); void m3.offsetWidth; m3.classList.add('brilla'); lis[n].classList.add('is-on'); lis[n + cinco].dataset.s = n % 3; lis[n + cinco].dataset.l = n % 2; var bq = document.querySelector('.bloqueo'); bq.classList.remove('ping'); void bq.offsetWidth; bq.classList.add('ping'); vibra(); lis[n + cinco].classList.add('is-on'); if (n >= 3) lis[n - 3 + cinco].classList.remove('is-on'); n++; setTimeout(paso, 1600); } // fuera del móvil, solo los 3 últimos
+        else setTimeout(function () { b3.classList.remove('encendida'); setTimeout(function () { lis.concat(lis3).forEach(function (l) { l.classList.remove('is-on'); }); n = 0; setTimeout(paso, 900); }, 600); }, 3200);
       }
       setTimeout(paso, 600);
     })();
