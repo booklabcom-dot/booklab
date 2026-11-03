@@ -144,3 +144,23 @@
 .u-big { font-size: 44px; font-weight: 800; letter-spacing: -.03em; line-height: 1.05; }
 .u-jefe .u-card:nth-child(n+3) { padding: 16px 24px; }
 .u-jefe .u-card:nth-child(n+3) .u-big { font-size: 36px; }
+
+/* 1 · La web de una barbería inventada («Norte Barber Club»), con foto de portada (Unsplash, licencia libre) */
+.u-webv { padding: 0; }
+.u-wv-foto { position: relative; height: 560px; padding: 14px 22px 0; background: #111 center 20% / cover no-repeat; display: flex; flex-direction: column; }
+.u-wv-foto::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.05) 30%, rgba(0,0,0,.25) 55%, rgba(15,15,15,1) 100%); filter: none; }
+.u-wv-foto > * { position: relative; }
+.u-wv-nav { display: flex; justify-content: space-between; align-items: center; }
+.u-wv-nav b { display: grid; font-size: 24px; font-weight: 800; letter-spacing: .12em; line-height: 1; }
+.u-wv-nav small { font-size: 10px; font-weight: 600; letter-spacing: .32em; text-transform: uppercase; margin-top: 4px; opacity: .8; }
+.u-wv-menu { display: grid; gap: 6px; }
+.u-wv-menu i { display: block; width: 26px; height: 2px; background: #fff; }
+.u-wv-hero { margin-top: auto; padding-bottom: 22px; }
+.u-wv-lugar { font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #e0e0e0; }
+.u-wv-hero h3 { margin: 10px 0 18px !important; font-size: 52px; line-height: .92; font-weight: 800; letter-spacing: -.045em; text-transform: uppercase; }
+.u-wv-hero em { font-style: normal; color: #fff; -webkit-text-stroke: 0; text-decoration: underline; text-decoration-color: #FEDA12; text-decoration-thickness: 6px; text-underline-offset: 6px; }
+.u-wv-ctas { display: flex; gap: 10px; align-items: center; }
+.u-wv-borde { padding: 13px 18px; border-radius: 999px; border: 1.5px solid rgba(255,255,255,.7); font-weight: 700; font-size: 15px; }
+.u-wv-cuerpo { padding: 6px 22px 0; }
+.u-wv-galeria { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 8px; margin: 10px 0 14px; }
+.u-wv-galeria span { height: 120px; border-radius: 14px; background: #222 center / cover no-repeat; filter: grayscale(1); }
