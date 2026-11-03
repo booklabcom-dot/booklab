@@ -32,3 +32,33 @@
   .foto-mano-texto .marca-gigante { font-size: clamp(4.5rem, 10vw, 9.5rem); }
 }
 @media (prefers-reduced-motion: reduce) { .avisos li { transition: none; } }
+
+/* ---------- Pruebas (03/11): A zoom · B avisos flotando fuera · C mezcla ---------- */
+.avisos-fuera { display: none; }
+/* A · Zoom: el móvil mucho más grande (en el móvil se corta el brazo, no pasa nada) */
+.estilo-zoom .foto-mano-marco, .estilo-mix .foto-mano-marco { width: 168%; top: -5%; left: 46%; }
+.estilo-mix .foto-mano-marco { width: 128%; top: -3%; left: 48%; }
+/* B y C · Avisos grandes y blancos que salen del móvil hacia fuera */
+.estilo-flotan .avisos-fuera, .estilo-mix .avisos-fuera { display: flex; flex-direction: column-reverse; gap: 10px; position: absolute; z-index: 3; list-style: none; margin: 0; padding: 0;
+  left: 50%; top: 22%; width: min(86%, 380px); transform: translateX(-50%); }
+.estilo-flotan .bloqueo .avisos, .estilo-mix .bloqueo .avisos { visibility: hidden; }
+.avisos-fuera li { display: grid; grid-template-columns: 40px 1fr; column-gap: 12px; padding: 12px 14px; border-radius: 20px; background: rgba(255,255,255,.92); color: #111;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 18px 40px rgba(0,0,0,.28);
+  opacity: 0; transform: scale(.55) translateY(40px); max-height: 0; padding-top: 0; padding-bottom: 0; overflow: hidden;
+  transition: opacity .45s ease, transform .6s cubic-bezier(.2,.9,.3,1.25), max-height .45s ease, padding .45s ease; }
+.avisos-fuera li.is-on { opacity: 1; transform: none; max-height: 90px; padding-top: 12px; padding-bottom: 12px; }
+.avisos-fuera li::before { content: "BL"; grid-row: 1 / 3; align-self: center; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 11px; background: #111; color: #fff; font-size: .82rem; font-weight: 800; }
+.avisos-fuera b { font-size: 1rem; font-weight: 700; }
+.avisos-fuera span { font-size: .9rem; color: #444; line-height: 1.3; }
+.estilo-mix .avisos-fuera { top: 18%; }
+@media (min-width: 760px) {
+  .estilo-zoom .foto-mano-marco { width: auto; height: 190%; top: -6%; left: 68%; }
+  .estilo-mix .foto-mano-marco { width: auto; height: 165%; top: -5%; left: 68%; }
+  .estilo-flotan .avisos-fuera, .estilo-mix .avisos-fuera { left: 68%; top: 16%; width: 400px; }
+}
+
+/* Botones para cambiar de prueba (solo en esta página de pruebas) */
+.probar { position: fixed; z-index: 50; left: 50%; bottom: 14px; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 6px; border-radius: 999px; background: #111; color: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.3); font: 600 .82rem/1 var(--letra); white-space: nowrap; }
+.probar span { padding: 0 6px 0 8px; opacity: .7; }
+.probar button { border: 0; border-radius: 999px; padding: 9px 12px; background: #2a2a2a; color: #fff; font: inherit; cursor: pointer; }
+.probar button.is-on { background: #fff; color: #111; }

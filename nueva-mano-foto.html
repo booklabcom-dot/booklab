@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="assets/css/clara.css?v=20261103k">
   <link rel="stylesheet" href="assets/css/video-portada.css?v=1">
   <link rel="stylesheet" href="assets/css/mano.css?v=1">
-  <link rel="stylesheet" href="assets/css/foto-mano.css?v=4">
+  <link rel="stylesheet" href="assets/css/foto-mano.css?v=5">
 </head>
 <body>
   <header class="nav">
@@ -25,7 +25,7 @@
   <main>
     <section class="portada" aria-labelledby="portada-titulo">
       <!-- PRUEBA: mano tatuada (creada con IA por Johan) con el móvil del dueño: avisos de Book Lab llegando uno a uno -->
-      <div class="foto-mano">
+      <div class="foto-mano estilo-zoom" id="foto-mano">
         <div class="foto-mano-marco">
           <div class="bloqueo" aria-hidden="true">
             <p class="bloqueo-fecha">martes, 3 de noviembre</p>
@@ -40,6 +40,14 @@
           </div>
           <img class="foto-mano-img" src="assets/img/mano-tatuada.webp?v=1" alt="" width="1024" height="1536" aria-hidden="true">
         </div>
+        <!-- Los mismos avisos, grandes y flotando fuera del móvil (pruebas B y C) -->
+        <ul class="avisos-fuera" aria-hidden="true">
+          <li><b>Nueva reserva</b><span>Carlos · Skinfade · mañana 11:00</span></li>
+          <li><b>Recordatorios enviados</b><span>6 clientes de hoy, con un toque</span></li>
+          <li><b>Hueco recuperado</b><span>Iván cogió la cita que se canceló</span></li>
+          <li><b>Nueva reseña en Google</b><span>★★★★★ «El mejor fade de la zona»</span></li>
+          <li><b>Caja de hoy</b><span>Llevas 412 € · 23 cobros</span></li>
+        </ul>
         <div class="foto-mano-texto">
           <h1 class="marca-gigante" id="portada-titulo">Book Lab<sup>®</sup></h1>
           <p class="video-lema">Tu barbería trabaja sola. Tú, a cortar.</p>
@@ -161,13 +169,29 @@
     <nav aria-label="Legal"><a href="legal.html#aviso-legal">Aviso legal</a><a href="legal.html#privacidad">Privacidad</a><a href="legal.html#cookies">Cookies</a></nav>
   </footer>
 
+  <!-- SOLO PARA PROBAR: cambiar entre las tres ideas -->
+  <div class="probar" role="group" aria-label="Probar estilos">
+    <span>Prueba:</span>
+    <button type="button" data-e="estilo-zoom" class="is-on">A · Zoom</button>
+    <button type="button" data-e="estilo-flotan">B · Flotan</button>
+    <button type="button" data-e="estilo-mix">C · Mezcla</button>
+  </div>
+
   <script>
+    /* Pruebas: cambia la clase de la portada */
+    document.querySelectorAll('.probar button').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var f = document.getElementById('foto-mano'); f.className = 'foto-mano ' + b.dataset.e;
+        document.querySelectorAll('.probar button').forEach(function (x) { x.classList.toggle('is-on', x === b); });
+      });
+    });
+
     /* Portada: los avisos llegan uno a uno (el más nuevo arriba) y vuelven a empezar */
     (function () {
-      var lis = [].slice.call(document.querySelectorAll('#avisos li')), n = 0;
+      var lis = [].slice.call(document.querySelectorAll('#avisos li, .avisos-fuera li')), n = 0, cinco = 5;
       if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { lis.forEach(function (l) { l.classList.add('is-on'); }); return; }
       function paso() {
-        if (n < lis.length) { lis[n].classList.add('is-on'); n++; setTimeout(paso, 1500); }
+        if (n < cinco) { lis[n].classList.add('is-on'); lis[n + cinco].classList.add('is-on'); if (n >= 3) lis[n - 3 + cinco].classList.remove('is-on'); n++; setTimeout(paso, 1600); } // fuera del móvil, solo los 3 últimos
         else setTimeout(function () { lis.forEach(function (l) { l.classList.remove('is-on'); }); n = 0; setTimeout(paso, 700); }, 3200);
       }
       setTimeout(paso, 600);
