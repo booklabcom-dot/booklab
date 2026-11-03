@@ -238,3 +238,7 @@ html { scroll-behavior: smooth; }
 /* En el móvil, el iPad deja sitio a las flechas */
 @media (max-width: 759px) { .ipad { width: calc(100% - 64px); } .flecha-ant { left: -8px; } .flecha-sig { right: -8px; } }
 .hr-pronto { display: inline-block; vertical-align: middle; margin-left: 6px; padding: 5px 10px; border-radius: 999px; background: #FFE14D; color: var(--negro); font-size: .8rem; font-weight: 700; letter-spacing: 0; }
+/* Capturas recortadas de cada herramienta */
+.hr-captura { margin: 0; justify-self: center; width: 100%; max-width: 380px; border-radius: 18px; overflow: hidden; box-shadow: 0 0 0 1px #2a2a2a, 0 18px 40px rgba(0,0,0,.22); }
+.hr-capturas { display: grid; gap: 12px; justify-items: center; }
+@media (min-width: 760px) { .hr-captura { width: 340px; } }
