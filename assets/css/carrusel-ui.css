@@ -164,3 +164,27 @@
 .u-wv-cuerpo { padding: 6px 22px 0; }
 .u-wv-galeria { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 8px; margin: 10px 0 14px; }
 .u-wv-galeria span { height: 120px; border-radius: 14px; background: #222 center / cover no-repeat; filter: grayscale(1); }
+
+/* Pantallas de plantones, reseñas y lista de espera */
+.u-nom { font-size: 19px; font-weight: 800; }
+.u-nom small { margin-left: 6px; font-size: 13px; font-weight: 500; color: #8d8d8d; }
+.u-gr { color: #a5a5a5; font-size: 15px; margin-top: 2px !important; }
+.u-b { font-weight: 700; font-size: 15px; margin-top: 6px !important; }
+.u-fila-b { display: flex; gap: 8px; margin-top: 14px; }
+.u-ok-b { padding: 11px 14px; border-radius: 999px; background: #1f3a2a; color: #7fe0a8; font-weight: 800; font-size: 14px; }
+.u-bloq { padding: 11px 16px; border-radius: 999px; background: var(--a); color: #111; font-weight: 800; font-size: 14px; }
+.u-wab { display: grid; gap: 8px; margin-top: 12px; padding: 14px 16px; border-radius: 4px 20px 20px 20px; background: #fff; color: #111; font-size: 15px; line-height: 1.38; }
+.u-mt2 { margin-top: 12px; }
+.u-mail { margin-top: 10px; padding: 22px 20px; border-radius: 22px; background: #fff; color: #111; }
+.u-mail-de { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #8d8d8d; }
+.u-mail-t { margin-top: 8px !important; font-size: 26px; font-weight: 800; letter-spacing: -.03em; line-height: 1.1; }
+.u-estrellas { margin: 14px 0 4px !important; font-size: 42px; letter-spacing: 4px; color: var(--a); -webkit-text-stroke: 1px #d9b800; }
+.u-mail-p { margin-top: 10px !important; font-size: 15px; line-height: 1.45; color: #444; }
+.u-btn-n { display: block; margin-top: 18px; padding: 15px; border-radius: 999px; background: #111; color: #fff; text-align: center; font-weight: 800; font-size: 16px; }
+.u-google { margin-top: 14px; padding: 16px 18px; border-radius: 20px; background: #1a1a1a; box-shadow: inset 0 0 0 1px #262626; }
+.u-google b { font-size: 17px; }
+.u-google p { margin-top: 4px !important; color: #c9c9c9; font-size: 15px; }
+.u-google span { color: var(--a); letter-spacing: 2px; }
+.u-espera { border-left: 4px solid var(--a); }
+.u-horas-o { display: flex; gap: 8px; margin-top: 12px; }
+.u-horas-o span { padding: 12px 18px; border-radius: 12px; border: 1.5px solid #111; font-weight: 800; font-size: 17px; }
