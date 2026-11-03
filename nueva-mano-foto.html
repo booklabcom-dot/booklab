@@ -260,7 +260,8 @@
         // Las pantallas de la caja van en el iPad: se esconde el móvil y aparece el iPad
         aparato.classList.toggle('is-ipad', !!imgs[i].closest('.ipad'));
       }
-      function auto() { clearTimeout(t); if (solo) t = setTimeout(function () { ir(i + 1); auto(); }, imgs[i].closest('.ipad') ? 5000 : 2800); }
+      var visto = false; // solo pasa solo cuando el carrusel está a la vista
+      function auto() { clearTimeout(t); if (solo && visto) t = setTimeout(function () { ir(i + 1); auto(); }, imgs[i].closest('.ipad') ? 5000 : 2800); }
       function mover(d) { ir(i + d); auto(); }
       pasos.forEach(function (p, n) { p.addEventListener('click', function () { ir(n); auto(); }); });
       document.getElementById('ant').addEventListener('click', function () { mover(-1); });
@@ -279,7 +280,12 @@
         var r = aparato.getBoundingClientRect();
         mover(e.clientX < r.left + r.width / 2 ? -1 : 1);
       });
-      auto();
+      // Empieza cuando el cliente baja hasta el carrusel; se para si lo deja atrás y sigue al volver
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          visto = es[0].isIntersecting; if (visto) auto(); else clearTimeout(t);
+        }, { threshold: .5 }).observe(aparato);
+      } else { visto = true; auto(); }
     })();
   </script>
 </body>
