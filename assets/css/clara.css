@@ -165,3 +165,7 @@ a { color: inherit; }
 .precios-legal { color: #8d8d8d; }
 @media (min-width: 760px) { .precios { padding: 56px 48px 44px; } }
 @media (min-width: 1100px) { .precios { padding: 64px 72px 52px; } }
+/* Dentro del bloque negro: las dos tarjetas y las píldoras en blanco */
+.precios .plan { background: #fff; color: var(--negro); }
+.precios .plan .plan-precio s, .precios .plan .plan-precio span, .precios .plan .plan-nota { color: var(--gris); }
+.precios-incluye li { border-color: #fff; color: var(--negro); background: #fff; }
