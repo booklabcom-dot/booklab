@@ -62,3 +62,29 @@
 .probar span { padding: 0 6px 0 8px; opacity: .7; }
 .probar button { border: 0; border-radius: 999px; padding: 9px 12px; background: #2a2a2a; color: #fff; font: inherit; cursor: pointer; }
 .probar button.is-on { background: #fff; color: #111; }
+
+/* D · Salen del móvil: misma mano que C (se ven los tatuajes). Cada aviso nace pequeño y oscuro justo donde
+   aparece la notificación dentro de la pantalla, y crece hacia fuera hasta quedarse como tarjeta blanca grande.
+   left/top = posición de las notificaciones de la pantalla, calculada para este encuadre. */
+.estilo-sale .foto-mano-marco { width: 128%; top: -3%; left: 48%; }
+.estilo-sale .avisos-fuera { display: flex; flex-direction: column-reverse; gap: 10px; position: absolute; z-index: 3; list-style: none; margin: 0; padding: 0;
+  left: 47.6%; top: 25.7%; width: min(86%, 380px); transform: translateX(-50%); }
+.estilo-sale .avisos-fuera li { transition: max-height .45s ease, padding .45s ease, opacity .3s ease; transform: none; }
+.estilo-sale .avisos-fuera li.is-on { animation: sale-del-movil 1.1s cubic-bezier(.2,.9,.3,1.15) both; }
+@keyframes sale-del-movil {
+  0%   { transform: scale(.4); transform-origin: 50% 0; background: rgba(70,70,70,.95); color: #fff; box-shadow: none; }
+  35%  { transform: scale(.4); transform-origin: 50% 0; background: rgba(70,70,70,.95); color: #fff; box-shadow: none; }
+  100% { transform: scale(1); transform-origin: 50% 0; }
+}
+.estilo-sale .avisos-fuera li.is-on span { animation: texto-sale 1.1s ease both; }
+@keyframes texto-sale { 0%, 35% { color: #ddd; } 100% { color: #444; } }
+@media (min-width: 760px) {
+  .estilo-sale .foto-mano-marco { width: auto; height: 165%; top: -5%; left: 68%; }
+  .estilo-sale .avisos-fuera { left: 67.8%; top: 29.3%; width: 400px; }
+  @keyframes sale-del-movil {
+    0%, 35% { transform: scale(.5); transform-origin: 50% 0; background: rgba(70,70,70,.95); color: #fff; box-shadow: none; }
+    100% { transform: scale(1); transform-origin: 50% 0; }
+  }
+}
+@media (prefers-reduced-motion: reduce) { .estilo-sale .avisos-fuera li.is-on, .estilo-sale .avisos-fuera li.is-on span { animation: none; } }
+.probar button { padding: 9px 11px; }
