@@ -15,3 +15,5 @@
   .foto-mano-marco { width: 52%; top: -16%; }
   .foto-mano-texto { left: 40px; right: 40px; bottom: 34px; }
 }
+/* Todo en blanco y negro: también lo que se ve dentro del móvil */
+.foto-mano-pantalla { filter: grayscale(1); }
