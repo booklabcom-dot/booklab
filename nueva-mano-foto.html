@@ -13,7 +13,7 @@
   <link rel="preload" as="image" href="assets/img/pantallas/1-web.webp" type="image/webp">
   <link rel="stylesheet" href="assets/css/clara.css?v=20261103l">
   <link rel="stylesheet" href="assets/css/foto-mano.css?v=18">
-  <link rel="stylesheet" href="assets/css/carrusel-ui.css?v=5">
+  <link rel="stylesheet" href="assets/css/carrusel-ui.css?v=6">
 </head>
 <body>
   <header class="nav">
@@ -129,6 +129,7 @@
             </div>
           </div>
         </div>
+        <button type="button" class="pausa" id="pausa" aria-pressed="false">❚❚ Pausa</button>
         <ol class="escaparate-pasos" id="pasos">
           <li class="is-on"><b>Tu web</b><span>Con tu nombre, tus fotos y tus precios.</span></li>
           <li><b>Reservan solos</b><span>Eligen servicio, barbero y hora libre. A cualquier hora.</span></li>
@@ -260,10 +261,24 @@
         // Las pantallas de la caja van en el iPad: se esconde el móvil y aparece el iPad
         aparato.classList.toggle('is-ipad', !!imgs[i].closest('.ipad'));
       }
-      var visto = false; // solo pasa solo cuando el carrusel está a la vista
-      function auto() { clearTimeout(t); if (solo && visto) t = setTimeout(function () { ir(i + 1); auto(); }, imgs[i].closest('.ipad') ? 5000 : 2800); }
+      var visto = false, pausa = false, mantiene = false, largo = false, tMant; // visto: a la vista · pausa: botón · mantiene: dedo pulsado
+      function auto() { clearTimeout(t); if (solo && visto && !pausa && !mantiene) t = setTimeout(function () { ir(i + 1); auto(); }, imgs[i].closest('.ipad') ? 5000 : 2800); }
       function mover(d) { ir(i + d); auto(); }
       pasos.forEach(function (p, n) { p.addEventListener('click', function () { ir(n); auto(); }); });
+      var bp = document.getElementById('pausa');
+      bp.addEventListener('click', function () {
+        pausa = !pausa; bp.setAttribute('aria-pressed', String(pausa)); bp.textContent = pausa ? '▶ Seguir' : '❚❚ Pausa';
+        if (pausa) clearTimeout(t); else auto();
+      });
+      // Mantener el dedo (o el clic) sobre la pantalla: se queda quieta mientras está pulsada
+      aparato.addEventListener('pointerdown', function (e) {
+        if (e.target.closest('.flecha')) return;
+        clearTimeout(t); // quieto desde que se pone el dedo
+        tMant = setTimeout(function () { mantiene = largo = true; clearTimeout(t); aparato.classList.add('en-pausa'); }, 280);
+      });
+      ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) {
+        aparato.addEventListener(ev, function () { clearTimeout(tMant); if (mantiene) { mantiene = false; aparato.classList.remove('en-pausa'); } auto(); });
+      });
       document.getElementById('ant').addEventListener('click', function () { mover(-1); });
       document.getElementById('sig').addEventListener('click', function () { mover(1); });
       // Deslizar: más de 40 px en horizontal (y más que en vertical, para no molestar al bajar la página)
@@ -277,6 +292,7 @@
       // Tocar la pantalla: mitad izquierda = anterior, mitad derecha = siguiente
       aparato.addEventListener('click', function (e) {
         if (e.target.closest('.flecha')) return;
+        if (largo) { largo = false; return; }
         var r = aparato.getBoundingClientRect();
         mover(e.clientX < r.left + r.width / 2 ? -1 : 1);
       });
