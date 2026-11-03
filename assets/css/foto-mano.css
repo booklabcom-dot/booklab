@@ -149,3 +149,19 @@
   .estilo-sube .avisos-fuera li { left: 67.8%; top: 40%; width: 330px; }
 }
 @media (prefers-reduced-motion: reduce) { .estilo-sube .avisos-fuera li.is-on { animation: none; opacity: 1; transform: translate(-50%, -60%); } }
+
+/* ---------- Detalles sobre la D (03/11): color del logo, vibración, contador y scroll ---------- */
+.foto-mano { --amarillo: #FEDA12; --sy: 0px; --rot: 0deg; --sep: 0; }
+.foto-mano .amarillo { color: var(--amarillo); }
+.avisos li::before { background: var(--amarillo); color: #111; }
+.avisos-fuera li::before { background: var(--amarillo); color: #111; }
+.avisos-fuera em, .avisos em { font-style: normal; font-weight: 700; color: #111; }
+.avisos em { color: #fff; }
+/* Scroll: el marco sube e inclina (top y rotate van aparte de transform, que ya centra el marco) */
+.estilo-sale .foto-mano-marco { top: calc(-3% + var(--sy)); rotate: var(--rot); transition: rotate .1s linear; }
+.estilo-sale .avisos-fuera { margin-top: calc(var(--sy) * .6); gap: calc(10px + var(--sep) * 26px); }
+/* Vibración al llegar un aviso */
+.foto-mano-marco.vibra { animation: vibra .38s linear; }
+@keyframes vibra { 0%, 100% { translate: 0 0; } 15% { translate: -2px 0; } 30% { translate: 2px 0; } 45% { translate: -2px 0; } 60% { translate: 1px 0; } 75% { translate: -1px 0; } }
+@media (min-width: 760px) { .estilo-sale .foto-mano-marco { top: calc(-5% + var(--sy)); } }
+@media (prefers-reduced-motion: reduce) { .foto-mano-marco.vibra { animation: none; } }
