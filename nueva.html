@@ -11,7 +11,7 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/img/pantallas/1-web.webp" type="image/webp">
-  <link rel="stylesheet" href="assets/css/clara.css?v=20261103g">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261103i">
 </head>
 <body>
   <header class="nav">
@@ -26,18 +26,20 @@
       <div class="portada-fila">
         <p class="portada-lema">La web de tu barbería, con reservas, recordatorios y caja. Hecha por un barbero.</p>
         <ul class="portada-lista">
-          <li>Web propia y dominio</li>
-          <li>Reservas 24/7</li>
-          <li>Recordatorios por WhatsApp</li>
-          <li>Panel y caja del iPad</li>
+          <li><a href="herramientas.html#web">Web propia y dominio</a></li>
+          <li><a href="herramientas.html#reservas">Reservas 24/7</a></li>
+          <li><a href="herramientas.html#recordatorios">Recordatorios por WhatsApp</a></li>
+          <li><a href="herramientas.html#caja">Panel y caja del iPad</a></li>
         </ul>
       </div>
 
       <!-- Escaparate: la demo pasando sola dentro de un móvil -->
       <div class="escaparate">
         <!-- Pantallas del móvil y de la caja en un iPad en horizontal, en el mismo orden que los pasos -->
-        <div class="escaparate-movil" id="aparato" aria-hidden="true">
-          <div class="movil">
+        <div class="escaparate-movil" id="aparato">
+          <button type="button" class="flecha flecha-ant" id="ant" aria-label="Pantalla anterior">‹</button>
+          <button type="button" class="flecha flecha-sig" id="sig" aria-label="Pantalla siguiente">›</button>
+          <div class="movil" aria-hidden="true">
             <div class="movil-pantalla">
               <img src="assets/img/pantallas/1-web.webp?v=20261103b" alt="" width="600" height="1298" class="is-on">
               <img src="assets/img/pantallas/2-hora.webp?v=20261103b" alt="" width="600" height="1298" loading="lazy">
@@ -47,7 +49,7 @@
               <img src="assets/img/pantallas/5-hoy.webp?v=20261103b" alt="" width="600" height="1298" loading="lazy">
             </div>
           </div>
-          <div class="ipad">
+          <div class="ipad" aria-hidden="true">
             <div class="ipad-pantalla">
               <img src="assets/img/pantallas/ipad-1-cobro.webp?v=20261103b" alt="" width="1400" height="973" loading="lazy">
               <img src="assets/img/pantallas/ipad-2-cambio.webp?v=20261103b" alt="" width="1400" height="973" loading="lazy">
@@ -60,10 +62,10 @@
           <li><b>Reservan solos</b><span>Eligen servicio, barbero y hora libre.</span></li>
           <li><b>Cita confirmada</b><span>En un minuto y sin llamar.</span></li>
           <li><b>Le llega todo</b><span>Correo de confirmación y recordatorio por WhatsApp.</span></li>
-          <li><b>Tus números</b><span>Facturación, citas y quién no vino.</span></li>
+          <li><b>Tus números</b><span>Facturación, citas, ocupación, mejores clientes y mucho más.</span></li>
           <li><b>Hoy</b><span>Recordatorios y reseñas por WhatsApp.</span></li>
           <li><b>La caja del iPad</b><span>Toca el cliente, el servicio y cómo paga.</span></li>
-          <li><b>El cambio</b><span>Te da 20 € y te dice cuánto devolver.</span></li>
+          <li><b>El cambio</b><span>Paga en efectivo y la caja te dice lo que le tienes que devolver.</span></li>
           <li><b>Tus cuentas</b><span>Lo que hay en caja, lo de cada barbero y lo tuyo.</span></li>
         </ol>
       </div>
@@ -72,21 +74,21 @@
       <section class="funciones" aria-labelledby="funciones-titulo">
         <h2 id="funciones-titulo">Todo lo que hace por ti</h2>
         <ol class="funciones-lista">
-          <li><b>Menos citas perdidas</b><span>Recordatorios automáticos el día antes y 3 horas antes, o cuando tú quieras. Y avisos por WhatsApp con un solo toque.</span></li>
-          <li><b>Bloquea a los que te dejan tirado</b><span>Con un toque, ese cliente ya no puede volver a reservar.</span></li>
-          <li><b>Más reseñas en Google</b><span>Después de cada corte le llega un recordatorio automático para dejar su reseña. Y si quieres, se lo recuerdas tú por WhatsApp con un solo toque.</span></li>
-          <li><b>Caja con reparto automático</b><span>Lo que factura cada barbero, lo que le toca cobrar y lo que queda para ti. Sin hacer cuentas.</span></li>
-          <li><b>Lista de espera</b><span>Si no hay hueco, el cliente se apunta. Si alguien cancela, le avisa sola y el hueco se llena.</span></li>
-          <li><b>El cliente se gestiona solo</b><span>Cambia o cancela su cita desde el correo, sin llamarte.</span></li>
-          <li><b>Agenda de mostrador</b><span>¿Entra alguien sin cita? Tres toques y apuntado.</span></li>
-          <li><b>Tus números claros</b><span>Facturación, ocupación, horas punta y mejores clientes. Y todo a Excel.</span></li>
+          <li><a href="herramientas.html#recordatorios"><b>Menos citas perdidas</b><span>Recordatorios automáticos el día antes y 3 horas antes, o cuando tú quieras. Y avisos por WhatsApp con un solo toque.</span></a></li>
+          <li><a href="herramientas.html#bloqueos"><b>Bloquea a los que te dejan tirado</b><span>Con un toque, ese cliente ya no puede volver a reservar.</span></a></li>
+          <li><a href="herramientas.html#resenas"><b>Más reseñas en Google</b><span>Después de cada corte le llega un recordatorio automático para dejar su reseña. Y si quieres, se lo recuerdas tú por WhatsApp con un solo toque.</span></a></li>
+          <li><a href="herramientas.html#caja"><b>Caja con reparto automático</b><span>Lo que factura cada barbero, lo que le toca cobrar y lo que queda para ti. Sin hacer cuentas.</span></a></li>
+          <li><a href="herramientas.html#espera"><b>Lista de espera</b><span>Si no hay hueco, el cliente se apunta. Si alguien cancela, le avisa sola y el hueco se llena.</span></a></li>
+          <li><a href="herramientas.html#cliente"><b>El cliente se gestiona solo</b><span>Cambia o cancela su cita desde el correo, sin llamarte.</span></a></li>
+          <li><a href="herramientas.html#mostrador"><b>Agenda de mostrador</b><span>¿Entra alguien sin cita? Tres toques y apuntado.</span></a></li>
+          <li><a href="herramientas.html#numeros"><b>Tus números claros</b><span>Facturación, ocupación, horas punta y mejores clientes. Y todo a Excel.</span></a></li>
         </ol>
       </section>
 
       <!-- Precios (oferta de lanzamiento; mismos precios que index.html) -->
       <section class="precios" id="precios" aria-labelledby="precios-titulo">
         <h2 id="precios-titulo">Precios</h2>
-        <p class="precios-sub">Precio de lanzamiento para las 10 primeras barberías.</p>
+        <p class="precios-sub">Precio de lanzamiento para las 10 primeras barberías. Después, 24,90 €/mes.</p>
         <div class="precios-planes">
           <article class="plan">
             <h3>Mensual</h3>
@@ -94,20 +96,29 @@
             <p class="plan-nota">Pagas mes a mes.</p>
           </article>
           <article class="plan plan-destacado">
-            <span class="plan-etiqueta">2 meses gratis</span>
+            <span class="plan-etiqueta">1 mes gratis</span>
             <h3>Anual</h3>
-            <p class="plan-precio"><s>299 €</s> <b>199 €</b><span>/año</span></p>
-            <p class="plan-nota">Sale a 16,58 € al mes.</p>
+            <p class="plan-precio"><s>274 €</s> <b>219 €</b><span>/año</span></p>
+            <p class="plan-nota">Sale a 18,25 € al mes.</p>
           </article>
         </div>
         <ul class="precios-incluye">
-          <li>Alojamiento, mantenimiento y cambios incluidos</li>
+          <li>Mantenimiento y cambios incluidos</li>
           <li>Sin comisiones por reserva</li>
           <li>Sin coste por barbero</li>
           <li>🤝 Trae a otra barbería: 1 mes gratis</li>
         </ul>
         <a class="pildora pildora-negra precios-cta" href="https://wa.me/34625725758?text=Hola%2C%20quiero%20la%20oferta%20de%20lanzamiento%20de%20Book%20Lab" target="_blank" rel="noopener">Quiero la oferta <i aria-hidden="true"></i></a>
         <p class="precios-legal">Precios sin IVA. El precio que contrates se mantiene mientras sigas con nosotros.</p>
+      </section>
+
+      <!-- Llamadas finales: probar la demo y ver todas las herramientas -->
+      <section class="final" aria-label="Pruébalo">
+        <a class="final-herramientas" href="herramientas.html">Descubre todas nuestras herramientas <span aria-hidden="true">→</span></a>
+        <div class="final-demo">
+          <p>Pruébalo como si fueras tu cliente y mira lo que verías tú.</p>
+          <a class="pildora pildora-negra pildora-grande" href="demo.html">Probar la demo <i aria-hidden="true"></i></a>
+        </div>
       </section>
 
       <!-- Tarjeta personal (la foto de Johan irá aquí cuando la tenga) -->
@@ -122,25 +133,45 @@
     </section>
   </main>
 
+  <footer class="pie">
+    <span>© 2026 Book Lab · Webs con reservas para barberías</span>
+    <nav aria-label="Legal"><a href="legal.html#aviso-legal">Aviso legal</a><a href="legal.html#privacidad">Privacidad</a><a href="legal.html#cookies">Cookies</a></nav>
+  </footer>
+
   <script>
-    /* Escaparate: cambia de pantalla cada 2,8 s; se puede tocar un paso. Con «movimiento reducido», no avanza solo. */
+    /* Escaparate: pasa solo (2,8 s en el móvil, 5 s en el iPad). Se puede deslizar con el dedo, tocar un lado
+       de la pantalla o tocar un paso; al hacerlo, el tiempo vuelve a empezar. Con «movimiento reducido», no avanza solo. */
     (function () {
       var aparato = document.getElementById('aparato'), pasos = document.querySelectorAll('#pasos li'), i = 0, t;
       var imgs = aparato.querySelectorAll('img');
+      var solo = !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
       function ir(n) {
         imgs[i].classList.remove('is-on'); pasos[i].classList.remove('is-on');
         i = (n + imgs.length) % imgs.length;
         imgs[i].classList.add('is-on'); pasos[i].classList.add('is-on');
         // Las pantallas de la caja van en el iPad: se esconde el móvil y aparece el iPad
-        var ipad = !!imgs[i].closest('.ipad');
-        aparato.classList.toggle('is-ipad', ipad);
-        // Reinicia el paseo del iPad (móvil) en cada pantalla
-        if (ipad) { var p = aparato.querySelector('.ipad'); p.style.animation = 'none'; void p.offsetWidth; p.style.animation = ''; }
+        aparato.classList.toggle('is-ipad', !!imgs[i].closest('.ipad'));
       }
-      // Las pantallas del iPad se quedan más tiempo: tienen más que leer
-      function auto() { clearTimeout(t); t = setTimeout(function () { ir(i + 1); auto(); }, imgs[i].closest('.ipad') ? 5000 : 2800); }
+      function auto() { clearTimeout(t); if (solo) t = setTimeout(function () { ir(i + 1); auto(); }, imgs[i].closest('.ipad') ? 5000 : 2800); }
+      function mover(d) { ir(i + d); auto(); }
       pasos.forEach(function (p, n) { p.addEventListener('click', function () { ir(n); auto(); }); });
-      if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) auto();
+      document.getElementById('ant').addEventListener('click', function () { mover(-1); });
+      document.getElementById('sig').addEventListener('click', function () { mover(1); });
+      // Deslizar: más de 40 px en horizontal (y más que en vertical, para no molestar al bajar la página)
+      var x0 = null, y0 = 0;
+      aparato.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+      aparato.addEventListener('touchend', function (e) {
+        if (x0 === null) return;
+        var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) mover(dx < 0 ? 1 : -1);
+      }, { passive: true });
+      // Tocar la pantalla: mitad izquierda = anterior, mitad derecha = siguiente
+      aparato.addEventListener('click', function (e) {
+        if (e.target.closest('.flecha')) return;
+        var r = aparato.getBoundingClientRect();
+        mover(e.clientX < r.left + r.width / 2 ? -1 : 1);
+      });
+      auto();
     })();
   </script>
 </body>
