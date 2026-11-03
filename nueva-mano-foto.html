@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="assets/css/clara.css?v=20261103k">
   <link rel="stylesheet" href="assets/css/video-portada.css?v=1">
   <link rel="stylesheet" href="assets/css/mano.css?v=1">
-  <link rel="stylesheet" href="assets/css/foto-mano.css?v=6">
+  <link rel="stylesheet" href="assets/css/foto-mano.css?v=8">
 </head>
 <body>
   <header class="nav">
@@ -25,7 +25,7 @@
   <main>
     <section class="portada" aria-labelledby="portada-titulo">
       <!-- PRUEBA: mano tatuada (creada con IA por Johan) con el móvil del dueño: avisos de Book Lab llegando uno a uno -->
-      <div class="foto-mano estilo-sale" id="foto-mano">
+      <div class="foto-mano estilo-dispara" id="foto-mano">
         <div class="foto-mano-marco">
           <div class="bloqueo" aria-hidden="true">
             <p class="bloqueo-fecha">martes, 3 de noviembre</p>
@@ -175,7 +175,8 @@
     <button type="button" data-e="estilo-zoom">A</button>
     <button type="button" data-e="estilo-flotan">B</button>
     <button type="button" data-e="estilo-mix">C</button>
-    <button type="button" data-e="estilo-sale" class="is-on">D · Salen</button>
+    <button type="button" data-e="estilo-sale">D · Salen</button>
+    <button type="button" data-e="estilo-dispara" class="is-on">E · Disparo</button>
   </div>
 
   <script>
@@ -192,7 +193,7 @@
       var lis = [].slice.call(document.querySelectorAll('#avisos li, .avisos-fuera li')), n = 0, cinco = 5;
       if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { lis.forEach(function (l) { l.classList.add('is-on'); }); return; }
       function paso() {
-        if (n < cinco) { lis[n].classList.add('is-on'); lis[n + cinco].classList.add('is-on'); if (n >= 3) lis[n - 3 + cinco].classList.remove('is-on'); n++; setTimeout(paso, 1600); } // fuera del móvil, solo los 3 últimos
+        if (n < cinco) { lis[n].classList.add('is-on'); lis[n + cinco].dataset.s = n % 3; lis[n + cinco].classList.add('is-on'); if (n >= 3) lis[n - 3 + cinco].classList.remove('is-on'); n++; setTimeout(paso, 1600); } // fuera del móvil, solo los 3 últimos
         else setTimeout(function () { lis.forEach(function (l) { l.classList.remove('is-on'); }); n = 0; setTimeout(paso, 700); }, 3200);
       }
       setTimeout(paso, 600);
