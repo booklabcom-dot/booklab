@@ -1,0 +1,46 @@
+/* OLYMPO · Panel «Hoy» (dia.html). Usa las piezas de caja.css; aquí solo lo propio. */
+body { min-height: 100vh; }
+.dia { max-width: 980px; margin: 0 auto; }
+.dia .cj-top { flex-wrap: wrap; }
+a.cj-jefe-btn { text-decoration: none; color: var(--text); }
+.dia-main { padding: 16px 20px 32px; }
+.dia-login { padding: 32px 20px; max-width: 460px; margin: 0 auto; }
+.dia-login form { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+
+/* Los dos botones grandes */
+.dia-acciones { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+.dia-accion {
+  display: flex; align-items: center; gap: 14px; text-align: left; min-height: 96px; padding: 16px 20px;
+  border: 0; border-radius: 18px; background: #25D366; color: #0b2a17;
+}
+.dia-accion b { display: block; font-size: 1.35rem; font-weight: 900; }
+.dia-accion small { display: block; font-size: .95rem; font-weight: 600; opacity: .85; margin-top: 2px; }
+.dia-accion-ico { font-size: 2.2rem; }
+.dia-accion-resena { background: var(--accent); color: var(--accent-ink); }
+.dia-accion:disabled { background: var(--surface); color: var(--muted); }
+
+/* Lista de clientes */
+.dia-fila { grid-template-columns: 64px 78px 1fr auto auto; cursor: default; }
+.dia-fila.is-pasada .dia-hora { color: var(--muted); }
+.dia-hora { font-weight: 800; color: var(--text); font-size: 1.05rem; }
+.dia-chips { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.dia-botones { display: flex; gap: 6px; }
+.dia-mini {
+  display: inline-flex; align-items: center; justify-content: center; min-width: 52px; height: 44px; padding: 0 10px;
+  border-radius: 12px; background: var(--surface-2); border: 1px solid var(--line); color: var(--text); text-decoration: none; font-weight: 800;
+}
+.dia-mini.is-hecho { opacity: .45; }
+
+/* Cola */
+.dia-cola h2 { font-size: 2rem; margin: 6px 0 4px; }
+.dia-cola-abrir { display: flex; align-items: center; justify-content: center; width: 100%; margin: 20px 0 10px; text-decoration: none; background: #25D366; color: #0b2a17; }
+
+@media (max-width: 760px) {
+  .dia-main { padding: 12px 16px 28px; }
+  .dia-acciones { grid-template-columns: 1fr; }
+  .dia-accion { min-height: 80px; }
+  .dia-fila { grid-template-columns: 56px 1fr auto; }
+  .dia-fila .cj-cobro-b { display: none; }
+  .dia-fila .dia-chips { grid-column: 2 / 3; justify-content: flex-start; }
+  .dia-fila .dia-botones { grid-row: 1 / 3; grid-column: 3; }
+}

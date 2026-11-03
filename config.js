@@ -30,16 +30,16 @@ window.BOOKLAB_CONFIG = {
 
   // ---------- Datos del negocio ----------
   negocio: {
-    nombre: 'Nombre de tu barbería',
-    // true = el nombre sale entre comillas con estilo de "marcador" (solo para la demo).
-    // Pon false cuando escribas el nombre real.
-    esMarcador: true,
+    // Barbería inventada para la demo (03/11/2026): con nombre y personalidad vende más que «Nombre de tu barbería».
+    nombre: 'Navaja Barber Club',
+    // true = el nombre sale entre comillas con estilo de "marcador". Con nombre de verdad, false.
+    esMarcador: false,
     eslogan: 'Cortes clásicos, degradados y barbas. Sin esperas: reserva en un minuto.',
-    direccion: 'Calle Ejemplo 1, 28001 Madrid',
+    direccion: 'Calle de la Navaja 12, Malasaña · Madrid',
     // Enlace de Google Maps. Si lo dejas vacío, se busca la dirección automáticamente.
     mapa: '',
     telefono: '600 000 000',
-    instagram: 'tubarberia',          // sin la @. Vacío = no se muestra
+    instagram: '',                    // sin la @. Vacío = no se muestra (la demo no enlaza a ninguna cuenta real)
     zonaHoraria: 'Europe/Madrid'
   },
 
@@ -97,6 +97,29 @@ window.BOOKLAB_CONFIG = {
   // Marcos las abre desde su agenda (pestaña «Fuera horario»). Debe coincidir con Code.gs → HORAS_EXTRA.
   horasExtra: { barbero: 'marcos' },
 
+  // ---------- Caja de cobros (caja.html), «Caja y ventas» y panel «Hoy» (dia.html) ----------
+  // En la demo todo va en modo simulación, con cobros inventados. Mismo código que Olympo.
+  caja: {
+    barberos: ['marcos', 'lucia', 'diego'],
+    servicios: [
+      { id: 'corte-clasico', nombre: 'Corte clásico', precio: 16 },
+      { id: 'degradado', nombre: 'Degradado', precio: 17 },
+      { id: 'corte-barba', nombre: 'Corte + barba', precio: 20 },
+      { id: 'barba', nombre: 'Arreglo de barba', precio: 12 }
+    ],
+    extras: [],
+    m12: { barbero: '', nombre: '', precio: 0, paraBarbero: 0 },   // sin «cliente de precio especial» en la demo
+    productos: [
+      { id: 'cera-mate', nombre: 'Cera mate', precio: 12 },
+      { id: 'cera-brillo', nombre: 'Cera brillo', precio: 12 },
+      { id: 'aceite', nombre: 'Aceite de barba', precio: 15 },
+      { id: 'polvos', nombre: 'Polvos', precio: 15 }
+    ],
+    billetes: [50, 20, 10, 5, 2, 1],
+    reparto: { marcos: 0, lucia: 0.4, diego: 0.5 },   // Marcos es el dueño; Lucía al 40 %, Diego al 50 %
+    jefe: 'marcos'
+  },
+
   // ---------- Barberos ----------
   // El primero con id "any" es la opción "Cualquiera": no lo borres.
   // foto: ruta de la foto del barbero (opcional). Vacía = círculo con la inicial.
@@ -130,6 +153,16 @@ window.BOOKLAB_CONFIG = {
 
   // ---------- Textos ----------
   textos: {
+    // Mensaje de WhatsApp para pedir la reseña (panel «Hoy»)
+    resenaWhatsapp: [
+      '¡Gracias por venir a Navaja Barber Club! 💈',
+      '',
+      'Si te ha gustado el corte, nos ayudas muchísimo dejándonos una reseña en Google. Son 30 segundos. ⭐⭐⭐⭐⭐',
+      '',
+      '👉 (aquí va el enlace a tu ficha de Google)',
+      '',
+      '¡Nos vemos en la próxima!'
+    ],
     subtitulo: 'DEMO · así verían tus clientes tu web',
     subtituloReserva: 'Reserva tu cita en 4 pasos',
     botonCita: 'Aparta tu cita',

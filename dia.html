@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- DEMO de Book Lab (copia de la de Olympo) · Panel «Hoy»: los clientes del día y dos botones rápidos por WhatsApp (recordar y pedir reseña).
+       Página oculta: entra con la clave del panel (la misma que panel.html). -->
+  <title>Hoy</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="format-detection" content="telephone=no, email=no">
+  <meta name="theme-color" content="#1E1E1E">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Hoy">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
+  <link rel="preload" href="assets/fonts/outfit.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/caja.css?v=20261103a">
+  <link rel="stylesheet" href="assets/css/dia.css?v=20261103a">
+  <style>:root { --accent: #d9493a; --accent-ink: #fff; --accent-soft: rgba(217, 73, 58, .14); }
+    /* Sobre fondo blanco, el texto va oscuro (con el rojo de la demo, el texto sobre el rojo va blanco) */
+    .cj-filtro[aria-pressed="true"], .cj-pago[aria-pressed="true"], .cj-billete[aria-pressed="true"], .cj-aviso { color: #111; }</style>
+</head>
+<body>
+  <div class="dia">
+    <header class="cj-top">
+      <p class="cj-brand">NAVAJA <span>Hoy</span></p>
+      <p class="cj-reloj" id="fecha"></p>
+      <a class="cj-jefe-btn" href="caja.html?jefe=1" id="ir-caja">💶 Caja</a>
+      <a class="cj-jefe-btn" href="panel.html">Panel</a>
+    </header>
+
+    <!-- Entrar (solo la primera vez en este dispositivo) -->
+    <section id="v-login" class="dia-login" hidden>
+      <h1>Panel de hoy</h1>
+      <p class="cj-muted">Escribe la clave del panel (la misma del panel de la barbería). Se queda guardada en este dispositivo.</p>
+      <form id="login-form">
+        <input id="clave" class="cj-input" type="password" autocomplete="current-password" autocapitalize="off" spellcheck="false" placeholder="Clave del panel">
+        <button class="cj-btn cj-btn-amarillo" type="submit">Entrar</button>
+      </form>
+      <p class="cj-error" id="login-error" role="alert" hidden></p>
+    </section>
+
+    <main id="v-dia" class="dia-main" hidden>
+      <div class="dia-acciones">
+        <button type="button" class="dia-accion" id="btn-recordar">
+          <span class="dia-accion-ico">💬</span>
+          <span><b>Recordar a todos</b><small id="n-recordar"></small></span>
+        </button>
+        <button type="button" class="dia-accion dia-accion-resena" id="btn-resena">
+          <span class="dia-accion-ico">⭐</span>
+          <span><b>Pedir reseña</b><small id="n-resena"></small></span>
+        </button>
+      </div>
+
+      <div class="cj-filtros" id="filtro"></div>
+      <p class="cj-cargando" id="cargando-dia">Cargando los clientes de hoy…</p>
+      <div class="cj-lista" id="lista"></div>
+      <p class="cj-pie" id="pie"></p>
+    </main>
+  </div>
+
+  <!-- Cola: uno detrás de otro -->
+  <div id="v-cola" class="cj-hecho" hidden role="dialog" aria-modal="true" aria-labelledby="cola-titulo">
+    <div class="cj-hecho-caja dia-cola">
+      <p class="cj-label" id="cola-paso"></p>
+      <h2 id="cola-titulo"></h2>
+      <p class="cj-hecho-linea" id="cola-sub"></p>
+      <a class="cj-guardar dia-cola-abrir" id="cola-abrir" href="#">Abrir WhatsApp</a>
+      <p class="cj-nota">En WhatsApp pulsa <b>Enter</b> para enviar y vuelve aquí: pasa solo al siguiente.</p>
+      <div class="cj-hecho-btns">
+        <button type="button" class="cj-btn cj-btn-borde" id="cola-saltar">Saltar</button>
+        <button type="button" class="cj-btn cj-btn-borde" id="cola-fin">Terminar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js?v=20261103a"></script>
+  <script src="assets/js/dia.js?v=20261103a"></script>
+</body>
+</html>

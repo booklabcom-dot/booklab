@@ -16,6 +16,16 @@
   <!-- Datos de la barbería y sus colores: config.js -->
   <script src="config.js?v=20261026"></script>
   <script src="assets/js/tema.js?v=20261026"></script>
+  <style>
+    .p-accesos { display: grid; gap: 10px; margin: 6px 0 18px; }
+    .p-acceso { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border-radius: 14px; background: var(--surface, #1b1b1b); border: 1px solid var(--line, #2a2a2a); color: inherit; text-decoration: none; }
+    .p-acceso > span:first-child { font-size: 1.6rem; }
+    .p-acceso b { display: block; font-size: 1.05rem; }
+    .p-acceso small { display: block; opacity: .75; }
+    .p-acceso-hoy { background: #25D366; color: #0b2a17; border-color: #25D366; }
+    .p-acceso-caja { background: var(--accent, #f5c518); color: #111; border-color: transparent; }
+    @media (min-width: 900px) { .p-accesos { grid-template-columns: repeat(3, 1fr); } }
+  </style>
 </head>
 <body class="panel-page">
   <a class="skip" href="#panel">Saltar al contenido</a>
@@ -68,6 +78,13 @@
           <select id="mes"></select>
           <button type="button" class="p-arrow" id="mes-sig" aria-label="Mes siguiente">›</button>
         </div>
+      </div>
+
+      <!-- Lo nuevo (03/11, igual que en Olympo): accesos al panel «Hoy», a «Caja y ventas» y a la caja del iPad (en la demo, con datos de ejemplo) -->
+      <div class="p-accesos">
+        <a class="p-acceso p-acceso-hoy" href="dia.html?demo=1"><span aria-hidden="true">📋</span><span><b>Hoy</b><small>Clientes del día · recordar a todos y pedir reseñas por WhatsApp</small></span></a>
+        <a class="p-acceso p-acceso-caja" href="caja.html?jefe=1&amp;demo=1"><span aria-hidden="true">💶</span><span><b>Caja y ventas</b><small>Lo cobrado de verdad, sueldos y reparto, productos más vendidos</small></span></a>
+        <a class="p-acceso" href="caja.html?demo=1"><span aria-hidden="true">🧾</span><span><b>Caja del iPad</b><small>Cobrar en el mostrador: efectivo con el cambio, tarjeta o Bizum</small></span></a>
       </div>
 
       <div class="p-chips" id="filtro" role="group" aria-label="Barbero"></div>

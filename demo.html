@@ -3,251 +3,151 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>Tu barbería · Demo Book Lab</title>
+  <!-- DEMO de Book Lab (03/11/2026): la web de una barbería inventada, «Navaja Barber Club».
+       Precios, equipo, reseñas y horario salen de config.js (portada.js los pinta). Todo es de ejemplo. -->
+  <title>Navaja Barber Club · Malasaña, Madrid · Demo Book Lab</title>
   <meta name="description" content="Demo de la web de una barbería hecha con Book Lab: precios, equipo, fotos, horario y reserva online desde el móvil.">
-  <meta name="theme-color" content="#050505">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#111111">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
-  <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="assets/img/barberia.webp" type="image/webp">
-  <script>
-    // Animaciones solo sin «movimiento reducido». Si demo-editorial.js no carga, a los 2,5 s todo queda visible.
-    (function (d) {
-      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      d.classList.add('anim');
-      setTimeout(function () { if (!window.__dx) d.classList.remove('anim'); }, 2500);
-    })(document.documentElement);
-  </script>
-  <link rel="stylesheet" href="assets/css/styles.css">
-  <link rel="stylesheet" href="assets/css/demo.css">
-  <link rel="stylesheet" href="assets/css/demo-editorial.css?v=20261026">
+  <link rel="preload" as="font" href="assets/fonts/anton.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" href="assets/img/corte-portada.webp" type="image/webp">
+  <link rel="stylesheet" href="assets/css/portada.css?v=20261103a">
+  <script src="config.js?v=20261103a"></script>
 </head>
-<body class="demo shop-page dx">
+<body>
   <a class="skip" href="#main">Saltar al contenido</a>
 
-  <div class="demo-bar">
-    <div class="wrap">
-      <a href="./" class="demo-back">← Book Lab</a>
-      <span class="demo-tag">Demo</span>
-    </div>
+  <!-- Aviso de demo -->
+  <div class="aviso">
+    <a href="./">← Book Lab</a>
+    <span>Esto es un ejemplo de web hecha con Book Lab. La tuya, con tu nombre, tus fotos y tus precios.</span>
+    <a class="aviso-panel" href="#dueno">Ver lo que ve el dueño</a>
   </div>
-  <!-- Franja de la demo + menú: se quedan fijos arriba al hacer scroll -->
-  <div class="demo-sticky">
-    <p class="demo-note">
-      <span class="wrap"><strong>Esto es un ejemplo.</strong> Cada web se diseña a medida: tus colores, tu estilo, tus fotos y tus textos.</span>
-    </p>
 
-    <!-- Toda la información de esta página sale de config.js -->
-    <header class="site-nav" id="nav">
-      <div class="wrap">
-        <a href="#main" class="site-name" id="nav-name"></a>
-        <nav aria-label="Secciones" class="site-links">
-          <a href="#precios">Precios</a>
-          <a href="#nosotros">Nosotros</a>
-          <a href="#visitanos">Horario</a>
-        </nav>
-        <div class="nav-right">
-          <a class="btn btn-primary btn-sm nav-cta" href="reservar.html" data-cta></a>
-          <a class="demo-panel" href="panel.html?demo=1">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>
-            Control del negocio
-          </a>
-        </div>
-      </div>
-    </header>
-  </div>
+  <header class="nav" id="nav">
+    <a class="nav-logo" href="#main" aria-label="Navaja Barber Club, inicio">NAVAJA<small>Barber Club</small></a>
+    <nav class="nav-links" aria-label="Secciones">
+      <a href="#precios">Precios</a>
+      <a href="#trabajos">Trabajos</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#visitanos">Visítanos</a>
+    </nav>
+    <a class="btn btn-rojo nav-cta" href="reservar.html">Reservar</a>
+  </header>
 
   <main id="main">
-    <!-- Portada editorial -->
-    <section class="s-hero dx-hero" aria-labelledby="shop-name">
-      <div class="wrap dx-hero-grid">
-        <!-- Fila técnica: ciudad, hora local y si está abierto (todo sale de config.js) -->
-        <div class="dx-meta" aria-hidden="true">
-          <span id="dx-city">Barbería</span>
-          <span><b id="dx-clock">--:--</b> <i>Hora local</i></span>
-          <span class="dx-open" id="dx-open"><i></i><em>Horario</em></span>
+    <!-- Portada -->
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero-img" src="assets/img/corte-portada.webp" width="900" height="1350" alt="Cliente de perfil con un degradado bajo recién hecho" fetchpriority="high">
+      <div class="hero-copy">
+        <p class="hero-lugar">Malasaña · Madrid · desde 2014</p>
+        <h1 id="hero-title" class="hero-title">Navaja<br><span>Barber Club</span></h1>
+        <p class="hero-sub">Degradados al milímetro, barbas a navaja y cero esperas. Reserva en un minuto y llega a tu hora.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-rojo btn-grande" href="reservar.html">Reservar cita</a>
+          <a class="btn btn-borde" href="#precios">Ver precios</a>
         </div>
-
-        <p class="dx-mega" aria-hidden="true">
-          <span class="dx-line"><span class="dx-line-in">Tu próximo</span></span>
-          <span class="dx-line dx-mega-2"><span class="dx-line-in"><span class="dx-y">fade.</span></span></span>
-        </p>
-
-        <div class="dx-hero-copy">
-          <p class="shop-sub" id="shop-sub"></p>
-          <h1 class="shop-name" id="shop-name"></h1>
-          <p class="s-hero-tagline" id="tagline"></p>
-          <p class="s-hero-address"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21Z"/><circle cx="12" cy="9.5" r="2.5"/></svg><span id="hero-address"></span></p>
-          <a class="g-rating" id="hero-rating" target="_blank" rel="noopener"></a>
-          <div class="hero-ctas">
-            <a class="btn btn-primary" href="reservar.html" data-cta></a>
-          </div>
-        </div>
-
-        <div class="dx-hero-pics">
-          <!-- Foto de portada: config.js → web.portada -->
-          <figure class="dx-pic dx-pic-a">
-            <div class="s-hero-media" id="hero-media"></div>
-            <figcaption aria-hidden="true"><span>/01</span><span>El local</span></figcaption>
-          </figure>
-          <!-- Segunda foto: la primera de config.js → web.galeria -->
-          <figure class="dx-pic dx-pic-b" id="dx-hero-pic-b" aria-hidden="true">
-            <figcaption><span>/02</span><span>Nuestro trabajo</span></figcaption>
-          </figure>
-        </div>
-
-        <a class="dx-scroll" href="#precios" aria-label="Ver los precios">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M5 13l7 7 7-7"/></svg>
-        </a>
+        <a class="hero-nota" href="#resenas"><span class="estrellas" aria-hidden="true">★★★★★</span> <b id="nota"></b> en Google · <span id="n-resenas"></span> reseñas</a>
       </div>
     </section>
 
-    <!-- Cinta (decorativa) -->
-    <div class="dx-ticker" aria-hidden="true">
-      <div class="dx-ticker-track">
-        <span>Reserva en un minuto</span><span>Sin llamadas</span><span>Elige barbero y hora</span><span>Recordatorio antes de tu cita</span>
-        <span>Reserva en un minuto</span><span>Sin llamadas</span><span>Elige barbero y hora</span><span>Recordatorio antes de tu cita</span>
-      </div>
-    </div>
-
-    <!-- Precios -->
-    <section class="s-section dx-white" id="precios" aria-labelledby="precios-title">
+    <!-- Precios: como la pizarra de la barbería -->
+    <section class="sec precios" id="precios" aria-labelledby="precios-title">
       <div class="wrap">
-        <div class="dx-head">
-          <span class="eyebrow" data-reveal="left">Precios</span>
-          <h2 class="s-title dx-h" id="precios-title"><span class="dx-line"><span class="dx-line-in">Servicios <sup class="dx-count" id="dx-count-serv"></sup></span></span></h2>
-        </div>
-        <ul class="price-list" id="price-list" data-stagger></ul>
-        <a class="btn btn-primary btn-block-sm" href="reservar.html" data-cta></a>
+        <h2 class="titulo" id="precios-title">Precios</h2>
+        <ul class="pizarra" id="pizarra"></ul>
+        <p class="pizarra-pie"><span id="extra-cejas"></span> Pago en el local: efectivo, tarjeta o Bizum.</p>
+        <a class="btn btn-rojo btn-grande" href="reservar.html">Reservar cita</a>
       </div>
-      <div class="dx-preview" id="dx-preview" aria-hidden="true"></div>
     </section>
 
-    <!-- Reseñas de Google: config.js → resenas -->
-    <section class="s-section dx-dark" id="resenas" aria-labelledby="resenas-title">
+    <!-- Trabajos -->
+    <section class="sec trabajos" id="trabajos" aria-labelledby="trabajos-title">
       <div class="wrap">
-        <div class="dx-stats" id="dx-stats" data-stagger aria-hidden="true"></div>
-        <div class="dx-head">
-          <span class="eyebrow" data-reveal="left">Reseñas</span>
-          <h2 class="s-title dx-h" id="resenas-title"><span class="dx-line"><span class="dx-line-in">Lo que dicen</span></span> <span class="dx-line"><span class="dx-line-in dx-y">en Google</span></span></h2>
-        </div>
-        <a class="g-summary" id="g-summary" target="_blank" rel="noopener"></a>
-        <ul class="reviews" id="reviews" data-stagger></ul>
-        <p class="reviews-note" id="reviews-note"></p>
+        <h2 class="titulo" id="trabajos-title">El trabajo<br>habla solo.</h2>
+        <div class="galeria" id="galeria"></div>
       </div>
     </section>
 
-    <!-- Quiénes somos -->
-    <section class="s-section dx-light" id="nosotros" aria-labelledby="nosotros-title">
-      <span class="dx-ring" aria-hidden="true"></span>
-      <div class="wrap s-about">
-        <div class="dx-about-text">
-          <span class="eyebrow" data-reveal="left">Quiénes somos</span>
-          <h2 class="s-title dx-h" id="nosotros-title"></h2>
-          <div class="s-about-text" id="about-text" data-reveal="up"></div>
-          <ul class="values" id="values" data-stagger></ul>
+    <!-- El local -->
+    <section class="sec local" aria-labelledby="local-title">
+      <div class="wrap local-grid">
+        <img class="local-img" src="assets/img/local-2.webp" width="720" height="900" alt="El local: sillones de barbero, espejos y la zona de espera con revistas" loading="lazy">
+        <div class="local-copy">
+          <h2 class="titulo" id="local-title">Sales nuevo.<br>Cada vez.</h2>
+          <div id="nosotros"></div>
+          <ul class="valores" id="valores"></ul>
         </div>
-        <!-- Fotos del local: config.js → web.fotosLocal -->
-        <div class="s-about-photo" id="about-photo" data-stagger></div>
       </div>
     </section>
 
     <!-- Equipo -->
-    <section class="s-section dx-white" id="equipo" aria-labelledby="equipo-title">
+    <section class="sec equipo" id="equipo" aria-labelledby="equipo-title">
       <div class="wrap">
-        <div class="dx-head">
-          <span class="eyebrow" data-reveal="left">El equipo</span>
-          <h2 class="s-title dx-h" id="equipo-title"><span class="dx-line"><span class="dx-line-in">Quién te corta</span></span></h2>
-        </div>
-        <ul class="team" id="team" data-stagger></ul>
+        <h2 class="titulo" id="equipo-title">El equipo</h2>
+        <ul class="barberos" id="barberos"></ul>
       </div>
     </section>
 
-    <!-- Galería -->
-    <section class="s-section dx-dark" id="fotos" aria-labelledby="fotos-title">
+    <!-- Reseñas -->
+    <section class="sec resenas" id="resenas" aria-labelledby="resenas-title">
       <div class="wrap">
-        <div class="dx-head">
-          <span class="eyebrow" data-reveal="left">Nuestro trabajo</span>
-          <h2 class="s-title dx-h" id="fotos-title"><span class="dx-line"><span class="dx-line-in">Cortes recientes <sup class="dx-count" id="dx-count-fotos"></sup></span></span></h2>
-        </div>
-        <!-- Fotos: config.js → web.galeria -->
-        <div class="gallery" id="gallery" data-stagger></div>
-        <p class="ig-line" id="ig-line"></p>
+        <h2 class="titulo" id="resenas-title"><span id="nota-grande"></span> en Google</h2>
+        <div class="citas" id="citas"></div>
       </div>
     </section>
 
-    <!-- Horario y ubicación -->
-    <section class="s-section dx-light" id="visitanos" aria-labelledby="visitanos-title">
-      <div class="wrap s-visit">
+    <!-- Visítanos -->
+    <section class="sec visitanos" id="visitanos" aria-labelledby="visitanos-title">
+      <div class="wrap visitanos-grid">
         <div>
-          <span class="eyebrow" data-reveal="left">Visítanos</span>
-          <h2 class="s-title dx-h" id="visitanos-title"><span class="dx-line"><span class="dx-line-in">Horario</span></span></h2>
-          <dl class="hours" id="hours" data-stagger></dl>
+          <h2 class="titulo" id="visitanos-title">Visítanos</h2>
+          <p class="direccion" id="direccion"></p>
+          <p class="telefono" id="telefono"></p>
+          <a class="btn btn-rojo btn-grande" href="reservar.html">Reservar cita</a>
         </div>
-        <div data-reveal="right">
-          <h2 class="s-title s-title-sm">Dónde estamos</h2>
-          <p class="visit-address" id="visit-address"></p>
-          <div class="visit-links" id="visit-links"></div>
-        </div>
+        <dl class="horario" id="horario"></dl>
       </div>
     </section>
 
-    <!-- Llamada final -->
-    <section class="s-section dx-final" aria-labelledby="final-title">
+    <!-- Para el dueño: lo que vende Book Lab -->
+    <section class="sec dueno" id="dueno" aria-labelledby="dueno-title">
       <div class="wrap">
-        <div class="cta">
-          <h2 id="final-title"><span class="dx-line"><span class="dx-line-in">¿Te toca?</span></span></h2>
-          <div class="dx-final-row">
-            <p>Elige servicio, barbero y hora. En menos de un minuto tienes tu cita.</p>
-            <a class="btn" href="reservar.html" data-cta></a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-
-    <!-- Solo en la demo: lo que tiene el equipo (en la web real no sale) -->
-    <section class="s-section dx-agenda-sec" id="equipo-agenda" aria-labelledby="agenda-title">
-      <div class="wrap">
-        <div class="demo-agenda" data-reveal="up">
-          <span class="demo-agenda-tag">Solo para tu equipo</span>
-          <h2 id="agenda-title">Cada barbero, su agenda<br><span class="accent">en el bolsillo.</span></h2>
-          <p class="demo-agenda-lead">¿Entra alguien por la puerta y pide hora? Servicio, hora y nombre: tres toques y queda apuntado. Va directo a su calendario y suma en la facturación. Adiós a la libreta.</p>
-          <ul class="demo-agenda-list">
-            <li><b>Como una app.</b> Cada barbero la tiene en la pantalla de inicio de su móvil.</li>
-            <li><b>Horas libres al momento.</b> Hoy, mañana o cuando sea, sin pisar ninguna cita.</li>
-            <li><b>Todo cuadra.</b> Lo que se apunta en persona cuenta en tus números como lo de la web.</li>
-          </ul>
-          <a class="btn btn-primary demo-agenda-btn" href="apuntar.html?demo=1&amp;b=marcos">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 2v4M16 2v4M3 10h18M12 14v4M10 16h4"/></svg>
-            Probar la agenda de Marcos
+        <p class="dueno-ante">Esto no lo ven tus clientes. Lo ves tú.</p>
+        <h2 class="titulo" id="dueno-title">Tu barbería,<br>bajo control.</h2>
+        <div class="dueno-grid">
+          <a class="dueno-card" href="panel.html?demo=1">
+            <b>Panel del dueño</b>
+            <span>Facturación por barbero y por mes, ocupación, mejores clientes, quién no vino y bloqueos.</span>
+            <em>Abrir el panel →</em>
           </a>
-          <p class="demo-agenda-url">Su enlace privado: <span>tubarberia.com/panel-agenda-marcos</span>. Tus clientes no lo ven.</p>
+          <a class="dueno-card" href="apuntar.html?demo=1&amp;b=marcos">
+            <b>Agenda de cada barbero</b>
+            <span>¿Entra alguien sin cita? Servicio, hora y nombre: tres toques y a su calendario.</span>
+            <em>Abrir la agenda de Marcos →</em>
+          </a>
+          <a class="dueno-card" href="reservar.html">
+            <b>Reserva en 4 pasos</b>
+            <span>Así reservan tus clientes desde el móvil, con horas libres de verdad y recordatorios.</span>
+            <em>Probar una reserva →</em>
+          </a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="footer">
+  <footer class="pie">
     <div class="wrap">
-      <span id="footer-name"></span>
-      <a href="legal.html#aviso-legal">Aviso legal</a>
-      <a href="legal.html#privacidad">Privacidad</a>
-      <a href="./">Web y reservas por Book Lab</a>
+      <span class="pie-logo">NAVAJA</span>
+      <span>Web y reservas hechas con <a href="./">Book Lab</a> · Barbería de ejemplo</span>
     </div>
   </footer>
 
-  <!-- Botón fijo abajo en el móvil -->
-  <div class="book-bar">
-    <a class="btn btn-primary btn-block" href="reservar.html" data-cta></a>
-  </div>
+  <!-- En el móvil, el botón de reservar siempre a mano -->
+  <a class="btn btn-rojo reservar-fijo" href="reservar.html">Reservar cita</a>
 
-  <!-- Cursor de escritorio (solo ratón, sin movimiento reducido) -->
-  <div class="dx-cursor" id="dx-cursor" aria-hidden="true"><span></span></div>
-
-  <script src="config.js?v=20261026"></script>
-  <script src="assets/js/shop.js?v=20261026"></script>
-  <script defer src="assets/js/fuera.js?v=20261026"></script>
-  <script src="assets/js/demo-editorial.js?v=20261021b"></script>
+  <script src="assets/js/portada.js?v=20261103a"></script>
 </body>
 </html>

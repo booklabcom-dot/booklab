@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- DEMO de Book Lab (copia de la de Olympo) · Caja de cobros para el iPad del mostrador. Página oculta: se entra con el enlace que escribe
+       configurarCaja() en Apps Script (caja.html#c=CLAVE) y se guarda en la pantalla de inicio.
+       Solo control interno y reparto: no emite tickets ni facturas. -->
+  <title>Caja</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="format-detection" content="telephone=no, email=no">
+  <meta name="theme-color" content="#1E1E1E">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Caja">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png">
+  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
+  <link rel="preload" href="assets/fonts/outfit.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/caja.css?v=20261103b">
+  <style>:root { --accent: #d9493a; --accent-ink: #fff; --accent-soft: rgba(217, 73, 58, .14); }
+    /* Sobre fondo blanco, el texto va oscuro (con el rojo de la demo, el texto sobre el rojo va blanco) */
+    .cj-filtro[aria-pressed="true"], .cj-pago[aria-pressed="true"], .cj-billete[aria-pressed="true"], .cj-aviso { color: #111; }</style>
+</head>
+<body>
+  <!-- Sin enlace -->
+  <section id="v-enlace" class="cj-full" hidden>
+    <p class="cj-brand">NAVAJA <span>Caja</span></p>
+    <h1>Código de la caja</h1>
+    <p class="cj-muted">Escribe el código de la caja (o el PIN del jefe).</p>
+    <div class="cj-pin-puntos" id="cod-puntos" style="margin-top:18px"><i></i><i></i><i></i><i></i></div>
+    <p class="cj-error" id="cod-error" role="alert" hidden></p>
+    <div class="cj-teclado" id="cod-teclado"></div>
+  </section>
+
+  <!-- Caja -->
+  <div id="v-caja" class="cj-app" hidden>
+    <header class="cj-top">
+      <p class="cj-brand">NAVAJA <span>Caja</span></p>
+      <p class="cj-reloj" id="reloj"></p>
+      <button type="button" class="cj-jefe-btn cj-hoy-btn" id="ver-hoy">Cobrado hoy</button>
+      <button type="button" class="cj-jefe-btn" id="abrir-jefe">🔒 Jefe</button>
+    </header>
+
+    <div class="cj-cols">
+      <!-- Izquierda: barbero y citas -->
+      <aside class="cj-izq">
+        <div class="cj-barberos" id="barberos" role="tablist" aria-label="Barbero"></div>
+        <div class="cj-sin">
+          <button type="button" class="cj-sincita" id="sincita">＋ Cobrar sin cita</button>
+          <button type="button" class="cj-sincita" id="soloprod">🛍 Solo producto</button>
+        </div>
+        <p class="cj-label" id="citas-titulo">Citas de hoy</p>
+        <div class="cj-citas" id="citas" aria-live="polite"></div>
+      </aside>
+
+      <!-- Derecha: lo que se cobra -->
+      <main class="cj-der" id="ticket">
+        <div class="cj-vacio" id="t-vacio">
+          <p class="cj-vacio-ico">✂️</p>
+          <p>Toca el cliente que ha venido<br>o <strong>Cobrar sin cita</strong>.</p>
+        </div>
+
+        <div id="t-form" hidden>
+          <div class="cj-cliente">
+            <div id="t-cliente-cita"></div>
+            <input id="t-cliente" class="cj-input" type="text" autocomplete="off" autocapitalize="words" placeholder="Nombre (si no, «Cliente de mostrador»)" maxlength="80">
+            <button type="button" class="cj-x" id="t-cerrar" aria-label="Cancelar este cobro">✕</button>
+          </div>
+
+          <p class="cj-label" id="t-serv-label">Servicio</p>
+          <div class="cj-servicios" id="t-servicios"></div>
+          <div class="cj-otro" id="t-otro" hidden>
+            <input id="t-otro-concepto" class="cj-input" type="text" autocomplete="off" placeholder="Concepto (p. ej. Corte niño)" maxlength="60">
+            <input id="t-otro-precio" class="cj-input cj-input-num" type="text" inputmode="decimal" autocomplete="off" placeholder="€">
+          </div>
+
+          <div class="cj-productos" id="t-prod-fila">
+            <span class="cj-label cj-label-in">Productos</span>
+            <div id="t-productos" class="cj-prod-lista"></div>
+          </div>
+
+          <p class="cj-error" id="t-error" role="alert" hidden></p>
+          <p class="cj-nota" id="t-pago-nota" hidden></p>
+          <div class="cj-total">
+            <div><span class="cj-label">Total</span><strong id="t-total">0 €</strong></div>
+            <div class="cj-pagos" id="t-pagos"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Guardado -->
+  <div id="v-hecho" class="cj-hecho" hidden role="dialog" aria-modal="true" aria-labelledby="h-titulo">
+    <div class="cj-hecho-caja">
+      <p class="cj-hecho-ok">✓</p>
+      <h2 id="h-titulo">Guardado</h2>
+      <p class="cj-hecho-linea" id="h-linea"></p>
+      <div id="h-cambio" class="cj-hecho-cambio" hidden><span>Devuélvele</span><strong id="h-cambio-n"></strong></div>
+      <div class="cj-hecho-btns">
+        <button type="button" class="cj-btn cj-btn-amarillo" id="h-ok">Seguir</button>
+        <button type="button" class="cj-btn cj-btn-borde" id="h-deshacer">Deshacer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Efectivo: pantalla aparte -->
+  <div id="v-efectivo" class="cj-pantalla" hidden role="dialog" aria-modal="true" aria-labelledby="ef-titulo">
+    <header class="cj-top">
+      <button type="button" class="cj-jefe-btn" id="ef-volver">← Volver</button>
+      <p class="cj-brand" id="ef-titulo">💶 Efectivo <span id="ef-cliente"></span></p>
+    </header>
+    <div class="cj-ef">
+      <div class="cj-ef-izq">
+        <div class="cj-ef-dato"><span class="cj-label">Total</span><strong id="ef-total"></strong></div>
+        <div class="cj-ef-dato"><span class="cj-label">Te da</span><strong id="ef-da"></strong></div>
+        <div class="cj-ef-cambio" id="ef-cambio-caja"><span id="ef-cambio-t"></span><strong id="ef-cambio"></strong></div>
+      </div>
+      <div class="cj-ef-der">
+        <div class="cj-ef-billetes" id="ef-billetes"></div>
+        <div class="cj-ef-acciones">
+          <button type="button" class="cj-btn cj-btn-borde" id="ef-borrar">Borrar</button>
+          <button type="button" class="cj-guardar" id="ef-guardar">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cobrado hoy -->
+  <div id="v-hoy" class="cj-hecho" hidden role="dialog" aria-modal="true" aria-labelledby="hoy-titulo">
+    <div class="cj-hecho-caja cj-editar">
+      <h2 id="hoy-titulo">Cobrado hoy</h2>
+      <div id="hoy-lista" class="cj-hoy"></div>
+      <div class="cj-e-fila"><span>Total</span><strong id="hoy-total"></strong></div>
+      <div class="cj-e-btns" style="grid-template-columns:1fr"><button type="button" class="cj-btn cj-btn-amarillo" id="hoy-cerrar">Cerrar</button></div>
+    </div>
+  </div>
+
+  <!-- Panel del jefe -->
+  <div id="v-jefe" class="cj-jefe" hidden>
+    <header class="cj-top">
+      <p class="cj-brand">NAVAJA <span>Panel de caja</span></p>
+      <div class="cj-periodos" id="periodos" role="tablist" aria-label="Periodo"></div>
+      <button type="button" class="cj-jefe-btn" id="cerrar-jefe">Salir 🔒</button>
+    </header>
+
+    <div id="j-pin" class="cj-pin">
+      <h2>PIN del jefe</h2>
+      <div class="cj-pin-puntos" id="pin-puntos"><i></i><i></i><i></i><i></i></div>
+      <p class="cj-error" id="pin-error" role="alert" hidden></p>
+      <div class="cj-teclado" id="pin-teclado"></div>
+    </div>
+
+    <div id="j-datos" class="cj-jefe-scroll" hidden>
+      <p class="cj-cargando" id="j-cargando">Cargando…</p>
+      <div id="j-contenido"></div>
+    </div>
+  </div>
+
+  <!-- Detalle de un número del panel -->
+  <div id="v-detalle" class="cj-hecho" hidden role="dialog" aria-modal="true" aria-labelledby="det-titulo">
+    <div class="cj-hecho-caja cj-editar cj-detalle">
+      <h2 id="det-titulo"></h2>
+      <p class="cj-card-sub" id="det-nota"></p>
+      <div id="det-lista" class="cj-lista"></div>
+      <div class="cj-e-fila"><span>Total</span><strong id="det-total"></strong></div>
+      <div class="cj-e-btns" style="grid-template-columns:1fr"><button type="button" class="cj-btn cj-btn-amarillo" id="det-cerrar">Cerrar</button></div>
+    </div>
+  </div>
+
+  <!-- Corregir un cobro -->
+  <div id="v-editar" class="cj-hecho" hidden role="dialog" aria-modal="true" aria-labelledby="e-titulo">
+    <div class="cj-hecho-caja cj-editar">
+      <h2 id="e-titulo">Corregir cobro</h2>
+      <div id="e-cuerpo"></div>
+    </div>
+  </div>
+
+  <div class="cj-cargando-capa" id="cargando" hidden><span>Guardando…</span></div>
+
+  <script src="config.js?v=20261103a"></script>
+  <script src="assets/js/caja.js?v=20261103b"></script>
+</body>
+</html>
