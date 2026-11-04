@@ -29,20 +29,20 @@ window.BOOKLAB_CONFIG = {
   },
 
   // ---------- Colores (tema.js los aplica en reservar, panel, cita y agenda) ----------
-  // Solo el color de la marca: el rojo de Navaja, con texto blanco encima.
+  // Solo el color de la marca: el amarillo de Book Lab, con texto negro encima (la demo va a juego con getbooklab.com).
   colores: {
-    acento: '#c4392b',
-    textoSobreAcento: '#ffffff'
+    acento: '#FEDA12',
+    textoSobreAcento: '#111111'
   },
 
   // ---------- Datos del negocio ----------
   negocio: {
     // Barbería inventada para la demo (03/11/2026): con nombre y personalidad vende más que «Nombre de tu barbería».
-    nombre: 'Navaja Barber Club',
+    nombre: 'Norte Barber Club',
     // true = el nombre sale entre comillas con estilo de "marcador". Con nombre de verdad, false.
     esMarcador: false,
-    eslogan: 'Cortes clásicos, degradados y barbas. Sin esperas: reserva en un minuto.',
-    direccion: 'Calle de la Navaja 12, Malasaña · Madrid',
+    eslogan: 'Fades que hablan solos. Reserva en un minuto y llega a tu hora.',
+    direccion: 'Calle del Norte 14, Malasaña · Madrid',
     // Enlace de Google Maps. Si lo dejas vacío, se busca la dirección automáticamente.
     mapa: '',
     telefono: '600 000 000',
@@ -69,10 +69,10 @@ window.BOOKLAB_CONFIG = {
     fotoCorte: 'assets/img/corte-portada.webp',   // segunda foto de la portada (si falta, se usa la primera de la galería)
     tituloNosotros: 'Sales nuevo. Cada vez.',
     quienesSomos: [
-      'Degradados al milímetro, barbas perfiladas a navaja y un acabado que aguanta hasta tu próxima cita.',
-      'Reservas en un minuto, llegas a tu hora y te vas con el corte que tenías en la cabeza.'
+      'Somos tres barberos de Malasaña obsesionados con los degradados limpios y las barbas bien perfiladas.',
+      'Reservas en un minuto, llegas a tu hora y te vas con el corte que tenías en la cabeza. Sin esperas, sin llamadas.'
     ],
-    valores: ['Fades al milímetro', 'Navaja y toalla caliente', 'Cero esperas']
+    valores: ['Fades al milímetro', 'Barba con toalla caliente', 'Cero esperas', 'Buena música']
   },
 
   // ---------- Reseñas de Google ----------
@@ -86,7 +86,7 @@ window.BOOKLAB_CONFIG = {
     ejemplo: true,
     lista: [
       { nombre: 'Álex M.', estrellas: 5, cuando: 'hace 1 semana', texto: 'El mejor degradado que me han hecho. Puntuales, buen rollo y reservar es facilísimo.' },
-      { nombre: 'Javier R.', estrellas: 5, cuando: 'hace 3 semanas', texto: 'Vas, te sientas y sales nuevo. Marcos es un crack con la navaja.' },
+      { nombre: 'Javier R.', estrellas: 5, cuando: 'hace 3 semanas', texto: 'Vas, te sientas y sales nuevo. Álex es un crack con los degradados.' },
       { nombre: 'Sergio P.', estrellas: 5, cuando: 'hace 1 mes', texto: 'Ambiente top y ni un minuto de espera. Ya no voy a otro sitio.' }
     ]
   },
@@ -94,14 +94,14 @@ window.BOOKLAB_CONFIG = {
   // ---------- Servicios ----------
   // id: sin espacios ni tildes. duracion en minutos. precio en euros.
   servicios: [
-    { id: 'corte-clasico', nombre: 'Corte clásico', descripcion: 'Tijera y máquina, lavado y peinado.', duracion: 30, precio: 16 },
+    { id: 'corte-clasico', nombre: 'Corte', descripcion: 'Tijera y máquina, lavado y peinado.', duracion: 30, precio: 16 },
     { id: 'corte-barba', nombre: 'Corte + barba', descripcion: 'Corte completo y arreglo de barba con toalla caliente.', duracion: 30, precio: 20 },
-    { id: 'degradado', nombre: 'Degradado', descripcion: 'Fade a tu medida, del cero al largo que quieras.', duracion: 30, precio: 17 },
+    { id: 'degradado', nombre: 'Skinfade', descripcion: 'Degradado a piel, del cero al largo que quieras.', duracion: 30, precio: 17 },
     { id: 'barba', nombre: 'Arreglo de barba', descripcion: 'Perfilado, rebaje y acabado con navaja.', duracion: 30, precio: 12 }
   ],
 
   // ---------- Citas fuera de horario (precio x2) ----------
-  // Marcos las abre desde su agenda (pestaña «Fuera horario»). Debe coincidir con Code.gs → HORAS_EXTRA.
+  // Álex las abre desde su agenda (pestaña «Fuera horario»). Debe coincidir con Code.gs → HORAS_EXTRA.
   horasExtra: { barbero: 'marcos' },
 
   // ---------- Caja de cobros (caja.html), «Caja y ventas» y panel «Hoy» (dia.html) ----------
@@ -109,8 +109,8 @@ window.BOOKLAB_CONFIG = {
   caja: {
     barberos: ['marcos', 'lucia', 'diego'],
     servicios: [
-      { id: 'corte-clasico', nombre: 'Corte clásico', precio: 16 },
-      { id: 'degradado', nombre: 'Degradado', precio: 17 },
+      { id: 'corte-clasico', nombre: 'Corte', precio: 16 },
+      { id: 'degradado', nombre: 'Skinfade', precio: 17 },
       { id: 'corte-barba', nombre: 'Corte + barba', precio: 20 },
       { id: 'barba', nombre: 'Arreglo de barba', precio: 12 }
     ],
@@ -123,7 +123,7 @@ window.BOOKLAB_CONFIG = {
       { id: 'polvos', nombre: 'Polvos', precio: 15 }
     ],
     billetes: [50, 20, 10, 5, 2, 1],
-    reparto: { marcos: 0, lucia: 0.4, diego: 0.5 },   // Marcos es el dueño; Lucía al 40 %, Diego al 50 %
+    reparto: { marcos: 0, lucia: 0.4, diego: 0.5 },   // Álex es el dueño; Dani al 40 %, Sara al 50 %
     jefe: 'marcos'
   },
 
@@ -132,9 +132,9 @@ window.BOOKLAB_CONFIG = {
   // foto: ruta de la foto del barbero (opcional). Vacía = círculo con la inicial.
   barberos: [
     { id: 'any', nombre: 'Cualquiera', frase: 'El primero que tenga hueco.' },
-    { id: 'marcos', nombre: 'Marcos', frase: 'Clásicos y navaja. 12 años de oficio.', foto: '' },
-    { id: 'lucia', nombre: 'Lucía', frase: 'Degradados limpios y diseño.', foto: '' },
-    { id: 'diego', nombre: 'Diego', frase: 'Barbas y cortes texturizados.', foto: '' }
+    { id: 'marcos', nombre: 'Álex', frase: 'El dueño. Clásicos y degradados, 12 años de oficio.', foto: '' },
+    { id: 'lucia', nombre: 'Dani', frase: 'Skinfades limpios y diseños.', foto: '' },
+    { id: 'diego', nombre: 'Sara', frase: 'Barbas y cortes texturizados.', foto: '' }
   ],
 
   // ---------- Horario ----------
@@ -162,7 +162,7 @@ window.BOOKLAB_CONFIG = {
   textos: {
     // Mensaje de WhatsApp para pedir la reseña (panel «Hoy»)
     resenaWhatsapp: [
-      '¡Gracias por venir a Navaja Barber Club! 💈',
+      '¡Gracias por venir a Norte Barber Club! 💈',
       '',
       'Si te ha gustado el corte, nos ayudas muchísimo dejándonos una reseña en Google. Son 30 segundos. ⭐⭐⭐⭐⭐',
       '',

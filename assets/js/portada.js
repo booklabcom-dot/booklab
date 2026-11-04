@@ -1,5 +1,5 @@
 /*
- * Demo de Book Lab · portada de «Navaja Barber Club» (demo.html).
+ * Demo de Book Lab · portada de «Norte Barber Club» (demo.html).
  * Pinta con los datos de config.js: precios, extras, galería, quiénes somos, equipo, reseñas, horario y contacto.
  * Sin librerías. Si algo falta en config.js, esa parte simplemente no sale.
  */
@@ -19,9 +19,10 @@
   }
 
   // Precios (pizarra)
-  (C.servicios || []).forEach(function (s) {
+  (C.servicios || []).forEach(function (s, n) {
     var li = el('li');
     var fila = el('div', 'pizarra-fila');
+    fila.appendChild(el('span', 'pizarra-num', (n < 9 ? '0' : '') + (n + 1)));
     fila.appendChild(el('span', 'pizarra-nombre', s.nombre));
     fila.appendChild(el('span', 'pizarra-puntos'));
     fila.appendChild(el('span', 'pizarra-precio', eur(s.precio)));
@@ -44,11 +45,16 @@
   ((C.web && C.web.quienesSomos) || []).forEach(function (t) { $('nosotros').appendChild(el('p', '', t)); });
   ((C.web && C.web.valores) || []).forEach(function (t) { $('valores').appendChild(el('li', '', t)); });
 
-  // Equipo (sin fotos: nombre grande y su especialidad)
+  // Equipo (sin fotos: inicial grande, nombre, su especialidad y un enlace para reservar con él)
   (C.barberos || []).filter(function (b) { return b.id !== 'any'; }).forEach(function (b) {
     var li = el('li');
-    li.appendChild(el('b', '', b.nombre));
-    if (b.frase) li.appendChild(el('span', '', b.frase));
+    li.appendChild(el('span', 'barbero-inicial', b.nombre.charAt(0)));
+    var t = el('div', 'barbero-texto');
+    t.appendChild(el('b', '', b.nombre));
+    if (b.frase) t.appendChild(el('span', '', b.frase));
+    li.appendChild(t);
+    var a = el('a', 'barbero-reservar', 'Reservar con ' + b.nombre + ' →'); a.href = 'reservar.html';
+    li.appendChild(a);
     $('barberos').appendChild(li);
   });
 

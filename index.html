@@ -17,7 +17,7 @@
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/img/mano-tatuada-3.webp" type="image/webp">
-  <link rel="stylesheet" href="assets/css/clara.css?v=20261103t">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261103u">
   <link rel="stylesheet" href="assets/css/foto-mano.css?v=19">
   <link rel="stylesheet" href="assets/css/carrusel-ui.css?v=7">
   <script type="application/ld+json">
@@ -70,6 +70,7 @@
         <p class="portada-lema">La web de tu barbería, con reservas, recordatorios y caja. Hecha por un barbero.</p>
         <ul class="portada-lista">
           <li><a href="herramientas.html#web">Web propia y dominio</a></li>
+          <li><a href="herramientas.html#seo">Posicionamiento SEO</a></li>
           <li><a href="herramientas.html#reservas">Reservas 24/7</a></li>
           <li><a href="herramientas.html#recordatorios">Recordatorios por WhatsApp</a></li>
           <li><a href="herramientas.html#caja">Panel y caja del iPad</a></li>
@@ -182,17 +183,19 @@
         </div>
       </section>
 
-      <!-- Precios (oferta de lanzamiento; mismos precios que index.html) -->
+      <!-- Precios (oferta de lanzamiento). Se toca un plan y el botón abre WhatsApp con ese plan ya escrito -->
       <section class="precios" id="precios" aria-labelledby="precios-titulo">
         <h2 id="precios-titulo">Precios</h2>
         <p class="precios-sub">Precio de lanzamiento para las 10 primeras barberías. Después, 24,90 €/mes.</p>
-        <div class="precios-planes">
-          <article class="plan">
+        <div class="precios-planes" role="radiogroup" aria-label="Elige tu plan">
+          <article class="plan" role="radio" tabindex="0" aria-checked="false" data-plan="mensual" data-texto="el plan mensual de Book Lab (19,90 € + IVA al mes)">
+            <span class="plan-marca" aria-hidden="true"></span>
             <h3>Mensual</h3>
             <p class="plan-precio"><s>24,90 €</s> <b>19,90 €</b><span>/mes <em class="iva">+ IVA</em></span></p>
             <p class="plan-nota">Pagas mes a mes. Con IVA: 24,08 €/mes.</p>
           </article>
-          <article class="plan plan-destacado">
+          <article class="plan plan-destacado is-elegido" role="radio" tabindex="0" aria-checked="true" data-plan="anual" data-texto="el plan anual de Book Lab (219 € + IVA al año)">
+            <span class="plan-marca" aria-hidden="true"></span>
             <span class="plan-etiqueta">1 mes gratis</span>
             <h3>Anual</h3>
             <p class="plan-precio"><s>274 €</s> <b>219 €</b><span>/año <em class="iva">+ IVA</em></span></p>
@@ -205,7 +208,12 @@
           <li>Sin coste por barbero</li>
           <li>🤝 Trae a otra barbería: 1 mes gratis</li>
         </ul>
-        <a class="pildora pildora-negra precios-cta" href="https://wa.me/34746045607?text=Hola%2C%20quiero%20la%20oferta%20de%20lanzamiento%20de%20Book%20Lab" target="_blank" rel="noopener">Quiero la oferta <i aria-hidden="true"></i></a>
+        <a class="pildora pildora-negra precios-cta" id="precios-cta" href="https://wa.me/34746045607?text=Hola%2C%20quiero%20el%20plan%20anual%20de%20Book%20Lab%20(219%20%E2%82%AC%20%2B%20IVA%20al%20a%C3%B1o)" target="_blank" rel="noopener"><span id="precios-cta-txt">Quiero el plan anual</span> <i aria-hidden="true"></i></a>
+        <ol class="precios-pasos">
+          <li><b>Me escribes</b> por WhatsApp y te resuelvo cualquier duda.</li>
+          <li><b>Me pasas</b> tu logo, fotos, servicios y precios.</li>
+          <li><b>En unos días</b> tienes tu web funcionando, con tu dominio.</li>
+        </ol>
         <p class="precios-legal">Todos los precios llevan aparte el IVA (21 %). El precio que contrates se mantiene mientras sigas con nosotros.</p>
       </section>
 
@@ -235,6 +243,20 @@
   </footer>
 
   <script>
+    /* Precios: al tocar un plan se marca y el botón cambia a ese plan (WhatsApp con el plan ya escrito) */
+    (function () {
+      var planes = document.querySelectorAll('.plan[data-plan]'), cta = document.getElementById('precios-cta'), txt = document.getElementById('precios-cta-txt');
+      function elige(p) {
+        planes.forEach(function (x) { var si = x === p; x.classList.toggle('is-elegido', si); x.setAttribute('aria-checked', String(si)); });
+        txt.textContent = 'Quiero el plan ' + p.dataset.plan;
+        cta.href = 'https://wa.me/34746045607?text=' + encodeURIComponent('Hola, quiero ' + p.dataset.texto);
+      }
+      planes.forEach(function (p) {
+        p.addEventListener('click', function () { elige(p); });
+        p.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); elige(p); } });
+      });
+    })();
+
     /* Portada: la pantalla se enciende, llegan los avisos uno a uno (cada uno con halo amarillo y una vibración),
        se ven los 3 últimos; al acabar, la pantalla se apaga y vuelve a empezar. */
     (function () {

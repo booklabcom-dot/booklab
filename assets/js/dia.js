@@ -1,7 +1,7 @@
 /*
  * OLYMPO · Panel «Hoy» (dia.html): los clientes del día de todos los barberos y dos botones rápidos.
  *  - 💬 Recordar a todos: los que aún no han venido.
- *  - ⭐ Pedir reseña: los que han venido hoy.
+ *  - ⭐ Reseñas en Google: el mensaje para los que han venido hoy.
  * Cada botón abre WhatsApp (la aplicación del Mac o del móvil) con el mensaje ya escrito, uno detrás de otro:
  * se pulsa Enter en WhatsApp y al volver ya está el siguiente. No se envía nada solo (así WhatsApp no bloquea el número).
  * Entra con la clave del panel (la guarda panel.html o se escribe aquí una vez). Sin motor o con ?demo=1, datos de ejemplo.
@@ -120,7 +120,7 @@
     $('#fecha').textContent = cap(fLarga.format(new Date(HOY + 'T12:00:00Z')));
     var r = pendientesRecordar(), s = pendientesResena(), ahora = ahoraMadrid().hora;
     $('#n-recordar').textContent = r.length ? r.length + (r.length === 1 ? ' por recordar' : ' por recordar') : 'Nadie pendiente ✓';
-    $('#n-resena').textContent = s.length ? s.length + (s.length === 1 ? ' han venido' : ' han venido') + ' sin pedírsela' : 'Nadie pendiente ✓';
+    $('#n-resena').textContent = s.length ? s.length + (s.length === 1 ? ' lista para enviar' : ' listas para enviar') : 'Todas enviadas ✓';
     $('#btn-recordar').disabled = !r.length; $('#btn-resena').disabled = !s.length;
 
     var fb = vaciar($('#filtro'));
@@ -143,7 +143,7 @@
         el('span', { class: 'dia-botones' }, tel && !c.novino ? [
           !vino ? el('a', { class: 'dia-mini' + (rec ? ' is-hecho' : ''), href: enlaceWa(c, mensajeRecordatorio(c)), title: 'Recordar por WhatsApp',
             onclick: function () { marcar(LS_RECORDADOS, c); setTimeout(pintar, 400); }, text: rec ? '💬 ✓' : '💬' }) : null,
-          vino ? el('a', { class: 'dia-mini' + (res ? ' is-hecho' : ''), href: enlaceWa(c, mensajeResena()), title: 'Pedir reseña por WhatsApp',
+          vino ? el('a', { class: 'dia-mini' + (res ? ' is-hecho' : ''), href: enlaceWa(c, mensajeResena()), title: 'Enviar el mensaje de reseña por WhatsApp',
             onclick: function () { marcar(LS_RESENAS, c); setTimeout(pintar, 400); }, text: res ? '⭐ ✓' : '⭐' }) : null
         ] : [])
       ]));

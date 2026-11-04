@@ -18,14 +18,14 @@
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="preload" href="assets/fonts/outfit.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/caja.css?v=20261103d">
-  <style>:root { --accent: #d9493a; --accent-ink: #fff; --accent-soft: rgba(217, 73, 58, .14); }
+  <style>:root { --accent: #FEDA12; --accent-ink: #111; --accent-soft: rgba(254, 218, 18, .12); }
     /* Sobre fondo blanco, el texto va oscuro (con el rojo de la demo, el texto sobre el rojo va blanco) */
     .cj-filtro[aria-pressed="true"], .cj-pago[aria-pressed="true"], .cj-billete[aria-pressed="true"], .cj-aviso { color: #111; }</style>
 </head>
 <body>
   <!-- Sin enlace -->
   <section id="v-enlace" class="cj-full" hidden>
-    <p class="cj-brand">NAVAJA <span>Caja</span></p>
+    <p class="cj-brand">NORTE <span>Caja</span></p>
     <h1>Código de la caja</h1>
     <p class="cj-muted">Escribe el código de la caja (o el PIN del jefe).</p>
     <div class="cj-pin-puntos" id="cod-puntos" style="margin-top:18px"><i></i><i></i><i></i><i></i></div>
@@ -36,7 +36,7 @@
   <!-- Caja -->
   <div id="v-caja" class="cj-app" hidden>
     <header class="cj-top">
-      <p class="cj-brand">NAVAJA <span>Caja</span></p>
+      <p class="cj-brand">NORTE <span>Caja</span></p>
       <p class="cj-reloj" id="reloj"></p>
       <button type="button" class="cj-jefe-btn cj-hoy-btn" id="ver-hoy">Cobrado hoy</button>
       <button type="button" class="cj-jefe-btn" id="abrir-jefe">🔒 Jefe</button>
@@ -140,7 +140,7 @@
   <!-- Panel del jefe -->
   <div id="v-jefe" class="cj-jefe" hidden>
     <header class="cj-top">
-      <p class="cj-brand">NAVAJA <span>Panel de caja</span></p>
+      <p class="cj-brand">NORTE <span>Panel de caja</span></p>
       <div class="cj-periodos" id="periodos" role="tablist" aria-label="Periodo"></div>
       <button type="button" class="cj-jefe-btn" id="cerrar-jefe">Salir 🔒</button>
     </header>
@@ -179,7 +179,7 @@
 
   <div class="cj-cargando-capa" id="cargando" hidden><span>Guardando…</span></div>
 
-  <script src="config.js?v=20261103b"></script>
+  <script src="config.js?v=20261103n"></script>
   <script src="assets/js/caja.js?v=20261103c"></script>
 </body>
 </html>

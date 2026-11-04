@@ -3,18 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <!-- DEMO de Book Lab (03/11/2026): la web de una barbería inventada, «Navaja Barber Club».
+  <!-- DEMO de Book Lab (03/11/2026): la web de una barbería inventada, «Norte Barber Club».
+       La misma barbería que sale en el carrusel de getbooklab.com, con los colores de Book Lab (negro, blanco y amarillo).
        Precios, equipo, reseñas y horario salen de config.js (portada.js los pinta). Todo es de ejemplo. -->
-  <title>Navaja Barber Club · Malasaña, Madrid · Demo Book Lab</title>
-  <meta name="description" content="Demo de la web de una barbería hecha con Book Lab: precios, equipo, fotos, horario y reserva online desde el móvil.">
+  <title>Norte Barber Club · Malasaña, Madrid · Demo Book Lab</title>
+  <meta name="description" content="Demo de la web de una barbería hecha con Book Lab: precios, equipo, trabajos, reseñas, horario y reserva online desde el móvil.">
   <meta name="robots" content="noindex">
-  <meta name="theme-color" content="#111111">
+  <meta name="theme-color" content="#0d0d0d">
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
-  <link rel="preload" as="font" href="assets/fonts/anton.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/img/corte-portada.webp" type="image/webp">
-  <link rel="stylesheet" href="assets/css/portada.css?v=20261103b">
-  <script src="config.js?v=20261103b"></script>
+  <link rel="stylesheet" href="assets/css/portada.css?v=20261103n">
+  <script src="config.js?v=20261103n"></script>
 </head>
 <body>
   <a class="skip" href="#main">Saltar al contenido</a>
@@ -22,19 +23,19 @@
   <!-- Aviso de demo -->
   <div class="aviso">
     <a href="./">← Book Lab</a>
-    <span>Esto es un ejemplo de web hecha con Book Lab. La tuya, con tu nombre, tus fotos y tus precios.</span>
+    <span>Ejemplo de web hecha con Book Lab. La tuya, con tu nombre, tus fotos y tus precios.</span>
     <a class="aviso-panel" href="#dueno">Ver lo que ve el dueño</a>
   </div>
 
   <header class="nav" id="nav">
-    <a class="nav-logo" href="#main" aria-label="Navaja Barber Club, inicio">NAVAJA<small>Barber Club</small></a>
+    <a class="nav-logo" href="#main" aria-label="Norte Barber Club, inicio"><i aria-hidden="true">↑</i>NORTE<small>Barber Club</small></a>
     <nav class="nav-links" aria-label="Secciones">
       <a href="#precios">Precios</a>
       <a href="#trabajos">Trabajos</a>
       <a href="#equipo">Equipo</a>
       <a href="#visitanos">Visítanos</a>
     </nav>
-    <a class="btn btn-rojo nav-cta" href="reservar.html">Reservar</a>
+    <a class="btn btn-amarillo nav-cta" href="reservar.html">Reservar</a>
   </header>
 
   <main id="main">
@@ -42,30 +43,39 @@
     <section class="hero" aria-labelledby="hero-title">
       <img class="hero-img" src="assets/img/corte-portada.webp" width="900" height="1350" alt="Cliente de perfil con un degradado bajo recién hecho" fetchpriority="high">
       <div class="hero-copy">
-        <p class="hero-lugar">Malasaña · Madrid · desde 2014</p>
-        <h1 id="hero-title" class="hero-title">Navaja<br><span>Barber Club</span></h1>
-        <p class="hero-sub">Degradados al milímetro, barbas a navaja y cero esperas. Reserva en un minuto y llega a tu hora.</p>
+        <p class="hero-lugar"><i aria-hidden="true">↑</i> Malasaña · Madrid · desde 2014</p>
+        <h1 id="hero-title" class="hero-title">Fades que<br>hablan <span>solos.</span></h1>
+        <p class="hero-sub">Tres barberos, cero esperas. Reserva en un minuto, llega a tu hora y sal con el corte que tenías en la cabeza.</p>
         <div class="hero-ctas">
-          <a class="btn btn-rojo btn-grande" href="reservar.html">Reservar cita</a>
+          <a class="btn btn-amarillo btn-grande" href="reservar.html">Reservar cita</a>
           <a class="btn btn-borde" href="#precios">Ver precios</a>
         </div>
         <a class="hero-nota" href="#resenas"><span class="estrellas" aria-hidden="true">★★★★★</span> <b id="nota"></b> en Google · <span id="n-resenas"></span> reseñas</a>
       </div>
+      <span class="pegatina" aria-hidden="true">Reserva<br>en 1 min</span>
     </section>
 
-    <!-- Precios: como la pizarra de la barbería -->
+    <!-- Cinta -->
+    <div class="cinta" aria-hidden="true"><div class="cinta-in">
+      <span>Skinfade</span><i>↑</i><span>Barba con toalla caliente</span><i>↑</i><span>Corte + barba</span><i>↑</i><span>Sin esperas</span><i>↑</i><span>Malasaña</span><i>↑</i>
+      <span>Skinfade</span><i>↑</i><span>Barba con toalla caliente</span><i>↑</i><span>Corte + barba</span><i>↑</i><span>Sin esperas</span><i>↑</i><span>Malasaña</span><i>↑</i>
+    </div></div>
+
+    <!-- Precios -->
     <section class="sec precios" id="precios" aria-labelledby="precios-title">
       <div class="wrap">
+        <p class="ante">N.º 01 · La carta</p>
         <h2 class="titulo" id="precios-title">Precios</h2>
         <ul class="pizarra" id="pizarra"></ul>
         <p class="pizarra-pie"><span id="extra-cejas"></span> Pago en el local: efectivo, tarjeta o Bizum.</p>
-        <a class="btn btn-rojo btn-grande" href="reservar.html">Reservar cita</a>
+        <a class="btn btn-amarillo btn-grande" href="reservar.html">Reservar cita</a>
       </div>
     </section>
 
     <!-- Trabajos -->
     <section class="sec trabajos" id="trabajos" aria-labelledby="trabajos-title">
       <div class="wrap">
+        <p class="ante">N.º 02 · Trabajos</p>
         <h2 class="titulo" id="trabajos-title">El trabajo<br>habla solo.</h2>
         <div class="galeria" id="galeria"></div>
       </div>
@@ -74,8 +84,9 @@
     <!-- El local -->
     <section class="sec local" aria-labelledby="local-title">
       <div class="wrap local-grid">
-        <img class="local-img" src="assets/img/local-2.webp" width="720" height="900" alt="El local: sillones de barbero, espejos y la zona de espera con revistas" loading="lazy">
+        <img class="local-img" src="assets/img/local-2.webp" width="720" height="900" alt="El local: sillones de barbero, espejos y la zona de espera" loading="lazy">
         <div class="local-copy">
+          <p class="ante">N.º 03 · Quiénes somos</p>
           <h2 class="titulo" id="local-title">Sales nuevo.<br>Cada vez.</h2>
           <div id="nosotros"></div>
           <ul class="valores" id="valores"></ul>
@@ -86,7 +97,8 @@
     <!-- Equipo -->
     <section class="sec equipo" id="equipo" aria-labelledby="equipo-title">
       <div class="wrap">
-        <h2 class="titulo" id="equipo-title">El equipo</h2>
+        <p class="ante">N.º 04 · El equipo</p>
+        <h2 class="titulo" id="equipo-title">Elige<br>a tu barbero.</h2>
         <ul class="barberos" id="barberos"></ul>
       </div>
     </section>
@@ -94,6 +106,7 @@
     <!-- Reseñas -->
     <section class="sec resenas" id="resenas" aria-labelledby="resenas-title">
       <div class="wrap">
+        <p class="ante">N.º 05 · Lo que dicen</p>
         <h2 class="titulo" id="resenas-title"><span id="nota-grande"></span> en Google</h2>
         <div class="citas" id="citas"></div>
       </div>
@@ -103,10 +116,11 @@
     <section class="sec visitanos" id="visitanos" aria-labelledby="visitanos-title">
       <div class="wrap visitanos-grid">
         <div>
-          <h2 class="titulo" id="visitanos-title">Visítanos</h2>
+          <p class="ante">N.º 06 · Visítanos</p>
+          <h2 class="titulo" id="visitanos-title">Te esperamos.</h2>
           <p class="direccion" id="direccion"></p>
           <p class="telefono" id="telefono"></p>
-          <a class="btn btn-rojo btn-grande" href="reservar.html">Reservar cita</a>
+          <a class="btn btn-amarillo btn-grande" href="reservar.html">Reservar cita</a>
         </div>
         <dl class="horario" id="horario"></dl>
       </div>
@@ -115,7 +129,7 @@
     <!-- Para el dueño: lo que vende Book Lab -->
     <section class="sec dueno" id="dueno" aria-labelledby="dueno-title">
       <div class="wrap">
-        <p class="dueno-ante">Esto no lo ven tus clientes. Lo ves tú.</p>
+        <p class="ante">Esto no lo ven tus clientes. Lo ves tú.</p>
         <h2 class="titulo" id="dueno-title">Tu barbería,<br>bajo control.</h2>
         <div class="dueno-grid">
           <a class="dueno-card" href="panel.html?demo=1">
@@ -123,15 +137,20 @@
             <span>Facturación por barbero y por mes, ocupación, mejores clientes, quién no vino y bloqueos.</span>
             <em>Abrir el panel →</em>
           </a>
+          <a class="dueno-card" href="dia.html?demo=1">
+            <b>Hoy</b>
+            <span>Los clientes del día, recordatorios y reseñas por WhatsApp con un toque.</span>
+            <em>Abrir «Hoy» →</em>
+          </a>
+          <a class="dueno-card" href="caja.html?demo=1">
+            <b>Caja del iPad</b>
+            <span>Cobra en efectivo, tarjeta o Bizum. Te dice el cambio y hace el reparto de cada barbero.</span>
+            <em>Abrir la caja →</em>
+          </a>
           <a class="dueno-card" href="apuntar.html?demo=1&amp;b=marcos">
             <b>Agenda de cada barbero</b>
             <span>¿Entra alguien sin cita? Servicio, hora y nombre: tres toques y a su calendario.</span>
-            <em>Abrir la agenda de Marcos →</em>
-          </a>
-          <a class="dueno-card" href="reservar.html">
-            <b>Reserva en 4 pasos</b>
-            <span>Así reservan tus clientes desde el móvil, con horas libres de verdad y recordatorios.</span>
-            <em>Probar una reserva →</em>
+            <em>Abrir la agenda de Álex →</em>
           </a>
         </div>
       </div>
@@ -140,14 +159,14 @@
 
   <footer class="pie">
     <div class="wrap">
-      <span class="pie-logo">NAVAJA</span>
+      <span class="pie-logo"><i aria-hidden="true">↑</i>NORTE</span>
       <span>Web y reservas hechas con <a href="./">Book Lab</a> · Barbería de ejemplo</span>
     </div>
   </footer>
 
-  <!-- Barra fija: probar como cliente o ver lo que ve el dueño (en el móvil abajo; en el ordenador, abajo a la derecha) -->
+  <!-- Barra fija: probar como cliente o ver lo que ve el dueño -->
   <div class="barra-demo" role="navigation" aria-label="Probar la demo">
-    <a class="btn btn-rojo" href="reservar.html">Reservar cita</a>
+    <a class="btn btn-amarillo" href="reservar.html">Reservar cita</a>
     <a class="btn btn-dueno" href="panel.html?demo=1">👀 Panel del dueño</a>
   </div>
 
@@ -163,6 +182,6 @@
     </div>
   </div>
 
-  <script src="assets/js/portada.js?v=20261103b"></script>
+  <script src="assets/js/portada.js?v=20261103n"></script>
 </body>
 </html>

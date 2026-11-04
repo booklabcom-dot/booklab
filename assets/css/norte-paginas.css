@@ -1,0 +1,45 @@
+/* Demo «Norte Barber Club»: pone las páginas de reserva y de cita a juego con la portada (demo.html)
+   y con getbooklab.com: fondo negro, el amarillo de Book Lab con texto negro encima y titulares en Archivo.
+   Va después de demo-editorial.css. */
+.dx {
+  --accent: #FEDA12;
+  --accent-ink: #111111;
+  --accent-soft: rgba(254, 218, 18, .12);
+  --g0: #0d0d0d;
+  --bg: #0d0d0d;
+  --mono: "Archivo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+}
+/* Todo en oscuro: las zonas «claras» de la plantilla pasan a negro */
+.dx-white, .dx-light, .rv-light {
+  --text: #ffffff; --muted: #a5a5a5; --line: #2a2a2a; --surface: #161616; --surface-2: #1f1f1f;
+  color: var(--text);
+}
+.dx-white, .dx-light, .rv-light, body.dx { background: #0d0d0d; }
+/* Texto negro sobre el amarillo */
+.dx-y-ink, .dx .btn-primary, .dx .btn-ghost::after, .rv .option[aria-pressed="true"]::after,
+.rv .option.barber[aria-pressed="true"] .avatar, .dx .demo-tag { color: #111; }
+.dx .btn-primary { border-radius: 999px; }
+.dx .btn-primary:hover { background: #ffe54d; color: #111; }
+/* Etiquetas sin mayúsculas espaciadas de máquina */
+.dx .demo-back, .rv .progress li, .rv .chip, .rv .step-kicker, .rv .shop-sub { letter-spacing: .02em; }
+/* Titulares como en la portada */
+.rv .step-title, .rv .shop-name { font-family: "Archivo", system-ui, sans-serif; font-weight: 900; font-stretch: 85%; text-transform: uppercase; letter-spacing: -.03em; }
+/* La reserva de la plantilla trae tarjetas blancas: aquí van oscuras, y lo elegido en amarillo */
+.rv .progress .is-current, .rv .progress .is-done { color: #fff; }
+.rv .option, .rv .day, .rv .slot { background: #161616; border-color: #2a2a2a; color: #fff; }
+.rv .option:hover, .rv .day:hover, .rv .slot:hover { border-color: #FEDA12; }
+.rv .option-price { color: #FEDA12; }
+.rv .option[aria-pressed="true"], .rv .day[aria-pressed="true"], .rv .slot[aria-pressed="true"] { background: #FEDA12; border-color: #FEDA12; color: #111; box-shadow: none; }
+.rv .option[aria-pressed="true"] .option-desc, .rv .option[aria-pressed="true"] .option-meta { color: #4a4a4a; }
+.rv .option[aria-pressed="true"] .option-price { color: #111; }
+.rv .avatar { background: #262626; color: #fff; }
+.rv .link-back:hover { color: #fff; }
+.rv .field input { background: #161616; border-color: #333; color: #fff; }
+.rv .field input:focus { border-color: #FEDA12; box-shadow: 0 0 0 4px rgba(254, 218, 18, .25); }
+.rv .spinner { border-color: rgba(255,255,255,.15); border-top-color: #FEDA12; }
+/* Política de reservas y demás cuadros blancos de la plantilla: oscuros, para que se lea el texto */
+.rv .policy { background: #161616; border-color: #2a2a2a; color: #fff; }
+.rv .policy li::before { background: #FEDA12; }
+.rv .policy > p, .rv .policy li { color: #d0d0d0; }
+.rv .policy li strong, .rv .policy h3 { color: #fff; }
+.rv .policy .check { background: #1f1f1f; border-color: #333; color: #fff; }
