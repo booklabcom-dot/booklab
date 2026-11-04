@@ -24,7 +24,7 @@
   if (ruta) B = ruta[1].toLowerCase();
   if (!B && DEMO && reales[0]) B = reales[0].id;
 
-  var S = { servicio: '', fecha: '', hora: '', ultima: null };   // hora: 'ahora' o HH:MM
+  var S = { servicio: '', fecha: '', hora: '', ultima: null, reintentar: false };   // hora: 'ahora' o HH:MM; reintentar: apuntar al poner el PIN
   var hoy = '';
 
   // ---------- Utilidades ----------
@@ -232,10 +232,12 @@
     if (!nombre) return error('Escribe el nombre del cliente.', $('#nombre'));
     if (tel && tel.replace(/\D/g, '').length < 9) return error('Revisa el teléfono: debe tener 9 cifras (o déjalo vacío).', $('#tel'));
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return error('Revisa el correo (o déjalo vacío).', $('#email'));
+    // Apuntar también pide el PIN (sin él, cualquiera con el enlace podría meter citas en la agenda)
+    if (!DEMO && !leerPin()) { T.apuntar = '#v-form'; T.pendiente = 'apuntar'; S.reintentar = true; pedirPin('Escribe tu PIN para apuntar la cita.'); return; }
     var btn = $('#apuntar-btn');
     btn.disabled = true; btn.textContent = 'Apuntando…';
     post({
-      action: 'mostrador', service: S.servicio, time: S.hora, date: S.hora === 'ahora' ? '' : S.fecha,
+      action: 'mostrador', pin: leerPin(), service: S.servicio, time: S.hora, date: S.hora === 'ahora' ? '' : S.fecha,
       name: nombre, phone: tel, email: email, forzar: !!forzar
     }).then(function (r) {
       S.ultima = r.id;
@@ -247,6 +249,7 @@
         if (confirm(err.message + '\n\n¿Apuntar igualmente?')) { btn.disabled = false; btn.textContent = 'Apuntar'; return apuntar(true); }
         return;
       }
+      if (err.code === 'PIN') { T.apuntar = '#v-form'; S.reintentar = true; return errorPin(err); }
       error(err.message);
     }).then(function () { btn.disabled = false; btn.textContent = 'Apuntar'; });
   }
@@ -260,7 +263,7 @@
   }
 
   // ---------- Pestañas: Apuntar · Mis citas · Mi actividad ----------
-  // «Mis citas» y «Mi actividad» piden el PIN de 4 cifras del barbero (una vez: queda guardado en su móvil).
+  // Apuntar, «Mis citas» y «Mi actividad» piden el PIN de 4 cifras del barbero (una vez: queda guardado en su móvil).
   // Aquí no hay importes ni botones de llamar o WhatsApp: el barbero ve los datos, pero contacta la barbería.
   var PIN_LS = 'booklab_pin_' + B;
   var T = { tab: 'apuntar', pendiente: '', apuntar: '#v-form' };
@@ -268,7 +271,8 @@
   function guardarPin(v) { try { if (v) localStorage.setItem(PIN_LS, v); else localStorage.removeItem(PIN_LS); } catch (e) { /* sin almacenamiento */ } }
 
   function irA(tab) {
-    if (T.tab === 'apuntar') T.apuntar = $('#v-hecho').hidden ? '#v-form' : '#v-hecho';
+    if (T.tab === 'apuntar' && $('#v-pin').hidden) T.apuntar = $('#v-hecho').hidden ? '#v-form' : '#v-hecho';
+    if (tab !== 'apuntar') S.reintentar = false;
     T.tab = tab;
     document.querySelectorAll('#ap-tabs [data-tab]').forEach(function (b) { b.setAttribute('aria-selected', String(b.getAttribute('data-tab') === tab)); });
     if (tab === 'apuntar') { show(T.apuntar); return; }
@@ -521,7 +525,9 @@
     btn.disabled = true;
     post({ action: 'pin', pin: pin }).then(function () {
       guardarPin(pin);
+      var seguir = S.reintentar; S.reintentar = false;
       irA(T.pendiente || 'citas');
+      if (seguir) apuntar(false);   // la cita que iba a apuntar, sin volver a pulsar
     }).catch(function (err) { pedirPin(err.message); }).then(function () { btn.disabled = false; });
   });
   $('#citas-actualizar').addEventListener('click', function () { cargarCitas(); });
@@ -537,9 +543,9 @@
     var b = this;
     if (!S.ultima || !confirm('¿Borrar la cita que acabas de apuntar?')) return;
     b.disabled = true;
-    post({ action: 'mostradorDeshacer', e: S.ultima })
+    post({ action: 'mostradorDeshacer', pin: leerPin(), e: S.ultima })
       .then(function () { reiniciar('Cita borrada. Puedes apuntarla de nuevo.'); })
-      .catch(function (err) { alert(err.message); })
+      .catch(function (err) { if (err.code === 'PIN') { T.apuntar = '#v-hecho'; return errorPin(err); } alert(err.message); })
       .then(function () { b.disabled = false; });
   });
 

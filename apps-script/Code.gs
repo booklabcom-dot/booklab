@@ -14,7 +14,7 @@
  *          · action "cambiar"       → mueve la cita a otro día u hora
  *          · action "panel"         → números para el panel del jefe (pide la clave)
  *          · action "novino"        → marca o desmarca "No vino" (pide la clave)
- *          · action "mostrador"     → el barbero apunta a un cliente que llega sin cita (apuntar.html, enlace firmado)
+ *          · action "mostrador"     → el barbero apunta a un cliente que llega sin cita (apuntar.html, con su PIN)
  *          · action "actividad" / "misCitas" / "cancelarBarberia" / "huecos" / "pin" → registro, agenda y panel
  *          · action "esperaApuntar" / "esperaQuitar" → lista de espera; "horasExtra" / "horasExtraGuardar" → fuera de horario
  *   - sendReminders(): con un activador cada 15 minutos. Recordatorios de 24 h
@@ -642,7 +642,7 @@ function mostradorInfo_(p) {
 /** POST: apunta una cita de mostrador. time = 'ahora' o HH:MM. Nombre obligatorio; teléfono y correo opcionales
  *  (con correo, el cliente recibe la confirmación, los recordatorios y el enlace para gestionar su cita). */
 function mostrador_(d, lock) {
-  comprobarMostrador_(d.b);
+  comprobarMostrador_(d.b); comprobarPin_(d.b, d.pin);
   var servicio = servicio_(d.service);
   var ahora = new Date();
   var hoy = Utilities.formatDate(ahora, ZONA_HORARIA, 'yyyy-MM-dd');
@@ -711,7 +711,7 @@ function mostrador_(d, lock) {
 
 /** POST: borra una cita recién apuntada en el mostrador (botón "Deshacer"). Solo citas de mostrador. */
 function mostradorDeshacer_(d) {
-  comprobarMostrador_(d.b);
+  comprobarMostrador_(d.b); comprobarPin_(d.b, d.pin);
   var calId = calendario_(d.b);
   var ev;
   try { ev = Calendar.Events.get(calId, d.e); } catch (x) { ev = null; }
