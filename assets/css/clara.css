@@ -392,3 +392,27 @@ html { scroll-behavior: smooth; }
 .precios-pasos li { counter-increment: paso; display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; color: #c9c9c9; font-size: .95rem; line-height: 1.4; }
 .precios-pasos li::before { content: counter(paso); display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #FEDA12; color: #111; font-weight: 800; font-size: .82rem; }
 .precios-pasos b { color: #fff; }
+
+/* Smart Booking (función estrella) */
+.smart { display: grid; gap: 22px; margin-top: 56px; padding: 30px 20px; border-radius: var(--radio); background: var(--negro); color: #fff; }
+.smart-marca { display: flex; align-items: center; gap: 6px; margin: 0 0 10px; font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--amarillo, #FEDA12); }
+.smart-marca svg { width: 11px; height: 11px; fill: currentColor; }
+.smart-marca span { color: #a5a5a5; letter-spacing: .04em; text-transform: none; font-weight: 600; }
+.smart h2 { margin: 0 0 12px; font: 700 clamp(1.9rem, 7vw, 3.2rem)/1 var(--letra); letter-spacing: -.04em; }
+.smart h2 span { color: #8d8d8d; }
+.smart-texto > p:not(.smart-marca) { margin: 0 0 14px; color: #d6d6d6; }
+.smart-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.smart-lista li { position: relative; padding-left: 22px; color: #eee; }
+.smart-lista li::before { content: '✦'; position: absolute; left: 0; color: var(--amarillo, #FEDA12); font-size: .8rem; top: 2px; }
+.smart-movil { justify-self: center; width: 100%; max-width: 330px; padding: 18px 14px 20px; border: 7px solid #2a2a2a; border-radius: 34px; background: #f3f2ee; color: var(--negro); }
+.sm-dia { margin: 0 0 10px; font-weight: 750; }
+.sm-horas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.sm-horas span { display: grid; place-items: center; gap: 2px; min-height: 44px; border-radius: 11px; background: #fff; font-weight: 650; font-size: .95rem; }
+.sm-horas .r { box-shadow: inset 0 0 0 2px var(--negro); }
+.sm-horas small { padding: 1px 6px; border-radius: 999px; background: var(--negro); color: #fff; font-size: .47rem; font-weight: 700; letter-spacing: .05em; text-transform: uppercase; }
+.sm-marca { margin: 12px 0 3px; font-size: .6rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.sm-marca em { font-style: normal; color: #8d8d8d; text-transform: none; letter-spacing: .03em; }
+.sm-texto { margin: 0; color: #6b6b6b; font-size: .74rem; line-height: 1.4; }
+@media (min-width: 900px) {
+  .smart { grid-template-columns: 1.2fr 1fr; align-items: center; gap: 48px; padding: 56px 64px; margin-top: 88px; }
+}
