@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="es-ES">
 <head>
+  <meta name="robots" content="noindex, nofollow">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Book Lab · Webs con reservas para barberías, hechas por un barbero</title>
@@ -34,11 +35,45 @@
     "sameAs": ["https://www.instagram.com/xffade/"]
   }
   </script>
+<style>
+  .pildora-amarilla { background: #FEDA12; color: #111; padding-right: 20px; font-weight: 700; }
+  .pildora-amarilla i { width: 9px; height: 9px; border-radius: 50%; background: #111; }
+  .pildora-borde { border: 1.5px solid #111; color: #111; padding-right: 20px; }
+  .nav-botones { display: flex; gap: 6px; }
+  .nav-demo { border: 1px solid #cfcdc8; padding-right: 16px; }
+  .cta-prueba { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .cta-nota { width: 100%; margin: 4px 0 0; font-size: .86rem; color: #6b6b6b; }
+  .precios-gratis { margin-top: 18px; width: 100%; justify-content: center; }
+  .precios-o { margin: 14px 0 8px; text-align: center; color: #6b6b6b; font-size: .9rem; }
+  .final-demo { display: grid; gap: 10px; }
+  .pro { margin: 28px 0 0; padding: 26px 20px 22px; border-radius: 26px; background: #111; color: #fff; }
+  .pro-etiqueta { display: inline-block; padding: 6px 12px; border-radius: 999px; background: #FEDA12; color: #111; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .pro h2 { margin: 14px 0 8px; font-size: clamp(2.4rem, 11vw, 3.4rem); letter-spacing: -.05em; line-height: .95; color: #fff; }
+  .pro h2 sup { font-size: .35em; vertical-align: super; }
+  .pro-lema { margin: 0 0 16px; color: #d6d6d6; font-size: 1.05rem; line-height: 1.45; }
+  .pro-lista { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 8px; }
+  .pro-lista li { display: flex; gap: 10px; align-items: flex-start; color: #eee; font-size: .97rem; }
+  .pro-lista li::before { content: ''; flex: none; width: 8px; height: 8px; margin-top: 8px; border-radius: 50%; background: #FEDA12; }
+  .pro-precio { margin: 0 0 16px; color: #aaa; } .pro-precio b { color: #fff; font-size: 1.3rem; }
+  .pro-botones { display: grid; gap: 8px; }
+  .pro-botones .pildora { justify-content: center; }
+  .pildora-blanca { background: #fff; color: #111; padding-right: 20px; }
+  .app-capturas { margin: 26px 0 8px; padding: 22px 0 16px; border-radius: 26px; background: #111; color: #fff; overflow: hidden; }
+  .app-cap-t { margin: 0 20px 14px; font-weight: 750; font-size: 1.3rem; letter-spacing: -.03em; }
+  .app-cap-t sup { font-size: .5em; }
+  .app-carril { display: grid; grid-auto-flow: column; grid-auto-columns: 64%; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 20px 6px; scrollbar-width: none; }
+  .app-carril figure { margin: 0; scroll-snap-align: center; }
+  .tel { border-radius: 30px; padding: 7px; background: #2a2a2a; box-shadow: 0 0 0 1px #3a3a3a; }
+  .tel img { display: block; width: 100%; aspect-ratio: 375 / 760; object-fit: cover; object-position: top; border-radius: 24px; }
+  .app-carril figcaption { margin-top: 10px; font-size: .88rem; color: #bdbdbd; line-height: 1.35; }
+  .app-carril figcaption b { display: block; color: #fff; font-size: 1rem; }
+  .app-cap-nota { margin: 8px 0 0; text-align: center; color: #777; font-size: .8rem; }
+</style>
 </head>
 <body>
   <header class="nav">
     <a class="nav-marca" href="./">Book Lab<sup>®</sup></a>
-    <a class="pildora pildora-negra" href="demo.html">Ver la demo</a>
+    <div class="nav-botones"><a class="pildora nav-demo" href="https://booklab-app-pruebas.booklab-app.workers.dev/b/norte-prueba">Ver ejemplo</a><a class="pildora pildora-amarilla" href="https://booklab-app-pruebas.booklab-app.workers.dev/empezar">Prueba gratis</a></div>
   </header>
 
   <main>
@@ -67,114 +102,46 @@
       </div>
 
       <div class="portada-fila">
-        <p class="portada-lema">La web de tu barbería, con reservas, recordatorios y caja. Hecha por un barbero.</p>
+        <p class="portada-lema">Tu página de reservas, tu agenda, tu caja y tus avisos, en una sola app. Hecha por un barbero.</p>
+        <div class="cta-prueba">
+          <a class="pildora pildora-amarilla pildora-grande" href="https://booklab-app-pruebas.booklab-app.workers.dev/empezar">Pruébalo 7 días gratis <i aria-hidden="true"></i></a>
+          <a class="pildora pildora-borde" href="https://booklab-app-pruebas.booklab-app.workers.dev/b/norte-prueba">Ver un ejemplo</a>
+          <p class="cta-nota">Sin tarjeta hasta que decidas seguir · Lista en 5 minutos · Sin permanencia</p>
+        </div>
         <ul class="portada-lista">
-          <li><a href="herramientas.html#web">Web propia y dominio</a></li>
-          <li><a href="herramientas.html#seo">Posicionamiento SEO</a></li>
-          <li><a href="herramientas.html#reservas">Reservas 24/7</a></li>
-          <li><a href="herramientas.html#recordatorios">Recordatorios por WhatsApp</a></li>
-          <li><a href="herramientas.html#caja">Panel y caja del iPad</a></li>
+          <li><a href="herramientas.html#reservas">Reservas online 24/7</a></li>
+          <li><a href="herramientas.html#recordatorios">Recordatorios automáticos</a></li>
+          <li><a href="herramientas.html#noshow">Adiós a los no shows</a></li>
+          <li><a href="herramientas.html#caja">Caja registradora</a></li>
+          <li><a href="herramientas.html#recordatorios">WhatsApp con un toque</a></li>
+          <li><a href="herramientas.html#numeros">Estadísticas en tiempo real</a></li>
         </ul>
       </div>
 
-      <!-- Escaparate: la demo pasando sola dentro de un móvil -->
-      <div class="escaparate">
-        <!-- Pantallas del móvil y de la caja en un iPad en horizontal, en el mismo orden que los pasos -->
-        <div class="escaparate-movil" id="aparato">
-          <button type="button" class="flecha flecha-ant" id="ant" aria-label="Pantalla anterior">‹</button>
-          <button type="button" class="flecha flecha-sig" id="sig" aria-label="Pantalla siguiente">›</button>
-          <div class="movil" aria-hidden="true">
-            <div class="movil-pantalla">
-              <div class="ui ui-m is-on u-webv">
-                <div class="u-wv-foto" style="background-image:url('assets/img/corte-portada.webp')">
-                  <div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
-                  <div class="u-wv-nav"><b>NORTE<small>Barber Club</small></b><span class="u-wv-menu"><i></i><i></i></span></div>
-                  <div class="u-wv-hero"><p class="u-wv-lugar">Malasaña · Madrid · desde 2014</p><h3>Fades que<br>hablan <em>solos.</em></h3>
-                    <div class="u-wv-ctas"><span class="u-btn-a">Reservar cita</span><span class="u-wv-borde">Ver precios</span></div>
-                    <p class="u-est">★★★★★ <b>4,9</b> en Google · 128 reseñas</p></div>
-                </div>
-                <div class="u-wv-cuerpo">
-                  <p class="u-mini">El trabajo habla solo</p>
-                  <div class="u-wv-galeria"><span style="background-image:url('assets/img/corte-1.webp')"></span><span style="background-image:url('assets/img/corte-2.webp')"></span><span style="background-image:url('assets/img/corte-3.webp')"></span></div>
-                  <div class="u-precio"><span>Skinfade</span><b>17 €</b></div><div class="u-precio"><span>Corte + barba</span><b>20 €</b></div>
-                </div>
-              </div>
-              <div class="ui ui-m"><div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
-                <p class="u-paso">Paso 3 de 4</p><h3 class="u-h">Día y hora</h3>
-                <div class="u-tags"><span>Skinfade · 17 €</span><span>Con Dani</span></div>
-                <span class="u-btn-a u-ancho">⚡ Primera hora libre</span>
-                <div class="u-dias"><span><b>3</b>hoy<i class="u-am"></i></span><span class="is-on"><b>4</b>mañana<i></i></span><span><b>5</b>jue<i></i></span><span><b>6</b>vie<i class="u-ro"></i></span></div>
-                <p class="u-mini u-mt">Mañana</p><div class="u-horas"><span>09:30</span><span>10:30</span><span class="is-on">11:00</span><span>12:30</span></div>
-                <p class="u-mini u-mt">Tarde</p><div class="u-horas"><span>16:00</span><span>17:30</span><span>19:00</span><span>20:00</span></div>
-                <span class="u-btn-a u-ancho u-abajo">Continuar</span>
-              </div>
-              <div class="ui ui-m u-bloqueo"><div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
-                <p class="u-fecha">miércoles, 4 de noviembre</p><p class="u-hora">08:00</p>
-                <div class="u-noti"><i>💬</i><div><b>WhatsApp · Norte Barber Club</b><p>Hola, Carlos 👋 Te recordamos tu cita de hoy a las 11:00 con Dani.</p></div></div>
-                <div class="u-noti"><i>✉️</i><div><b>Correo · Cita confirmada</b><p>Skinfade con Dani · miércoles 4, 11:00. Puedes cambiarla desde aquí.</p></div></div>
-              </div>
-              <div class="ui ui-m"><div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
-                <h3 class="u-h">No vinieron</h3>
-                <div class="u-card"><p class="u-nom">Iván López <small>29/10 · 12:00</small></p><p class="u-gr">Arreglo de barba · 12 €</p><p class="u-roj u-b">Ha fallado 2 veces</p>
-                  <div class="u-fila-b"><span class="u-ok-b">🤖 Aviso enviado ✓</span><span class="u-bloq">Bloquear</span></div></div>
-                <div class="u-wab"><p>🤖 <b>Book Lab · Asistente de Norte Barber Club</b><br><i>Mensaje automático</i></p><p>Hola, Iván: te informamos de que no acudiste a tu cita y no recibimos ningún aviso de cancelación.</p><p>💶 Importe: <b>12,00 €</b></p></div>
-                <div class="u-card u-mt2"><p class="u-mini">Bloqueados</p><p class="u-nom">Javier M. <small>No vino 3 veces</small></p></div>
-              </div>
-              <div class="ui ui-m"><div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
-                <div class="u-mail"><p class="u-mail-de">Correo · Norte Barber Club</p><p class="u-mail-t">¿Qué tal tu corte, Carlos?</p>
-                  <p class="u-estrellas">★★★★★</p>
-                  <p class="u-mail-p">Esperamos que hayas salido con el resultado que buscabas. Si te ha gustado, nos encantaría conocer tu opinión: te llevará menos de un minuto.</p>
-                  <span class="u-btn-n">Dejar mi reseña en Google</span></div>
-                <div class="u-google"><b>Norte Barber Club</b><p><span>★★★★★</span> 4,9 · 128 reseñas</p></div>
-              </div>
-              <div class="ui ui-m"><div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
-                <div class="u-card u-espera"><p class="u-mini">Lista de espera · martes 3</p><p class="u-nom">2 personas esperando hueco</p></div>
-                <div class="u-mail"><p class="u-mail-de">Correo · ¡Hueco libre!</p><p class="u-mail-t">¡Se ha quedado un hueco libre!</p>
-                  <p class="u-mail-p">Hola Carlos, estabas en nuestra lista de espera para el martes 3. Ahora hay hora libre:</p>
-                  <div class="u-horas-o"><span>17:00</span><span>17:30</span></div><p class="u-mail-p">Con Dani</p>
-                  <span class="u-btn-n">Reservar ahora</span></div>
-              </div>
-              <div class="ui ui-m"><div class="u-barra"><span>10:58</span><span>●●● ▮</span></div>
-                <h3 class="u-h">Tus números</h3><div class="u-tags"><span class="is-on">Octubre</span><span>Todos</span><span>Álex</span><span>Dani</span></div>
-                <div class="u-kpis"><div><small>Facturado</small><b>14.543 €</b><i>▲ 8 %</i></div><div><small>Citas</small><b>866</b><i>▲ 9 %</i></div><div><small>Ticket medio</small><b>17,31 €</b></div><div><small>Ocupación</small><b>56 %</b></div><div><small>Clientes nuevos</small><b>19</b></div><div><small>No vinieron</small><b>26</b><i class="u-roj">199 € por cobrar</i></div></div>
-              </div>
-            </div>
-          </div>
-          <div class="ipad" aria-hidden="true">
-            <div class="ipad-pantalla">
-              <div class="ui ui-i">
-                <div class="u-icab"><b>💵 EFECTIVO</b><span>Óscar F. · Álex</span></div>
-                <div class="u-cambio"><div class="u-cuentas"><div><small>Total</small><b>17 €</b></div><div><small>Te da</small><b>20 €</b></div><div class="u-devuelve"><small>Devuélvele</small><b>3 €</b></div></div>
-                <div class="u-billetes"><span>50 €</span><span class="is-on">20 €</span><span>10 €</span><span>5 €</span><span>2 €</span><span>1 €</span><span class="u-guardar">GUARDAR</span></div></div>
-              </div>
-            </div>
-          </div>
+      <!-- La app de verdad: capturas reales (página de reservas, panel, agenda y caja) -->
+      <div class="app-capturas">
+        <p class="app-cap-t">Así es Book Lab<sup>®</sup> por dentro</p>
+        <div class="app-carril">
+          <figure><div class="tel"><img src="assets/img/app/reservas.jpg" alt="Página de reservas de una barbería" loading="lazy"></div><figcaption><b>Tu página de reservas</b>Lista en 5 minutos. La compartes en Instagram.</figcaption></figure>
+          <figure><div class="tel"><img src="assets/img/app/panel.jpg" alt="Panel del jefe" loading="lazy"></div><figcaption><b>Panel del jefe</b>Tu día de un vistazo: citas, previsto y cobrado.</figcaption></figure>
+          <figure><div class="tel"><img src="assets/img/app/agenda.jpg" alt="Agenda" loading="lazy"></div><figcaption><b>Agenda</b>Día, semana y mes. No shows con un toque.</figcaption></figure>
+          <figure><div class="tel"><img src="assets/img/app/caja.jpg" alt="Caja" loading="lazy"></div><figcaption><b>Caja</b>Cobra la cita, añade productos y cierra el día.</figcaption></figure>
         </div>
-        <button type="button" class="pausa" id="pausa" aria-pressed="false">❚❚ Pausa</button>
-        <ol class="escaparate-pasos" id="pasos">
-          <li class="is-on"><b>Tu web</b><span>Con tu nombre, tus fotos y tus precios.</span></li>
-          <li><b>Reservan solos</b><span>Eligen servicio, barbero y hora libre. A cualquier hora.</span></li>
-          <li><b>Menos citas perdidas</b><span>Confirmación por correo y recordatorio por WhatsApp.</span></li>
-          <li><b>Adiós a los plantones</b><span>Aviso del bot al que no vino. Y si repite, bloqueado.</span></li>
-          <li><b>Más reseñas en Google</b><span>Después del corte le llega el recordatorio para valorarte.</span></li>
-          <li><b>Lista de espera</b><span>Si alguien cancela, el hueco se llena solo.</span></li>
-          <li><b>Tus números</b><span>Facturación, citas, ocupación y mucho más.</span></li>
-          <li><b>La caja del iPad</b><span>Cobra, te dice el cambio y hace el reparto.</span></li>
-        </ol>
+        <p class="app-cap-nota">← Desliza →</p>
       </div>
 
       <!-- Funciones: lo que más vende, en orden -->
       <section class="funciones" aria-labelledby="funciones-titulo">
         <h2 id="funciones-titulo">Todo lo que hace por ti</h2>
         <ol class="funciones-lista">
-          <li><a href="herramientas.html#recordatorios"><b>Menos citas perdidas</b><span>Recordatorios automáticos el día antes y 3 horas antes, o cuando tú quieras. Y avisos por WhatsApp con un solo toque.</span></a></li>
-          <li><a href="herramientas.html#bloqueos"><b>Bloquea a los que te dejan tirado</b><span>Con un toque, ese cliente ya no puede volver a reservar.</span></a></li>
-          <li><a href="herramientas.html#resenas"><b>Más reseñas en Google</b><span>Después de cada corte le llega un recordatorio automático para dejar su reseña. Y si quieres, se lo recuerdas tú por WhatsApp con un solo toque.</span></a></li>
-          <li><a href="herramientas.html#caja"><b>Caja con reparto automático</b><span>Lo que factura cada barbero, lo que le toca cobrar y lo que queda para ti. Sin hacer cuentas.</span></a></li>
-          <li><a href="herramientas.html#espera"><b>Lista de espera</b><span>Si no hay hueco, el cliente se apunta. Si alguien cancela, le avisa sola y el hueco se llena.</span></a></li>
-          <li><a href="herramientas.html#cliente"><b>El cliente se gestiona solo</b><span>Cambia o cancela su cita desde el correo, sin llamarte.</span></a></li>
-          <li><a href="herramientas.html#mostrador"><b>Agenda de mostrador</b><span>¿Entra alguien sin cita? Tres toques y apuntado.</span></a></li>
-          <li><a href="herramientas.html#numeros"><b>Tus números claros</b><span>Facturación, ocupación, horas punta y mejores clientes. Y todo a Excel.</span></a></li>
+          <li><a href="herramientas.html#reservas"><b>Reservas 24/7 en tu propia página</b><span>Tus clientes eligen servicio, barbero, día y hora en 30 segundos. Tú solo compartes el enlace en Instagram.</span></a></li>
+          <li><a href="herramientas.html#agenda"><b>Agenda de día, semana y mes</b><span>Cada barbero ve sus citas en el móvil. Apunta a quien llega sin cita en tres toques.</span></a></li>
+          <li><a href="herramientas.html#caja"><b>Caja registradora y cierre del día</b><span>Cobra la cita con un toque, añade productos, te dice el cambio y cierra la caja cuadrando el efectivo.</span></a></li>
+          <li><a href="herramientas.html#vuelta"><b>«Te toca corte»</b><span>Si un cliente tarda en volver, le llega solo un correo para que reserve. Recupera clientes sin hacer nada.</span></a></li>
+          <li><a href="herramientas.html#noshow"><b>No shows bajo control</b><span>Pon tu política (50 %, 100 % o un importe) y avisa al que falló por WhatsApp con un toque. Y bloquéalo si repite.</span></a></li>
+          <li><a href="herramientas.html#recordatorios"><b>Menos citas perdidas</b><span>Confirmación, recordatorio el día antes y 3 horas antes, y petición de reseña. Todo automático.</span></a></li>
+          <li><a href="herramientas.html#numeros"><b>Tus números claros</b><span>Lo que factura cada barbero y lo que le toca, ventas por producto y clientes nuevos. Sin hacer cuentas.</span></a></li>
+          <li><a href="herramientas.html#avisos"><b>Avisos en tu móvil</b><span>Nueva reserva, cancelación y el resumen de cada mañana, como cualquier app.</span></a></li>
         </ol>
         <!-- Cierre de las funciones: hay mucho más -->
         <div class="iceberg">
@@ -208,20 +175,42 @@
           <li>Sin coste por barbero</li>
           <li>🤝 Trae a otra barbería: 1 mes gratis</li>
         </ul>
+        <a class="pildora pildora-amarilla pildora-grande precios-gratis" href="https://booklab-app-pruebas.booklab-app.workers.dev/empezar">Empieza gratis 7 días <i aria-hidden="true"></i></a>
+        <p class="precios-o">o, si lo prefieres, habla conmigo:</p>
         <a class="pildora pildora-negra precios-cta" id="precios-cta" href="https://wa.me/34746045607?text=Hola%2C%20quiero%20el%20plan%20anual%20de%20Book%20Lab%20(219%20%E2%82%AC%20%2B%20IVA%20al%20a%C3%B1o)" target="_blank" rel="noopener"><span id="precios-cta-txt">Quiero el plan anual</span> <i aria-hidden="true"></i></a>
         <ol class="precios-pasos">
-          <li><b>Me escribes</b> por WhatsApp y te resuelvo cualquier duda.</li>
-          <li><b>Me pasas</b> tu logo, fotos, servicios y precios.</li>
-          <li><b>En unos días</b> tienes tu web funcionando, con tu dominio.</li>
+          <li><span><b>Te das de alta</b> con tu correo en un minuto. Sin tarjeta.</span></li>
+          <li><span><b>Pones tus servicios y tu horario</b> y tu página ya acepta reservas.</span></li>
+          <li><span><b>Durante 7 días</b> lo usas todo gratis. Si te gusta, eliges tu plan y sigues sin perder nada.</span></li>
         </ol>
         <p class="precios-legal">Todos los precios llevan aparte el IVA (21 %). El precio que contrates se mantiene mientras sigas con nosotros.</p>
+      </section>
+
+      <!-- Book Lab PRO: lo de encima, más una web a medida -->
+      <section class="pro" aria-labelledby="pro-titulo">
+        <span class="pro-etiqueta">Para quien quiere más</span>
+        <h2 id="pro-titulo">Book Lab<sup>®</sup> PRO</h2>
+        <p class="pro-lema">Todo lo de Book Lab, más una web hecha a medida para tu barbería. Nosotros te lo montamos todo.</p>
+        <ul class="pro-lista">
+          <li>Web con diseño exclusivo, con tus fotos y tu estilo</li>
+          <li>Tu propio dominio (tubarberia.com)</li>
+          <li>SEO para salir en Google en tu zona</li>
+          <li>Secciones a medida y correos desde tu dominio</li>
+          <li>Puesta en marcha con nosotros, sin que toques nada</li>
+        </ul>
+        <p class="pro-precio">Precio <b>a medida</b></p>
+        <div class="pro-botones">
+          <a class="pildora pildora-amarilla pildora-grande" href="demo.html">Ver la demo de la PRO <i aria-hidden="true"></i></a>
+          <a class="pildora pildora-blanca" href="https://wa.me/34746045607?text=Hola%2C%20me%20interesa%20Book%20Lab%20PRO" target="_blank" rel="noopener">Hablemos por WhatsApp</a>
+        </div>
       </section>
 
       <!-- Llamada final: probar la demo -->
       <section class="final" aria-label="Pruébalo">
         <div class="final-demo">
-          <p>Pruébalo como si fueras tu cliente y mira lo que verías tú.</p>
-          <a class="pildora pildora-negra pildora-grande" href="demo.html">Probar la demo <i aria-hidden="true"></i></a>
+          <p>Mira cómo es una barbería con Book Lab: reserva como si fueras su cliente.</p>
+          <a class="pildora pildora-negra pildora-grande" href="https://booklab-app-pruebas.booklab-app.workers.dev/b/norte-prueba">Ver un ejemplo <i aria-hidden="true"></i></a>
+          <a class="pildora pildora-amarilla pildora-grande" href="https://booklab-app-pruebas.booklab-app.workers.dev/empezar">Empezar gratis 7 días <i aria-hidden="true"></i></a>
         </div>
       </section>
 
@@ -279,72 +268,6 @@
       setTimeout(paso, 600);
     })();
 
-    /* Pantallas del carrusel: están diseñadas a 375 px (móvil) y 1180 px (iPad); se escalan al tamaño del marco */
-    (function () {
-      function escala() {
-        document.querySelectorAll('.movil-pantalla, .ipad-pantalla').forEach(function (p) {
-          p.style.setProperty('--k', p.clientWidth / (p.classList.contains('ipad-pantalla') ? 1180 : 375));
-        });
-      }
-      escala(); addEventListener('resize', escala);
-      if (window.ResizeObserver) document.querySelectorAll('.movil-pantalla, .ipad-pantalla').forEach(function (p) { new ResizeObserver(escala).observe(p); });
-    })();
-
-    /* Escaparate: pasa solo (2,8 s en el móvil, 5 s en el iPad). Se puede deslizar con el dedo, tocar un lado
-       de la pantalla o tocar un paso; al hacerlo, el tiempo vuelve a empezar. Con «movimiento reducido», no avanza solo. */
-    (function () {
-      var aparato = document.getElementById('aparato'), pasos = document.querySelectorAll('#pasos li'), i = 0, t;
-      var imgs = aparato.querySelectorAll('.ui');
-      var solo = !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
-      function ir(n) {
-        imgs[i].classList.remove('is-on'); pasos[i].classList.remove('is-on');
-        i = (n + imgs.length) % imgs.length;
-        imgs[i].classList.add('is-on'); pasos[i].classList.add('is-on');
-        // Las pantallas de la caja van en el iPad: se esconde el móvil y aparece el iPad
-        aparato.classList.toggle('is-ipad', !!imgs[i].closest('.ipad'));
-      }
-      var visto = false, pausa = false, mantiene = false, largo = false, tMant; // visto: a la vista · pausa: botón · mantiene: dedo pulsado
-      function auto() { clearTimeout(t); if (solo && visto && !pausa && !mantiene) t = setTimeout(function () { ir(i + 1); auto(); }, imgs[i].closest('.ipad') ? 5000 : 2800); }
-      function mover(d) { ir(i + d); auto(); }
-      pasos.forEach(function (p, n) { p.addEventListener('click', function () { ir(n); auto(); }); });
-      var bp = document.getElementById('pausa');
-      bp.addEventListener('click', function () {
-        pausa = !pausa; bp.setAttribute('aria-pressed', String(pausa)); bp.textContent = pausa ? '▶ Seguir' : '❚❚ Pausa';
-        if (pausa) clearTimeout(t); else auto();
-      });
-      // Mantener el dedo (o el clic) sobre la pantalla: se queda quieta mientras está pulsada
-      aparato.addEventListener('pointerdown', function (e) {
-        if (e.target.closest('.flecha')) return;
-        clearTimeout(t); // quieto desde que se pone el dedo
-        tMant = setTimeout(function () { mantiene = largo = true; clearTimeout(t); aparato.classList.add('en-pausa'); }, 280);
-      });
-      ['pointerup', 'pointercancel', 'pointerleave'].forEach(function (ev) {
-        aparato.addEventListener(ev, function () { clearTimeout(tMant); if (mantiene) { mantiene = false; aparato.classList.remove('en-pausa'); } auto(); });
-      });
-      document.getElementById('ant').addEventListener('click', function () { mover(-1); });
-      document.getElementById('sig').addEventListener('click', function () { mover(1); });
-      // Deslizar: más de 40 px en horizontal (y más que en vertical, para no molestar al bajar la página)
-      var x0 = null, y0 = 0;
-      aparato.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
-      aparato.addEventListener('touchend', function (e) {
-        if (x0 === null) return;
-        var dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
-        if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) mover(dx < 0 ? 1 : -1);
-      }, { passive: true });
-      // Tocar la pantalla: mitad izquierda = anterior, mitad derecha = siguiente
-      aparato.addEventListener('click', function (e) {
-        if (e.target.closest('.flecha')) return;
-        if (largo) { largo = false; return; }
-        var r = aparato.getBoundingClientRect();
-        mover(e.clientX < r.left + r.width / 2 ? -1 : 1);
-      });
-      // Empieza cuando el cliente baja hasta el carrusel; se para si lo deja atrás y sigue al volver
-      if ('IntersectionObserver' in window) {
-        new IntersectionObserver(function (es) {
-          visto = es[0].isIntersecting; if (visto) auto(); else clearTimeout(t);
-        }, { threshold: .5 }).observe(aparato);
-      } else { visto = true; auto(); }
-    })();
   </script>
 </body>
 </html>
