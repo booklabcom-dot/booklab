@@ -18,7 +18,7 @@
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/img/mano-tatuada-3.webp" type="image/webp">
-  <link rel="stylesheet" href="assets/css/clara.css?v=20261103u">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261106a">
   <link rel="stylesheet" href="assets/css/foto-mano.css?v=19">
   <link rel="stylesheet" href="assets/css/carrusel-ui.css?v=7">
   <script type="application/ld+json">
@@ -104,9 +104,9 @@
       <div class="portada-fila">
         <p class="portada-lema">Tu página de reservas, tu agenda, tu caja y tus avisos, en una sola app. Hecha por un barbero.</p>
         <div class="cta-prueba">
-          <a class="pildora pildora-amarilla pildora-grande" href="https://booklab-app-pruebas.booklab-app.workers.dev/empezar">Pruébalo 7 días gratis <i aria-hidden="true"></i></a>
+          <a class="pildora pildora-amarilla pildora-grande" href="https://booklab-app-pruebas.booklab-app.workers.dev/empezar">Pruébalo 14 días gratis <i aria-hidden="true"></i></a>
           <a class="pildora pildora-borde" href="https://booklab-app-pruebas.booklab-app.workers.dev/b/norte-prueba">Ver un ejemplo</a>
-          <p class="cta-nota">Sin tarjeta hasta que decidas seguir · Lista en 5 minutos · Sin permanencia</p>
+          <p class="cta-nota">Sin tarjeta · Lista en 5 minutos · Sin permanencia · Soporte por WhatsApp</p>
         </div>
         <ul class="portada-lista">
           <li><a href="herramientas.html#reservas">Reservas online 24/7</a></li>
@@ -153,11 +153,19 @@
       <!-- Precios (oferta de lanzamiento). Se toca un plan y el botón abre WhatsApp con ese plan ya escrito -->
       <section class="precios" id="precios" aria-labelledby="precios-titulo">
         <h2 id="precios-titulo">Precios</h2>
-        <p class="precios-sub">Precio de lanzamiento para las 10 primeras barberías. Después, 24,90 €/mes.</p>
-        <div class="precios-planes" role="radiogroup" aria-label="Elige tu plan">
+        <p class="precios-sub">Precio de fundadora para las 20 primeras barberías, para siempre mientras sigas. Después: Solo 16,90 €/mes y Book Lab® 24,90 €/mes o 249 €/año.</p>
+        <div class="precios-planes tres" role="radiogroup" aria-label="Elige tu plan">
+          <article class="plan" role="radio" tabindex="0" aria-checked="false" data-plan="Solo" data-texto="el plan Solo de Book Lab (14,90 € + IVA al mes)">
+            <span class="plan-marca" aria-hidden="true"></span>
+            <h3>Solo</h3>
+            <p class="plan-quien">1 barbero</p>
+            <p class="plan-precio"><s>16,90 €</s> <b>14,90 €</b><span>/mes <em class="iva">+ IVA</em></span></p>
+            <p class="plan-nota">Si trabajas por tu cuenta. Con IVA: 18,03 €/mes.</p>
+          </article>
           <article class="plan" role="radio" tabindex="0" aria-checked="false" data-plan="mensual" data-texto="el plan mensual de Book Lab (19,90 € + IVA al mes)">
             <span class="plan-marca" aria-hidden="true"></span>
             <h3>Mensual</h3>
+            <p class="plan-quien">Barberos ilimitados</p>
             <p class="plan-precio"><s>24,90 €</s> <b>19,90 €</b><span>/mes <em class="iva">+ IVA</em></span></p>
             <p class="plan-nota">Pagas mes a mes. Con IVA: 24,08 €/mes.</p>
           </article>
@@ -165,23 +173,25 @@
             <span class="plan-marca" aria-hidden="true"></span>
             <span class="plan-etiqueta">1 mes gratis</span>
             <h3>Anual</h3>
-            <p class="plan-precio"><s>274 €</s> <b>219 €</b><span>/año <em class="iva">+ IVA</em></span></p>
+            <p class="plan-quien">Barberos ilimitados</p>
+            <p class="plan-precio"><s>249 €</s> <b>219 €</b><span>/año <em class="iva">+ IVA</em></span></p>
             <p class="plan-nota">Sale a 18,25 € al mes. Con IVA: 264,99 €/año.</p>
           </article>
         </div>
         <ul class="precios-incluye">
           <li>Mantenimiento y cambios incluidos</li>
           <li>Sin comisiones por reserva</li>
-          <li>Sin coste por barbero</li>
-          <li>🤝 Trae a otra barbería: 1 mes gratis</li>
+          <li>Soporte por WhatsApp</li>
+          <li>Sin permanencia</li>
+          <li>Trae a otra barbería: 1 mes gratis</li>
         </ul>
-        <a class="pildora pildora-amarilla pildora-grande precios-gratis" href="https://booklab-app-pruebas.booklab-app.workers.dev/empezar">Empieza gratis 7 días <i aria-hidden="true"></i></a>
+        <a class="pildora pildora-amarilla pildora-grande precios-gratis" href="https://booklab-app-pruebas.booklab-app.workers.dev/empezar">Empieza gratis 14 días <i aria-hidden="true"></i></a>
         <p class="precios-o">o, si lo prefieres, habla conmigo:</p>
         <a class="pildora pildora-negra precios-cta" id="precios-cta" href="https://wa.me/34746045607?text=Hola%2C%20quiero%20el%20plan%20anual%20de%20Book%20Lab%20(219%20%E2%82%AC%20%2B%20IVA%20al%20a%C3%B1o)" target="_blank" rel="noopener"><span id="precios-cta-txt">Quiero el plan anual</span> <i aria-hidden="true"></i></a>
         <ol class="precios-pasos">
           <li><span><b>Te das de alta</b> con tu correo en un minuto. Sin tarjeta.</span></li>
           <li><span><b>Pones tus servicios y tu horario</b> y tu página ya acepta reservas.</span></li>
-          <li><span><b>Durante 7 días</b> lo usas todo gratis. Si te gusta, eliges tu plan y sigues sin perder nada.</span></li>
+          <li><span><b>Durante 14 días</b> lo usas todo gratis. Si te gusta, eliges tu plan y sigues sin perder nada.</span></li>
         </ol>
         <p class="precios-legal">Todos los precios llevan aparte el IVA (21 %). El precio que contrates se mantiene mientras sigas con nosotros.</p>
       </section>
@@ -198,7 +208,8 @@
           <li>Secciones a medida y correos desde tu dominio</li>
           <li>Puesta en marcha con nosotros, sin que toques nada</li>
         </ul>
-        <p class="pro-precio">Precio <b>a medida</b></p>
+        <p class="pro-precio"><b>49,90 €</b>/mes + IVA</p>
+        <p class="pro-nota">Montaje gratis para las fundadoras (después, 199 € una vez). Soporte prioritario por WhatsApp.</p>
         <div class="pro-botones">
           <a class="pildora pildora-amarilla pildora-grande" href="demo.html">Ver la demo de la PRO <i aria-hidden="true"></i></a>
           <a class="pildora pildora-blanca" href="https://wa.me/34746045607?text=Hola%2C%20me%20interesa%20Book%20Lab%20PRO" target="_blank" rel="noopener">Hablemos por WhatsApp</a>
@@ -210,7 +221,7 @@
         <div class="final-demo">
           <p>Mira cómo es una barbería con Book Lab: reserva como si fueras su cliente.</p>
           <a class="pildora pildora-negra pildora-grande" href="https://booklab-app-pruebas.booklab-app.workers.dev/b/norte-prueba">Ver un ejemplo <i aria-hidden="true"></i></a>
-          <a class="pildora pildora-amarilla pildora-grande" href="https://booklab-app-pruebas.booklab-app.workers.dev/empezar">Empezar gratis 7 días <i aria-hidden="true"></i></a>
+          <a class="pildora pildora-amarilla pildora-grande" href="https://booklab-app-pruebas.booklab-app.workers.dev/empezar">Empezar gratis 14 días <i aria-hidden="true"></i></a>
         </div>
       </section>
 
