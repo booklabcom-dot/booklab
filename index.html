@@ -18,7 +18,7 @@
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/img/mano-tatuada-3.webp" type="image/webp">
-  <link rel="stylesheet" href="assets/css/clara.css?v=20261106b">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261109a">
   <link rel="stylesheet" href="assets/css/foto-mano.css?v=19">
   <link rel="stylesheet" href="assets/css/carrusel-ui.css?v=7">
   <script type="application/ld+json">
@@ -131,6 +131,32 @@
         <p class="app-cap-nota">← Desliza →</p>
       </div>
 
+      <!-- Entre las capturas y Smart Booking: todas las herramientas de un vistazo -->
+      <section class="todas" aria-labelledby="todas-titulo">
+        <h2 id="todas-titulo">Todo en una sola app</h2>
+        <p>Sin pagar extras ni juntar programas. Toca cualquiera para ver cómo funciona.</p>
+        <ul class="todas-lista">
+          <li><a href="herramientas.html#reservas">Reservas online 24/7</a></li>
+          <li><a href="#smart">Smart Booking</a></li>
+          <li><a href="herramientas.html#mostrador">Agenda de cada barbero</a></li>
+          <li><a href="herramientas.html#caja">Caja registradora</a></li>
+          <li><a href="herramientas.html#caja">Productos e inventario</a></li>
+          <li><a href="herramientas.html#caja">Cierre de caja</a></li>
+          <li><a href="herramientas.html#recordatorios">Recordatorios automáticos</a></li>
+          <li><a href="herramientas.html#whatsapp">WhatsApp con un toque</a></li>
+          <li><a href="herramientas.html#politica">Control de no shows</a></li>
+          <li><a href="herramientas.html#bloqueos">Clientes bloqueados</a></li>
+          <li><a href="herramientas.html#espera">Lista de espera</a></li>
+          <li><a href="herramientas.html">«Te toca corte»</a></li>
+          <li><a href="herramientas.html">Fichas de cliente y VIP</a></li>
+          <li><a href="herramientas.html#resenas">Reseñas en Google</a></li>
+          <li><a href="herramientas.html#numeros">Estadísticas</a></li>
+          <li><a href="herramientas.html">Avisos en tu móvil</a></li>
+          <li><a href="herramientas.html">Citas fuera de horario</a></li>
+          <li><a href="herramientas.html#cancelar">Cambiar y cancelar online</a></li>
+        </ul>
+      </section>
+
       <!-- Smart Booking: la función estrella. Recomienda horas sin quitar ninguna -->
       <section class="smart" id="smart" aria-labelledby="smart-titulo">
         <div class="smart-texto">
@@ -140,15 +166,16 @@
           <ul class="smart-lista">
             <li>Tu cliente ve todas las horas, como siempre, y elige la que quiera.</li>
             <li>Sin pasos de más ni preguntas: solo una etiqueta «Recomendado».</li>
-            <li>Menos huecos de 15 minutos que no sirven para nada. Más citas al día.</li>
+            <li>Junta las citas en bloques seguidos: casi sin huecos entre clientes y con sitio para más citas cada día.</li>
             <li>Funciona solo. Lo enciendes o lo apagas con un toque.</li>
           </ul>
         </div>
         <div class="smart-movil" aria-hidden="true">
           <p class="sm-dia">Viernes 13 de noviembre</p>
+          <p class="sm-nota">Ya hay una cita a las 11:00. Smart Booking destaca la hora de antes y la de después.</p>
           <div class="sm-horas">
-            <span>10:00</span><span class="r">10:30<small>✦ Recomendado</small></span><span class="r">11:30<small>✦ Recomendado</small></span>
-            <span>12:00</span><span>12:30</span><span>13:00</span>
+            <span>10:00</span><span class="r">10:30<small>✦ Recomendado</small></span><span class="ocupada">11:00<small>Reservada</small></span>
+            <span class="r">11:30<small>✦ Recomendado</small></span><span>12:00</span><span>12:30</span>
             <span>16:00</span><span>16:30</span><span>17:00</span>
           </div>
           <p class="sm-marca">✦ Smart Booking <em>· Powered by Book Lab®</em></p>

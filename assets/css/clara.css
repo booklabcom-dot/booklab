@@ -416,3 +416,17 @@ html { scroll-behavior: smooth; }
 @media (min-width: 900px) {
   .smart { grid-template-columns: 1.2fr 1fr; align-items: center; gap: 48px; padding: 56px 64px; margin-top: 88px; }
 }
+
+/* Todas las herramientas (entre las capturas y Smart Booking) */
+.todas { margin-top: 48px; }
+.todas h2 { margin: 0; font: 700 clamp(1.9rem, 7vw, 3.2rem)/1 var(--letra); letter-spacing: -.04em; }
+.todas > p { margin: 8px 0 16px; color: var(--gris); }
+.todas-lista { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.todas-lista a { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 8px 15px 8px 12px; border: 1px solid var(--linea); border-radius: 999px; background: var(--tarjeta); color: var(--negro); font-size: .93rem; font-weight: 550; text-decoration: none; transition: border-color .15s, transform .15s; }
+.todas-lista a::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #FEDA12; box-shadow: 0 0 0 1.5px var(--negro); flex: none; }
+.todas-lista a:hover { border-color: var(--negro); transform: translateY(-1px); }
+.smart { margin-top: 48px; }
+.sm-nota { margin: -4px 0 10px; color: #6b6b6b; font-size: .74rem; line-height: 1.35; }
+.sm-horas .ocupada { background: var(--negro); color: #fff; }
+.sm-horas .ocupada small { background: #fff; color: var(--negro); }
+@media (min-width: 900px) { .todas { margin-top: 80px; } .smart { margin-top: 80px; } }
