@@ -388,3 +388,9 @@ html { scroll-behavior: smooth; }
 .precios-pasos li { counter-increment: paso; display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; color: #c9c9c9; font-size: .95rem; line-height: 1.4; }
 .precios-pasos li::before { content: counter(paso); display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #FEDA12; color: #111; font-weight: 800; font-size: .82rem; }
 .precios-pasos b { color: #fff; }
+
+/* Migrar desde otra app */
+.migrar { margin-top: 26px; padding: 26px 20px 28px; border-radius: var(--radio); background: var(--tarjeta); border: 2px solid #FEDA12; }
+.migrar-eye { margin: 0 0 6px; color: var(--gris); font-weight: 600; font-size: .95rem; }
+.migrar h2 { margin: 0 0 10px; font: 700 clamp(1.7rem, 7.5vw, 3rem)/1 var(--letra); letter-spacing: -.04em; }
+.migrar-texto { margin: 0 0 18px; color: #333; max-width: 46ch; }
