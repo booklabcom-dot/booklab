@@ -17,7 +17,7 @@
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/img/mano-tatuada-3.webp" type="image/webp">
-  <link rel="stylesheet" href="assets/css/clara.css?v=20261117e">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261117f">
   <link rel="stylesheet" href="assets/css/foto-mano.css?v=19">
   <link rel="stylesheet" href="assets/css/carrusel-ui.css?v=7">
   <script type="application/ld+json">
@@ -41,7 +41,7 @@
   .nav-botones { display: flex; gap: 6px; }
   .nav-demo { border: 1px solid #cfcdc8; padding-right: 16px; }
   .nav-marca { white-space: nowrap; }
-  @media (max-width: 480px) { .nav-botones .pildora { padding: 9px 13px; font-size: .86rem; } .nav-botones { gap: 5px; } .nav-marca { font-size: 1.1rem; } }
+  @media (max-width: 480px) { .solo-grande { display: none; } .nav-botones .pildora { padding: 9px 13px; font-size: .86rem; } .nav-botones { gap: 5px; } .nav-marca { font-size: 1.1rem; } }
   .cta-prueba { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
   .cta-nota { width: 100%; margin: 4px 0 0; font-size: .86rem; color: #6b6b6b; }
   .precios-gratis { margin-top: 18px; width: 100%; justify-content: center; }
@@ -128,7 +128,7 @@
 <body>
   <header class="nav">
     <a class="nav-marca" href="./">Book Lab<sup>®</sup></a>
-    <div class="nav-botones"><a class="nav-entrar" href="https://app.getbooklab.com/entrar" aria-label="Entrar a mi cuenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Entrar</span></a><a class="pildora nav-demo" href="#demo">Probar la demo</a><a class="pildora pildora-amarilla js-pronto" href="#prueba">Prueba gratis</a></div>
+    <div class="nav-botones"><a class="nav-entrar" href="https://app.getbooklab.com/entrar" aria-label="Mi cuenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Mi cuenta</span></a><a class="pildora nav-demo" href="#demo">Ver un ejemplo</a><a class="pildora pildora-amarilla js-pronto" href="#prueba"><span>Prueba <span class="solo-grande">14 días </span>gratis</span></a></div>
   </header>
 
   <main>
@@ -160,7 +160,7 @@
         <p class="portada-lema">Tu página de reservas, la agenda de cada barbero, la caja del iPad y los recordatorios, en una sola app. Hecha por un barbero que la usa cada día en su barbería.</p>
         <div class="cta-prueba">
           <a class="pildora pildora-amarilla pildora-grande js-pronto" href="#prueba">Prueba 14 días gratis <i aria-hidden="true"></i></a>
-          <a class="pildora pildora-borde" href="#demo">Probar la demo</a>
+          <a class="pildora pildora-borde" href="#demo">Ver un ejemplo</a>
           <p class="cta-nota">Sin tarjeta · Lista en 5 minutos · Sin permanencia · Sin comisiones por reserva</p>
         </div>
         <ul class="portada-lista">
@@ -190,7 +190,7 @@
       <!-- La demo: una barbería de mentira para tocarlo todo -->
       <section class="demo-viva" id="demo" aria-labelledby="demo-titulo">
         <p class="demo-eye">Sin registrarte · sin tarjeta</p>
-        <h2 id="demo-titulo">Pruébalo ahora, con una barbería de verdad</h2>
+        <h2 id="demo-titulo">Míralo funcionando en una barbería de ejemplo</h2>
         <p class="demo-sub"><b>Fade Club Madrid</b> es nuestra barbería de demostración: tres barberos, año y medio de citas, caja, clientes y números. Tócalo todo, no se rompe nada: cada noche vuelve a estar como nueva.</p>
         <div class="demo-tres">
           <a class="demo-c" href="https://booklab-app-pruebas.booklab-app.workers.dev/b/barberia-demo" target="_blank" rel="noopener"><span class="demo-n">1</span><b>Reserva como un cliente</b><span>Elige servicio, barbero y hora en 30 segundos.</span><em>Abrir la página de reservas →</em></a>
@@ -391,7 +391,7 @@
         <p class="pro-precio"><b>49,90 €</b>/mes + IVA</p>
         <p class="pro-nota">Montaje gratis para las fundadoras (después, 199 € una vez). Soporte prioritario por WhatsApp.</p>
         <div class="pro-botones">
-          <a class="pildora pildora-amarilla pildora-grande" href="demo.html">Ver la demo de la PRO <i aria-hidden="true"></i></a>
+          <a class="pildora pildora-amarilla pildora-grande" href="demo.html">Ver un ejemplo de la PRO <i aria-hidden="true"></i></a>
           <a class="pildora pildora-blanca" href="https://wa.me/34746045607?text=Hola%2C%20me%20interesa%20Book%20Lab%20PRO" target="_blank" rel="noopener">Hablemos por WhatsApp</a>
         </div>
       </section>
@@ -413,7 +413,7 @@
         <div class="final-demo">
           <p class="final-t">Tu barbería, trabajando sola. <span>Empieza hoy.</span></p>
           <a class="pildora pildora-amarilla pildora-grande js-pronto" href="#prueba">Prueba 14 días gratis <i aria-hidden="true"></i></a>
-          <a class="pildora pildora-negra pildora-grande" href="#demo">Antes, prueba la demo <i aria-hidden="true"></i></a>
+          <a class="pildora pildora-negra pildora-grande" href="#demo">Antes, mira un ejemplo <i aria-hidden="true"></i></a>
           <p class="cta-nota">Sin tarjeta · Sin permanencia · Te pasamos tus clientes</p>
         </div>
       </section>
@@ -435,7 +435,7 @@
     <nav aria-label="Legal"><a href="legal.html#aviso-legal">Aviso legal</a><a href="legal.html#privacidad">Privacidad</a><a href="legal.html#cookies">Cookies</a></nav>
   </footer>
 
-  <div class="pronto" id="pronto" role="status" aria-live="polite" hidden>Abrimos las altas en unos días. Mientras, prueba la demo.</div>
+  <div class="pronto" id="pronto" role="status" aria-live="polite" hidden>Abrimos las altas en unos días. Mientras, mira un ejemplo.</div>
   <script>
     /* «Prueba 14 días gratis»: aún sin funcionar (solo para ver la web). Al tocarlo, un aviso y te lleva a la demo. */
     (function () {

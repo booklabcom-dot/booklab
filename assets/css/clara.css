@@ -434,6 +434,7 @@ html { scroll-behavior: smooth; }
 /* «Entrar»: para quien ya tiene cuenta (lleva a app.getbooklab.com) */
 .nav-derecha { display: flex; align-items: center; gap: 6px; }
 .nav-entrar { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 14px; border-radius: 999px; font-weight: 600; font-size: .92rem; text-decoration: none; color: inherit; border: 1px solid #cfcdc8; }
+.nav-entrar, .nav-marca { white-space: nowrap; }
 .nav-entrar:hover { background: rgba(0,0,0,.05); }
 .nav-entrar svg { width: 16px; height: 16px; }
-@media (max-width: 480px) { .nav-entrar { padding: 0 11px; font-size: .86rem; } .nav-botones .nav-entrar span { display: none; } }
+@media (max-width: 480px) { .nav-entrar { padding: 0 11px; font-size: .86rem; } .nav-botones .nav-entrar span { display: none; } .nav-botones .nav-demo { display: none; } }
