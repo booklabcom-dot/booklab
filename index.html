@@ -167,7 +167,18 @@
   .categorias ol b { font-size: 1.08rem; letter-spacing: -.02em; }
   .categorias ol span { color: var(--gris); font-size: .9rem; line-height: 1.35; }
   @media (min-width: 900px) { .categorias ol { grid-template-columns: repeat(5, 1fr); } .categorias ol a { grid-template-columns: 1fr; align-content: start; } .categorias ol a::before { grid-row: auto; margin-bottom: 10px; } }
-  .confianza { margin: 40px 0 0; }
+  .cambia { margin: 40px 0 0; }
+  .cambia h2 { font: 750 clamp(1.8rem, 8vw, 2.8rem)/1 var(--letra); letter-spacing: -.045em; margin: 0 0 14px; }
+  .cambia h2 span { color: #6b6b6b; }
+  .cambia-tabla { display: grid; gap: 6px; max-width: 760px; }
+  .cambia-fila { display: grid; grid-template-columns: 1fr 1fr; border-radius: 14px; overflow: hidden; }
+  .cambia-fila > * { padding: 12px 14px; line-height: 1.3; }
+  .cambia-fila span { background: var(--tarjeta); color: #6b6b6b; }
+  .cambia-fila b { background: #111; color: #fff; }
+  .cambia-fila b::before { content: '✓ '; color: #FEDA12; }
+  .cambia-cab > * { padding: 4px 14px; background: none !important; color: #6b6b6b !important; font-size: .8rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
+  .cambia-cab b::before { content: none; }
+  .confianza { margin: 44px 0 0; }
   .confianza .tarjeta { grid-template-columns: 80px minmax(0, 1fr); }
   @media (max-width: 400px) { .confianza .tarjeta-texto .pildora { padding-left: 14px; font-size: .86rem; } }
   @media (min-width: 760px) { .portada-fila .cta-prueba { max-width: 430px; justify-content: flex-end; } .portada-fila .cta-nota { text-align: right; } }
@@ -234,6 +245,21 @@
         </div>
         <p class="app-cap-nota">← Desliza →</p>
       </div>
+
+      <!-- Confianza: hecho por un barbero -->
+      <section class="confianza" aria-labelledby="conf-titulo">
+        <h2 id="conf-titulo">Hecho por un barbero. <span>Para barberías.</span></h2>
+        <p>Johan lleva 12 años detrás del sillón. Sabe lo que es pasar el día cortando, contestando WhatsApps, cuadrando citas y llevando las cuentas. Por eso creó Book Lab, y lo usa en su propio negocio.</p>
+        <!-- Tarjeta personal (la foto de Johan irá aquí cuando la tenga) -->
+        <div class="tarjeta">
+          <div class="tarjeta-foto" aria-hidden="true">J</div>
+          <div class="tarjeta-texto">
+            <small>Barbero desde hace 12 años · fundador</small>
+            <b>Johan</b>
+            <a class="pildora pildora-negra" href="https://wa.me/34746045607?text=Hola%2C%20tengo%20una%20barber%C3%ADa%20y%20me%20interesa%20Book%20Lab" target="_blank" rel="noopener">Hablemos por WhatsApp <i aria-hidden="true"></i></a>
+          </div>
+        </div>
+      </section>
 
       <!-- ===== 1. AHORRA TIEMPO ===== -->
       <p class="nivel"><span>1</span>Ahorra tiempo</p>
@@ -379,18 +405,17 @@
         <a class="final-herramientas" href="herramientas.html">Ver todas las herramientas <span aria-hidden="true">→</span></a>
       </section>
 
-      <!-- Confianza: hecho por un barbero -->
-      <section class="confianza" aria-labelledby="conf-titulo">
-        <h2 id="conf-titulo">Hecho por un barbero. <span>Para barberías.</span></h2>
-        <p>Book Lab nace detrás del sillón. Lo ha creado Johan, barbero desde hace 12 años, que lo usa en su propio negocio. Por eso va al grano: lo que de verdad hace falta en una barbería, en pocos toques.</p>
-        <!-- Tarjeta personal (la foto de Johan irá aquí cuando la tenga) -->
-        <div class="tarjeta">
-          <div class="tarjeta-foto" aria-hidden="true">J</div>
-          <div class="tarjeta-texto">
-            <small>Barbero desde hace 12 años · fundador</small>
-            <b>Johan</b>
-            <a class="pildora pildora-negra" href="https://wa.me/34746045607?text=Hola%2C%20tengo%20una%20barber%C3%ADa%20y%20me%20interesa%20Book%20Lab" target="_blank" rel="noopener">Hablemos por WhatsApp <i aria-hidden="true"></i></a>
-          </div>
+
+      <!-- Qué cambia con Book Lab -->
+      <section class="cambia" aria-labelledby="cambia-titulo">
+        <h2 id="cambia-titulo">Qué cambia <span>con Book Lab</span></h2>
+        <div class="cambia-tabla" role="table" aria-label="Sin Book Lab y con Book Lab">
+          <div class="cambia-fila cambia-cab" role="row"><span role="columnheader">Sin Book Lab</span><b role="columnheader">Con Book Lab<sup>®</sup></b></div>
+          <div class="cambia-fila" role="row"><span role="cell">Reservas por WhatsApp</span><b role="cell">Reservas 24/7</b></div>
+          <div class="cambia-fila" role="row"><span role="cell">Agenda a mano</span><b role="cell">Agenda al día en todos los móviles</b></div>
+          <div class="cambia-fila" role="row"><span role="cell">Recordatorios uno a uno</span><b role="cell">Recordatorios ya escritos</b></div>
+          <div class="cambia-fila" role="row"><span role="cell">Cuentas a mano</span><b role="cell">Caja y estadísticas</b></div>
+          <div class="cambia-fila" role="row"><span role="cell">No sabes quién no vuelve</span><b role="cell">Recuperas clientes</b></div>
         </div>
       </section>
 

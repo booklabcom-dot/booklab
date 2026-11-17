@@ -21,6 +21,11 @@
     .hr-cat h2 { margin: 0; font: 750 clamp(1.5rem, 6vw, 2.2rem)/1.05 var(--letra); letter-spacing: -.04em; }
     .pildora-amarilla { background: #FEDA12; color: #111; padding-right: 20px; font-weight: 700; }
     .pildora-amarilla i { width: 9px; height: 9px; border-radius: 50%; background: #111; }
+    .pildora-borde { border: 1.5px solid #111; color: #111; padding-right: 20px; }
+    .hr-final .final-demo { display: grid; grid-template-columns: 1fr; justify-items: start; gap: 12px; }
+    .hr-final-t { font: 750 clamp(1.6rem, 7vw, 2.4rem)/1.05 var(--letra); letter-spacing: -.04em; color: #111 !important; }
+    .hr-final-nota { font-size: .86rem; margin-top: -4px !important; }
+    .hr-final-demo { display: flex; flex-wrap: wrap; gap: 8px; }
     .hr-captura-mac { display: block; width: 100%; max-width: 300px; height: auto; margin-top: 14px; border-radius: 18px; box-shadow: 0 12px 30px rgba(0,0,0,.35); }</style>
 </head>
 <body>
@@ -569,9 +574,14 @@
     <!-- Final -->
     <section class="final hr-final" aria-label="Pruébalo">
       <div class="final-demo">
-        <p>Tócalo todo en nuestra barbería de demostración, Fade Club Madrid.</p>
-        <a class="pildora pildora-negra pildora-grande" href="https://booklab-app-pruebas.booklab-app.workers.dev/demo" target="_blank" rel="noopener">Entrar como el jefe <i aria-hidden="true"></i></a>
-        <a class="pildora pildora-amarilla pildora-grande" href="https://booklab-app-pruebas.booklab-app.workers.dev/b/barberia-demo" target="_blank" rel="noopener">Reservar como un cliente <i aria-hidden="true"></i></a>
+        <p class="hr-final-t">¿Te lo imaginas en tu barbería?</p>
+        <a class="pildora pildora-amarilla pildora-grande" href="https://app.getbooklab.com/empezar">Empieza tus 14 días gratis <i aria-hidden="true"></i></a>
+        <p class="hr-final-nota">Sin tarjeta · Lista en 5 minutos · Sin permanencia</p>
+        <p>O antes, tócalo todo en nuestra barbería de demostración, Fade Club Madrid:</p>
+        <div class="hr-final-demo">
+          <a class="pildora pildora-negra" href="https://booklab-app-pruebas.booklab-app.workers.dev/demo" target="_blank" rel="noopener">Entrar como el jefe <i aria-hidden="true"></i></a>
+          <a class="pildora pildora-borde" href="https://booklab-app-pruebas.booklab-app.workers.dev/b/barberia-demo" target="_blank" rel="noopener">Reservar como un cliente</a>
+        </div>
       </div>
       <a class="final-herramientas" href="./#precios">Ver precios <span aria-hidden="true">→</span></a>
     </section>
