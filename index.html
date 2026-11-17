@@ -95,6 +95,14 @@
   .intel-tel { max-width: 280px; margin: 0 auto; }
   .intel-tel img { display: block; width: 100%; border-radius: 24px; }
   .caja-ipad, .recordar { margin: 28px 0 0; }
+  .espera { margin: 28px 0 0; padding: 28px 20px; border-radius: 26px; background: #FFE14D; color: #111; }
+  .espera h2 { font: 750 clamp(1.8rem, 8vw, 2.8rem)/1 var(--letra); letter-spacing: -.045em; margin: 0 0 12px; }
+  .espera h2 span { display: block; }
+  .espera > p { line-height: 1.5; margin: 0 0 18px; max-width: 60ch; }
+  .espera-pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; max-width: 460px; }
+  .espera-pasos li { display: flex; gap: 12px; align-items: baseline; padding: 13px 16px; border-radius: 16px; background: rgba(255,255,255,.75); }
+  .espera-pasos li span { font-size: .8rem; color: #666; font-variant-numeric: tabular-nums; }
+  .espera-pasos li.ok { background: #111; color: #fff; } .espera-pasos li.ok span { color: #FFE14D; }
   .caja-ipad h2, .recordar h2, .compara h2, .faq h2 { font: 750 clamp(1.8rem, 8vw, 2.8rem)/1 var(--letra); letter-spacing: -.045em; margin: 0 0 10px; }
   .caja-ipad > p, .recordar > p { color: #444; line-height: 1.5; margin: 0 0 16px; }
   .marco-ipad { padding: 10px; border-radius: 26px; background: #111; box-shadow: 0 0 0 1px #2a2a2a; }
@@ -163,16 +171,11 @@
           <a class="pildora pildora-borde" href="#demo">Ver un ejemplo</a>
           <p class="cta-nota">Sin tarjeta · Lista en 5 minutos · Sin permanencia · Sin comisiones por reserva</p>
         </div>
-        <ul class="portada-lista">
-          <li><a href="herramientas.html#reservas">Reservas online 24/7</a></li>
-          <li><a href="#smart">Smart Booking: agenda sin huecos</a></li>
+        <ul class="portada-lista estrellas">
+          <li><a href="#smart">Smart Booking</a></li>
           <li><a href="#intelligence">BookLab Intelligence</a></li>
-          <li><a href="#caja">Caja del iPad con modo caja</a></li>
           <li><a href="#recordatorios">Recordatorios por WhatsApp</a></li>
-          <li><a href="herramientas.html#whatsapp">WhatsApp solos desde Mac o Windows</a></li>
-          <li><a href="herramientas.html#whatsapp">Difusión: un mensaje a todos</a></li>
-          <li><a href="herramientas.html#bloqueos">Adiós a los no shows</a></li>
-          <li><a href="herramientas.html#numeros">Estadísticas en tiempo real</a></li>
+          <li><a href="#espera">Lista de espera automática</a></li>
         </ul>
       </div>
 
@@ -201,36 +204,6 @@
         </div>
       </section>
 
-      <!-- Entre las capturas y Smart Booking: todas las herramientas de un vistazo -->
-      <section class="todas" aria-labelledby="todas-titulo">
-        <h2 id="todas-titulo">Todo en una sola app</h2>
-        <p>Sin pagar extras ni juntar programas. Toca cualquiera para ver cómo funciona.</p>
-        <ul class="todas-lista">
-          <li><a href="herramientas.html#reservas">Reservas online 24/7</a></li>
-          <li><a href="#smart">Smart Booking</a></li>
-          <li><a href="#intelligence">BookLab Intelligence</a></li>
-          <li><a href="herramientas.html#mostrador">Agenda de cada barbero</a></li>
-          <li><a href="#caja">Modo caja con código</a></li>
-          <li><a href="herramientas.html#numeros">Permisos por barbero</a></li>
-          <li><a href="herramientas.html#caja">Caja registradora</a></li>
-          <li><a href="herramientas.html#caja">Productos e inventario</a></li>
-          <li><a href="herramientas.html#caja">Cierre de caja</a></li>
-          <li><a href="herramientas.html#recordatorios">Correos automáticos</a></li>
-          <li><a href="#recordatorios">Recordatorios por WhatsApp</a></li>
-          <li><a href="herramientas.html#whatsapp">WhatsApp solos desde Mac o Windows</a></li>
-          <li><a href="herramientas.html#whatsapp">Difusión: un mensaje a todos</a></li>
-          <li><a href="herramientas.html#politica">Control de no shows</a></li>
-          <li><a href="herramientas.html#bloqueos">Clientes bloqueados</a></li>
-          <li><a href="herramientas.html#espera">Lista de espera</a></li>
-          <li><a href="herramientas.html">«Te toca corte»</a></li>
-          <li><a href="herramientas.html">Fichas de cliente y VIP</a></li>
-          <li><a href="herramientas.html#resenas">Reseñas en Google</a></li>
-          <li><a href="herramientas.html#numeros">Estadísticas</a></li>
-          <li><a href="herramientas.html">Avisos en tu móvil</a></li>
-          <li><a href="herramientas.html">Citas fuera de horario</a></li>
-          <li><a href="herramientas.html#cancelar">Cambiar y cancelar online</a></li>
-        </ul>
-      </section>
 
       <!-- Smart Booking: la función estrella. Recomienda horas sin quitar ninguna -->
       <section class="smart" id="smart" aria-labelledby="smart-titulo">
@@ -274,6 +247,29 @@
         </div>
       </section>
 
+
+      <!-- Recordatorios -->
+      <section class="recordar" id="recordatorios" aria-labelledby="recordar-titulo">
+        <h2 id="recordar-titulo">Menos sillas vacías</h2>
+        <p>Confirmación y recordatorios por correo, <b>solos</b>. Y por WhatsApp, con el mensaje ya escrito con su nombre y su hora.</p>
+        <ul class="caja-puntos">
+          <li><b>Desde el móvil, con un toque.</b> Recuerdas todas las citas de hoy, una detrás de otra.</li>
+          <li><b>Desde el ordenador, solos.</b> Con la app Book Lab Recordatorios (Mac o Windows) se envían uno a uno desde tu propio WhatsApp.</li>
+          <li><b>Difusión.</b> ¿Hoy no tienes cambio o llegas tarde? Un mensaje y les llega a todos los que tienen cita, cada uno con su nombre.</li>
+        </ul>
+      </section>
+
+      <!-- Lista de espera: el hueco se llena solo -->
+      <section class="espera" id="espera" aria-labelledby="espera-titulo">
+        <h2 id="espera-titulo">Si alguien cancela, <span>el hueco se llena solo</span></h2>
+        <p>Cuando no queda hora, tu cliente se apunta a la lista de espera de ese día. Si alguien cancela, Book Lab avisa al momento a los que esperan. El primero que reserva, se la queda. Tú no haces nada.</p>
+        <ol class="espera-pasos" aria-label="Así funciona">
+          <li><span>17:02</span><b>Marcos cancela su cita de las 18:00</b></li>
+          <li><span>17:02</span><b>Aviso a los 3 clientes en lista de espera</b></li>
+          <li class="ok"><span>17:06</span><b>Iván reserva las 18:00 ✓</b></li>
+        </ol>
+      </section>
+
       <!-- Caja del iPad + modo caja -->
       <section class="caja-ipad" id="caja" aria-labelledby="caja-titulo">
         <h2 id="caja-titulo">Una caja de verdad en tu iPad</h2>
@@ -281,44 +277,14 @@
         <div class="marco-ipad"><img src="assets/img/app/caja-ipad.jpg?v=1" alt="Caja de Book Lab en un iPad" loading="lazy"></div>
         <ul class="caja-puntos">
           <li><b>Modo caja con código.</b> El iPad del mostrador solo enseña la caja. Tu facturación y tus ajustes, con tu código.</li>
-          <li><b>Cada barbero, lo suyo.</b> Sus clientes de hoy, lo que lleva y su comisión. Tú decides qué ve cada uno.</li>
           <li><b>Facturación automática.</b> Las citas hechas cuentan solas. Si se cobra distinto, se ajusta con un toque.</li>
         </ul>
       </section>
 
-      <!-- Recordatorios -->
-      <section class="recordar" id="recordatorios" aria-labelledby="recordar-titulo">
-        <h2 id="recordar-titulo">Menos sillas vacías</h2>
-        <p>Los correos de confirmación y recordatorio salen <b>solos</b>. Y por la mañana, con un botón, <b>recuerdas todas las citas de hoy por WhatsApp</b>, una detrás de otra, con el mensaje ya escrito con su nombre y su hora.</p>
-        <ul class="caja-puntos">
-          <li><b>Desde tu ordenador, se envían solos.</b> Con nuestra app Book Lab Recordatorios (Mac o Windows), un botón y manda el WhatsApp a cada cliente de hoy, uno a uno, desde tu propio WhatsApp. Tú ves cómo se van marcando.</li>
-          <li><b>Difusión.</b> ¿Hoy no tienes cambio, llegas tarde o cierras antes? Escribes un mensaje y le llega a todos los que tienen cita hoy o esta semana, cada uno con su nombre.</li>
-          <li><b>Política de no shows.</b> Decides cuánto paga el que falla y se lo pides con un toque.</li>
-          <li><b>Clientes bloqueados.</b> El que repite ya no puede reservar online.</li>
-          <li><b>Lista de espera.</b> Si alguien cancela, se avisa solo al siguiente.</li>
-        </ul>
-      </section>
-
-      <!-- Funciones: lo que más vende, en orden -->
-      <section class="funciones" aria-labelledby="funciones-titulo">
-        <h2 id="funciones-titulo">Todo lo que hace por ti</h2>
-        <ol class="funciones-lista">
-          <li><a href="herramientas.html#reservas"><b>Reservas 24/7 en tu propia página</b><span>Tus clientes eligen servicio, barbero, día y hora en 30 segundos. Tú solo compartes el enlace en Instagram.</span></a></li>
-          <li><a href="#smart"><b>Smart Booking</b><span>Destaca las horas que mejor encajan en la agenda para que no queden huecos muertos. El cliente elige siempre.</span></a></li>
-          <li><a href="#intelligence"><b>BookLab Intelligence</b><span>Te dice qué clientes se te escapan, qué horas flojean y cómo vas con tus objetivos. Y qué hacer.</span></a></li>
-          <li><a href="herramientas.html#mostrador"><b>Agenda de día, semana y mes</b><span>Cada barbero ve sus citas en el móvil. Apunta a quien llega sin cita en tres toques.</span></a></li>
-          <li><a href="herramientas.html#caja"><b>Caja registradora y cierre del día</b><span>Cobra la cita con un toque, añade productos, te dice el cambio y cierra la caja cuadrando el efectivo.</span></a></li>
-          <li><a href="herramientas.html#cliente"><b>«Te toca corte»</b><span>Si un cliente tarda en volver, le llega solo un correo para que reserve. Recupera clientes sin hacer nada.</span></a></li>
-          <li><a href="herramientas.html#bloqueos"><b>No shows bajo control</b><span>Pon tu política (50 %, 100 % o un importe) y avisa al que falló por WhatsApp con un toque. Y bloquéalo si repite.</span></a></li>
-          <li><a href="herramientas.html#recordatorios"><b>Menos citas perdidas</b><span>Confirmación, recordatorios y petición de reseña, todo automático. Y a ti te avisa en el móvil de cada reserva.</span></a></li>
-          <li><a href="herramientas.html#whatsapp"><b>WhatsApp que se envían solos</b><span>Con la app Book Lab Recordatorios para Mac o Windows: recordatorios, reseñas o un mensaje a todos, enviados uno a uno desde tu WhatsApp.</span></a></li>
-          <li><a href="herramientas.html#numeros"><b>Tus números claros</b><span>Lo que factura cada barbero y lo que le toca, ventas por producto y clientes nuevos. Sin hacer cuentas.</span></a></li>
-        </ol>
-        <!-- Cierre de las funciones: hay mucho más -->
-        <div class="iceberg">
-          <p>Y esto es solo la punta del iceberg. <span>Hacemos mucho más.</span></p>
-          <a class="final-herramientas" href="herramientas.html">Descubre todas nuestras herramientas <span aria-hidden="true">→</span></a>
-        </div>
+      <!-- Y mucho más: una línea y a Herramientas -->
+      <section class="iceberg" aria-label="Y mucho más">
+        <p>Y mucho más: <span>no shows y bloqueos, «te toca corte», fichas de cliente, reseñas en Google, estadísticas, equipo y permisos, gastos y beneficio.</span></p>
+        <a class="final-herramientas" href="herramientas.html">Ver todas las herramientas <span aria-hidden="true">→</span></a>
       </section>
 
       <!-- Sin comisiones: frente a las apps de reservas de siempre -->
