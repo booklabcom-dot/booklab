@@ -17,7 +17,7 @@
   <link rel="apple-touch-icon" href="assets/img/icon-180.png">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
   <link rel="preload" as="image" href="assets/img/mano-tatuada-3.webp" type="image/webp">
-  <link rel="stylesheet" href="assets/css/clara.css?v=20261117h">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261117i">
   <link rel="stylesheet" href="assets/css/foto-mano.css?v=19">
   <link rel="stylesheet" href="assets/css/carrusel-ui.css?v=7">
   <script type="application/ld+json">
@@ -69,6 +69,13 @@
   .app-carril figcaption { margin-top: 10px; font-size: .88rem; color: #bdbdbd; line-height: 1.35; }
   .app-carril figcaption b { display: block; color: #fff; font-size: 1rem; }
   .app-cap-nota { margin: 8px 0 0; text-align: center; color: #777; font-size: .8rem; }
+  /* Ordenador: los 5 móviles a la vez, a tamaño de móvil (no gigantes) */
+  @media (min-width: 900px) {
+    .app-capturas { padding: 34px 34px 26px; }
+    .app-cap-t { margin: 0 0 20px; font-size: 1.6rem; }
+    .app-carril { grid-auto-flow: row; grid-template-columns: repeat(5, 1fr); grid-auto-columns: auto; overflow: visible; padding: 0; gap: 18px; }
+    .app-cap-nota { display: none; }
+  }
   .demo-viva { margin: 26px 0 0; padding: 26px 20px; border-radius: 26px; background: #FEDA12; color: #111; }
   .demo-eye { margin: 0 0 6px; font-weight: 750; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
   .demo-viva h2 { margin: 0 0 10px; font: 750 clamp(1.8rem, 8vw, 2.8rem)/1 var(--letra); letter-spacing: -.045em; }
@@ -136,7 +143,7 @@
 <body>
   <header class="nav">
     <a class="nav-marca" href="./">Book Lab<sup>®</sup></a>
-    <div class="nav-botones"><a class="nav-entrar" href="https://app.getbooklab.com/entrar" aria-label="Mi cuenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Mi cuenta</span></a><a class="pildora nav-demo" href="#demo">Ver un ejemplo</a><a class="pildora pildora-amarilla" href="https://app.getbooklab.com/empezar"><span>Prueba <span class="solo-grande">14 días </span>gratis</span></a></div>
+    <div class="nav-botones"><a class="nav-entrar" href="https://app.getbooklab.com/entrar" aria-label="Mi cuenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Mi cuenta</span></a></div>
   </header>
 
   <main>
@@ -183,16 +190,27 @@
       <div class="app-capturas">
         <p class="app-cap-t">Así es Book Lab<sup>®</sup> por dentro</p>
         <div class="app-carril">
-          <figure><div class="tel"><img src="assets/img/app/reservas.jpg?v=2" alt="Página de reservas de una barbería" loading="lazy"></div><figcaption><b>Tu página de reservas</b>Con tus fotos y tus precios. La compartes donde quieras.</figcaption></figure>
-          <figure><div class="tel"><img src="assets/img/app/panel.jpg?v=2" alt="Inicio del panel del jefe" loading="lazy"></div><figcaption><b>Tu día de un vistazo</b>Caja de hoy, citas, quién viene ahora.</figcaption></figure>
-          <figure><div class="tel"><img src="assets/img/app/agenda.jpg?v=2" alt="Agenda de los barberos" loading="lazy"></div><figcaption><b>La agenda de todos</b>Cada barbero con su color. Apunta en tres toques.</figcaption></figure>
-          <figure><div class="tel"><img src="assets/img/app/recordatorios.jpg?v=1" alt="Recordatorios por WhatsApp" loading="lazy"></div><figcaption><b>Recordatorios</b>Recuerda todas las citas de hoy, una detrás de otra.</figcaption></figure>
-          <figure><div class="tel"><img src="assets/img/app/intelligence.jpg?v=1" alt="BookLab Intelligence" loading="lazy"></div><figcaption><b>BookLab Intelligence</b>Tu negocio, explicado. Y qué hacer para mejorarlo.</figcaption></figure>
+          <figure><div class="tel"><img src="assets/img/app/reservas.webp?v=3" alt="Página de reservas de una barbería" loading="lazy"></div><figcaption><b>Tu página de reservas</b>Con tus fotos y tus precios. La compartes donde quieras.</figcaption></figure>
+          <figure><div class="tel"><img src="assets/img/app/panel.webp?v=3" alt="Inicio del panel del jefe" loading="lazy"></div><figcaption><b>Tu día de un vistazo</b>Caja de hoy, citas, quién viene ahora.</figcaption></figure>
+          <figure><div class="tel"><img src="assets/img/app/agenda.webp?v=3" alt="Agenda de los barberos" loading="lazy"></div><figcaption><b>La agenda de todos</b>Cada barbero con su color. Apunta en tres toques.</figcaption></figure>
+          <figure><div class="tel"><img src="assets/img/app/recordatorios.webp?v=3" alt="Recordatorios por WhatsApp" loading="lazy"></div><figcaption><b>Recordatorios</b>Recuerda todas las citas de hoy, una detrás de otra.</figcaption></figure>
+          <figure><div class="tel"><img src="assets/img/app/intelligence.webp?v=3" alt="BookLab Intelligence" loading="lazy"></div><figcaption><b>BookLab Intelligence</b>Tu negocio, explicado. Y qué hacer para mejorarlo.</figcaption></figure>
         </div>
         <p class="app-cap-nota">← Desliza →</p>
       </div>
 
 
+
+      <!-- Recordatorios -->
+      <section class="recordar" id="recordatorios" aria-labelledby="recordar-titulo">
+        <h2 id="recordar-titulo">Menos sillas vacías</h2>
+        <p>Confirmación y recordatorios por correo, <b>solos</b>. Y por WhatsApp, con el mensaje ya escrito con su nombre y su hora.</p>
+        <ul class="caja-puntos">
+          <li><b>Desde el móvil, con un toque.</b> Recuerdas todas las citas de hoy, una detrás de otra.</li>
+          <li><b>Desde el ordenador, solos.</b> Con la app Book Lab Recordatorios (Mac o Windows) se envían uno a uno desde tu propio WhatsApp.</li>
+          <li><b>Difusión.</b> ¿Un imprevisto, vas con retraso o tienes que avisar de algo? Escribes un mensaje y les llega a todos tus clientes con cita, cada uno con su nombre.</li>
+        </ul>
+      </section>
 
       <!-- Smart Booking: la función estrella. Recomienda horas sin quitar ninguna -->
       <section class="smart" id="smart" aria-labelledby="smart-titulo">
@@ -243,28 +261,18 @@
             <li><b>Objetivos del mes</b><span>Facturación, ticket medio, ocupación y clientes nuevos, con cómo vas cada día.</span></li>
             <li><b>Rendimiento de cada barbero</b><span>Lo que factura, su ocupación y lo que le toca de comisión.</span></li>
           </ul>
-          <div class="tel intel-tel"><img src="assets/img/app/intelligence.jpg?v=1" alt="Pantalla de BookLab Intelligence" loading="lazy"></div>
+          <div class="tel intel-tel"><img src="assets/img/app/intelligence.webp?v=3" alt="Pantalla de BookLab Intelligence" loading="lazy"></div>
         </div>
       </section>
 
 
-      <!-- Recordatorios -->
-      <section class="recordar" id="recordatorios" aria-labelledby="recordar-titulo">
-        <h2 id="recordar-titulo">Menos sillas vacías</h2>
-        <p>Confirmación y recordatorios por correo, <b>solos</b>. Y por WhatsApp, con el mensaje ya escrito con su nombre y su hora.</p>
-        <ul class="caja-puntos">
-          <li><b>Desde el móvil, con un toque.</b> Recuerdas todas las citas de hoy, una detrás de otra.</li>
-          <li><b>Desde el ordenador, solos.</b> Con la app Book Lab Recordatorios (Mac o Windows) se envían uno a uno desde tu propio WhatsApp.</li>
-          <li><b>Difusión.</b> ¿Un imprevisto, vas con retraso o tienes que avisar de algo? Escribes un mensaje y les llega a todos tus clientes con cita, cada uno con su nombre.</li>
-        </ul>
-      </section>
 
 
       <!-- Caja del iPad + modo caja -->
       <section class="caja-ipad" id="caja" aria-labelledby="caja-titulo">
         <h2 id="caja-titulo">Una caja de verdad en tu iPad</h2>
         <p>Tocas al cliente y ya está cargado lo que reservó. Añades la cera, eliges cómo paga y te dice el cambio. Sin calculadora ni libreta.</p>
-        <div class="marco-ipad"><img src="assets/img/app/caja-ipad.jpg?v=1" alt="Caja de Book Lab en un iPad" loading="lazy"></div>
+        <div class="marco-ipad"><img src="assets/img/app/caja-ipad.webp?v=3" alt="Caja de Book Lab en un iPad" loading="lazy"></div>
         <ul class="caja-puntos">
           <li><b>Modo caja con código.</b> El iPad del mostrador solo enseña la caja. Tu facturación y tus ajustes, con tu código.</li>
           <li><b>Facturación automática.</b> Las citas hechas cuentan solas. Si se cobra distinto, se ajusta con un toque.</li>
