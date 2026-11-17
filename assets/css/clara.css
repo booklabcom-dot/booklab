@@ -394,3 +394,10 @@ html { scroll-behavior: smooth; }
 .migrar-eye { margin: 0 0 6px; color: var(--gris); font-weight: 600; font-size: .95rem; }
 .migrar h2 { margin: 0 0 10px; font: 700 clamp(1.7rem, 7.5vw, 3rem)/1 var(--letra); letter-spacing: -.04em; }
 .migrar-texto { margin: 0 0 18px; color: #333; max-width: 46ch; }
+
+/* «Entrar»: para quien ya tiene cuenta (lleva a app.getbooklab.com) */
+.nav-derecha { display: flex; align-items: center; gap: 6px; }
+.nav-entrar { display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 14px; border-radius: 999px; font-weight: 600; font-size: .92rem; text-decoration: none; color: inherit; border: 1px solid #cfcdc8; }
+.nav-entrar:hover { background: rgba(0,0,0,.05); }
+.nav-entrar svg { width: 16px; height: 16px; }
+@media (max-width: 480px) { .nav-entrar { padding: 0 11px; font-size: .86rem; } }
