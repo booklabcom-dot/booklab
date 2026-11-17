@@ -12,7 +12,14 @@
   <link rel="icon" type="image/png" href="assets/img/favicon.png">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/clara.css?v=20261117i">
-  <style>.hr-captura-mac { display: block; width: 100%; max-width: 300px; height: auto; margin-top: 14px; border-radius: 18px; box-shadow: 0 12px 30px rgba(0,0,0,.35); }</style>
+  <style>
+    .hr-indice { display: grid; gap: 12px; }
+    .hr-indice-g { display: flex; flex-wrap: wrap; gap: 6px; }
+    .hr-indice a.hr-indice-cat { width: 100%; padding: 0; border: 0; background: none; font-weight: 750; color: #111; }
+    .hr-cat { scroll-margin-top: 14px; display: flex; align-items: baseline; gap: 12px; margin: 40px 0 4px; }
+    .hr-cat span { display: grid; place-items: center; flex: none; width: 34px; height: 34px; border-radius: 50%; background: #111; color: #FEDA12; font: 750 .85rem/1 var(--letra); transform: translateY(-4px); }
+    .hr-cat h2 { margin: 0; font: 750 clamp(1.5rem, 6vw, 2.2rem)/1.05 var(--letra); letter-spacing: -.04em; }
+    .hr-captura-mac { display: block; width: 100%; max-width: 300px; height: auto; margin-top: 14px; border-radius: 18px; box-shadow: 0 12px 30px rgba(0,0,0,.35); }</style>
 </head>
 <body>
   <header class="nav">
@@ -23,13 +30,18 @@
   <main class="hr">
     <a class="hr-volver" href="./">← Volver</a>
     <h1 class="hr-titulo">Todas las herramientas</h1>
-    <p class="hr-lema">Todo lo que incluye Book Lab, sin extras de pago. Toca una para ir directo o baja para verlas todas.</p>
+    <p class="hr-lema">Todo lo que incluye Book Lab, en cinco bloques y sin extras de pago. Toca una para ir directo o baja para verlas todas.</p>
 
     <nav class="hr-indice" aria-label="Herramientas">
-      <a href="#web">Tu página</a><a href="#reservas">Reservas</a><a href="#smart">Smart Booking</a><a href="#politica">Política de reserva</a><a href="#recordatorios">Recordatorios</a><a href="#whatsapp">WhatsApp y app Mac/Windows</a><a href="#bloqueos">No shows y bloqueos</a><a href="#cancelar">Cancelar con motivo</a>
-      <a href="#resenas">Reseñas</a><a href="#cliente">Gestionar mi cita</a><a href="#espera">Lista de espera</a><a href="#mostrador">Agenda</a>
-      <a href="#numeros">Panel y números</a><a href="#intelligence">BookLab Intelligence</a><a href="#caja">Caja y modo caja</a><a href="#equipo">Equipo y permisos</a><a href="#gastos">Gastos y beneficio</a><a href="#ademas">Y además</a><a href="#privacidad">Datos y seguridad</a>
+      <div class="hr-indice-g"><a class="hr-indice-cat" href="#atraer">01 · Atraer y recibir clientes</a><a href="#web">Tu página</a><a href="#reservas">Reservas</a><a href="#smart">Smart Booking</a><a href="#politica">Política de reserva</a><a href="#cliente">Gestionar mi cita</a></div>
+      <div class="hr-indice-g"><a class="hr-indice-cat" href="#automatizar">02 · Automatizar el día a día</a><a href="#recordatorios">Recordatorios</a><a href="#whatsapp">WhatsApp y app Mac/Windows</a><a href="#cancelar">Cancelar con motivo</a><a href="#espera">Lista de espera</a><a href="#resenas">Reseñas</a><a href="#bloqueos">No shows y bloqueos</a></div>
+      <div class="hr-indice-g"><a class="hr-indice-cat" href="#gestionar">03 · Gestionar tu barbería</a><a href="#mostrador">Agenda</a><a href="#caja">Caja y modo caja</a><a href="#equipo">Equipo y permisos</a><a href="#gastos">Gastos y beneficio</a><a href="#ademas">Y además</a></div>
+      <div class="hr-indice-g"><a class="hr-indice-cat" href="#crecer">04 · Hacer crecer tu negocio</a><a href="#intelligence">BookLab Intelligence</a><a href="#numeros">Panel y números</a><a href="#recuperar">Recuperar clientes</a></div>
+      <div class="hr-indice-g"><a class="hr-indice-cat" href="#tranquilidad">05 · Tranquilidad y control</a><a href="#privacidad">Datos y seguridad</a></div>
     </nav>
+
+    <!-- Bloque 1: Atraer y recibir clientes -->
+    <div class="hr-cat" id="atraer"><span>01</span><h2>Atraer y recibir clientes</h2></div>
 
     <!-- Tu página -->
     <section class="hr-sec" id="web" aria-labelledby="t-web">
@@ -132,10 +144,37 @@
       </div>
     </section>
 
+    <!-- Gestionar mi cita -->
+    <section class="hr-sec" id="cliente" aria-labelledby="t-cliente">
+      <div class="hr-texto">
+        <p class="hr-num">05</p>
+        <h2 id="t-cliente">El cliente se gestiona solo</h2>
+        <p class="hr-intro">Nada de llamadas para cambiar la hora.</p>
+        <ul>
+          <li>Desde el correo, cambia o cancela su cita hasta 2 horas antes.</li>
+          <li>Máximo 2 cambios por cita, para que nadie abuse.</li>
+          <li>Si cancela, el hueco queda libre y avisa a la lista de espera.</li>
+          <li>Puede copiar el resumen de su cita con un toque.</li>
+        </ul>
+      </div>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp rp-claro">
+          <p class="rp-mini">Correo · Cita confirmada</p>
+          <p class="rp-nombre-o">¡Cita confirmada!</p>
+          <ul class="rp-datos"><li><span>Servicio</span>Skinfade</li><li><span>Barbero</span>Dani</li><li><span>Día</span>Miércoles 4 de noviembre</li><li><span>Hora</span>11:00</li></ul>
+          <div class="rp-botones"><span class="rp-boton rp-negro">Cambiar la cita</span><span class="rp-boton rp-boton-o">Cancelar</span></div>
+          <p class="rp-nota-o">Hasta 2 horas antes · máximo 2 cambios</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bloque 2: Automatizar el día a día -->
+    <div class="hr-cat" id="automatizar"><span>02</span><h2>Automatizar el día a día</h2></div>
+
     <!-- Recordatorios -->
     <section class="hr-sec" id="recordatorios" aria-labelledby="t-recordatorios">
       <div class="hr-texto">
-        <p class="hr-num">05</p>
+        <p class="hr-num">06</p>
         <h2 id="t-recordatorios">Recordatorios automáticos</h2>
         <p class="hr-intro">Menos citas perdidas sin que tengas que estar pendiente.</p>
         <ul>
@@ -158,7 +197,7 @@
     <!-- Por qué WhatsApp va con un toque -->
     <section class="hr-sec" id="whatsapp" aria-labelledby="t-whatsapp">
       <div class="hr-texto">
-        <p class="hr-num">06</p>
+        <p class="hr-num">07</p>
         <h2 id="t-whatsapp">WhatsApp: con un toque, o solos desde tu ordenador</h2>
         <p class="hr-intro">Todos los mensajes de WhatsApp (recordatorios, reseñas, avisos, cancelaciones) salen ya escritos, con el nombre del cliente y sus datos. En el móvil, tocas el botón y le das a enviar: dos toques y listo.</p>
         <ul class="hr-lista">
@@ -181,10 +220,90 @@
       </div>
     </section>
 
+    <!-- Cancelar con motivo -->
+    <section class="hr-sec" id="cancelar" aria-labelledby="t-cancelar">
+      <div class="hr-texto">
+        <p class="hr-num">08</p>
+        <h2 id="t-cancelar">Cancelar sin malos ratos</h2>
+        <p class="hr-intro">¿Te has puesto malo o te ha surgido un imprevisto y el día ya no va a salir como estaba previsto? Cancelas tus citas en un momento, desde la cama, y cada cliente se entera bien y con buenas formas.</p>
+        <ul>
+          <li>Cada cita se cancela con dos toques.</li>
+          <li>Botonera de motivos: barbero enfermo, imprevisto en la barbería, cierre del local… o escribes el tuyo.</li>
+          <li>A cada cliente le llega un correo automático, personalizado con su nombre y el motivo, y un botón para coger otra cita.</li>
+          <li>Y además el WhatsApp ya escrito, con su nombre, la hora y el motivo: solo le das a enviar.</li>
+          <li>El hueco vuelve a quedar libre en la web al momento.</li>
+        </ul>
+      </div>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Cancelar cita</p>
+          <p class="rp-gris">Carlos Martín · martes 3, 19:00 · Skinfade</p>
+          <p class="rp-mini rp-mini-o">Motivo</p>
+          <div class="rp-chips"><span class="is-on">Barbero enfermo</span><span>Imprevisto en la barbería</span><span>Cierre del local</span></div>
+          <p class="rp-check"><span>✓</span>Avisar al cliente por correo con el motivo y un botón para reservar otra cita</p>
+          <div class="rp-wa"><p class="rp-wa-de">Y el WhatsApp, ya escrito</p><p class="rp-wa-txt">🤖 <b>Book Lab · Asistente de tu barbería</b><br><i>Mensaje automático</i><br><br>Hola, Carlos:<br>Sentimos comunicarte que hemos tenido que cancelar tu cita:<br><br>📅 Martes 3 de noviembre a las 19:00<br>✂️ Skinfade con Álex<br>📝 Motivo: Barbero enfermo<br><br>Puedes reservar otra cita cuando quieras aquí: tubarberia.com/reservar<br><br>Disculpa las molestias.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Lista de espera -->
+    <section class="hr-sec" id="espera" aria-labelledby="t-espera">
+      <div class="hr-texto">
+        <p class="hr-num">09</p>
+        <h2 id="t-espera">Lista de espera</h2>
+        <p class="hr-intro">Un hueco libre es dinero que se escapa.</p>
+        <ul>
+          <li>Si no hay hora, el cliente se apunta: mañana, tarde o cualquier hora.</li>
+          <li>Si alguien cancela, le avisa sola y el hueco se llena.</li>
+          <li>Cada barbero ve en su agenda cuánta gente espera cada día.</li>
+        </ul>
+      </div>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Lista de espera</p>
+          <p class="rp-gris">Martes 3 · Skinfade · con Dani</p>
+          <p class="rp-mini rp-mini-o">¿Qué franja te va bien?</p>
+          <div class="rp-chips"><span>Mañana</span><span class="is-on">Tarde</span><span>Me da igual</span></div>
+          <span class="rp-boton rp-amarillo rp-bloque">Apuntarme</span>
+          <p class="rp-nota">Si alguien cancela, te avisamos al momento.</p>
+        </div>
+        <div class="rp rp-claro">
+          <p class="rp-mini">Correo · ¡Hueco libre! · Martes 3</p>
+          <p class="rp-nombre-o">¡Se ha quedado un hueco libre!</p>
+          <p class="rp-gris-o">Hola Carlos, estabas en nuestra lista de espera para el martes 3 de noviembre. Ahora hay hora libre:</p>
+          <div class="rp-horas rp-horas-o"><span>17:00</span><span>17:30</span></div>
+          <p class="rp-nota-o">Con Dani</p>
+          <span class="rp-boton rp-negro rp-bloque">Reservar ahora</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Reseñas -->
+    <section class="hr-sec" id="resenas" aria-labelledby="t-resenas">
+      <div class="hr-texto">
+        <p class="hr-num">10</p>
+        <h2 id="t-resenas">Más reseñas en Google</h2>
+        <p class="hr-intro">Las reseñas te traen clientes nuevos. Book Lab hace que lleguen más.</p>
+        <ul>
+          <li>Después de cada corte le llega un recordatorio automático por correo para dejar su reseña.</li>
+          <li>También se la puedes recordar tú por WhatsApp, con un solo toque.</li>
+          <li>Con tu propio mensaje y el enlace directo a tu ficha de Google.</li>
+        </ul>
+      </div>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Hoy</p>
+          <span class="rp-gordo rp-verde">💬 Recordar a todos <small>2 por recordar</small></span>
+          <span class="rp-gordo rp-amarillo">⭐ Reseñas en Google <small>4 listas para enviar</small></span>
+          <div class="rp-fila rp-fila-linea"><div><p class="rp-nombre">Hugo P. <small>10:00</small></p><p class="rp-verde-t">Cobrado</p></div><span class="rp-boton">⭐</span></div>
+        </div>
+      </div>
+    </section>
+
     <!-- No shows -->
     <section class="hr-sec" id="bloqueos" aria-labelledby="t-bloqueos">
       <div class="hr-texto">
-        <p class="hr-num">07</p>
+        <p class="hr-num">11</p>
         <h2 id="t-bloqueos">No shows y bloqueos</h2>
         <p class="hr-intro">Para los que te dejan la silla vacía, sin pasar el mal rato de escribirles tú.</p>
         <ul>
@@ -228,109 +347,8 @@
       </div>
     </section>
 
-    <!-- Cancelar con motivo -->
-    <section class="hr-sec" id="cancelar" aria-labelledby="t-cancelar">
-      <div class="hr-texto">
-        <p class="hr-num">08</p>
-        <h2 id="t-cancelar">Cancelar sin malos ratos</h2>
-        <p class="hr-intro">¿Te has puesto malo o te ha surgido un imprevisto y el día ya no va a salir como estaba previsto? Cancelas tus citas en un momento, desde la cama, y cada cliente se entera bien y con buenas formas.</p>
-        <ul>
-          <li>Cada cita se cancela con dos toques.</li>
-          <li>Botonera de motivos: barbero enfermo, imprevisto en la barbería, cierre del local… o escribes el tuyo.</li>
-          <li>A cada cliente le llega un correo automático, personalizado con su nombre y el motivo, y un botón para coger otra cita.</li>
-          <li>Y además el WhatsApp ya escrito, con su nombre, la hora y el motivo: solo le das a enviar.</li>
-          <li>El hueco vuelve a quedar libre en la web al momento.</li>
-        </ul>
-      </div>
-      <div class="hr-paneles" aria-hidden="true">
-        <div class="rp">
-          <p class="rp-titulo">Cancelar cita</p>
-          <p class="rp-gris">Carlos Martín · martes 3, 19:00 · Skinfade</p>
-          <p class="rp-mini rp-mini-o">Motivo</p>
-          <div class="rp-chips"><span class="is-on">Barbero enfermo</span><span>Imprevisto en la barbería</span><span>Cierre del local</span></div>
-          <p class="rp-check"><span>✓</span>Avisar al cliente por correo con el motivo y un botón para reservar otra cita</p>
-          <div class="rp-wa"><p class="rp-wa-de">Y el WhatsApp, ya escrito</p><p class="rp-wa-txt">🤖 <b>Book Lab · Asistente de tu barbería</b><br><i>Mensaje automático</i><br><br>Hola, Carlos:<br>Sentimos comunicarte que hemos tenido que cancelar tu cita:<br><br>📅 Martes 3 de noviembre a las 19:00<br>✂️ Skinfade con Álex<br>📝 Motivo: Barbero enfermo<br><br>Puedes reservar otra cita cuando quieras aquí: tubarberia.com/reservar<br><br>Disculpa las molestias.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Reseñas -->
-    <section class="hr-sec" id="resenas" aria-labelledby="t-resenas">
-      <div class="hr-texto">
-        <p class="hr-num">09</p>
-        <h2 id="t-resenas">Más reseñas en Google</h2>
-        <p class="hr-intro">Las reseñas te traen clientes nuevos. Book Lab hace que lleguen más.</p>
-        <ul>
-          <li>Después de cada corte le llega un recordatorio automático por correo para dejar su reseña.</li>
-          <li>También se la puedes recordar tú por WhatsApp, con un solo toque.</li>
-          <li>Con tu propio mensaje y el enlace directo a tu ficha de Google.</li>
-        </ul>
-      </div>
-      <div class="hr-paneles" aria-hidden="true">
-        <div class="rp">
-          <p class="rp-titulo">Hoy</p>
-          <span class="rp-gordo rp-verde">💬 Recordar a todos <small>2 por recordar</small></span>
-          <span class="rp-gordo rp-amarillo">⭐ Reseñas en Google <small>4 listas para enviar</small></span>
-          <div class="rp-fila rp-fila-linea"><div><p class="rp-nombre">Hugo P. <small>10:00</small></p><p class="rp-verde-t">Cobrado</p></div><span class="rp-boton">⭐</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Gestionar mi cita -->
-    <section class="hr-sec" id="cliente" aria-labelledby="t-cliente">
-      <div class="hr-texto">
-        <p class="hr-num">10</p>
-        <h2 id="t-cliente">El cliente se gestiona solo</h2>
-        <p class="hr-intro">Nada de llamadas para cambiar la hora.</p>
-        <ul>
-          <li>Desde el correo, cambia o cancela su cita hasta 2 horas antes.</li>
-          <li>Máximo 2 cambios por cita, para que nadie abuse.</li>
-          <li>Si cancela, el hueco queda libre y avisa a la lista de espera.</li>
-          <li>Puede copiar el resumen de su cita con un toque.</li>
-        </ul>
-      </div>
-      <div class="hr-paneles" aria-hidden="true">
-        <div class="rp rp-claro">
-          <p class="rp-mini">Correo · Cita confirmada</p>
-          <p class="rp-nombre-o">¡Cita confirmada!</p>
-          <ul class="rp-datos"><li><span>Servicio</span>Skinfade</li><li><span>Barbero</span>Dani</li><li><span>Día</span>Miércoles 4 de noviembre</li><li><span>Hora</span>11:00</li></ul>
-          <div class="rp-botones"><span class="rp-boton rp-negro">Cambiar la cita</span><span class="rp-boton rp-boton-o">Cancelar</span></div>
-          <p class="rp-nota-o">Hasta 2 horas antes · máximo 2 cambios</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Lista de espera -->
-    <section class="hr-sec" id="espera" aria-labelledby="t-espera">
-      <div class="hr-texto">
-        <p class="hr-num">11</p>
-        <h2 id="t-espera">Lista de espera</h2>
-        <p class="hr-intro">Un hueco libre es dinero que se escapa.</p>
-        <ul>
-          <li>Si no hay hora, el cliente se apunta: mañana, tarde o cualquier hora.</li>
-          <li>Si alguien cancela, le avisa sola y el hueco se llena.</li>
-          <li>Cada barbero ve en su agenda cuánta gente espera cada día.</li>
-        </ul>
-      </div>
-      <div class="hr-paneles" aria-hidden="true">
-        <div class="rp">
-          <p class="rp-titulo">Lista de espera</p>
-          <p class="rp-gris">Martes 3 · Skinfade · con Dani</p>
-          <p class="rp-mini rp-mini-o">¿Qué franja te va bien?</p>
-          <div class="rp-chips"><span>Mañana</span><span class="is-on">Tarde</span><span>Me da igual</span></div>
-          <span class="rp-boton rp-amarillo rp-bloque">Apuntarme</span>
-          <p class="rp-nota">Si alguien cancela, te avisamos al momento.</p>
-        </div>
-        <div class="rp rp-claro">
-          <p class="rp-mini">Correo · ¡Hueco libre! · Martes 3</p>
-          <p class="rp-nombre-o">¡Se ha quedado un hueco libre!</p>
-          <p class="rp-gris-o">Hola Carlos, estabas en nuestra lista de espera para el martes 3 de noviembre. Ahora hay hora libre:</p>
-          <div class="rp-horas rp-horas-o"><span>17:00</span><span>17:30</span></div>
-          <p class="rp-nota-o">Con Dani</p>
-          <span class="rp-boton rp-negro rp-bloque">Reservar ahora</span>
-        </div>
-      </div>
-    </section>
+    <!-- Bloque 3: Gestionar tu barbería -->
+    <div class="hr-cat" id="gestionar"><span>03</span><h2>Gestionar tu barbería</h2></div>
 
     <!-- Agenda de mostrador -->
     <section class="hr-sec" id="mostrador" aria-labelledby="t-mostrador">
@@ -360,66 +378,10 @@
       </div>
     </section>
 
-    <!-- Panel -->
-    <section class="hr-sec" id="numeros" aria-labelledby="t-numeros">
-      <div class="hr-texto">
-        <p class="hr-num">13</p>
-        <h2 id="t-numeros">Panel y números</h2>
-        <p class="hr-intro">Tu barbería en números, en el móvil. Privado: solo entras tú.</p>
-        <ul>
-          <li>Facturación por barbero y por mes, comparada con el mes anterior.</li>
-          <li>Citas, ocupación, ticket medio y horas punta.</li>
-          <li>Clientes nuevos y mejores clientes.</li>
-          <li>Huecos libres de hoy y quién ha reservado, cambiado o cancelado.</li>
-          <li>Cuántos no vinieron y cuánto tienes por cobrar.</li>
-          <li>Exporta todo a Excel cuando quieras.</li>
-          <li>Elige un barbero y todo lo que ves es solo suyo.</li>
-          <li>Facturación automática (citas hechas + caja) o solo lo cobrado en caja: tú eliges.</li>
-          <li>¿Se hizo otro servicio? «Ajustar cobro» en la cita y la facturación se corrige sola.</li>
-        </ul>
-      </div>
-      <div class="hr-paneles" aria-hidden="true">
-        <div class="rp">
-          <p class="rp-titulo">Tus números · octubre</p>
-          <div class="rp-kpis">
-            <div><small>Facturado</small><b>14.543 €</b><i>▲ 8 %</i></div>
-            <div><small>Citas</small><b>866</b><i>▲ 9 %</i></div>
-            <div><small>Ticket medio</small><b>17,31 €</b></div>
-            <div><small>Ocupación</small><b>56 %</b></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BookLab Intelligence -->
-    <section class="hr-sec" id="intelligence" aria-labelledby="t-intelligence">
-      <div class="hr-texto">
-        <p class="hr-num">14</p>
-        <h2 id="t-intelligence">BookLab Intelligence</h2>
-        <p class="hr-intro">Tu negocio, entendido mejor. Con tus datos reales, detecta lo que pasa, te lo explica y te dice qué hacer. Tú decides: nunca cambia nada solo.</p>
-        <ul>
-          <li>Lo más importante ahora: clientes que llevan tiempo sin venir, horas flojas, productos que se acaban.</li>
-          <li>Oportunidades con su botón: «Preparar mensajes de WhatsApp» para recuperar a esos clientes.</li>
-          <li>Tus objetivos del mes (facturación, ticket, ocupación, clientes nuevos) y cómo vas.</li>
-          <li>Rendimiento de cada barbero y servicios más vendidos.</li>
-          <li>Informes del mes, listos para mirar en dos minutos.</li>
-        </ul>
-      </div>
-      <div class="hr-paneles" aria-hidden="true">
-        <div class="rp">
-          <p class="rp-titulo">✦ Lo más importante ahora</p>
-          <div class="rp-fila rp-fila-linea"><p>22 clientes llevan más de 60 días sin venir</p></div>
-          <div class="rp-fila rp-fila-linea"><p class="rp-gris">Los martes por la tarde tienes huecos</p></div>
-          <div class="rp-fila rp-fila-linea"><p class="rp-gris">2 productos se están acabando</p></div>
-          <p class="rp-nota">Preparar mensajes de WhatsApp →</p>
-        </div>
-      </div>
-    </section>
-
     <!-- Caja -->
     <section class="hr-sec hr-sec-ancha" id="caja" aria-labelledby="t-caja">
       <div class="hr-texto">
-        <p class="hr-num">15</p>
+        <p class="hr-num">13</p>
         <h2 id="t-caja">Caja del iPad y modo caja</h2>
         <p class="hr-intro">Cobra en el mostrador con un iPad, el móvil o el ordenador. Botones grandes, como el TPV de un bar.</p>
         <ul>
@@ -455,7 +417,7 @@
     <!-- Equipo y permisos -->
     <section class="hr-sec" id="equipo" aria-labelledby="t-equipo">
       <div class="hr-texto">
-        <p class="hr-num">16</p>
+        <p class="hr-num">14</p>
         <h2 id="t-equipo">Equipo y permisos</h2>
         <p class="hr-intro">Cada barbero con su cuenta y su agenda en el móvil. Tú decides qué ve y qué puede hacer cada uno.</p>
         <ul>
@@ -472,7 +434,7 @@
     <!-- Gastos y beneficio -->
     <section class="hr-sec" id="gastos" aria-labelledby="t-gastos">
       <div class="hr-texto">
-        <p class="hr-num">17</p>
+        <p class="hr-num">15</p>
         <h2 id="t-gastos">Gastos y beneficio</h2>
         <p class="hr-intro">Lo que entra, lo que sale y lo que te queda de verdad.</p>
         <ul>
@@ -486,24 +448,97 @@
     <!-- Y además -->
     <section class="hr-sec" id="ademas" aria-labelledby="t-ademas">
       <div class="hr-texto">
-        <p class="hr-num">18</p>
+        <p class="hr-num">16</p>
         <h2 id="t-ademas">Y además</h2>
         <ul>
           <li><b>Google Calendar (opcional):</b> las citas aparecen en el calendario de cada barbero, y lo que ya tenga apuntado allí no se pisa.</li>
           <li><b>Avisos en tu móvil:</b> cada reserva o cancelación al momento, y el resumen de la mañana con tus citas del día.</li>
           <li><b>Citas fuera de horario:</b> abres horas especiales con su precio, solo cuando tú quieras.</li>
-          <li><b>«Te toca corte»:</b> si un cliente tarda en volver, le llega un correo para que reserve.</li>
-          <li><b>Fichas de cliente:</b> historial, notas («siempre con Álex, café solo»), VIP y clientes fijos que se repiten solos.</li>
           <li><b>Modo día y modo noche</b>, en el móvil, el iPad y el ordenador.</li>
-          <li><b>Te pasamos tus clientes</b> desde otra app, Google Calendar o una libreta.</li>
         </ul>
       </div>
     </section>
 
+    <!-- Bloque 4: Hacer crecer tu negocio -->
+    <div class="hr-cat" id="crecer"><span>04</span><h2>Hacer crecer tu negocio</h2></div>
+
+    <!-- BookLab Intelligence -->
+    <section class="hr-sec" id="intelligence" aria-labelledby="t-intelligence">
+      <div class="hr-texto">
+        <p class="hr-num">17</p>
+        <h2 id="t-intelligence">BookLab Intelligence</h2>
+        <p class="hr-intro">Tu negocio, entendido mejor. Con tus datos reales, detecta lo que pasa, te lo explica y te dice qué hacer. Tú decides: nunca cambia nada solo.</p>
+        <ul>
+          <li>Lo más importante ahora: clientes que llevan tiempo sin venir, horas flojas, productos que se acaban.</li>
+          <li>Oportunidades con su botón: «Preparar mensajes de WhatsApp» para recuperar a esos clientes.</li>
+          <li>Tus objetivos del mes (facturación, ticket, ocupación, clientes nuevos) y cómo vas.</li>
+          <li>Rendimiento de cada barbero y servicios más vendidos.</li>
+          <li>Informes del mes, listos para mirar en dos minutos.</li>
+        </ul>
+      </div>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">✦ Lo más importante ahora</p>
+          <div class="rp-fila rp-fila-linea"><p>22 clientes llevan más de 60 días sin venir</p></div>
+          <div class="rp-fila rp-fila-linea"><p class="rp-gris">Los martes por la tarde tienes huecos</p></div>
+          <div class="rp-fila rp-fila-linea"><p class="rp-gris">2 productos se están acabando</p></div>
+          <p class="rp-nota">Preparar mensajes de WhatsApp →</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Panel -->
+    <section class="hr-sec" id="numeros" aria-labelledby="t-numeros">
+      <div class="hr-texto">
+        <p class="hr-num">18</p>
+        <h2 id="t-numeros">Panel y números</h2>
+        <p class="hr-intro">Tu barbería en números, en el móvil. Privado: solo entras tú.</p>
+        <ul>
+          <li>Facturación por barbero y por mes, comparada con el mes anterior.</li>
+          <li>Citas, ocupación, ticket medio y horas punta.</li>
+          <li>Clientes nuevos y mejores clientes.</li>
+          <li>Huecos libres de hoy y quién ha reservado, cambiado o cancelado.</li>
+          <li>Cuántos no vinieron y cuánto tienes por cobrar.</li>
+          <li>Exporta todo a Excel cuando quieras.</li>
+          <li>Elige un barbero y todo lo que ves es solo suyo.</li>
+          <li>Facturación automática (citas hechas + caja) o solo lo cobrado en caja: tú eliges.</li>
+          <li>¿Se hizo otro servicio? «Ajustar cobro» en la cita y la facturación se corrige sola.</li>
+        </ul>
+      </div>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp">
+          <p class="rp-titulo">Tus números · octubre</p>
+          <div class="rp-kpis">
+            <div><small>Facturado</small><b>14.543 €</b><i>▲ 8 %</i></div>
+            <div><small>Citas</small><b>866</b><i>▲ 9 %</i></div>
+            <div><small>Ticket medio</small><b>17,31 €</b></div>
+            <div><small>Ocupación</small><b>56 %</b></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recuperar clientes -->
+    <section class="hr-sec" id="recuperar" aria-labelledby="t-recuperar">
+      <div class="hr-texto">
+        <p class="hr-num">19</p>
+        <h2 id="t-recuperar">Recuperar clientes</h2>
+        <p class="hr-intro">Tus clientes no desaparecen: Book Lab te ayuda a que vuelvan.</p>
+        <ul>
+          <li><b>«Te toca corte»:</b> si un cliente tarda en volver, le llega un correo para que reserve.</li>
+          <li><b>Fichas de cliente:</b> historial, notas («siempre con Álex, café solo»), VIP y clientes fijos que se repiten solos.</li>
+          <li>BookLab Intelligence te avisa de quién lleva tiempo sin venir y te prepara los WhatsApp para recuperarlo.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Bloque 5: Tranquilidad y control -->
+    <div class="hr-cat" id="tranquilidad"><span>05</span><h2>Tranquilidad y control</h2></div>
+
     <!-- Privacidad -->
     <section class="hr-sec" id="privacidad" aria-labelledby="t-privacidad">
       <div class="hr-texto">
-        <p class="hr-num">19</p>
+        <p class="hr-num">20</p>
         <h2 id="t-privacidad">Tus datos, seguros y en orden</h2>
         <p class="hr-intro">Las citas y los datos de tus clientes son tuyos.</p>
         <ul>
@@ -513,6 +548,7 @@
           <li>Las citas antiguas se borran solas a los 2 años.</li>
           <li>Aviso legal, privacidad y casilla de aceptación en la reserva.</li>
           <li>Descarga todas tus citas y clientes cuando quieras. Si te vas, te los llevas.</li>
+          <li><b>Te pasamos tus clientes</b> desde otra app, Google Calendar o una libreta.</li>
         </ul>
       </div>
     </section>
