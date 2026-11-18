@@ -187,6 +187,14 @@
   .precios .precios-fundadora, .precios .precios-o { color: #b8b8b8; }
   .precios .plan-destacado .plan-quien { color: #6b6b6b; }
   .sm-marca em { color: #6b6b6b; }
+  /* Lista de espera: las dos pantallas reales */
+  .espera-fotos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; max-width: 560px; }
+  .espera-fotos figure { margin: 0; }
+  .espera-fotos .tel { background: #111; box-shadow: none; padding: 6px; border-radius: 26px; }
+  .espera-fotos .tel img { aspect-ratio: 780 / 1375; object-fit: cover; object-position: top; border-radius: 20px; height: auto; background: #f3f3f1; }
+  .espera-fotos figcaption { margin-top: 8px; font-size: .86rem; line-height: 1.35; color: #333; }
+  .espera-fotos figcaption b { display: block; color: #111; font-size: .95rem; }
+  @media (min-width: 900px) { .espera { display: grid; grid-template-columns: 1.1fr 1fr; column-gap: 40px; align-items: start; } .espera > h2, .espera > p, .espera-pasos { grid-column: 1; } .espera-fotos { grid-column: 2; grid-row: 1 / span 3; margin-top: 0; } }
 </style>
 </head>
 <body>
@@ -317,6 +325,9 @@
           <li><span>17:02</span><b>Avisa a los 3 clientes en lista de espera</b></li>
           <li class="ok"><span>17:06</span><b>Iván reserva las 18:00 ✓</b></li>
         </ol>
+        <div class="espera-fotos">
+          <figure><div class="tel"><img src="assets/img/app/espera-cliente.webp?v=1" alt="Día completo: el cliente se apunta a la lista de espera" loading="lazy"></div><figcaption><b>1. Día completo</b>Tu cliente se apunta con un toque.</figcaption></figure>
+          <figure><div class="tel"><img src="assets/img/app/espera-correo.webp?v=1" alt="Correo: se ha quedado un hueco libre" loading="lazy"></div>
       </section>
 
       <!-- No shows y bloqueos -->
