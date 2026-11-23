@@ -30,15 +30,21 @@
     .rp-claro .rp-mini, .rp-claro .rp-nota-o { color: #6b6b6b !important; }
     .hr-captura-mac { display: block; width: 100%; max-width: 300px; height: auto; margin-top: 14px; border-radius: 18px; box-shadow: 0 12px 30px rgba(0,0,0,.35); }
     .nav-marca { white-space: nowrap; display: inline-flex; align-items: center; gap: 9px; } .nav-b { width: 30px; height: 30px; border-radius: 8px; }</style>
+<script src="/assets/js/fundadores.js?v=1"></script>
+  <script>
+    /* Hasta el lanzamiento (1/1/2027), solo fundadores con pase */
+    (function () { try { var p = JSON.parse(localStorage.getItem('bl-pase')); var ok = p && BL_FUNDADORES.codigos.some(function (x) { return x.h === p.h; });
+      if (Date.now() < new Date(BL_FUNDADORES.lanzamiento).getTime() && !ok) location.replace('/'); } catch (e) { location.replace('/'); } })();
+  </script>
 </head>
 <body>
   <header class="nav">
-    <a class="nav-marca" href="./"><img class="nav-b" src="assets/img/logo-b-128.png" alt="" width="30" height="30">Book Lab</a>
+    <a class="nav-marca" href="/web/"><img class="nav-b" src="assets/img/logo-b-128.png" alt="" width="30" height="30">Book Lab</a>
     <div class="nav-derecha"><a class="nav-entrar" href="https://app.getbooklab.com/entrar" aria-label="Mi cuenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Mi cuenta</span></a></div>
   </header>
 
   <main class="hr">
-    <a class="hr-volver" href="./">← Volver</a>
+    <a class="hr-volver" href="/web/">← Volver</a>
     <h1 class="hr-titulo">Todo lo que necesita tu barbería</h1>
     <p class="hr-lema">Todo lo que incluye Book Lab, en cinco bloques y sin extras de pago. Toca una para ir directo o baja para verlas todas.</p>
 

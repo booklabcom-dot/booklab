@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Book Lab · Acceso</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0b0b0b">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png?v=2">
+  <!-- Invitación de fundador. Enlace: /invitacion/?c=CÓDIGO&b=Nombre de la barbería -->
+  <script src="/assets/js/fundadores.js?v=1"></script>
+  <script>
+    /* Fundadores: el código se comprueba por su huella; el pase se guarda en este navegador */
+    window.BL = {
+      lanzado: function () { return Date.now() >= new Date(BL_FUNDADORES.lanzamiento).getTime(); },
+      huella: async function (c) {
+        var b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('booklab:' + c));
+        return Array.from(new Uint8Array(b)).map(function (x) { return x.toString(16).padStart(2, '0'); }).join('');
+      },
+      busca: function (h) { return BL_FUNDADORES.codigos.find(function (x) { return x.h === h; }); },
+      pase: function () { try { var p = JSON.parse(localStorage.getItem('bl-pase')); return p && BL.busca(p.h) ? p : null; } catch (x) { return null; } },
+      guarda: function (p) { try { localStorage.setItem('bl-pase', JSON.stringify(p)); } catch (x) {} },
+      limpia: function (c) { return String(c || '').trim().toUpperCase().replace(/\s+/g, ''); }
+    };
+  </script>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("/assets/fonts/archivo-var.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+    :root { --am: #FEE304; --letra: "Archivo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body { display: grid; grid-template-rows: auto 1fr auto; min-height: 100svh; background: #0b0b0b; color: #fff; font: 400 1rem/1.4 var(--letra); -webkit-font-smoothing: antialiased; overflow: hidden; }
+
+    /* La foto, muy tenue y quieta; entra con un fogonazo */
+    .fondo { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+    .fondo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; opacity: .16; animation: entra-foto 1.2s steps(1, end) both, respira 18s ease-in-out 1.2s infinite alternate; }
+    @keyframes entra-foto { 0% { opacity: .9; translate: -14px 0; } 15% { opacity: .3; translate: 0 0; } 30% { opacity: .7; } 50% { opacity: .2; } 100% { opacity: .16; } }
+    @keyframes respira { from { transform: scale(1); } to { transform: scale(1.05); } }
+
+    header, main, footer { position: relative; z-index: 2; }
+    header { display: flex; justify-content: space-between; align-items: center; padding: 22px 22px 0; }
+    .b-ico { display: block; width: 30px; height: 30px; border-radius: 8px; background: #111 url("/assets/img/logo-b-128.png") center / cover no-repeat; box-shadow: 0 0 0 1px #262626; }
+    .num { font: 600 .66rem/1 var(--letra); letter-spacing: .3em; text-transform: uppercase; color: #8a8a8a; }
+    .num b { color: var(--am); font-weight: 700; }
+
+    main { display: grid; align-content: center; padding: 0 22px; }
+    .quien { margin: 0; font: 800 clamp(2.6rem, 13vw, 6.4rem)/.92 var(--letra); letter-spacing: -.055em; animation: entra .9s cubic-bezier(.2,.7,.2,1) .3s both; }
+    .dentro { margin: 10px 0 0; font: 200 clamp(2.6rem, 13vw, 6.4rem)/.92 var(--letra); letter-spacing: -.05em; color: #9a9a9a; animation: entra .9s cubic-bezier(.2,.7,.2,1) .5s both; }
+    .cursor::after { content: ""; display: inline-block; width: .36em; height: .8em; margin-left: .08em; vertical-align: -.04em; background: var(--am); animation: parpadea 1.05s steps(1, end) infinite; }
+    @keyframes parpadea { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
+    @keyframes entra { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+
+    footer { display: flex; justify-content: space-between; align-items: center; padding: 0 22px max(26px, env(safe-area-inset-bottom)); }
+    .firma { font: 600 .66rem/1 var(--letra); letter-spacing: .26em; text-transform: uppercase; color: #6b6b6b; }
+    .entrar { color: #fff; font: 700 1.05rem/1 var(--letra); letter-spacing: -.01em; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--am); }
+
+    @media (min-width: 900px) { header { padding: 28px 40px 0; } main { padding: 0 40px; } footer { padding: 0 40px 34px; } }
+    @media (prefers-reduced-motion: reduce) { .fondo img, .quien, .dentro, .cursor::after { animation: none; } }
+  </style>
+</head>
+<body>
+  <div class="fondo" aria-hidden="true"><img src="/assets/img/final.webp?v=1" alt=""></div>
+
+  <header>
+    <i class="b-ico" role="img" aria-label="Book Lab"></i>
+    <span class="num">Fundador <b id="num">07</b>/20</span>
+  </header>
+
+  <main>
+    <h1 class="quien" id="barberia">Barbería Norte.</h1>
+    <p class="dentro cursor">Estás dentro.</p>
+  </main>
+
+  <footer>
+    <span class="firma">Acceso antes del 11 · 01</span>
+    <a class="entrar" id="entrar" href="/web/">Entrar →</a>
+  </footer>
+
+  <script>
+    /* La invitación: el código del enlace se comprueba; si vale, «Entrar» guarda el pase */
+    (async function () {
+      var q = new URLSearchParams(location.search), cod = BL.limpia(q.get('c')), b = (q.get('b') || '').trim();
+      var f = cod ? BL.busca(await BL.huella(cod)) : null;
+      if (!f) { location.replace('/'); return; }
+      document.getElementById('num').textContent = f.n;
+      document.getElementById('barberia').textContent = b ? b + '.' : 'Bienvenido.';
+      document.getElementById('entrar').addEventListener('click', function () { BL.guarda({ h: f.h, n: f.n, b: b }); });
+    })();
+  </script>
+</body>
+</html>

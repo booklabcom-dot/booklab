@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Book Lab · La app de reservas, agenda y caja para barberías, hecha por un barbero</title>
+  <meta name="description" content="Reservas online 24/7 sin comisiones, Smart Booking, agenda de cada barbero, caja para iPad, recordatorios, control de no shows y BookLab Intelligence. Prueba 14 días gratis. Hecho por un barbero.">
+  <link rel="canonical" href="https://getbooklab.com/web/">
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#f2f2f2">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://getbooklab.com/">
+  <meta property="og:title" content="Book Lab · Tu barbería trabaja sola. Tú vuelves a tener vida.">
+  <meta property="og:description" content="Web propia, reservas 24/7, recordatorios, reseñas, lista de espera y caja. Hecho por un barbero, para barberos.">
+  <meta property="og:image" content="https://getbooklab.com/assets/img/og.jpg?v=2">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" type="image/png" href="../assets/img/favicon.png?v=2">
+  <link rel="apple-touch-icon" href="../assets/img/icon-180.png?v=2">
+  <link rel="preload" as="font" href="../assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
+  <link rel="preload" as="image" href="../assets/img/portada-amarilla.webp?v=1" type="image/webp">
+  <link rel="stylesheet" href="../assets/css/clara.css?v=20261123">
+  <link rel="stylesheet" href="../assets/css/portada-marca.css?v=2">
+  <link rel="stylesheet" href="../assets/css/carteles.css?v=1">
+  <link rel="stylesheet" href="../assets/css/glitch.css?v=15">
+  <script>document.documentElement.classList.add('gl-js');</script>
+  <link rel="stylesheet" href="../assets/css/carrusel-ui.css?v=8">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Book Lab",
+    "url": "https://getbooklab.com/",
+    "logo": "https://getbooklab.com/assets/img/logo-b-512.png",
+    "description": "App de reservas, agenda, caja y recordatorios para barberías.",
+    "email": "booklab.com@gmail.com",
+    "telephone": "+34746045607",
+    "areaServed": "ES",
+    "sameAs": ["https://www.instagram.com/xffade/"]
+  }
+  </script>
+<style>
+  .pildora-amarilla { background: #FEE304; color: #111; padding-right: 20px; font-weight: 700; }
+  .pildora-amarilla i { width: 9px; height: 9px; border-radius: 50%; background: #111; }
+  .pildora-borde { border: 1.5px solid #111; color: #111; padding-right: 20px; }
+  .nav-botones { display: flex; gap: 6px; }
+  .nav-demo { border: 1px solid #cfcfcf; padding-right: 16px; }
+  .nav-marca { white-space: nowrap; display: inline-flex; align-items: center; gap: 9px; }
+  .nav-b { width: 30px; height: 30px; border-radius: 8px; }
+  @media (max-width: 480px) { .solo-grande { display: none; } .nav-botones .pildora { padding: 9px 13px; font-size: .86rem; } .nav-botones { gap: 5px; } .nav-marca { font-size: 1.1rem; } }
+  .cta-prueba { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .cta-nota { width: 100%; margin: 4px 0 0; font-size: .86rem; color: #6b6b6b; }
+  .precios-gratis { margin-top: 18px; width: 100%; justify-content: center; }
+  .precios-o { margin: 14px 0 8px; text-align: center; color: #6b6b6b; font-size: .9rem; }
+  .final-demo { display: grid; gap: 10px; }
+  .pro { margin: 28px 0 0; padding: 26px 20px 22px; border-radius: 26px; background: #111; color: #fff; }
+  .pro-etiqueta { display: inline-block; padding: 6px 12px; border-radius: 999px; background: #FEE304; color: #111; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .pro h2 { margin: 14px 0 8px; font-size: clamp(2.4rem, 11vw, 3.4rem); letter-spacing: -.05em; line-height: .95; color: #fff; }
+  .pro h2 sup { font-size: .35em; vertical-align: super; }
+  .pro-lema { margin: 0 0 16px; color: #d6d6d6; font-size: 1.05rem; line-height: 1.45; }
+  .pro-lista { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 8px; }
+  .pro-lista li { display: flex; gap: 10px; align-items: flex-start; color: #eee; font-size: .97rem; }
+  .pro-lista li::before { content: ''; flex: none; width: 8px; height: 8px; margin-top: 8px; border-radius: 50%; background: #FEE304; }
+  .pro-precio { margin: 0 0 16px; color: #aaa; } .pro-precio b { color: #fff; font-size: 1.3rem; }
+  .pro-botones { display: grid; gap: 8px; }
+  .pro-botones .pildora { justify-content: center; }
+  .pildora-blanca { background: #fff; color: #111; padding-right: 20px; }
+  .app-capturas { margin: 26px 0 8px; padding: 22px 0 16px; border-radius: 26px; background: #111; color: #fff; overflow: hidden; }
+  .app-cap-t { margin: 0 20px 14px; font-weight: 750; font-size: 1.3rem; letter-spacing: -.03em; }
+  .app-cap-t sup { font-size: .5em; }
+  .app-carril { display: grid; grid-auto-flow: column; grid-auto-columns: 64%; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 20px 6px; scrollbar-width: none; }
+  .app-carril figure { margin: 0; scroll-snap-align: center; }
+  .tel { border-radius: 30px; padding: 7px; background: #2a2a2a; box-shadow: 0 0 0 1px #3a3a3a; }
+  .tel img { display: block; width: 100%; aspect-ratio: 375 / 760; object-fit: cover; object-position: top; border-radius: 24px; }
+  .app-carril figcaption { margin-top: 10px; font-size: .88rem; color: #bdbdbd; line-height: 1.35; }
+  .app-carril figcaption b { display: block; color: #fff; font-size: 1rem; }
+  .app-cap-nota { margin: 8px 0 0; text-align: center; color: #777; font-size: .8rem; }
+  /* Ordenador: los 5 móviles a la vez, a tamaño de móvil (no gigantes) */
+  @media (min-width: 900px) {
+    .app-capturas { padding: 34px 34px 26px; }
+    .app-cap-t { margin: 0 0 20px; font-size: 1.6rem; }
+    .app-carril { grid-auto-flow: row; grid-template-columns: repeat(5, 1fr); grid-auto-columns: auto; overflow: visible; padding: 0; gap: 18px; }
+    .app-cap-nota { display: none; }
+  }
+  .demo-viva { margin: 26px 0 0; padding: 26px 20px; border-radius: 26px; background: #FEE304; color: #111; }
+  .demo-eye { margin: 0 0 6px; font-weight: 750; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
+  .demo-viva h2 { margin: 0 0 10px; font: 750 clamp(1.8rem, 8vw, 2.8rem)/1 var(--letra); letter-spacing: -.045em; }
+  .demo-sub { margin: 0 0 18px; line-height: 1.45; }
+  .demo-tres { display: grid; gap: 10px; }
+  @media (min-width: 760px) { .demo-tres { grid-template-columns: repeat(3, 1fr); } }
+  .demo-c { display: grid; gap: 6px; align-content: start; padding: 18px; border-radius: 20px; background: #fff; color: #111; text-decoration: none; transition: transform .15s; }
+  .demo-c:active { transform: scale(.99); }
+  .demo-c.destacada { background: #111; color: #fff; }
+  .demo-n { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #111; color: #FEE304; font-weight: 800; }
+  .demo-c.destacada .demo-n { background: #FEE304; color: #111; }
+  .demo-c b { font-size: 1.2rem; letter-spacing: -.02em; } .demo-c span:not(.demo-n) { color: inherit; opacity: .75; line-height: 1.35; }
+  .demo-c em { font-style: normal; font-weight: 750; margin-top: 6px; }
+  .intel { margin: 28px 0 0; padding: 28px 20px; border-radius: 26px; background: #111; color: #fff; }
+  .intel-marca { color: #FEE304; }
+  .intel h2 { margin: 10px 0 10px; font: 750 clamp(1.9rem, 8.5vw, 3rem)/1 var(--letra); letter-spacing: -.045em; color: #fff; }
+  .intel h2 span { color: #9a9a9a; }
+  .intel-sub { color: #cfcfcf; margin: 0 0 18px; line-height: 1.45; }
+  .intel-cols { display: grid; gap: 20px; align-items: center; }
+  @media (min-width: 760px) { .intel-cols { grid-template-columns: 1fr 280px; } }
+  .intel-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+  .intel-lista li { display: grid; gap: 3px; padding: 14px 16px; border-radius: 16px; background: #1e1e1e; }
+  .intel-lista b { color: #FEE304; } .intel-lista span { color: #bdbdbd; font-size: .95rem; }
+  .intel-tel { max-width: 280px; margin: 0 auto; }
+  .intel-tel img { display: block; width: 100%; border-radius: 24px; }
+  .caja-ipad, .recordar { margin: 28px 0 0; }
+  .espera { margin: 28px 0 0; padding: 28px 20px; border-radius: 26px; background: #FEE304; color: #111; }
+  .espera h2 { font: 750 clamp(1.8rem, 8vw, 2.8rem)/1 var(--letra); letter-spacing: -.045em; margin: 0 0 12px; }
+  .espera h2 span { display: block; }
+  .espera > p { line-height: 1.5; margin: 0 0 18px; max-width: 60ch; }
+  .espera-pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; max-width: 460px; }
+  .espera-pasos li { display: flex; gap: 12px; align-items: baseline; padding: 13px 16px; border-radius: 16px; background: rgba(255,255,255,.75); }
+  .espera-pasos li span { font-size: .8rem; color: #666; font-variant-numeric: tabular-nums; }
+  .espera-pasos li.ok { background: #111; color: #fff; } .espera-pasos li.ok span { color: #FEE304; }
+  .caja-ipad h2, .recordar h2, .compara h2, .faq h2 { font: 750 clamp(1.8rem, 8vw, 2.8rem)/1 var(--letra); letter-spacing: -.045em; margin: 0 0 10px; }
+  .caja-ipad > p, .recordar > p { color: #444; line-height: 1.5; margin: 0 0 16px; }
+  .marco-ipad { padding: 10px; border-radius: 26px; background: #111; box-shadow: 0 0 0 1px #2a2a2a; }
+  .marco-ipad img { display: block; width: 100%; border-radius: 18px; }
+  .caja-puntos { list-style: none; margin: 16px 0 0; padding: 0; display: grid; gap: 8px; }
+  .caja-puntos li { padding: 14px 16px; border-radius: 16px; background: var(--tarjeta); line-height: 1.4; }
+  .compara { margin: 28px 0 0; }
+  .compara-tabla { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .compara-col { padding: 16px; border-radius: 20px; background: var(--tarjeta); }
+  .compara-col.nuestra { background: #111; color: #fff; }
+  .compara-t { margin: 0 0 10px; font-weight: 800; }
+  .compara-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: .95rem; }
+  .compara-col.otras li { color: #6b6b6b; } .compara-col.otras li::before { content: '✕ '; color: #9a9a9a; font-weight: 800; }
+  .compara-col.nuestra li::before { content: '✓ '; color: #FEE304; font-weight: 800; }
+  .faq { margin: 28px 0 0; }
+  .faq details { margin: 0 0 8px; padding: 16px 18px; border-radius: 18px; background: var(--tarjeta); }
+  .faq summary { cursor: pointer; font-weight: 750; list-style: none; }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after { content: '+'; float: right; font-weight: 800; }
+  .faq details[open] summary::after { content: '−'; }
+  .faq details p { margin: 10px 0 0; color: #444; line-height: 1.5; }
+  .final-t { font: 750 clamp(1.8rem, 8vw, 2.6rem)/1.02 var(--letra); letter-spacing: -.045em; margin: 0 0 6px; }
+  .final-t span { color: #6b6b6b; }
+  .pronto { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 50; max-width: calc(100% - 32px); padding: 14px 20px; border-radius: 16px; background: #111; color: #fff; font-weight: 650; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .migrar { margin-top: 26px; padding: 26px 20px 28px; border-radius: var(--radio); background: var(--tarjeta); border: 2px solid #FEE304; }
+  .migrar-eye { margin: 0 0 6px; color: var(--gris); font-weight: 600; font-size: .95rem; }
+  .migrar h2 { margin: 0 0 10px; font: 700 clamp(1.7rem, 7.5vw, 3rem)/1 var(--letra); letter-spacing: -.04em; }
+  .migrar-texto { margin: 0 0 18px; color: #333; max-width: 46ch; }
+  /* Reestructuración 17/11: beneficios, niveles, bloques nuevos */
+  .beneficios { list-style: none; margin: 0 0 6px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .beneficios a { display: grid; gap: 3px; height: 100%; padding: 13px 14px; border-radius: 16px; background: var(--tarjeta); text-decoration: none; }
+  .beneficios b { display: flex; gap: 8px; align-items: baseline; font-size: .98rem; letter-spacing: -.02em; line-height: 1.2; }
+  .beneficios b::before { content: ''; flex: none; width: 8px; height: 8px; border-radius: 50%; background: #FEE304; box-shadow: 0 0 0 1.5px #111; transform: translateY(-1px); }
+  .beneficios span { color: var(--gris); font-size: .84rem; line-height: 1.3; }
+  @media (min-width: 760px) { .beneficios { grid-template-columns: repeat(4, 1fr); gap: 10px; } .beneficios a { padding: 16px 18px; } .beneficios b { font-size: 1.08rem; } }
+  .nivel { display: flex; align-items: center; gap: 10px; margin: 44px 0 -12px; font: 750 .82rem/1 var(--letra); letter-spacing: .08em; text-transform: uppercase; }
+  .nivel span { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #111; color: #FEE304; letter-spacing: 0; }
+  .nivel::after { content: ''; flex: 1; height: 1px; background: var(--linea); }
+  .mini-cta { display: inline-block; margin-top: 16px; font-weight: 750; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; text-decoration-color: #FEE304; }
+  .intel .mini-cta { color: #FEE304; text-decoration-color: currentColor; }
+  .nota-peq { margin: 10px 0 0; font-size: .85rem; color: var(--gris); }
+  .caja-ipad h2 span, .bloque-blanco h2 span, .categorias h2 span, .confianza h2 span { color: #6b6b6b; }
+  .bloque-blanco { margin: 28px 0 0; }
+  .bloque-blanco h2, .categorias h2, .confianza h2 { font: 750 clamp(1.8rem, 8vw, 2.8rem)/1 var(--letra); letter-spacing: -.045em; margin: 0 0 10px; }
+  .bloque-blanco > p, .confianza > p { color: #444; line-height: 1.5; margin: 0 0 16px; max-width: 60ch; }
+  .recuperar { margin-top: 20px; padding: 18px 16px; border-radius: 16px; border: 1px solid #333; }
+  .recuperar h3 { margin: 0 0 10px; font-size: 1.2rem; letter-spacing: -.02em; line-height: 1.2; }
+  .recuperar h3 span { color: #9a9a9a; }
+  .recuperar ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; color: #cfcfcf; font-size: .95rem; }
+  .recuperar b { color: #fff; }
+  .categorias { margin: 40px 0 0; }
+  .categorias ol { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 8px; counter-reset: cat; }
+  .categorias ol a { display: grid; grid-template-columns: 34px 1fr; gap: 2px 10px; padding: 14px 16px; border-radius: 16px; background: var(--tarjeta); text-decoration: none; counter-increment: cat; }
+  .categorias ol a::before { content: counter(cat, decimal-leading-zero); grid-row: 1 / 3; padding-top: 3px; font: 700 .82rem/1 var(--letra); color: var(--gris); }
+  .categorias ol b { font-size: 1.08rem; letter-spacing: -.02em; }
+  .categorias ol span { color: var(--gris); font-size: .9rem; line-height: 1.35; }
+  @media (min-width: 900px) { .categorias ol { grid-template-columns: repeat(5, 1fr); } .categorias ol a { grid-template-columns: 1fr; align-content: start; } .categorias ol a::before { grid-row: auto; margin-bottom: 10px; } }
+  .cambia { margin: 40px 0 0; }
+  .cambia h2 { font: 750 clamp(1.8rem, 8vw, 2.8rem)/1 var(--letra); letter-spacing: -.045em; margin: 0 0 14px; }
+  .cambia h2 span { color: #6b6b6b; }
+  .cambia-tabla { display: grid; gap: 6px; max-width: 760px; }
+  .cambia-fila { display: grid; grid-template-columns: 1fr 1fr; border-radius: 14px; overflow: hidden; }
+  .cambia-fila > * { padding: 12px 14px; line-height: 1.3; }
+  .cambia-fila span { background: var(--tarjeta); color: #6b6b6b; }
+  .cambia-fila b { background: #111; color: #fff; }
+  .cambia-fila b::before { content: '✓ '; color: #FEE304; }
+  .cambia-cab > * { padding: 4px 14px; background: none !important; color: #6b6b6b !important; font-size: .8rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
+  .cambia-cab b::before { content: none; }
+  .confianza { margin: 44px 0 0; }
+  .confianza .tarjeta { grid-template-columns: 80px minmax(0, 1fr); }
+  @media (max-width: 400px) { .confianza .tarjeta-texto .pildora { padding-left: 14px; font-size: .86rem; } }
+  @media (min-width: 760px) { .portada-fila .cta-prueba { max-width: 430px; justify-content: flex-end; } .portada-fila .cta-nota { text-align: right; } }
+  .precios-fundadora { margin: -6px 0 18px; font-size: .9rem; color: var(--gris); }
+  /* Contraste (revisión 17/11): textos grises sobre negro y el plan destacado en blanco */
+  .precios .precios-fundadora, .precios .precios-o { color: #b8b8b8; }
+  .precios .plan-destacado .plan-quien { color: #6b6b6b; }
+  .sm-marca em { color: #6b6b6b; }
+  /* Lista de espera: las dos pantallas reales */
+  .espera-fotos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; max-width: 560px; }
+  .espera-fotos figure { margin: 0; }
+  .espera-fotos .tel { background: #111; box-shadow: none; padding: 6px; border-radius: 26px; }
+  .espera-fotos .tel img { aspect-ratio: 780 / 1375; object-fit: cover; object-position: top; border-radius: 20px; height: auto; background: #f3f3f3; }
+  .espera-fotos figcaption { margin-top: 8px; font-size: .86rem; line-height: 1.35; color: #333; }
+  .espera-fotos figcaption b { display: block; color: #111; font-size: .95rem; }
+  @media (min-width: 900px) { .espera { display: grid; grid-template-columns: 1.1fr 1fr; column-gap: 40px; align-items: start; } .espera > h2, .espera > p, .espera-pasos { grid-column: 1; } .espera-fotos { grid-column: 2; grid-row: 1 / span 3; margin-top: 0; } }
+</style>
+<script src="/assets/js/fundadores.js?v=1"></script>
+  <script>
+    /* Fundadores: el código se comprueba por su huella; el pase se guarda en este navegador */
+    window.BL = {
+      lanzado: function () { return Date.now() >= new Date(BL_FUNDADORES.lanzamiento).getTime(); },
+      huella: async function (c) {
+        var b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('booklab:' + c));
+        return Array.from(new Uint8Array(b)).map(function (x) { return x.toString(16).padStart(2, '0'); }).join('');
+      },
+      busca: function (h) { return BL_FUNDADORES.codigos.find(function (x) { return x.h === h; }); },
+      pase: function () { try { var p = JSON.parse(localStorage.getItem('bl-pase')); return p && BL.busca(p.h) ? p : null; } catch (x) { return null; } },
+      guarda: function (p) { try { localStorage.setItem('bl-pase', JSON.stringify(p)); } catch (x) {} },
+      limpia: function (c) { return String(c || '').trim().toUpperCase().replace(/\s+/g, ''); }
+    };
+  </script>
+  <script>
+    /* Candado: antes del lanzamiento, solo con pase de fundador */
+    if (!BL.lanzado() && !BL.pase()) location.replace('/');
+  </script>
+</head>
+<body>
+  <div class="franja-fundador" id="franja-fundador" hidden>
+    <i aria-hidden="true"></i><p><b>Fundador <span id="ff-num"></span>/20</b> · <span id="ff-quien"></span> estás viendo Book Lab antes que nadie.</p>
+  </div>
+  <style>
+    .franja-fundador { display: flex; align-items: center; gap: 10px; padding: 10px 16px; background: #111; color: #fff; font-size: .88rem; line-height: 1.3; }
+    .franja-fundador[hidden] { display: none; }
+    .franja-fundador p { margin: 0; } .franja-fundador b { color: #FEE304; letter-spacing: .04em; }
+    .franja-fundador i { flex: none; width: 22px; height: 22px; border-radius: 6px; background: #111 url("../assets/img/logo-b-128.png") center / cover no-repeat; box-shadow: 0 0 0 1px #333; }
+  </style>
+  <header class="nav">
+    <a class="nav-marca" href="./"><img class="nav-b" src="../assets/img/logo-b-128.png" alt="" width="30" height="30">Book Lab</a>
+    <div class="nav-botones"><a class="nav-entrar" href="https://app.getbooklab.com/entrar" aria-label="Mi cuenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Mi cuenta</span></a></div>
+  </header>
+
+  <main>
+    <section class="portada opcion-2" aria-labelledby="portada-titulo">
+      <div class="pr" id="portada-roja">
+        <div class="pr-foto" id="pr-foto">
+          <img class="pr-base" src="../assets/img/portada-amarilla.webp?v=1" alt="" width="941" height="1672" aria-hidden="true">
+          <img class="pr-g pr-g1" src="../assets/img/portada-amarilla.webp?v=1" alt="" aria-hidden="true">
+          <img class="pr-g pr-g2" src="../assets/img/portada-amarilla.webp?v=1" alt="" aria-hidden="true">
+          <img class="pr-mano" src="../assets/img/portada-amarilla.webp?v=1" alt="" aria-hidden="true">
+        </div>
+        <ul class="pr-avisos" id="avisos" aria-hidden="true">
+          <li><b>Nueva reserva</b><span>Carlos · Skinfade · mañana 11:00</span></li>
+          <li><b>Recordatorios enviados</b><span>6 clientes de hoy</span></li>
+          <li><b>Hueco recuperado</b><span>Iván cogió la cita cancelada</span></li>
+          <li><b>Nueva reseña en Google</b><span>★★★★★ «El mejor fade»</span></li>
+          <li><b>Caja de hoy</b><span>Llevas <em>412 €</em> · 23 cobros</span></li>
+        </ul>
+        <div class="pr-texto">
+          <span class="pr-raya" aria-hidden="true"></span>
+          <h1 class="pr-marca" id="portada-titulo">Book <span>Lab</span><sup>®</sup></h1>
+          <p class="pr-lema">Tu barbería trabaja sola. <span class="cursor">Tú vuelves a tener vida.</span></p>
+        </div>
+      </div>
+
+      <div class="portada-fila corta">
+        <div class="cta-prueba">
+          <a class="pildora pildora-amarilla pildora-grande" href="https://app.getbooklab.com/empezar">Prueba Book Lab gratis 14 días <i aria-hidden="true"></i></a>
+          <a class="pildora pildora-borde" href="https://booklab-app-pruebas.booklab-app.workers.dev/demo" target="_blank" rel="noopener">Ver la demo</a>
+          <p class="cta-nota">Sin tarjeta · Sin permanencia · Sin comisiones</p>
+        </div>
+      </div>
+      <div class="cinta" aria-label="Lo que incluye Book Lab">
+        <ul class="cinta-pista"><li>Reservas 24/7</li><li>Recordatorios automáticos</li><li>Lista de espera</li><li>Caja y facturación</li><li>Sin comisiones</li><li>Bloqueo de clientes problemáticos</li><li>Reseñas en Google</li></ul>
+        <ul class="cinta-pista" aria-hidden="true"><li>Reservas 24/7</li><li>Recordatorios automáticos</li><li>Lista de espera</li><li>Caja y facturación</li><li>Sin comisiones</li><li>Bloqueo de clientes problemáticos</li><li>Reseñas en Google</li></ul>
+      </div>
+      <section class="confianza" aria-labelledby="conf-titulo">
+        <div class="foto-cartel cartel-johan">
+          <img src="../assets/img/barbero.webp?v=1" alt="Johan cortando el pelo a un cliente" width="1254" height="1254" loading="lazy">
+          <img class="g g1" src="../assets/img/barbero.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+          <img class="g g2" src="../assets/img/barbero.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+          <h2 class="foto-titulo" id="conf-titulo">Hecho por un barbero. <span>Para barberías.</span></h2>
+          <p class="foto-pie"><b>Johan</b><span>Barbero desde hace 14 años · fundador de Book Lab</span></p>
+        </div>
+        <p class="foto-texto">14 años detrás del sillón. Lo creó para su barbería y lo usa cada día.</p>
+      </section>      <section class="ganas" aria-label="Lo que ganas con Book Lab">
+        <p class="ganas-t">Con Book Lab tienes</p>
+        <p class="ganas-frase"><span class="ganas-texto" id="ganas-texto">Más tiempo libre.</span><span class="ganas-cursor" aria-hidden="true"></span></p>
+        <ul class="solo-lector"><li>Más tiempo libre</li><li>La agenda llena</li><li>Menos plantones</li><li>Recordatorios automáticos</li><li>Citas sin llamadas ni mensajes</li></ul>
+      </section>
+      <section class="recordar" id="recordatorios" aria-labelledby="recordar-titulo">
+        <div class="foto-cartel cartel-recordar desfase">
+          <img src="../assets/img/mensajes.webp?v=1" alt="Manos enviando mensajes desde el móvil" width="1086" height="1448" loading="lazy">
+          <img class="g g1" src="../assets/img/mensajes.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+          <img class="g g2" src="../assets/img/mensajes.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+          <h2 class="foto-titulo" id="recordar-titulo">Deja de escribir a tus clientes <span>uno por uno.</span></h2>
+        </div>
+        <p class="foto-texto">Confirmación, recordatorios y reseñas salen <b>solos</b>. Los WhatsApp, con un clic.</p>
+        <a class="mas" href="../herramientas.html#recordatorios">Ver cómo funciona →</a>
+      </section>      <section class="cartel-ui cartel-smart" id="smart" aria-labelledby="smart-titulo">
+        <p class="smart-marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.5 7.3 4.7 11.5 6 7.3 7.3 6 11.5 4.7 7.3 0.5 6 4.7 4.7Z"/></svg>Smart Booking</p>
+        <h2 id="smart-titulo">Más citas. <span>Menos huecos.</span></h2>
+        <div class="horas-ui" aria-hidden="true">
+          <span>10:00</span><span class="r">10:30<small>✦ Recomendado</small></span><span class="ocupada">11:00<small>Reservada</small></span>
+          <span class="r">11:30<small>✦ Recomendado</small></span><span>12:00</span><span>12:30</span>
+        </div>
+        <p class="cartel-frase">Destaca las horas que no dejan huecos en tu agenda. Tu cliente elige igual.</p>
+        <a class="mas" href="../herramientas.html#smart">Ver cómo funciona →</a>
+      </section>
+      <div class="foto-cartel cartel-sangre">
+        <img src="../assets/img/sillon.webp?v=1" alt="Un sillón de barbero vacío y alguien que llega" width="1194" height="1600" loading="lazy">
+        <img class="g g1" src="../assets/img/sillon.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+        <img class="g g2" src="../assets/img/sillon.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+        <p class="foto-titulo-grande" aria-hidden="true">Si alguien cancela, <span>el hueco se llena solo.</span></p>
+      </div>
+      <section class="espera tras-foto" id="espera" aria-labelledby="espera-titulo">
+        <h2 id="espera-titulo" class="solo-lector">Si alguien cancela, el hueco se llena solo</h2>
+        <p class="espera-corta">Si no hay hora, se apunta. Si alguien cancela, le avisamos al momento y el primero que reserva se la queda.</p>
+        <div class="sim-espera" aria-hidden="true">
+          <div class="sim-movil">
+            <p class="sim-dia">Miércoles 18</p>
+            <p class="sim-lleno">No quedan horas</p>
+            <span class="sim-boton"><span class="sim-b1">Apuntarme a la lista de espera</span><span class="sim-b2">✓ Estás en la lista de espera</span></span>
+          </div>
+          <div class="sim-correo">
+            <p class="sim-de"><i class="b-ico"></i>Book Lab · ahora</p>
+            <b>¡Se ha quedado un hueco libre!</b>
+            <span>Miércoles 18 · 18:00 con Laura</span>
+            <span class="sim-reservar">Reservar ahora</span>
+          </div>
+        </div>
+        <a class="mas" href="../herramientas.html#espera">Ver cómo funciona →</a>
+      </section>      <section class="caja-ipad" id="caja" aria-labelledby="caja-titulo">
+        <div class="caja-escena">
+          <div class="foto-cartel cartel-caja">
+            <img src="../assets/img/caja.webp?v=1" alt="Un barbero llevando la caja en el iPad del mostrador" width="1194" height="1600" loading="lazy">
+            <img class="g g1" src="../assets/img/caja.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+            <img class="g g2" src="../assets/img/caja.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+            <h2 class="foto-titulo" id="caja-titulo">Todo lo que entra y sale, <span>bajo control.</span></h2>
+          </div>
+          <div class="marco-ipad caja-flota"><img src="../assets/img/app/caja-ipad.webp?v=3" alt="Caja de Book Lab en un iPad" loading="lazy"></div>
+        </div>
+        <p class="foto-texto">Cobros, productos, cierre de caja y comisiones. Conectada con la agenda.</p>
+        <a class="mas" href="../herramientas.html#caja">Ver cómo funciona →</a>
+      </section>      <section class="cartel-ui cartel-intel" id="intelligence" aria-labelledby="intel-titulo">
+        <p class="smart-marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.5 7.3 4.7 11.5 6 7.3 7.3 6 11.5 4.7 7.3 0.5 6 4.7 4.7Z"/></svg>BookLab Intelligence</p>
+        <h2 id="intel-titulo">Tus números, <span>en claro.</span></h2>
+        <div class="intel-escena">
+          <div class="tel intel-pantalla"><img src="../assets/img/app/intelligence.webp?v=3" alt="Pantalla de BookLab Intelligence" loading="lazy"></div>
+          <ul class="avisos-intel" aria-label="Ejemplos">
+            <li><b>22 clientes</b> llevan más de 60 días sin venir</li>
+            <li>Los <b>martes por la tarde</b> tienes huecos</li>
+            <li>Vas al <b>82 %</b> del objetivo del mes</li>
+          </ul>
+        </div>
+        <a class="mas" href="../herramientas.html#intelligence">Ver cómo funciona →</a>
+      </section>
+      <section class="y-ademas" aria-label="Y además">
+        <p class="y-ademas-t">Y además</p>
+        <ul class="chips grandes"><li>Bloquea a los clientes que no aparecen</li><li>Agenda de cada barbero</li><li>Avisos de no show</li><li>Equipo y permisos</li><li>Reseñas en Google</li><li>Gastos y beneficio</li><li>App de avisos para el ordenador</li></ul>
+        <a class="mas" href="../herramientas.html">Ver todas las herramientas →</a>
+      </section>
+<span id="demo"></span>
+      <section class="precios" id="precios" aria-labelledby="precios-titulo">
+        <h2 id="precios-titulo">Precios</h2>
+        <p class="precios-sub"><b>Todas las herramientas en todos los planes, sin extras.</b> Solo cambia cuántos barberos sois.</p>
+        <p class="precios-fundadora oculto">Precio de fundadora para las 20 primeras barberías: se mantiene mientras sigas. Después, Solo 16,90 €/mes y Book Lab® 24,90 €/mes o 249 €/año.</p>
+        <div class="precios-planes tres" role="radiogroup" aria-label="Elige tu plan">
+          <article class="plan" role="radio" tabindex="0" aria-checked="false" data-plan="Solo" data-texto="el plan Solo de Book Lab (14,90 € + IVA al mes)">
+            <span class="plan-marca" aria-hidden="true"></span>
+            <h3>Solo</h3>
+            <p class="plan-quien">1 barbero</p>
+            <p class="plan-precio"><s>16,90 €</s> <b>14,90 €</b><span>/mes <em class="iva">+ IVA</em></span></p>
+            
+          </article>
+          <article class="plan plan-destacado is-elegido" role="radio" tabindex="0" aria-checked="true" data-plan="mensual" data-texto="el plan mensual de Book Lab (19,90 € + IVA al mes)">
+            <span class="plan-marca" aria-hidden="true"></span>
+            <span class="plan-etiqueta">Con equipo</span>
+            <h3>Mensual</h3>
+            <p class="plan-quien">Barberos ilimitados</p>
+            <p class="plan-precio"><s>24,90 €</s> <b>19,90 €</b><span>/mes <em class="iva">+ IVA</em></span></p>
+            
+          </article>
+          <article class="plan" role="radio" tabindex="0" aria-checked="false" data-plan="anual" data-texto="el plan anual de Book Lab (219 € + IVA al año)">
+            <span class="plan-marca" aria-hidden="true"></span>
+            <span class="plan-etiqueta">1 mes gratis</span>
+            <h3>Anual</h3>
+            <p class="plan-quien">Barberos ilimitados</p>
+            <p class="plan-precio"><s>249 €</s> <b>219 €</b><span>/año <em class="iva">+ IVA</em></span></p>
+            
+          </article>
+        </div>
+        <ul class="chips"><li>Todo incluido</li><li>Sin comisiones</li><li>Sin permanencia</li><li>Soporte por WhatsApp</li></ul>
+        <a class="pildora pildora-amarilla pildora-grande precios-gratis" href="https://app.getbooklab.com/empezar" id="prueba">Prueba Book Lab gratis 14 días <i aria-hidden="true"></i></a>
+        <p class="precios-o">o, si lo prefieres, habla conmigo:</p>
+        <a class="pildora pildora-negra precios-cta" id="precios-cta" href="https://wa.me/34746045607?text=Hola%2C%20quiero%20el%20plan%20mensual%20de%20Book%20Lab%20(19%2C90%20%E2%82%AC%20%2B%20IVA%20al%20mes)" target="_blank" rel="noopener"><span id="precios-cta-txt">Quiero el plan mensual</span> <i aria-hidden="true"></i></a>
+        <p class="precios-legal">Todos los precios llevan aparte el IVA (21 %). El precio que contrates se mantiene mientras sigas con nosotros.</p>
+      </section>      <section class="final" aria-label="Pruébalo">
+        <div class="final-demo con-foto">
+          <div class="final-foto" aria-hidden="true">
+            <img src="../assets/img/final.webp?v=1" alt="" width="1194" height="1600" loading="lazy">
+            <img class="g g1" src="../assets/img/final.webp?v=1" alt="" loading="lazy">
+            <img class="g g2" src="../assets/img/final.webp?v=1" alt="" loading="lazy">
+          </div>
+          <p class="final-t">Tu barbería, trabajando sola. <span class="cursor">Empieza hoy.</span></p>
+          <a class="pildora pildora-amarilla pildora-grande" href="https://app.getbooklab.com/empezar">Prueba Book Lab gratis 14 días <i aria-hidden="true"></i></a>
+          <a class="pildora pildora-negra pildora-grande" href="#demo">Antes, mira la demo <i aria-hidden="true"></i></a>
+          <p class="cta-nota">Sin tarjeta · Sin permanencia · Te pasamos tus clientes</p>
+        </div>
+      </section>    </section>
+  </main>
+
+  <footer class="pie">
+    <span class="pie-marca"><i class="b-ico" aria-hidden="true"></i>© 2026 Book Lab · Reservas, agenda y caja para barberías</span>
+    <nav aria-label="Legal"><a href="../legal.html#aviso-legal">Aviso legal</a><a href="../legal.html#privacidad">Privacidad</a><a href="../legal.html#cookies">Cookies</a></nav>
+  </footer>
+
+  <div class="pronto" id="pronto" role="status" aria-live="polite" hidden>Abrimos las altas en unos días. Mientras, mira un ejemplo.</div>
+  <script>
+    /* «Prueba 14 días gratis»: aún sin funcionar (solo para ver la web). Al tocarlo, un aviso y te lleva a la demo. */
+    (function () {
+      var aviso = document.getElementById('pronto'), t;
+      document.querySelectorAll('.js-pronto').forEach(function (b) {
+        b.addEventListener('click', function (e) {
+          e.preventDefault(); aviso.hidden = false; clearTimeout(t);
+          t = setTimeout(function () { aviso.hidden = true; }, 3200);
+          var d = document.getElementById('demo'); if (d) d.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    })();
+
+    /* Precios: al tocar un plan se marca y el botón cambia a ese plan (WhatsApp con el plan ya escrito) */
+    (function () {
+      var planes = document.querySelectorAll('.plan[data-plan]'), cta = document.getElementById('precios-cta'), txt = document.getElementById('precios-cta-txt');
+      function elige(p) {
+        planes.forEach(function (x) { var si = x === p; x.classList.toggle('is-elegido', si); x.setAttribute('aria-checked', String(si)); });
+        txt.textContent = 'Quiero el plan ' + p.dataset.plan;
+        cta.href = 'https://wa.me/34746045607?text=' + encodeURIComponent('Hola, quiero ' + p.dataset.texto);
+      }
+      planes.forEach(function (p) {
+        p.addEventListener('click', function () { elige(p); });
+        p.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); elige(p); } });
+      });
+    })();
+
+    /* Portada: la persona en glitch; cada aviso nace en la pantalla del móvil (toque del pulgar + destello)
+       y sube a su sitio. Se ven los 3 últimos y vuelve a empezar. */
+    (function () {
+      var lista = document.getElementById('avisos'), lis = lista.querySelectorAll('li'), foto = document.getElementById('pr-foto'), n = 0;
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { for (var k = 2; k < lis.length; k++) lis[k].classList.add('is-on'); return; }
+      function repite(el, c) { el.classList.remove(c); void el.offsetWidth; el.classList.add(c); }
+      function desdeElMovil(li) {
+        var f = foto.getBoundingClientRect(), l = lista.getBoundingClientRect();
+        var mx = f.left + f.width * .79, my = f.top + f.height * .79;          // pantalla del móvil en la foto
+        var cx = l.left + l.width / 2, cy = l.bottom - 32;                      // sitio final del aviso nuevo (abajo de la pila)
+        li.style.setProperty('--dx', Math.round(mx - cx) + 'px');
+        li.style.setProperty('--dy', Math.round(my - cy) + 'px');
+      }
+      var reloj;
+      function paso() {
+        if (n < lis.length) {
+          desdeElMovil(lis[n]);
+          lis[n].classList.add('is-on'); if (n >= 3) lis[n - 3].classList.remove('is-on');
+          repite(foto, 'toca'); repite(foto, 'destella'); n++; reloj = setTimeout(paso, 1900);
+        } else reloj = setTimeout(function () { lis.forEach(function (l) { l.classList.remove('is-on'); }); n = 0; reloj = setTimeout(paso, 900); }, 3000);
+      }
+      reloj = setTimeout(paso, 900);
+    })();
+
+
+    /* Glitch: los bloques aparecen con un glitch al llegar con el scroll, y los botones dan un glitch al tocarlos */
+    (function () {
+      var raiz = document.documentElement;
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { raiz.classList.remove('gl-js'); return; }
+      var bloques = document.querySelectorAll('.portada-fila, .beneficios, .app-capturas, main section.portada > section, .nivel');
+      if (!('IntersectionObserver' in window)) { raiz.classList.remove('gl-js'); return; }
+      var obs = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('gl-on'); obs.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+      bloques.forEach(function (b) { b.classList.add('gl'); obs.observe(b); });
+      document.addEventListener('pointerdown', function (ev) {
+        var el = ev.target.closest('.pildora, .nav-entrar, .demo-c, .plan, .beneficios a, .categorias ol a, .mini-cta, .faq summary');
+        if (!el) return; el.classList.remove('gl-toque'); void el.offsetWidth; el.classList.add('gl-toque');
+        setTimeout(function () { el.classList.remove('gl-toque'); }, 400);
+      });
+    })();
+
+    /* «Con Book Lab tienes…»: la frase se borra y se reescribe con el cursor amarillo */
+    (function () {
+      var el = document.getElementById('ganas-texto'); if (!el) return;
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var frases = ['Más tiempo libre.', 'La agenda llena.', 'Menos plantones.', 'Recordatorios automáticos.', 'Citas sin llamadas ni mensajes.'], i = 0, n = frases[0].length, borrando = true;
+      function paso() {
+        var f = frases[i];
+        if (borrando) {
+          n--; el.textContent = f.slice(0, n);
+          if (n <= 0) { borrando = false; i = (i + 1) % frases.length; setTimeout(paso, 350); } else setTimeout(paso, 28);
+        } else {
+          var g = frases[i]; n++; el.textContent = g.slice(0, n);
+          if (n >= g.length) { borrando = true; setTimeout(paso, 2200); } else setTimeout(paso, 55);
+        }
+      }
+      setTimeout(paso, 2600);
+    })();
+
+    /* Fundador: franja con su número y, hasta el lanzamiento, el alta se pide por WhatsApp (Johan le da de alta) */
+    (function () {
+      var p = BL.pase(); if (!p || BL.lanzado()) return;
+      document.getElementById('ff-num').textContent = p.n;
+      document.getElementById('ff-quien').textContent = p.b ? p.b + ',' : 'Ya';
+      document.getElementById('franja-fundador').hidden = false;
+      var wa = 'https://wa.me/34746045607?text=' + encodeURIComponent('Hola Johan, soy el fundador ' + p.n + (p.b ? ' (' + p.b + ')' : '') + ' y quiero darme de alta en Book Lab.');
+      document.querySelectorAll('a[href^="https://app.getbooklab.com/empezar"]').forEach(function (a) { a.href = wa; a.target = '_blank'; a.rel = 'noopener'; a.firstChild.textContent = 'Date de alta como fundador '; });
+    })();
+  </script>
+</body>
+</html>
