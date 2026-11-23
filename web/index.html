@@ -499,14 +499,16 @@
       setTimeout(paso, 2600);
     })();
 
-    /* Fundador: franja con su número y, hasta el lanzamiento, el alta se pide por WhatsApp (Johan le da de alta) */
+    /* Fundador: franja con su número y el alta directa con su código de fundador */
     (function () {
       var p = BL.pase(); if (!p || BL.lanzado()) return;
       document.getElementById('ff-num').textContent = p.n;
       document.getElementById('ff-quien').textContent = p.b ? p.b + ',' : 'Ya';
       document.getElementById('franja-fundador').hidden = false;
-      var wa = 'https://wa.me/34746045607?text=' + encodeURIComponent('Hola Johan, soy el fundador ' + p.n + (p.b ? ' (' + p.b + ')' : '') + ' y quiero darme de alta en Book Lab.');
-      document.querySelectorAll('a[href^="https://app.getbooklab.com/empezar"]').forEach(function (a) { a.href = wa; a.target = '_blank'; a.rel = 'noopener'; a.firstChild.textContent = 'Date de alta como fundador '; });
+      /* Su alta: el formulario de la app con su código de fundador (sin tarjeta) */
+      var alta = p.c ? 'https://app.getbooklab.com/empezar?codigo=' + encodeURIComponent(p.c)
+        : 'https://wa.me/34746045607?text=' + encodeURIComponent('Hola Johan, soy el fundador ' + p.n + (p.b ? ' (' + p.b + ')' : '') + ' y quiero darme de alta en Book Lab.');
+      document.querySelectorAll('a[href^="https://app.getbooklab.com/empezar"]').forEach(function (a) { a.href = alta; a.firstChild.textContent = 'Date de alta como fundador '; });
     })();
   </script>
 </body>
