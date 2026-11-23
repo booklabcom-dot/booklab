@@ -33,7 +33,7 @@
 <script src="/assets/js/fundadores.js?v=1"></script>
   <script>
     /* Hasta el lanzamiento (1/1/2027), solo fundadores con pase */
-    (function () { try { var p = JSON.parse(localStorage.getItem('bl-pase')); var ok = p && BL_FUNDADORES.codigos.some(function (x) { return x.h === p.h; });
+    (function () { try { var p = JSON.parse(localStorage.getItem('bl-pase')); var ok = p && p.n === '00' && BL_FUNDADORES.codigos.some(function (x) { return x.h === p.h; });
       if (Date.now() < new Date(BL_FUNDADORES.lanzamiento).getTime() && !ok) location.replace('/'); } catch (e) { location.replace('/'); } })();
   </script>
 </head>

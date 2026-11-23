@@ -113,6 +113,11 @@
     .marca sup { font-size: .26em; vertical-align: super; margin-left: .6em; position: relative; top: -.4em; }
     .enlace.fund { color: #fff; }
     .enlace .cuantos { margin-left: .5em; color: var(--am); font-weight: 700; }
+    .izq { display: flex; gap: 16px; }
+    footer { gap: 14px; }
+    footer .enlace { white-space: nowrap; letter-spacing: .14em; font-size: .66rem; }
+    @media (min-width: 600px) { footer .enlace { letter-spacing: .22em; font-size: .72rem; } }
+    .cuenta-ya { margin-top: 14px !important; }
     .sin-codigo { margin: 40px 0 0; color: #8a8a8a; font-size: .92rem; }
     .sin-codigo a { color: #fff; font-weight: 700; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--am); }
     .enlace.fund::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 9px; background: var(--am); vertical-align: .08em; animation: parpadea 1.05s steps(1, end) infinite; }
@@ -159,7 +164,7 @@
   </main>
 
   <footer>
-    <a class="enlace" href="https://www.instagram.com/getbooklab/" target="_blank" rel="noopener">Instagram ↗</a>
+    <span class="izq"><a class="enlace" href="https://www.instagram.com/getbooklab/" target="_blank" rel="noopener">Instagram ↗</a><a class="enlace" href="https://app.getbooklab.com/entrar">Entrar</a></span>
     <button class="enlace fund" type="button" id="abrir">Fundadores <b class="cuantos" id="cuantos">3/20</b></button>
   </footer>
 
@@ -170,6 +175,7 @@
       <input id="codigo" autocomplete="off" spellcheck="false" required>
       <p class="mal" id="mal" aria-live="polite"></p>
       <p class="sin-codigo">¿Aún no tienes? <a href="https://wa.me/34746045607?text=Hola%2C%20quiero%20ser%20fundador%20de%20Book%20Lab" target="_blank" rel="noopener">Quiero ser fundador →</a></p>
+      <p class="sin-codigo cuenta-ya">¿Ya tienes cuenta? <a href="https://app.getbooklab.com/entrar">Entrar →</a></p>
     </form>
   </div>
 
@@ -198,7 +204,7 @@
       document.getElementById('cuantos').textContent = BL_FUNDADORES.ocupadas + '/20';
       var capa = document.getElementById('acceso'), campo = document.getElementById('codigo'), mal = document.getElementById('mal');
       document.getElementById('abrir').onclick = function () {
-        if (BL.pase()) { location.href = '/web/'; return; }
+        var ya = BL.pase(); if (ya) { location.href = ya.n === '00' ? '/web/' : '/guia/'; return; }
         capa.hidden = false; mal.textContent = ''; campo.value = ''; setTimeout(function () { campo.focus(); }, 50);
       };
       document.getElementById('cerrar').onclick = function () { capa.hidden = true; };

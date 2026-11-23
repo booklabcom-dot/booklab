@@ -72,7 +72,7 @@
 
   <footer>
     <span class="firma">Acceso antes del 11 · 01</span>
-    <a class="entrar" id="entrar" href="/web/">Entrar →</a>
+    <a class="entrar" id="entrar" href="/guia/">Empezar →</a>
   </footer>
 
   <script>
@@ -83,7 +83,8 @@
       if (!f) { location.replace('/'); return; }
       document.getElementById('num').textContent = f.n;
       document.getElementById('barberia').textContent = b ? b + '.' : 'Bienvenido.';
-      document.getElementById('entrar').addEventListener('click', function () { BL.guarda({ h: f.h, n: f.n, b: b, c: cod }); });
+      var e = document.getElementById('entrar'); if (f.n === '00') { e.href = '/web/'; e.textContent = 'Entrar →'; }
+      e.addEventListener('click', function () { BL.guarda({ h: f.h, n: f.n, b: b, c: cod }); });
     })();
   </script>
 </body>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es-ES">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Book Lab · Tu guía de fundador</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0b0b0b">
+  <link rel="icon" type="image/png" href="/assets/img/favicon.png?v=2">
+  <!-- Guía del fundador (23/11): después de «Estás dentro», una herramienta por pantalla (qué hace y cómo se usa)
+       y al final «Crear mi cuenta» con su código. Solo con pase de fundador. -->
+  <script src="/assets/js/fundadores.js?v=1"></script>
+  <script>
+    window.BL = {
+      busca: function (h) { return BL_FUNDADORES.codigos.find(function (x) { return x.h === h; }); },
+      pase: function () { try { var p = JSON.parse(localStorage.getItem('bl-pase')); return p && BL.busca(p.h) ? p : null; } catch (x) { return null; } }
+    };
+    if (!BL.pase()) location.replace('/');
+  </script>
+  <style>
+    @font-face { font-family: "Archivo"; src: url("/assets/fonts/archivo-var.woff2") format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; font-display: swap; }
+    :root { --am: #FEE304; --letra: "Archivo", system-ui, -apple-system, "Segoe UI", Arial, sans-serif; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; }
+    body { display: grid; grid-template-rows: auto 1fr auto; height: 100svh; background: #0b0b0b; color: #fff; font: 400 1rem/1.45 var(--letra); -webkit-font-smoothing: antialiased; overflow: hidden; }
+
+    header { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px; padding: 18px 20px 0; }
+    .b-ico { display: block; width: 28px; height: 28px; border-radius: 8px; background: #111 url("/assets/img/logo-b-128.png") center / cover no-repeat; box-shadow: 0 0 0 1px #262626; }
+    .progreso { display: grid; grid-auto-flow: column; gap: 4px; }
+    .progreso i { height: 3px; border-radius: 2px; background: #2e2e2e; transition: background .3s; }
+    .progreso i.hecho { background: var(--am); }
+    .saltar { padding: 6px 0; border: 0; background: none; color: #8a8a8a; font: 600 .68rem/1 var(--letra); letter-spacing: .22em; text-transform: uppercase; cursor: pointer; }
+
+    /* Cada pantalla: lo visual arriba y el texto abajo */
+    main { position: relative; overflow: hidden; }
+    .paso { position: absolute; inset: 0; display: grid; grid-template-rows: minmax(0, 1fr) auto; gap: 18px; padding: 18px 20px 0; opacity: 0; pointer-events: none; transform: translateX(30px); filter: blur(6px); transition: opacity .45s ease, transform .45s cubic-bezier(.2,.7,.2,1), filter .45s ease; }
+    .paso.activo { opacity: 1; pointer-events: auto; transform: none; filter: none; }
+    .paso.antes { transform: translateX(-30px); }
+    .visual { position: relative; display: grid; place-items: center; min-height: 0; }
+    .tel { height: 100%; max-height: 52vh; aspect-ratio: 375 / 760; padding: 6px; border-radius: 30px; background: #1e1e1e; box-shadow: 0 0 0 1px #2e2e2e, 0 30px 60px rgba(0,0,0,.5); }
+    .tel img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; border-radius: 24px; }
+    .ipad { width: min(100%, 520px); padding: 8px; border-radius: 22px; background: #1e1e1e; box-shadow: 0 0 0 1px #2e2e2e, 0 30px 60px rgba(0,0,0,.5); }
+    .ipad img { display: block; width: 100%; border-radius: 15px; }
+    .foto { width: min(100%, 420px); height: 100%; max-height: 52vh; border-radius: 22px; overflow: hidden; }
+    .foto img { width: 100%; height: 100%; object-fit: cover; }
+
+    .texto { padding-bottom: 6px; }
+    .num { margin: 0 0 8px; font: 600 .66rem/1 var(--letra); letter-spacing: .26em; text-transform: uppercase; color: #8a8a8a; }
+    .num b { color: var(--am); }
+    .texto h1 { margin: 0 0 8px; font: 800 clamp(1.7rem, 7.5vw, 2.6rem)/1 var(--letra); letter-spacing: -.045em; }
+    .que { margin: 0; color: #d6d6d6; max-width: 40ch; }
+    .como { display: flex; gap: 10px; align-items: baseline; margin: 12px 0 0; color: #9a9a9a; font-size: .9rem; max-width: 42ch; }
+    .como::before { content: ""; flex: none; width: 7px; height: 7px; background: var(--am); transform: translateY(-1px); }
+    .como b { color: #fff; font-weight: 650; }
+
+    /* Página de reservas (maqueta moderna) */
+    .reserva { height: 100%; overflow: hidden; border-radius: 24px; background: #f2f2f2; color: #111; display: grid; grid-template-rows: 38% 1fr; }
+    .r-foto { position: relative; overflow: hidden; }
+    .r-foto img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 35%; filter: grayscale(1); }
+    .r-cuerpo { padding: 12px 12px 10px; display: grid; align-content: start; gap: 8px; }
+    .r-nombre { margin: 0; font: 800 1.15rem/1 var(--letra); letter-spacing: -.04em; }
+    .r-sub { margin: -4px 0 2px; font-size: .68rem; color: #6b6b6b; }
+    .r-lista { display: grid; gap: 5px; margin: 0; padding: 0; list-style: none; }
+    .r-lista li { display: flex; justify-content: space-between; padding: 8px 10px; border-radius: 10px; background: #fff; font-size: .72rem; font-weight: 650; }
+    .r-lista li.r-elegido { background: #111; color: #fff; box-shadow: inset 3px 0 0 var(--am); }
+    .r-hora { display: flex; gap: 5px; align-items: center; margin: 2px 0 0; font-size: .66rem; font-weight: 700; color: #6b6b6b; }
+    .r-h { padding: 5px 7px; border-radius: 8px; background: #fff; color: #111; }
+    .r-h.r-sel { background: var(--am); }
+    .r-boton { display: grid; place-items: center; min-height: 34px; margin-top: 2px; border-radius: 999px; background: var(--am); color: #111; font-weight: 800; font-size: .78rem; }
+    /* Fotos con el título dentro (como los carteles de la web) */
+    .cartel { position: relative; }
+    .cartel h1 { position: absolute; z-index: 2; top: 18px; left: 18px; right: 18px; margin: 0; font: 800 clamp(1.9rem, 8.6vw, 3rem)/.95 var(--letra); letter-spacing: -.05em; color: #111; text-wrap: balance; }
+    .cartel h1 span { color: #6b6b6b; }
+    .cartel.oscuro h1 { color: #fff; } .cartel.oscuro h1 span { color: var(--am); }
+    .final .cartel h1 span { color: #111; background: var(--am); padding: 0 .08em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+    .cartel::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(230,230,230,.55) 0%, rgba(230,230,230,0) 38%); }
+    .cartel.oscuro::after { background: linear-gradient(180deg, rgba(11,11,11,.7) 0%, rgba(11,11,11,0) 40%); }
+    /* Smart Booking: las horas */
+    .horas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: min(100%, 360px); }
+    .horas span { display: grid; place-items: center; align-content: center; min-height: 66px; border-radius: 14px; background: #fff; color: #111; font-weight: 800; font-size: 1.15rem; }
+    .horas small { display: block; margin-top: 3px; font-size: .56rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+    .horas .r { background: var(--am); animation: late 2.4s ease-in-out infinite; }
+    .horas .ocu { background: #2a2a2a; color: #8d8d8d; }
+    @keyframes late { 0%, 100% { box-shadow: 0 0 0 0 rgba(254,227,4,.6); } 50% { box-shadow: 0 0 0 6px rgba(254,227,4,0); } }
+
+    /* Lista de espera: se apunta → le llega el aviso */
+    .espera { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: center; width: min(100%, 420px); }
+    .e-movil, .e-correo { padding: 14px 12px; border-radius: 18px; background: #fff; color: #111; }
+    .e-dia { margin: 0; font-weight: 800; }
+    .e-lleno { margin: 2px 0 12px; color: #6b6b6b; font-size: .82rem; }
+    .e-boton { position: relative; display: grid; min-height: 46px; border-radius: 999px; background: var(--am); font-weight: 800; font-size: .72rem; line-height: 1.15; box-shadow: 0 0 0 1.5px #111 inset; overflow: hidden; }
+    .e-boton span { grid-area: 1 / 1; display: grid; place-items: center; padding: 0 8px; text-align: center; }
+    .e-b2 { background: #111; color: var(--am); opacity: 0; animation: hecho 7s infinite; }
+    @keyframes hecho { 0%, 15% { opacity: 0; } 17%, 92% { opacity: 1; } 96%, 100% { opacity: 0; } }
+    .e-correo { display: grid; gap: 3px; font-size: .78rem; animation: llega 7s infinite; }
+    .e-correo b { font-size: .92rem; line-height: 1.15; }
+    .e-correo > span { color: #555; }
+    .e-res { justify-self: start; margin-top: 6px; padding: 7px 12px; border-radius: 999px; background: #111; color: #fff !important; font-weight: 800; }
+    @keyframes llega { 0%, 38% { opacity: 0; transform: translateY(14px) scale(.92); } 42% { opacity: 1; transform: translateX(-5px); } 45% { transform: translateX(4px); } 48%, 92% { opacity: 1; transform: none; } 97%, 100% { opacity: 0; } }
+
+    /* Final */
+    .paso.final { text-align: left; }
+    .final h1 { font-size: clamp(2.4rem, 11vw, 4rem); line-height: .95; }
+    .final h1 span { color: var(--am); }
+    .crear { display: inline-flex; align-items: center; gap: 10px; margin: 26px 0 0; padding: 16px 26px; border-radius: 999px; background: var(--am); color: #111; font: 800 1.08rem var(--letra); text-decoration: none; }
+    .crear i { width: 9px; height: 9px; border-radius: 50%; background: #111; }
+    .volver-entrar { margin: 22px 0 0; color: #8a8a8a; font-size: .88rem; max-width: 36ch; }
+    .volver-entrar b { color: #fff; }
+
+    footer { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px max(22px, env(safe-area-inset-bottom)); }
+    .nav { padding: 10px 0; border: 0; background: none; color: #fff; font: 700 1.02rem/1 var(--letra); cursor: pointer; }
+    .nav.atras { color: #8a8a8a; font-weight: 600; }
+    .nav.siguiente { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; text-decoration-color: var(--am); }
+    .nav[hidden] { visibility: hidden; display: block; }
+
+    @media (min-width: 900px) {
+      .paso { grid-template-columns: 1fr minmax(0, 440px); grid-template-rows: 1fr; align-items: center; gap: 56px; padding: 30px 60px; }
+      .tel, .foto { max-height: 70vh; }
+      header, footer { padding-left: 40px; padding-right: 40px; }
+    }
+    @media (prefers-reduced-motion: reduce) { .paso { transition: opacity .2s; transform: none !important; filter: none !important; } .horas .r, .e-b2, .e-correo { animation: none; } .e-b2 { opacity: 1; } }
+  </style>
+</head>
+<body>
+  <header>
+    <i class="b-ico" role="img" aria-label="Book Lab"></i>
+    <div class="progreso" id="progreso" aria-hidden="true"></div>
+    <button class="saltar" type="button" id="saltar">Saltar</button>
+  </header>
+
+  <main id="pasos" aria-live="polite">
+    <section class="paso">
+      <div class="visual">
+        <div class="tel"><div class="reserva" aria-label="Ejemplo de página de reservas">
+          <div class="r-foto"><img src="/assets/img/barbero.webp?v=1" alt=""></div>
+          <div class="r-cuerpo">
+            <p class="r-nombre">Barbería Norte</p>
+            <p class="r-sub">Reserva en 30 segundos</p>
+            <ul class="r-lista">
+              <li><span>Corte clásico</span><b>15 €</b></li>
+              <li class="r-elegido"><span>Skin fade</span><b>17 €</b></li>
+              <li><span>Corte + barba</span><b>22 €</b></li>
+            </ul>
+            <p class="r-hora"><span>Hoy</span><span class="r-h">17:30</span><span class="r-h r-sel">18:00</span><span class="r-h">18:30</span></p>
+            <span class="r-boton">Reservar</span>
+          </div>
+        </div></div>
+      </div>
+      <div class="texto">
+        <p class="num"><b>01</b> / 07</p>
+        <h1>Tu página de reservas</h1>
+        <p class="que">Tus clientes eligen servicio, barbero y hora. A cualquier hora, sin llamarte.</p>
+        <p class="como"><span><b>Cómo:</b> compartes tu enlace en Instagram y WhatsApp. Nada más.</span></p>
+      </div>
+    </section>
+
+    <section class="paso">
+      <div class="visual"><div class="foto cartel"><img src="/assets/img/mensajes.webp?v=1" alt="" style="object-position:55% 80%"><h1>Recordatorios <span>automáticos.</span></h1></div></div>
+      <div class="texto">
+        <p class="num"><b>02</b> / 07</p>
+        <p class="que">La confirmación, el recordatorio y la petición de reseña salen automáticamente por correo. Y por WhatsApp, en un clic.</p>
+        <p class="como"><span><b>Cómo:</b> no tienes que hacer nada, nos ocupamos nosotros. Si quieres recordar por WhatsApp, solo le das a un botón.</span></p>
+      </div>
+    </section>
+
+    <section class="paso">
+      <div class="visual">
+        <div class="horas" aria-hidden="true">
+          <span>10:00</span><span class="r">10:30<small>✦ Recomendado</small></span><span class="ocu">11:00<small>Reservada</small></span>
+          <span class="r">11:30<small>✦ Recomendado</small></span><span>12:00</span><span>12:30</span>
+        </div>
+      </div>
+      <div class="texto">
+        <p class="num"><b>03</b> / 07</p>
+        <h1>Smart Booking</h1>
+        <p class="que">Destaca las horas que no dejan huecos en tu agenda. Tu cliente sigue eligiendo la que quiera.</p>
+        <p class="como"><span><b>Cómo:</b> funciona solo. Lo enciendes o lo apagas con un toque.</span></p>
+      </div>
+    </section>
+
+    <section class="paso">
+      <div class="visual">
+        <div class="espera" aria-hidden="true">
+          <div class="e-movil">
+            <p class="e-dia">Miércoles 18</p>
+            <p class="e-lleno">No quedan horas</p>
+            <span class="e-boton"><span>Apuntarme a la lista de espera</span><span class="e-b2">✓ Estás en la lista de espera</span></span>
+          </div>
+          <div class="e-correo">
+            <b>¡Se ha quedado un hueco libre!</b>
+            <span>Miércoles 18 · 18:00 con Laura</span>
+            <span class="e-res">Reservar ahora</span>
+          </div>
+        </div>
+      </div>
+      <div class="texto">
+        <p class="num"><b>04</b> / 07</p>
+        <h1>Lista de espera</h1>
+        <p class="que">Si no hay hora, tu cliente se apunta. Si alguien cancela, le avisamos al momento, automáticamente.</p>
+        <p class="como"><span><b>Cómo:</b> no haces nada. El primero que reserva se queda el hueco.</span></p>
+      </div>
+    </section>
+
+    <section class="paso">
+      <div class="visual"><div class="foto cartel"><img src="/assets/img/caja.webp?v=1" alt="Un barbero llevando la caja en el iPad del mostrador" style="object-position:45% 75%"><h1>Caja en <span>el iPad.</span></h1></div></div>
+      <div class="texto">
+        <p class="num"><b>05</b> / 07</p>
+        <p class="que">Cobros, productos, comisiones y cierre de caja. Conectada con la agenda.</p>
+        <p class="como"><span><b>Cómo:</b> pon el iPad del mostrador en modo caja. Tu facturación y tus ajustes quedan protegidos con tu código.</span></p>
+      </div>
+    </section>
+
+    <section class="paso">
+      <div class="visual"><div class="foto cartel"><img src="/assets/img/barbero.webp?v=1" alt="Un barbero cortando" style="object-position:60% 70%"><h1>Tu <span>equipo.</span></h1></div></div>
+      <div class="texto">
+        <p class="num"><b>06</b> / 07</p>
+        <p class="que">Cada barbero, su agenda y su color. Todos al día en su móvil.</p>
+        <p class="como"><span><b>Cómo:</b> invita a tu equipo desde Equipo y elige qué puede ver cada uno.</span></p>
+      </div>
+    </section>
+
+    <section class="paso">
+      <div class="visual"><div class="foto cartel oscuro"><img src="/assets/img/final.webp?v=1" alt="" style="object-position:50% 70%"><h1>Tus <span>números.</span></h1></div></div>
+      <div class="texto">
+        <p class="num"><b>07</b> / 07</p>
+        <p class="que">Lo que facturas y cómo vas este mes. Tus mejores clientes, quién lleva tiempo sin venir y la ficha de cada cliente con su historial.</p>
+        <p class="como"><span><b>Cómo:</b> está todo en Inicio y en Clientes. Y Book Lab te propone qué hacer.</span></p>
+      </div>
+    </section>
+
+    <section class="paso final">
+      <div class="visual"><div class="foto cartel"><img src="/assets/img/movimiento.webp?v=1" alt="" style="object-position:30% 75%"><h1>Vamos a montar <span>tu barbería.</span></h1></div></div>
+      <div class="texto">
+        <p class="num" id="final-num">Fundador</p>
+        <p class="que">Tus servicios, tus precios y tu horario. En 5 minutos y sin tarjeta.</p>
+        <a class="crear" id="crear" href="https://app.getbooklab.com/empezar">Crear mi cuenta <i aria-hidden="true"></i></a>
+        <p class="volver-entrar">Para volver a entrar: <b>getbooklab.com → Entrar</b>, con tu correo y tu contraseña.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <button class="nav atras" type="button" id="atras">← Atrás</button>
+    <button class="nav siguiente" type="button" id="siguiente">Siguiente →</button>
+  </footer>
+
+  <script>
+    (function () {
+      var p = BL.pase(); if (!p) return;
+      var pasos = document.querySelectorAll('.paso'), barra = document.getElementById('progreso'), i = 0, total = pasos.length;
+      // Su alta: el formulario de la app con su código de fundador
+      if (p.c) document.getElementById('crear').href = 'https://app.getbooklab.com/empezar?codigo=' + encodeURIComponent(p.c);
+      document.getElementById('final-num').innerHTML = 'Fundador <b>' + p.n + '</b> / 20';
+      for (var k = 0; k < total; k++) barra.appendChild(document.createElement('i'));
+      function ir(n) {
+        i = Math.max(0, Math.min(total - 1, n));
+        pasos.forEach(function (s, k) { s.classList.toggle('activo', k === i); s.classList.toggle('antes', k < i); });
+        barra.querySelectorAll('i').forEach(function (b, k) { b.classList.toggle('hecho', k <= i); });
+        document.getElementById('atras').hidden = i === 0;
+        document.getElementById('siguiente').hidden = i === total - 1;
+        document.getElementById('saltar').hidden = i === total - 1;
+      }
+      document.getElementById('siguiente').onclick = function () { ir(i + 1); };
+      document.getElementById('atras').onclick = function () { ir(i - 1); };
+      document.getElementById('saltar').onclick = function () { ir(total - 1); };
+      document.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') ir(i + 1); if (e.key === 'ArrowLeft') ir(i - 1); });
+      // Deslizar con el dedo
+      var x0 = null;
+      document.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+      document.addEventListener('touchend', function (e) { if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 50) ir(i + (dx < 0 ? 1 : -1)); x0 = null; });
+      ir(0);
+    })();
+  </script>
+</body>
+</html>
