@@ -39,29 +39,30 @@
 /* Base: tiembla muy poco, siempre */
 .pr-foto .pr-base { animation: tiembla 2.6s steps(1) infinite; }
 @keyframes tiembla {
-  0% { translate: 0 0; } 12% { translate: -1.5px 0; } 24% { translate: 1px 0; } 37% { translate: 0 0; }
-  52% { translate: 2px 0; } 55% { translate: -2px 0; } 58% { translate: 0 0; } 80% { translate: -1px 0; } 92% { translate: 1px 0; }
+  0% { translate: 0 0; } 12% { translate: -1.5px 0; } 24% { translate: -1px 0; } 37% { translate: 0 0; }
+  52% { translate: -2px 0; } 55% { translate: -2px 0; } 58% { translate: 0 0; } 80% { translate: -1px 0; } 92% { translate: -1px 0; }
 }
-/* Copias cortadas en franjas que saltan de lado (como una señal que falla) */
+/* Copias cortadas en franjas que saltan de lado (como una señal que falla).
+   Solo hacia la izquierda: si fueran a la derecha se vería el corte recto del borde de la foto. */
 .pr-foto .pr-g { opacity: 0; pointer-events: none; }
 .pr-foto .pr-g1 { animation: franjas-1 3.4s steps(1) infinite; }
-.pr-foto .pr-g2 { animation: franjas-2 3.4s steps(1) infinite; filter: contrast(1.4); }
+.pr-foto .pr-g2 { animation: franjas-2 3.4s steps(1) infinite; }
 @keyframes franjas-1 {
-  0%   { opacity: 1; clip-path: inset(44% 0 51% 0); translate: 14px 0; }
+  0%   { opacity: 1; clip-path: inset(44% 0 51% 0); translate: -14px 0; }
   3%   { opacity: 1; clip-path: inset(30% 0 64% 0); translate: -10px 0; }
-  6%   { opacity: 1; clip-path: inset(60% 0 33% 0); translate: 8px 0; }
+  6%   { opacity: 1; clip-path: inset(60% 0 33% 0); translate: -8px 0; }
   9%   { opacity: 0; }
   48%  { opacity: 1; clip-path: inset(46% 0 49% 0); translate: -18px 0; }
-  51%  { opacity: 1; clip-path: inset(75% 0 18% 0); translate: 12px 0; }
+  51%  { opacity: 1; clip-path: inset(75% 0 18% 0); translate: -12px 0; }
   54%  { opacity: 0; }
   100% { opacity: 0; }
 }
 @keyframes franjas-2 {
   0%   { opacity: 0; }
-  2%   { opacity: .9; clip-path: inset(36% 0 58% 0); translate: 22px 0; }
+  2%   { opacity: .9; clip-path: inset(36% 0 58% 0); translate: -22px 0; }
   5%   { opacity: .9; clip-path: inset(47% 0 50% 0); translate: -6px 0; }
   8%   { opacity: 0; }
-  50%  { opacity: .9; clip-path: inset(52% 0 40% 0); translate: 20px 0; }
+  50%  { opacity: .9; clip-path: inset(52% 0 40% 0); translate: -20px 0; }
   53%  { opacity: 0; }
   100% { opacity: 0; }
 }
@@ -72,7 +73,7 @@
 @keyframes toque { 0% { translate: 0 0; } 35% { translate: -4px 5px; } 100% { translate: 0 0; } }
 /* Cuando llega un aviso, toda la figura da un salto de glitch */
 .pr-foto.toca .pr-base { animation: salto .28s steps(2); }
-@keyframes salto { 0% { translate: 6px 0; } 50% { translate: -5px 0; } 100% { translate: 0 0; } }
+@keyframes salto { 0% { translate: -6px 0; } 50% { translate: -2px 0; } 100% { translate: 0 0; } }
 
 /* Texto arriba, sobre el gris limpio de la foto */
 .pr-texto { position: absolute; z-index: 3; left: var(--lado); right: var(--lado); top: 26px; }

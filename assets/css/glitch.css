@@ -70,23 +70,23 @@
 .foto-cartel img:first-child { animation: cartel-mueve 16s ease-in-out infinite alternate, salta 6.4s steps(1, end) infinite 2s; }
 .foto-cartel.desfase img, .foto-cartel.desfase img:first-child { animation-delay: 0s, 4.6s; }
 @keyframes corte-1 {
-  0%   { opacity: 1; clip-path: inset(40% 0 52% 0); translate: 16px 0; }
+  0%   { opacity: 1; clip-path: inset(40% 0 52% 0); translate: -16px 0; }
   2%   { opacity: 1; clip-path: inset(50% 0 42% 0); translate: -12px 0; }
-  4%   { opacity: 1; clip-path: inset(70% 0 22% 0); translate: 9px 0; }
+  4%   { opacity: 1; clip-path: inset(70% 0 22% 0); translate: -9px 0; }
   6%, 61% { opacity: 0; }
   62%  { opacity: 1; clip-path: inset(46% 0 46% 0); translate: -18px 0; }
-  64%  { opacity: 1; clip-path: inset(78% 0 14% 0); translate: 10px 0; }
+  64%  { opacity: 1; clip-path: inset(78% 0 14% 0); translate: -10px 0; }
   66%, 100% { opacity: 0; }
 }
 @keyframes corte-2 {
   0%   { opacity: 0; }
-  1%   { opacity: .9; clip-path: inset(44% 0 52% 0); translate: 26px 0; }
+  1%   { opacity: .9; clip-path: inset(44% 0 52% 0); translate: -26px 0; }
   3%   { opacity: .9; clip-path: inset(60% 0 34% 0); translate: -8px 0; }
   5%, 62% { opacity: 0; }
-  63%  { opacity: .9; clip-path: inset(54% 0 40% 0); translate: 22px 0; }
+  63%  { opacity: .9; clip-path: inset(54% 0 40% 0); translate: -22px 0; }
   65%, 100% { opacity: 0; }
 }
-@keyframes salta { 0% { translate: 4px 0; } 2% { translate: -3px 0; } 4%, 61% { translate: 0 0; } 62% { translate: -4px 0; } 64%, 100% { translate: 0 0; } }
+@keyframes salta { 0% { translate: -4px 0; } 2% { translate: -3px 0; } 4%, 61% { translate: 0 0; } 62% { translate: -4px 0; } 64%, 100% { translate: 0 0; } }
 
 @media (min-width: 900px) {
   .foto-cartel { aspect-ratio: 21 / 9; margin-bottom: 22px; }
