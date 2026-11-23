@@ -6,27 +6,29 @@
   <title>Book Lab · La app de reservas, agenda y caja para barberías, hecha por un barbero</title>
   <meta name="description" content="Reservas online 24/7 sin comisiones, Smart Booking, agenda de cada barbero, caja para iPad, recordatorios, control de no shows y BookLab Intelligence. Prueba 14 días gratis. Hecho por un barbero.">
   <link rel="canonical" href="https://getbooklab.com/">
-  <meta name="theme-color" content="#f2f2f0">
+  <meta name="theme-color" content="#f2f2f2">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://getbooklab.com/">
   <meta property="og:title" content="Book Lab · Tu barbería trabaja sola. Tú vuelves a tener vida.">
   <meta property="og:description" content="Web propia, reservas 24/7, recordatorios, reseñas, lista de espera y caja. Hecho por un barbero, para barberos.">
-  <meta property="og:image" content="https://getbooklab.com/assets/img/og.jpg">
+  <meta property="og:image" content="https://getbooklab.com/assets/img/og.jpg?v=2">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="icon" type="image/png" href="assets/img/favicon.png">
-  <link rel="apple-touch-icon" href="assets/img/icon-180.png">
+  <link rel="icon" type="image/png" href="assets/img/favicon.png?v=2">
+  <link rel="apple-touch-icon" href="assets/img/icon-180.png?v=2">
   <link rel="preload" as="font" href="assets/fonts/archivo-var.woff2" type="font/woff2" crossorigin>
-  <link rel="preload" as="image" href="assets/img/mano-tatuada-3.webp" type="image/webp">
-  <link rel="stylesheet" href="assets/css/clara.css?v=20261117j">
-  <link rel="stylesheet" href="assets/css/foto-mano.css?v=19">
-  <link rel="stylesheet" href="assets/css/carrusel-ui.css?v=7">
+  <link rel="preload" as="image" href="assets/img/portada-amarilla.webp?v=1" type="image/webp">
+  <link rel="stylesheet" href="assets/css/clara.css?v=20261123">
+  <link rel="stylesheet" href="assets/css/portada-marca.css?v=1">
+  <link rel="stylesheet" href="assets/css/glitch.css?v=14">
+  <script>document.documentElement.classList.add('gl-js');</script>
+  <link rel="stylesheet" href="assets/css/carrusel-ui.css?v=8">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
     "name": "Book Lab",
     "url": "https://getbooklab.com/",
-    "logo": "https://getbooklab.com/assets/img/logo.webp",
+    "logo": "https://getbooklab.com/assets/img/logo-b-512.png",
     "description": "App de reservas, agenda, caja y recordatorios para barberías.",
     "email": "booklab.com@gmail.com",
     "telephone": "+34746045607",
@@ -35,12 +37,13 @@
   }
   </script>
 <style>
-  .pildora-amarilla { background: #FEDA12; color: #111; padding-right: 20px; font-weight: 700; }
+  .pildora-amarilla { background: #FEE304; color: #111; padding-right: 20px; font-weight: 700; }
   .pildora-amarilla i { width: 9px; height: 9px; border-radius: 50%; background: #111; }
   .pildora-borde { border: 1.5px solid #111; color: #111; padding-right: 20px; }
   .nav-botones { display: flex; gap: 6px; }
-  .nav-demo { border: 1px solid #cfcdc8; padding-right: 16px; }
-  .nav-marca { white-space: nowrap; }
+  .nav-demo { border: 1px solid #cfcfcf; padding-right: 16px; }
+  .nav-marca { white-space: nowrap; display: inline-flex; align-items: center; gap: 9px; }
+  .nav-b { width: 30px; height: 30px; border-radius: 8px; }
   @media (max-width: 480px) { .solo-grande { display: none; } .nav-botones .pildora { padding: 9px 13px; font-size: .86rem; } .nav-botones { gap: 5px; } .nav-marca { font-size: 1.1rem; } }
   .cta-prueba { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
   .cta-nota { width: 100%; margin: 4px 0 0; font-size: .86rem; color: #6b6b6b; }
@@ -48,13 +51,13 @@
   .precios-o { margin: 14px 0 8px; text-align: center; color: #6b6b6b; font-size: .9rem; }
   .final-demo { display: grid; gap: 10px; }
   .pro { margin: 28px 0 0; padding: 26px 20px 22px; border-radius: 26px; background: #111; color: #fff; }
-  .pro-etiqueta { display: inline-block; padding: 6px 12px; border-radius: 999px; background: #FEDA12; color: #111; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .pro-etiqueta { display: inline-block; padding: 6px 12px; border-radius: 999px; background: #FEE304; color: #111; font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
   .pro h2 { margin: 14px 0 8px; font-size: clamp(2.4rem, 11vw, 3.4rem); letter-spacing: -.05em; line-height: .95; color: #fff; }
   .pro h2 sup { font-size: .35em; vertical-align: super; }
   .pro-lema { margin: 0 0 16px; color: #d6d6d6; font-size: 1.05rem; line-height: 1.45; }
   .pro-lista { list-style: none; margin: 0 0 18px; padding: 0; display: grid; gap: 8px; }
   .pro-lista li { display: flex; gap: 10px; align-items: flex-start; color: #eee; font-size: .97rem; }
-  .pro-lista li::before { content: ''; flex: none; width: 8px; height: 8px; margin-top: 8px; border-radius: 50%; background: #FEDA12; }
+  .pro-lista li::before { content: ''; flex: none; width: 8px; height: 8px; margin-top: 8px; border-radius: 50%; background: #FEE304; }
   .pro-precio { margin: 0 0 16px; color: #aaa; } .pro-precio b { color: #fff; font-size: 1.3rem; }
   .pro-botones { display: grid; gap: 8px; }
   .pro-botones .pildora { justify-content: center; }
@@ -76,7 +79,7 @@
     .app-carril { grid-auto-flow: row; grid-template-columns: repeat(5, 1fr); grid-auto-columns: auto; overflow: visible; padding: 0; gap: 18px; }
     .app-cap-nota { display: none; }
   }
-  .demo-viva { margin: 26px 0 0; padding: 26px 20px; border-radius: 26px; background: #FEDA12; color: #111; }
+  .demo-viva { margin: 26px 0 0; padding: 26px 20px; border-radius: 26px; background: #FEE304; color: #111; }
   .demo-eye { margin: 0 0 6px; font-weight: 750; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; }
   .demo-viva h2 { margin: 0 0 10px; font: 750 clamp(1.8rem, 8vw, 2.8rem)/1 var(--letra); letter-spacing: -.045em; }
   .demo-sub { margin: 0 0 18px; line-height: 1.45; }
@@ -85,31 +88,31 @@
   .demo-c { display: grid; gap: 6px; align-content: start; padding: 18px; border-radius: 20px; background: #fff; color: #111; text-decoration: none; transition: transform .15s; }
   .demo-c:active { transform: scale(.99); }
   .demo-c.destacada { background: #111; color: #fff; }
-  .demo-n { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #111; color: #FEDA12; font-weight: 800; }
-  .demo-c.destacada .demo-n { background: #FEDA12; color: #111; }
+  .demo-n { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; background: #111; color: #FEE304; font-weight: 800; }
+  .demo-c.destacada .demo-n { background: #FEE304; color: #111; }
   .demo-c b { font-size: 1.2rem; letter-spacing: -.02em; } .demo-c span:not(.demo-n) { color: inherit; opacity: .75; line-height: 1.35; }
   .demo-c em { font-style: normal; font-weight: 750; margin-top: 6px; }
   .intel { margin: 28px 0 0; padding: 28px 20px; border-radius: 26px; background: #111; color: #fff; }
-  .intel-marca { color: #FEDA12; }
+  .intel-marca { color: #FEE304; }
   .intel h2 { margin: 10px 0 10px; font: 750 clamp(1.9rem, 8.5vw, 3rem)/1 var(--letra); letter-spacing: -.045em; color: #fff; }
-  .intel h2 span { color: #9a9a97; }
-  .intel-sub { color: #cfcfcc; margin: 0 0 18px; line-height: 1.45; }
+  .intel h2 span { color: #9a9a9a; }
+  .intel-sub { color: #cfcfcf; margin: 0 0 18px; line-height: 1.45; }
   .intel-cols { display: grid; gap: 20px; align-items: center; }
   @media (min-width: 760px) { .intel-cols { grid-template-columns: 1fr 280px; } }
   .intel-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
   .intel-lista li { display: grid; gap: 3px; padding: 14px 16px; border-radius: 16px; background: #1e1e1e; }
-  .intel-lista b { color: #FEDA12; } .intel-lista span { color: #bdbdba; font-size: .95rem; }
+  .intel-lista b { color: #FEE304; } .intel-lista span { color: #bdbdbd; font-size: .95rem; }
   .intel-tel { max-width: 280px; margin: 0 auto; }
   .intel-tel img { display: block; width: 100%; border-radius: 24px; }
   .caja-ipad, .recordar { margin: 28px 0 0; }
-  .espera { margin: 28px 0 0; padding: 28px 20px; border-radius: 26px; background: #FFE14D; color: #111; }
+  .espera { margin: 28px 0 0; padding: 28px 20px; border-radius: 26px; background: #FEE304; color: #111; }
   .espera h2 { font: 750 clamp(1.8rem, 8vw, 2.8rem)/1 var(--letra); letter-spacing: -.045em; margin: 0 0 12px; }
   .espera h2 span { display: block; }
   .espera > p { line-height: 1.5; margin: 0 0 18px; max-width: 60ch; }
   .espera-pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; max-width: 460px; }
   .espera-pasos li { display: flex; gap: 12px; align-items: baseline; padding: 13px 16px; border-radius: 16px; background: rgba(255,255,255,.75); }
   .espera-pasos li span { font-size: .8rem; color: #666; font-variant-numeric: tabular-nums; }
-  .espera-pasos li.ok { background: #111; color: #fff; } .espera-pasos li.ok span { color: #FFE14D; }
+  .espera-pasos li.ok { background: #111; color: #fff; } .espera-pasos li.ok span { color: #FEE304; }
   .caja-ipad h2, .recordar h2, .compara h2, .faq h2 { font: 750 clamp(1.8rem, 8vw, 2.8rem)/1 var(--letra); letter-spacing: -.045em; margin: 0 0 10px; }
   .caja-ipad > p, .recordar > p { color: #444; line-height: 1.5; margin: 0 0 16px; }
   .marco-ipad { padding: 10px; border-radius: 26px; background: #111; box-shadow: 0 0 0 1px #2a2a2a; }
@@ -122,8 +125,8 @@
   .compara-col.nuestra { background: #111; color: #fff; }
   .compara-t { margin: 0 0 10px; font-weight: 800; }
   .compara-col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: .95rem; }
-  .compara-col.otras li { color: #6b6b6b; } .compara-col.otras li::before { content: '✕ '; color: #c0392b; font-weight: 800; }
-  .compara-col.nuestra li::before { content: '✓ '; color: #FEDA12; font-weight: 800; }
+  .compara-col.otras li { color: #6b6b6b; } .compara-col.otras li::before { content: '✕ '; color: #9a9a9a; font-weight: 800; }
+  .compara-col.nuestra li::before { content: '✓ '; color: #FEE304; font-weight: 800; }
   .faq { margin: 28px 0 0; }
   .faq details { margin: 0 0 8px; padding: 16px 18px; border-radius: 18px; background: var(--tarjeta); }
   .faq summary { cursor: pointer; font-weight: 750; list-style: none; }
@@ -134,7 +137,7 @@
   .final-t { font: 750 clamp(1.8rem, 8vw, 2.6rem)/1.02 var(--letra); letter-spacing: -.045em; margin: 0 0 6px; }
   .final-t span { color: #6b6b6b; }
   .pronto { position: fixed; left: 50%; bottom: 22px; transform: translateX(-50%); z-index: 50; max-width: calc(100% - 32px); padding: 14px 20px; border-radius: 16px; background: #111; color: #fff; font-weight: 650; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
-  .migrar { margin-top: 26px; padding: 26px 20px 28px; border-radius: var(--radio); background: var(--tarjeta); border: 2px solid #FEDA12; }
+  .migrar { margin-top: 26px; padding: 26px 20px 28px; border-radius: var(--radio); background: var(--tarjeta); border: 2px solid #FEE304; }
   .migrar-eye { margin: 0 0 6px; color: var(--gris); font-weight: 600; font-size: .95rem; }
   .migrar h2 { margin: 0 0 10px; font: 700 clamp(1.7rem, 7.5vw, 3rem)/1 var(--letra); letter-spacing: -.04em; }
   .migrar-texto { margin: 0 0 18px; color: #333; max-width: 46ch; }
@@ -142,14 +145,14 @@
   .beneficios { list-style: none; margin: 0 0 6px; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .beneficios a { display: grid; gap: 3px; height: 100%; padding: 13px 14px; border-radius: 16px; background: var(--tarjeta); text-decoration: none; }
   .beneficios b { display: flex; gap: 8px; align-items: baseline; font-size: .98rem; letter-spacing: -.02em; line-height: 1.2; }
-  .beneficios b::before { content: ''; flex: none; width: 8px; height: 8px; border-radius: 50%; background: #FEDA12; box-shadow: 0 0 0 1.5px #111; transform: translateY(-1px); }
+  .beneficios b::before { content: ''; flex: none; width: 8px; height: 8px; border-radius: 50%; background: #FEE304; box-shadow: 0 0 0 1.5px #111; transform: translateY(-1px); }
   .beneficios span { color: var(--gris); font-size: .84rem; line-height: 1.3; }
   @media (min-width: 760px) { .beneficios { grid-template-columns: repeat(4, 1fr); gap: 10px; } .beneficios a { padding: 16px 18px; } .beneficios b { font-size: 1.08rem; } }
   .nivel { display: flex; align-items: center; gap: 10px; margin: 44px 0 -12px; font: 750 .82rem/1 var(--letra); letter-spacing: .08em; text-transform: uppercase; }
-  .nivel span { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #111; color: #FEDA12; letter-spacing: 0; }
+  .nivel span { display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: #111; color: #FEE304; letter-spacing: 0; }
   .nivel::after { content: ''; flex: 1; height: 1px; background: var(--linea); }
-  .mini-cta { display: inline-block; margin-top: 16px; font-weight: 750; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; text-decoration-color: #FEDA12; }
-  .intel .mini-cta { color: #FEDA12; text-decoration-color: currentColor; }
+  .mini-cta { display: inline-block; margin-top: 16px; font-weight: 750; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 4px; text-decoration-color: #FEE304; }
+  .intel .mini-cta { color: #FEE304; text-decoration-color: currentColor; }
   .nota-peq { margin: 10px 0 0; font-size: .85rem; color: var(--gris); }
   .caja-ipad h2 span, .bloque-blanco h2 span, .categorias h2 span, .confianza h2 span { color: #6b6b6b; }
   .bloque-blanco { margin: 28px 0 0; }
@@ -157,8 +160,8 @@
   .bloque-blanco > p, .confianza > p { color: #444; line-height: 1.5; margin: 0 0 16px; max-width: 60ch; }
   .recuperar { margin-top: 20px; padding: 18px 16px; border-radius: 16px; border: 1px solid #333; }
   .recuperar h3 { margin: 0 0 10px; font-size: 1.2rem; letter-spacing: -.02em; line-height: 1.2; }
-  .recuperar h3 span { color: #9a9a97; }
-  .recuperar ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; color: #cfcfcc; font-size: .95rem; }
+  .recuperar h3 span { color: #9a9a9a; }
+  .recuperar ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; color: #cfcfcf; font-size: .95rem; }
   .recuperar b { color: #fff; }
   .categorias { margin: 40px 0 0; }
   .categorias ol { list-style: none; margin: 0 0 22px; padding: 0; display: grid; gap: 8px; counter-reset: cat; }
@@ -175,7 +178,7 @@
   .cambia-fila > * { padding: 12px 14px; line-height: 1.3; }
   .cambia-fila span { background: var(--tarjeta); color: #6b6b6b; }
   .cambia-fila b { background: #111; color: #fff; }
-  .cambia-fila b::before { content: '✓ '; color: #FEDA12; }
+  .cambia-fila b::before { content: '✓ '; color: #FEE304; }
   .cambia-cab > * { padding: 4px 14px; background: none !important; color: #6b6b6b !important; font-size: .8rem; font-weight: 750; letter-spacing: .06em; text-transform: uppercase; }
   .cambia-cab b::before { content: none; }
   .confianza { margin: 44px 0 0; }
@@ -191,7 +194,7 @@
   .espera-fotos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; max-width: 560px; }
   .espera-fotos figure { margin: 0; }
   .espera-fotos .tel { background: #111; box-shadow: none; padding: 6px; border-radius: 26px; }
-  .espera-fotos .tel img { aspect-ratio: 780 / 1375; object-fit: cover; object-position: top; border-radius: 20px; height: auto; background: #f3f3f1; }
+  .espera-fotos .tel img { aspect-ratio: 780 / 1375; object-fit: cover; object-position: top; border-radius: 20px; height: auto; background: #f3f3f3; }
   .espera-fotos figcaption { margin-top: 8px; font-size: .86rem; line-height: 1.35; color: #333; }
   .espera-fotos figcaption b { display: block; color: #111; font-size: .95rem; }
   @media (min-width: 900px) { .espera { display: grid; grid-template-columns: 1.1fr 1fr; column-gap: 40px; align-items: start; } .espera > h2, .espera > p, .espera-pasos { grid-column: 1; } .espera-fotos { grid-column: 2; grid-row: 1 / span 3; margin-top: 0; } }
@@ -199,7 +202,7 @@
 </head>
 <body>
   <header class="nav">
-    <a class="nav-marca" href="./">Book Lab<sup>®</sup></a>
+    <a class="nav-marca" href="./"><img class="nav-b" src="assets/img/logo-b-128.png" alt="" width="30" height="30">Book Lab</a>
     <div class="nav-botones"><a class="nav-entrar" href="https://app.getbooklab.com/entrar" aria-label="Mi cuenta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg><span>Mi cuenta</span></a></div>
   </header>
 
@@ -207,24 +210,24 @@
     <section class="portada" aria-labelledby="portada-titulo">
       <!-- Portada: mano tatuada (imagen creada con IA por Johan) con el móvil del dueño. La pantalla se enciende
            y los avisos de Book Lab nacen en ella y salen hacia fuera, grandes y apilados. -->
-      <div class="foto-mano" id="foto-mano">
-        <div class="foto-mano-marco" id="mano-marco">
-          <div class="bloqueo" id="bloqueo" aria-hidden="true">
-            <p class="bloqueo-fecha">martes, 3 de noviembre</p>
-            <p class="bloqueo-hora">10:58</p>
-          </div>
-          <img class="foto-mano-img" src="assets/img/mano-tatuada-3.webp?v=1" alt="" width="1024" height="1536" aria-hidden="true">
+      <div class="pr" id="portada-roja">
+        <div class="pr-foto" id="pr-foto">
+          <img class="pr-base" src="assets/img/portada-amarilla.webp?v=1" alt="" width="941" height="1672" aria-hidden="true">
+          <img class="pr-g pr-g1" src="assets/img/portada-amarilla.webp?v=1" alt="" aria-hidden="true">
+          <img class="pr-g pr-g2" src="assets/img/portada-amarilla.webp?v=1" alt="" aria-hidden="true">
+          <img class="pr-mano" src="assets/img/portada-amarilla.webp?v=1" alt="" aria-hidden="true">
         </div>
-        <ul class="avisos-fuera" id="avisos" aria-hidden="true">
+        <ul class="pr-avisos" id="avisos" aria-hidden="true">
           <li><b>Nueva reserva</b><span>Carlos · Skinfade · mañana 11:00</span></li>
-          <li><b>Recordatorios enviados</b><span>6 clientes de hoy, con un toque</span></li>
-          <li><b>Hueco recuperado</b><span>Iván cogió la cita que se canceló</span></li>
-          <li><b>Nueva reseña en Google</b><span>★★★★★ «El mejor fade de la zona»</span></li>
-          <li><b>Caja de hoy</b><span>Llevas <em>412</em> € · 23 cobros</span></li>
+          <li><b>Recordatorios enviados</b><span>6 clientes de hoy</span></li>
+          <li><b>Hueco recuperado</b><span>Iván cogió la cita cancelada</span></li>
+          <li><b>Nueva reseña en Google</b><span>★★★★★ «El mejor fade»</span></li>
+          <li><b>Caja de hoy</b><span>Llevas <em>412 €</em> · 23 cobros</span></li>
         </ul>
-        <div class="foto-mano-texto">
-          <h1 class="marca-gigante" id="portada-titulo">Book <span class="amarillo">Lab</span><sup>®</sup></h1>
-          <p class="video-lema">Tu barbería trabaja sola.<br><span class="amarillo">Tú vuelves a tener vida.</span></p>
+        <div class="pr-texto">
+          <span class="pr-raya" aria-hidden="true"></span>
+          <h1 class="pr-marca" id="portada-titulo">Book <span>Lab</span><sup>®</sup></h1>
+          <p class="pr-lema">Tu barbería trabaja sola. <span class="cursor">Tú vuelves a tener vida.</span></p>
         </div>
       </div>
 
@@ -260,16 +263,14 @@
 
       <!-- Confianza: hecho por un barbero -->
       <section class="confianza" aria-labelledby="conf-titulo">
-        <h2 id="conf-titulo">Hecho por un barbero. <span>Para barberías.</span></h2>
-        <p>Johan lleva 14 años detrás del sillón. Sabe lo que es pasar el día cortando, contestando WhatsApps, cuadrando citas y llevando las cuentas. Por eso creó Book Lab, y lo usa en su propio negocio.</p>
-        <!-- Tarjeta personal (la foto de Johan irá aquí cuando la tenga) -->
-        <div class="tarjeta">
-          <div class="tarjeta-foto" aria-hidden="true">J</div>
-          <div class="tarjeta-texto">
-            <small>Barbero desde hace 14 años · fundador</small>
-            <b>Johan</b>
-          </div>
+        <div class="foto-cartel cartel-johan">
+          <img src="assets/img/barbero.webp?v=1" alt="Johan cortando el pelo a un cliente" width="1254" height="1254" loading="lazy">
+          <img class="g g1" src="assets/img/barbero.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+          <img class="g g2" src="assets/img/barbero.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+          <h2 class="foto-titulo" id="conf-titulo">Hecho por un barbero. <span>Para barberías.</span></h2>
+          <p class="foto-pie"><b>Johan</b><span>Barbero desde hace 14 años · fundador de Book Lab</span></p>
         </div>
+        <p class="foto-texto">Johan lleva 14 años detrás del sillón. Sabe lo que es pasar el día cortando, contestando WhatsApps, cuadrando citas y llevando las cuentas. Por eso creó Book Lab, y lo usa en su propio negocio.</p>
       </section>
 
       <!-- ===== 1. AHORRA TIEMPO ===== -->
@@ -277,8 +278,13 @@
 
       <!-- Recordatorios y WhatsApp -->
       <section class="recordar" id="recordatorios" aria-labelledby="recordar-titulo">
-        <h2 id="recordar-titulo">Deja de escribir a tus clientes uno por uno</h2>
-        <p>Los correos salen <b>solos</b>: confirmación, recordatorios, reseñas y avisos de cancelación. Los WhatsApp, ya escritos con su nombre y su hora.</p>
+        <div class="foto-cartel cartel-recordar desfase">
+          <img src="assets/img/mensajes.webp?v=1" alt="Manos enviando mensajes desde el móvil" width="1086" height="1448" loading="lazy">
+          <img class="g g1" src="assets/img/mensajes.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+          <img class="g g2" src="assets/img/mensajes.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+          <h2 class="foto-titulo" id="recordar-titulo">Deja de escribir a tus clientes <span>uno por uno.</span></h2>
+        </div>
+        <p class="foto-texto">Los correos salen <b>solos</b>: confirmación, recordatorios, reseñas y avisos de cancelación. Los WhatsApp, con un clic.</p>
         <ul class="caja-puntos">
           <li><b>Desde el móvil, con un toque.</b> Se abre WhatsApp con el mensaje escrito y tú le das a enviar. Todas las citas de hoy, una detrás de otra.</li>
           <li><b>Desde el ordenador, solos.</b> La app Book Lab Recordatorios (Mac o Windows) los envía uno a uno, con pausas, desde tu propio WhatsApp.</li>
@@ -316,8 +322,14 @@
       </section>
 
       <!-- Lista de espera: el hueco se llena solo -->
-      <section class="espera" id="espera" aria-labelledby="espera-titulo">
-        <h2 id="espera-titulo">Si alguien cancela, <span>el hueco se llena solo</span></h2>
+      <div class="foto-cartel cartel-sangre">
+        <img src="assets/img/sillon.webp?v=1" alt="Un sillón de barbero vacío y alguien que llega" width="1194" height="1600" loading="lazy">
+        <img class="g g1" src="assets/img/sillon.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+        <img class="g g2" src="assets/img/sillon.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+        <p class="foto-titulo-grande" aria-hidden="true">Si alguien cancela, <span>el hueco se llena solo.</span></p>
+      </div>
+      <section class="espera tras-foto" id="espera" aria-labelledby="espera-titulo">
+        <h2 id="espera-titulo" class="solo-lector">Si alguien cancela, el hueco se llena solo</h2>
         <p>Cuando no queda hora, tu cliente se apunta a la lista de espera de ese día. Si alguien cancela, Book Lab avisa al momento a los que esperan y el primero que reserva se la queda. Horas que antes se perdían, recuperadas. Tú no haces nada.</p>
         <ol class="espera-pasos" aria-label="Así funciona">
           <li><span>17:02</span><b>Marcos cancela su cita de las 18:00</b></li>
@@ -371,9 +383,16 @@
 
       <!-- Caja del iPad + modo caja -->
       <section class="caja-ipad" id="caja" aria-labelledby="caja-titulo">
-        <h2 id="caja-titulo">Todo lo que entra y sale, <span>bajo control</span></h2>
-        <p>Una caja de verdad en tu iPad, conectada con la agenda. Tocas al cliente y ya está cargado lo que reservó. Añades la cera, eliges cómo paga y te dice el cambio.</p>
-        <div class="marco-ipad"><img src="assets/img/app/caja-ipad.webp?v=3" alt="Caja de Book Lab en un iPad" loading="lazy"></div>
+        <div class="caja-escena">
+          <div class="foto-cartel cartel-caja">
+            <img src="assets/img/caja.webp?v=1" alt="Un barbero llevando la caja en el iPad del mostrador" width="1194" height="1600" loading="lazy">
+            <img class="g g1" src="assets/img/caja.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+            <img class="g g2" src="assets/img/caja.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+            <h2 class="foto-titulo" id="caja-titulo">Todo lo que entra y sale, <span>bajo control.</span></h2>
+          </div>
+          <div class="marco-ipad caja-flota"><img src="assets/img/app/caja-ipad.webp?v=3" alt="Caja de Book Lab en un iPad" loading="lazy"></div>
+        </div>
+        <p class="foto-texto">Una caja de verdad en tu iPad, conectada con la agenda. Tocas al cliente y ya está cargado lo que reservó. Añades la cera, eliges cómo paga y te dice el cambio.</p>
         <ul class="caja-puntos">
           <li><b>Efectivo, tarjeta o Bizum.</b> Servicios y productos, con inventario y aviso de poco stock.</li>
           <li><b>Cierre de caja y comisiones.</b> Cuadras el efectivo y ves lo que le toca a cada barbero.</li>
@@ -500,7 +519,7 @@
 
       <!-- Book Lab PRO: lo de encima, más una web a medida -->
       <section class="pro" aria-labelledby="pro-titulo">
-        <span class="pro-etiqueta">Book Lab<sup>®</sup> PRO</span>
+        <span class="pro-etiqueta"><i class="b-ico" aria-hidden="true"></i>Book Lab PRO</span>
         <h2 id="pro-titulo">Una web a la altura de tu barbería</h2>
         <p class="pro-lema">Para quien quiere más: todo lo de Book Lab, más una web hecha a medida. Nosotros te lo montamos todo.</p>
         <ul class="pro-lista">
@@ -533,8 +552,13 @@
       </section>
 
       <section class="final" aria-label="Pruébalo">
-        <div class="final-demo">
-          <p class="final-t">Tu barbería, trabajando sola. <span>Empieza hoy.</span></p>
+        <div class="final-demo con-foto">
+          <div class="final-foto" aria-hidden="true">
+            <img src="assets/img/final.webp?v=1" alt="" width="1194" height="1600" loading="lazy">
+            <img class="g g1" src="assets/img/final.webp?v=1" alt="" loading="lazy">
+            <img class="g g2" src="assets/img/final.webp?v=1" alt="" loading="lazy">
+          </div>
+          <p class="final-t">Tu barbería, trabajando sola. <span class="cursor">Empieza hoy.</span></p>
           <a class="pildora pildora-amarilla pildora-grande" href="https://app.getbooklab.com/empezar">Prueba Book Lab gratis 14 días <i aria-hidden="true"></i></a>
           <a class="pildora pildora-negra pildora-grande" href="#demo">Antes, mira la demo <i aria-hidden="true"></i></a>
           <p class="cta-nota">Sin tarjeta · Sin permanencia · Te pasamos tus clientes</p>
@@ -545,7 +569,7 @@
   </main>
 
   <footer class="pie">
-    <span>© 2026 Book Lab · Reservas, agenda y caja para barberías</span>
+    <span class="pie-marca"><i class="b-ico" aria-hidden="true"></i>© 2026 Book Lab · Reservas, agenda y caja para barberías</span>
     <nav aria-label="Legal"><a href="legal.html#aviso-legal">Aviso legal</a><a href="legal.html#privacidad">Privacidad</a><a href="legal.html#cookies">Cookies</a></nav>
   </footer>
 
@@ -577,28 +601,47 @@
       });
     })();
 
-    /* Portada: la pantalla se enciende, llegan los avisos uno a uno (cada uno con halo amarillo y una vibración),
-       se ven los 3 últimos; al acabar, la pantalla se apaga y vuelve a empezar. */
+    /* Portada: la persona en glitch; cada aviso nace en la pantalla del móvil (toque del pulgar + destello)
+       y sube a su sitio. Se ven los 3 últimos y vuelve a empezar. */
     (function () {
-      var lis = document.querySelectorAll('#avisos li'), marco = document.getElementById('mano-marco'), pantalla = document.getElementById('bloqueo'), n = 0;
-      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        pantalla.classList.add('encendida'); for (var k = 2; k < lis.length; k++) lis[k].classList.add('is-on'); return;
+      var lista = document.getElementById('avisos'), lis = lista.querySelectorAll('li'), foto = document.getElementById('pr-foto'), n = 0;
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { for (var k = 2; k < lis.length; k++) lis[k].classList.add('is-on'); return; }
+      function repite(el, c) { el.classList.remove(c); void el.offsetWidth; el.classList.add(c); }
+      function desdeElMovil(li) {
+        var f = foto.getBoundingClientRect(), l = lista.getBoundingClientRect();
+        var mx = f.left + f.width * .79, my = f.top + f.height * .79;          // pantalla del móvil en la foto
+        var cx = l.left + l.width / 2, cy = l.bottom - 32;                      // sitio final del aviso nuevo (abajo de la pila)
+        li.style.setProperty('--dx', Math.round(mx - cx) + 'px');
+        li.style.setProperty('--dy', Math.round(my - cy) + 'px');
       }
-      function repite(el, clase) { el.classList.remove(clase); void el.offsetWidth; el.classList.add(clase); }
+      var reloj;
       function paso() {
-        if (n === 0) pantalla.classList.add('encendida');
         if (n < lis.length) {
+          desdeElMovil(lis[n]);
           lis[n].classList.add('is-on'); if (n >= 3) lis[n - 3].classList.remove('is-on');
-          repite(marco, 'brilla'); repite(marco, 'vibra');
-          n++; setTimeout(paso, 1600);
-        } else setTimeout(function () {
-          pantalla.classList.remove('encendida');
-          setTimeout(function () { lis.forEach(function (l) { l.classList.remove('is-on'); }); n = 0; setTimeout(paso, 900); }, 600);
-        }, 3200);
+          repite(foto, 'toca'); repite(foto, 'destella'); n++; reloj = setTimeout(paso, 1900);
+        } else reloj = setTimeout(function () { lis.forEach(function (l) { l.classList.remove('is-on'); }); n = 0; reloj = setTimeout(paso, 900); }, 3000);
       }
-      setTimeout(paso, 600);
+      reloj = setTimeout(paso, 900);
     })();
 
+
+    /* Glitch: los bloques aparecen con un glitch al llegar con el scroll, y los botones dan un glitch al tocarlos */
+    (function () {
+      var raiz = document.documentElement;
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) { raiz.classList.remove('gl-js'); return; }
+      var bloques = document.querySelectorAll('.portada-fila, .beneficios, .app-capturas, main section.portada > section, .nivel');
+      if (!('IntersectionObserver' in window)) { raiz.classList.remove('gl-js'); return; }
+      var obs = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('gl-on'); obs.unobserve(e.target); } });
+      }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
+      bloques.forEach(function (b) { b.classList.add('gl'); obs.observe(b); });
+      document.addEventListener('pointerdown', function (ev) {
+        var el = ev.target.closest('.pildora, .nav-entrar, .demo-c, .plan, .beneficios a, .categorias ol a, .mini-cta, .faq summary');
+        if (!el) return; el.classList.remove('gl-toque'); void el.offsetWidth; el.classList.add('gl-toque');
+        setTimeout(function () { el.classList.remove('gl-toque'); }, 400);
+      });
+    })();
   </script>
 </body>
 </html>
