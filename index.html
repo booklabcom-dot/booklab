@@ -148,6 +148,84 @@
     <img class="s3" src="/assets/img/final.webp?v=1" alt="">
   </div>
 
+  <!-- Detalles de «pantalla de mira» (numeritos amarillos que suben y bajan, una mira, cortes pequeños) -->
+  <div class="hud" id="hud" aria-hidden="true">
+    <div class="mira" id="mira"><i class="c1"></i><i class="c2"></i><i class="c3"></i><i class="c4"></i><b></b><span id="mira-xy">x 0.00 · y 0.00</span></div>
+  </div>
+  <style>
+    .hud { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+    .hud .n { position: absolute; font: 500 9px/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .12em; color: var(--am); opacity: .55; white-space: nowrap; animation: flota var(--t) ease-in-out infinite alternate; }
+    .hud .n.tenue { opacity: .28; }
+    @keyframes flota { from { transform: translateY(0); } to { transform: translateY(var(--dy)); } }
+    .hud .n.salta { animation: flota var(--t) ease-in-out infinite alternate, corte .3s steps(1, end); }
+    @keyframes corte { 0% { translate: -6px 0; opacity: 1; } 50% { translate: 3px 0; } 100% { translate: 0 0; } }
+    /* La mira: cuatro esquinas finas, un punto y sus coordenadas; se va moviendo despacio y «fija» de vez en cuando */
+    .mira { position: absolute; left: 0; top: 0; width: 46px; height: 46px; transition: transform 2.6s cubic-bezier(.6,0,.2,1); }
+    .mira i { position: absolute; width: 9px; height: 9px; border: 0 solid var(--am); }
+    .mira .c1 { left: 0; top: 0; border-width: 1px 0 0 1px; } .mira .c2 { right: 0; top: 0; border-width: 1px 1px 0 0; }
+    .mira .c3 { left: 0; bottom: 0; border-width: 0 0 1px 1px; } .mira .c4 { right: 0; bottom: 0; border-width: 0 1px 1px 0; }
+    .mira b { position: absolute; left: 50%; top: 50%; width: 3px; height: 3px; margin: -1.5px; background: var(--am); }
+    .mira b::before, .mira b::after { content: ""; position: absolute; background: var(--am); opacity: .6; }
+    .mira b::before { left: -9px; right: -9px; top: 1px; height: 1px; } .mira b::after { top: -9px; bottom: -9px; left: 1px; width: 1px; }
+    .mira span { position: absolute; left: 54px; top: -2px; font: 500 8px/1 ui-monospace, "SF Mono", Menlo, monospace; letter-spacing: .14em; color: var(--am); opacity: .7; white-space: nowrap; }
+    .mira.fija i { animation: fija .5s steps(2, end) 2; }
+    @keyframes fija { 50% { opacity: 0; } }
+    /* Rayitas de glitch: aparecen un instante y se van */
+    .hud .raya { position: absolute; height: 1px; background: var(--am); opacity: 0; }
+    .hud .raya.on { animation: raya .22s steps(1, end); }
+    @keyframes raya { 0% { opacity: .8; } 40% { opacity: .3; translate: -10px 0; } 70% { opacity: .7; translate: 0 0; } 100% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .hud { display: none; } }
+  </style>
+  <script>
+    (function () {
+      var hud = document.getElementById('hud'), W = function () { return innerWidth; }, H = function () { return innerHeight; };
+      var r = function (a, b) { return a + Math.random() * (b - a); };
+      var movil = innerWidth < 600, cuantos = movil ? 7 : 12;
+      /* Numeritos por los bordes (lejos de la cuenta atrás): suben o bajan despacio y cambian de valor */
+      var tipos = [
+        function () { return r(0, 1).toFixed(3); },
+        function () { return (Math.random() < .5 ? '+' : '−') + Math.floor(r(1, 99)); },
+        function () { return 'BL-' + String(Math.floor(r(0, 999))).padStart(3, '0'); },
+        function () { return String(Math.floor(r(0, 24))).padStart(2, '0') + ':' + String(Math.floor(r(0, 60))).padStart(2, '0'); },
+        function () { return Math.floor(r(10, 99)) + '.' + Math.floor(r(0, 9)) + '%'; },
+        function () { return '0' + Math.floor(r(1, 9)) + '/20'; }
+      ];
+      var nums = [];
+      for (var i = 0; i < cuantos; i++) {
+        var n = document.createElement('span'), lado = i % 2;
+        n.className = 'n' + (Math.random() < .4 ? ' tenue' : '');
+        n.style.left = (lado ? r(72, 94) : r(3, 22)) + '%';
+        n.style.top = r(8, 88) + '%';
+        n.style.setProperty('--t', r(5, 11) + 's');
+        n.style.setProperty('--dy', (Math.random() < .5 ? -1 : 1) * r(14, 46) + 'px');
+        n._f = tipos[i % tipos.length]; n.textContent = n._f();
+        hud.appendChild(n); nums.push(n);
+      }
+      setInterval(function () {
+        var n = nums[Math.floor(Math.random() * nums.length)];
+        n.textContent = n._f(); n.classList.remove('salta'); void n.offsetWidth; n.classList.add('salta');
+      }, 420);
+      /* La mira: se mueve a un punto, se fija (parpadea) y vuelve a moverse */
+      var mira = document.getElementById('mira'), xy = document.getElementById('mira-xy');
+      function mueve() {
+        var x = r(.08, .82) * W(), y = r(.1, .85) * H();
+        mira.classList.remove('fija'); mira.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+        xy.textContent = 'x ' + (x / W()).toFixed(2) + ' · y ' + (y / H()).toFixed(2);
+        setTimeout(function () { mira.classList.add('fija'); }, 2700);
+        setTimeout(mueve, r(4200, 6500));
+      }
+      mira.style.transform = 'translate(' + W() * .7 + 'px,' + H() * .25 + 'px)'; setTimeout(mueve, 900);
+      /* Rayitas de glitch sueltas */
+      var rayas = [];
+      for (var k = 0; k < 4; k++) { var ra = document.createElement('i'); ra.className = 'raya'; hud.appendChild(ra); rayas.push(ra); }
+      setInterval(function () {
+        var ra = rayas[Math.floor(Math.random() * rayas.length)];
+        ra.style.left = r(0, 85) + '%'; ra.style.top = r(5, 95) + '%'; ra.style.width = r(16, 90) + 'px';
+        ra.classList.remove('on'); void ra.offsetWidth; ra.classList.add('on');
+      }, 1300);
+    })();
+  </script>
+
   <header></header>
 
   <main>
