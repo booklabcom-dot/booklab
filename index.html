@@ -19,6 +19,7 @@
   <link rel="preload" as="image" href="assets/img/portada-amarilla.webp?v=1" type="image/webp">
   <link rel="stylesheet" href="assets/css/clara.css?v=20261123">
   <link rel="stylesheet" href="assets/css/portada-marca.css?v=2">
+  <link rel="stylesheet" href="assets/css/carteles.css?v=1">
   <link rel="stylesheet" href="assets/css/glitch.css?v=15">
   <script>document.documentElement.classList.add('gl-js');</script>
   <link rel="stylesheet" href="assets/css/carrusel-ui.css?v=8">
@@ -207,9 +208,7 @@
   </header>
 
   <main>
-    <section class="portada" aria-labelledby="portada-titulo">
-      <!-- Portada: mano tatuada (imagen creada con IA por Johan) con el móvil del dueño. La pantalla se enciende
-           y los avisos de Book Lab nacen en ella y salen hacia fuera, grandes y apilados. -->
+    <section class="portada opcion-2" aria-labelledby="portada-titulo">
       <div class="pr" id="portada-roja">
         <div class="pr-foto" id="pr-foto">
           <img class="pr-base" src="assets/img/portada-amarilla.webp?v=1" alt="" width="941" height="1672" aria-hidden="true">
@@ -231,37 +230,17 @@
         </div>
       </div>
 
-      <div class="portada-fila">
-        <p class="portada-lema">Reservas, agenda, clientes, caja y equipo en un solo lugar. Book Lab automatiza las tareas que te quitan tiempo y te ayuda a gestionar mejor tu barbería.</p>
+      <div class="portada-fila corta">
         <div class="cta-prueba">
           <a class="pildora pildora-amarilla pildora-grande" href="https://app.getbooklab.com/empezar">Prueba Book Lab gratis 14 días <i aria-hidden="true"></i></a>
-          <a class="pildora pildora-borde" href="#demo">Ver la demo</a>
-          <p class="cta-nota">Sin tarjeta · Lista en 5 minutos · Sin permanencia · Sin comisiones por reserva</p>
+          <a class="pildora pildora-borde" href="https://booklab-app-pruebas.booklab-app.workers.dev/demo" target="_blank" rel="noopener">Ver la demo</a>
+          <p class="cta-nota">Sin tarjeta · Sin permanencia · Sin comisiones</p>
         </div>
       </div>
-
-      <!-- Los 4 beneficios, de un vistazo (cada uno lleva a su sección) -->
-      <ul class="beneficios" aria-label="Lo que ganas">
-        <li><a href="#smart"><b>Reservas 24/7</b><span>Te reservan mientras cortas o duermes</span></a></li>
-        <li><a href="#espera"><b>Menos huecos vacíos</b><span>Smart Booking y lista de espera</span></a></li>
-        <li><a href="#caja"><b>Caja y gestión</b><span>Cobros, equipo y gastos</span></a></li>
-        <li><a href="#intelligence"><b>Inteligencia para crecer</b><span>Qué pasa y qué hacer</span></a></li>
-      </ul>
-
-      <!-- La app de verdad: capturas reales (página de reservas, panel, agenda y caja) -->
-      <div class="app-capturas">
-        <p class="app-cap-t">Así es Book Lab<sup>®</sup> por dentro</p>
-        <div class="app-carril">
-          <figure><div class="tel"><img src="assets/img/app/reservas.webp?v=3" alt="Página de reservas de una barbería" loading="lazy"></div><figcaption><b>Tu página de reservas</b>Con tus fotos y tus precios. La compartes donde quieras.</figcaption></figure>
-          <figure><div class="tel"><img src="assets/img/app/panel.webp?v=3" alt="Inicio del panel del jefe" loading="lazy"></div><figcaption><b>Tu día de un vistazo</b>Caja de hoy, citas, quién viene ahora.</figcaption></figure>
-          <figure><div class="tel"><img src="assets/img/app/agenda.webp?v=3" alt="Agenda de los barberos" loading="lazy"></div><figcaption><b>La agenda de todos</b>Cada barbero con su color. Apunta en tres toques.</figcaption></figure>
-          <figure><div class="tel"><img src="assets/img/app/recordatorios.webp?v=3" alt="Recordatorios por WhatsApp" loading="lazy"></div><figcaption><b>Recordatorios</b>Recuerda todas las citas de hoy, una detrás de otra.</figcaption></figure>
-          <figure><div class="tel"><img src="assets/img/app/intelligence.webp?v=3" alt="BookLab Intelligence" loading="lazy"></div><figcaption><b>BookLab Intelligence</b>Entiende tu negocio. Descubre cómo mejorarlo.</figcaption></figure>
-        </div>
-        <p class="app-cap-nota">← Desliza →</p>
+      <div class="cinta" aria-label="Lo que incluye Book Lab">
+        <ul class="cinta-pista"><li>Reservas 24/7</li><li>Recordatorios automáticos</li><li>Lista de espera</li><li>Caja y facturación</li><li>Sin comisiones</li><li>Bloqueo de clientes problemáticos</li><li>Reseñas en Google</li></ul>
+        <ul class="cinta-pista" aria-hidden="true"><li>Reservas 24/7</li><li>Recordatorios automáticos</li><li>Lista de espera</li><li>Caja y facturación</li><li>Sin comisiones</li><li>Bloqueo de clientes problemáticos</li><li>Reseñas en Google</li></ul>
       </div>
-
-      <!-- Confianza: hecho por un barbero -->
       <section class="confianza" aria-labelledby="conf-titulo">
         <div class="foto-cartel cartel-johan">
           <img src="assets/img/barbero.webp?v=1" alt="Johan cortando el pelo a un cliente" width="1254" height="1254" loading="lazy">
@@ -270,13 +249,12 @@
           <h2 class="foto-titulo" id="conf-titulo">Hecho por un barbero. <span>Para barberías.</span></h2>
           <p class="foto-pie"><b>Johan</b><span>Barbero desde hace 14 años · fundador de Book Lab</span></p>
         </div>
-        <p class="foto-texto">Johan lleva 14 años detrás del sillón. Sabe lo que es pasar el día cortando, contestando WhatsApps, cuadrando citas y llevando las cuentas. Por eso creó Book Lab, y lo usa en su propio negocio.</p>
+        <p class="foto-texto">14 años detrás del sillón. Lo creó para su barbería y lo usa cada día.</p>
+      </section>      <section class="ganas" aria-label="Lo que ganas con Book Lab">
+        <p class="ganas-t">Con Book Lab tienes</p>
+        <p class="ganas-frase"><span class="ganas-texto" id="ganas-texto">Más tiempo libre.</span><span class="ganas-cursor" aria-hidden="true"></span></p>
+        <ul class="solo-lector"><li>Más tiempo libre</li><li>La agenda llena</li><li>Menos plantones</li><li>Recordatorios automáticos</li><li>Citas sin llamadas ni mensajes</li></ul>
       </section>
-
-      <!-- ===== 1. AHORRA TIEMPO ===== -->
-      <p class="nivel"><span>1</span>Ahorra tiempo</p>
-
-      <!-- Recordatorios y WhatsApp -->
       <section class="recordar" id="recordatorios" aria-labelledby="recordar-titulo">
         <div class="foto-cartel cartel-recordar desfase">
           <img src="assets/img/mensajes.webp?v=1" alt="Manos enviando mensajes desde el móvil" width="1086" height="1448" loading="lazy">
@@ -284,44 +262,18 @@
           <img class="g g2" src="assets/img/mensajes.webp?v=1" alt="" aria-hidden="true" loading="lazy">
           <h2 class="foto-titulo" id="recordar-titulo">Deja de escribir a tus clientes <span>uno por uno.</span></h2>
         </div>
-        <p class="foto-texto">Los correos salen <b>solos</b>: confirmación, recordatorios, reseñas y avisos de cancelación. Los WhatsApp, con un clic.</p>
-        <ul class="caja-puntos">
-          <li><b>Desde el móvil, con un toque.</b> Se abre WhatsApp con el mensaje escrito y tú le das a enviar. Todas las citas de hoy, una detrás de otra.</li>
-          <li><b>Desde el ordenador, solos.</b> La app Book Lab Recordatorios (Mac o Windows) los envía uno a uno, con pausas, desde tu propio WhatsApp.</li>
-          <li><b>Difusión.</b> ¿Un imprevisto o vas con retraso? Escribes un mensaje y les llega a todos tus clientes con cita, cada uno con su nombre.</li>
-        </ul>
-      </section>
-
-      <!-- ===== 2. GANA MÁS ===== -->
-      <p class="nivel"><span>2</span>Gana más</p>
-
-      <!-- Smart Booking: la función estrella. Recomienda horas sin quitar ninguna -->
-      <section class="smart" id="smart" aria-labelledby="smart-titulo">
-        <div class="smart-texto">
-          <p class="smart-marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.5 7.3 4.7 11.5 6 7.3 7.3 6 11.5 4.7 7.3 0.5 6 4.7 4.7Z"/></svg>Smart Booking <span>· Powered by Book Lab<sup>®</sup></span></p>
-          <h2 id="smart-titulo">Más citas. Menos huecos. <span>Sin complicarte.</span></h2>
-          <p>Tus clientes reservan las 24 horas y solo ven las horas libres de verdad. Smart Booking mira la agenda de cada barbero y lo que dura cada servicio, y destaca las horas que no dejan huecos muertos.</p>
-          <ul class="smart-lista">
-            <li>Tu cliente ve todas las horas, como siempre, y elige la que quiera.</li>
-            <li>Junta las citas seguidas: casi sin huecos entre clientes y con sitio para más citas cada día.</li>
-            <li>Funciona solo. Lo enciendes o lo apagas con un toque.</li>
-          </ul>
-          <a class="mini-cta" href="https://booklab-app-pruebas.booklab-app.workers.dev/b/barberia-demo" target="_blank" rel="noopener">Pruébalo reservando en la demo →</a>
+        <p class="foto-texto">Confirmación, recordatorios y reseñas salen <b>solos</b>. Los WhatsApp, con un clic.</p>
+        <a class="mas" href="herramientas.html#recordatorios">Ver cómo funciona →</a>
+      </section>      <section class="cartel-ui cartel-smart" id="smart" aria-labelledby="smart-titulo">
+        <p class="smart-marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.5 7.3 4.7 11.5 6 7.3 7.3 6 11.5 4.7 7.3 0.5 6 4.7 4.7Z"/></svg>Smart Booking</p>
+        <h2 id="smart-titulo">Más citas. <span>Menos huecos.</span></h2>
+        <div class="horas-ui" aria-hidden="true">
+          <span>10:00</span><span class="r">10:30<small>✦ Recomendado</small></span><span class="ocupada">11:00<small>Reservada</small></span>
+          <span class="r">11:30<small>✦ Recomendado</small></span><span>12:00</span><span>12:30</span>
         </div>
-        <div class="smart-movil" aria-hidden="true">
-          <p class="sm-dia">Viernes 13 de noviembre</p>
-          <p class="sm-nota">Ya hay una cita a las 11:00. Smart Booking destaca la hora de antes y la de después.</p>
-          <div class="sm-horas">
-            <span>10:00</span><span class="r">10:30<small>✦ Recomendado</small></span><span class="ocupada">11:00<small>Reservada</small></span>
-            <span class="r">11:30<small>✦ Recomendado</small></span><span>12:00</span><span>12:30</span>
-            <span>16:00</span><span>16:30</span><span>17:00</span>
-          </div>
-          <p class="sm-marca">✦ Smart Booking <em>· Powered by Book Lab®</em></p>
-          <p class="sm-texto">Hemos destacado los horarios que mejor encajan con la agenda del profesional para organizar mejor las citas y aprovechar el tiempo entre servicios, pero puedes elegir libremente cualquier horario disponible.</p>
-        </div>
+        <p class="cartel-frase">Destaca las horas que no dejan huecos en tu agenda. Tu cliente elige igual.</p>
+        <a class="mas" href="herramientas.html#smart">Ver cómo funciona →</a>
       </section>
-
-      <!-- Lista de espera: el hueco se llena solo -->
       <div class="foto-cartel cartel-sangre">
         <img src="assets/img/sillon.webp?v=1" alt="Un sillón de barbero vacío y alguien que llega" width="1194" height="1600" loading="lazy">
         <img class="g g1" src="assets/img/sillon.webp?v=1" alt="" aria-hidden="true" loading="lazy">
@@ -330,59 +282,22 @@
       </div>
       <section class="espera tras-foto" id="espera" aria-labelledby="espera-titulo">
         <h2 id="espera-titulo" class="solo-lector">Si alguien cancela, el hueco se llena solo</h2>
-        <p>Cuando no queda hora, tu cliente se apunta a la lista de espera de ese día. Si alguien cancela, Book Lab avisa al momento a los que esperan y el primero que reserva se la queda. Horas que antes se perdían, recuperadas. Tú no haces nada.</p>
-        <ol class="espera-pasos" aria-label="Así funciona">
-          <li><span>17:02</span><b>Marcos cancela su cita de las 18:00</b></li>
-          <li><span>17:02</span><b>Book Lab ve el hueco libre</b></li>
-          <li><span>17:02</span><b>Avisa a los 3 clientes en lista de espera</b></li>
-          <li class="ok"><span>17:06</span><b>Iván reserva las 18:00 ✓</b></li>
-        </ol>
-        <div class="espera-fotos">
-          <figure><div class="tel"><img src="assets/img/app/espera-cliente.webp?v=1" alt="Día completo: el cliente se apunta a la lista de espera" loading="lazy"></div><figcaption><b>1. Día completo</b>Tu cliente se apunta con un toque.</figcaption></figure>
-          <figure><div class="tel"><img src="assets/img/app/espera-correo.webp?v=1" alt="Correo: se ha quedado un hueco libre" loading="lazy"></div>
-      </section>
-
-      <!-- No shows y bloqueos -->
-      <section class="bloque-blanco" id="no-shows" aria-labelledby="noshow-titulo">
-        <h2 id="noshow-titulo">Tu tiempo también <span>vale dinero</span></h2>
-        <p>Cuando alguien no viene, lo marcas y Book Lab hace el resto: calcula lo que te debe según tu política y te deja el mensaje escrito. Sin malos ratos.</p>
-        <ul class="caja-puntos">
-          <li><b>Ves cuánto tienes por cobrar</b> y quién falla más: «Miguel · ha fallado 2 veces».</li>
-          <li><b>WhatsApp ya escrito</b> con el día, el servicio, el importe y tu política. Solo le das a enviar.</li>
-          <li><b>Bloquea al que siempre falla.</b> Ya no puede reservar por la web.</li>
-        </ul>
-      </section>
-
-      <!-- ===== 3. CONTROLA Y HAZ CRECER TU NEGOCIO ===== -->
-      <p class="nivel"><span>3</span>Controla y haz crecer tu negocio</p>
-
-      <!-- BookLab Intelligence + recuperar clientes -->
-      <section class="intel" id="intelligence" aria-labelledby="intel-titulo">
-        <p class="smart-marca intel-marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.5 7.3 4.7 11.5 6 7.3 7.3 6 11.5 4.7 7.3 0.5 6 4.7 4.7Z"/></svg>BookLab Intelligence</p>
-        <h2 id="intel-titulo">Tu barbería te cuenta lo que pasa. <span>Book Lab te dice qué hacer.</span></h2>
-        <p class="intel-sub">Con tus datos reales, detecta lo que pasa, te lo explica en cristiano y te propone qué hacer. Tú decides: nunca cambia nada por su cuenta.</p>
-        <div class="intel-cols">
-          <ul class="intel-lista">
-            <li><b>«22 clientes llevan más de 60 días sin venir»</b><span>Y te prepara los mensajes de WhatsApp para recuperarlos.</span></li>
-            <li><b>«Los martes por la tarde tienes huecos»</b><span>Detecta las horas flojas para que pongas una oferta o cierres antes.</span></li>
-            <li><b>Objetivos del mes</b><span>Facturación, ticket medio, ocupación y clientes nuevos, con cómo vas cada día.</span></li>
-            <li><b>Cada barbero y cada servicio</b><span>Ocupación y facturación de cada uno, lo que más se vende y los productos que se acaban.</span></li>
-          </ul>
-          <div class="tel intel-tel"><img src="assets/img/app/intelligence.webp?v=3" alt="Pantalla de BookLab Intelligence" loading="lazy"></div>
+        <p class="espera-corta">Si no hay hora, se apunta. Si alguien cancela, le avisamos al momento y el primero que reserva se la queda.</p>
+        <div class="sim-espera" aria-hidden="true">
+          <div class="sim-movil">
+            <p class="sim-dia">Miércoles 18</p>
+            <p class="sim-lleno">No quedan horas</p>
+            <span class="sim-boton"><span class="sim-b1">Apuntarme a la lista de espera</span><span class="sim-b2">✓ Estás en la lista de espera</span></span>
+          </div>
+          <div class="sim-correo">
+            <p class="sim-de"><i class="b-ico"></i>Book Lab · ahora</p>
+            <b>¡Se ha quedado un hueco libre!</b>
+            <span>Miércoles 18 · 18:00 con Laura</span>
+            <span class="sim-reservar">Reservar ahora</span>
+          </div>
         </div>
-        <div class="recuperar">
-          <h3>Tus clientes no desaparecen. <span>Book Lab te ayuda a recuperarlos.</span></h3>
-          <ul>
-            <li><b>«Te toca corte».</b> Si un cliente tarda en volver, le llega un correo para reservar.</li>
-            <li><b>Ficha de cada cliente.</b> Historial, notas («siempre con Álex, café solo») y VIP.</li>
-            <li><b>Mensajes preparados</b> para los que llevan tiempo sin venir.</li>
-          </ul>
-        </div>
-        <a class="mini-cta" href="https://booklab-app-pruebas.booklab-app.workers.dev/demo" target="_blank" rel="noopener">Explora BookLab Intelligence en la demo →</a>
-      </section>
-
-      <!-- Caja del iPad + modo caja -->
-      <section class="caja-ipad" id="caja" aria-labelledby="caja-titulo">
+        <a class="mas" href="herramientas.html#espera">Ver cómo funciona →</a>
+      </section>      <section class="caja-ipad" id="caja" aria-labelledby="caja-titulo">
         <div class="caja-escena">
           <div class="foto-cartel cartel-caja">
             <img src="assets/img/caja.webp?v=1" alt="Un barbero llevando la caja en el iPad del mostrador" width="1194" height="1600" loading="lazy">
@@ -392,93 +307,38 @@
           </div>
           <div class="marco-ipad caja-flota"><img src="assets/img/app/caja-ipad.webp?v=3" alt="Caja de Book Lab en un iPad" loading="lazy"></div>
         </div>
-        <p class="foto-texto">Una caja de verdad en tu iPad, conectada con la agenda. Tocas al cliente y ya está cargado lo que reservó. Añades la cera, eliges cómo paga y te dice el cambio.</p>
-        <ul class="caja-puntos">
-          <li><b>Efectivo, tarjeta o Bizum.</b> Servicios y productos, con inventario y aviso de poco stock.</li>
-          <li><b>Cierre de caja y comisiones.</b> Cuadras el efectivo y ves lo que le toca a cada barbero.</li>
-          <li><b>Modo caja con código.</b> El iPad del mostrador solo enseña la caja. Tu facturación y tus ajustes, con tu código.</li>
-        </ul>
-        <p class="nota-peq">Es un registro interno de cobros: no emite tickets ni facturas.</p>
-      </section>
-
-      <!-- Equipo -->
-      <section class="bloque-blanco" id="equipo" aria-labelledby="equipo-titulo">
-        <h2 id="equipo-titulo">Cada barbero a lo suyo. <span>Tú controlas todo.</span></h2>
-        <p>Para barberías con equipo: cada uno lleva su agenda en su móvil y tú decides qué ve cada uno.</p>
-        <ul class="caja-puntos">
-          <li><b>Cuentas y agendas propias.</b> Agenda compartida o cada uno solo la suya.</li>
-          <li><b>Permisos a tu medida.</b> Clientes, teléfonos, facturación, precios: tú eliges qué ve y qué toca.</li>
-          <li><b>Comisión o sueldo fijo.</b> Book Lab calcula lo que le toca y cómo rinde cada uno.</li>
-        </ul>
-      </section>
-
-      <!-- La demo: una barbería de mentira para tocarlo todo -->
-      <section class="demo-viva" id="demo" aria-labelledby="demo-titulo">
-        <p class="demo-eye">Sin registrarte · sin tarjeta</p>
-        <h2 id="demo-titulo">No te lo contamos. Te dejamos probarlo.</h2>
-        <p class="demo-sub">Entra en <b>Fade Club Madrid</b>, nuestra barbería de demostración: tres barberos y año y medio de citas. Reserva como cliente, lleva la agenda, cobra desde el iPad y mira BookLab Intelligence. Tócalo todo: cada noche vuelve a estar como nueva.</p>
-        <div class="demo-tres">
-          <a class="demo-c" href="https://booklab-app-pruebas.booklab-app.workers.dev/b/barberia-demo" target="_blank" rel="noopener"><span class="demo-n">1</span><b>Reserva como un cliente</b><span>Elige servicio, barbero y hora en 30 segundos.</span><em>Abrir la página de reservas →</em></a>
-          <a class="demo-c destacada" href="https://booklab-app-pruebas.booklab-app.workers.dev/demo" target="_blank" rel="noopener"><span class="demo-n">2</span><b>Entra como el jefe</b><span>Agenda, caja, recordatorios, estadísticas y BookLab Intelligence.</span><em>Abrir el panel del jefe →</em></a>
-          <a class="demo-c" href="https://booklab-app-pruebas.booklab-app.workers.dev/demo?ir=modo-caja" target="_blank" rel="noopener"><span class="demo-n">3</span><b>Prueba la caja del iPad</b><span>La caja del mostrador, bloqueada con código. El de la demo es 1234.</span><em>Abrir la caja →</em></a>
+        <p class="foto-texto">Cobros, productos, cierre de caja y comisiones. Conectada con la agenda.</p>
+        <a class="mas" href="herramientas.html#caja">Ver cómo funciona →</a>
+      </section>      <section class="cartel-ui cartel-intel" id="intelligence" aria-labelledby="intel-titulo">
+        <p class="smart-marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.5 7.3 4.7 11.5 6 7.3 7.3 6 11.5 4.7 7.3 0.5 6 4.7 4.7Z"/></svg>BookLab Intelligence</p>
+        <h2 id="intel-titulo">Tus números, <span>en claro.</span></h2>
+        <div class="intel-escena">
+          <div class="tel intel-pantalla"><img src="assets/img/app/intelligence.webp?v=3" alt="Pantalla de BookLab Intelligence" loading="lazy"></div>
+          <ul class="avisos-intel" aria-label="Ejemplos">
+            <li><b>22 clientes</b> llevan más de 60 días sin venir</li>
+            <li>Los <b>martes por la tarde</b> tienes huecos</li>
+            <li>Vas al <b>82 %</b> del objetivo del mes</li>
+          </ul>
         </div>
+        <a class="mas" href="herramientas.html#intelligence">Ver cómo funciona →</a>
       </section>
-
-      <!-- Todo lo demás, en 5 bloques: llevan a Herramientas -->
-      <section class="categorias" aria-labelledby="cat-titulo">
-        <h2 id="cat-titulo">Todo tu negocio, <span>en una app</span></h2>
-        <ol>
-          <li><a href="herramientas.html#atraer"><b>Atraer y recibir clientes</b><span>Página de reservas, Smart Booking, política de reservas, gestionar mi cita</span></a></li>
-          <li><a href="herramientas.html#automatizar"><b>Automatizar el día a día</b><span>Recordatorios, WhatsApp, lista de espera, reseñas, no shows</span></a></li>
-          <li><a href="herramientas.html#gestionar"><b>Gestionar tu barbería</b><span>Agenda, caja, equipo, fichas de cliente, productos, gastos</span></a></li>
-          <li><a href="herramientas.html#crecer"><b>Hacer crecer tu negocio</b><span>BookLab Intelligence, estadísticas, objetivos, recuperar clientes</span></a></li>
-          <li><a href="herramientas.html#tranquilidad"><b>Tranquilidad y control</b><span>Seguridad, copias cada noche, privacidad, tus datos y te pasamos tus clientes</span></a></li>
-        </ol>
-        <a class="final-herramientas" href="herramientas.html">Ver todas las herramientas <span aria-hidden="true">→</span></a>
+      <section class="y-ademas" aria-label="Y además">
+        <p class="y-ademas-t">Y además</p>
+        <ul class="chips grandes"><li>Bloquea a los clientes que no aparecen</li><li>Agenda de cada barbero</li><li>Avisos de no show</li><li>Equipo y permisos</li><li>Reseñas en Google</li><li>Gastos y beneficio</li><li>App de avisos para el ordenador</li></ul>
+        <a class="mas" href="herramientas.html">Ver todas las herramientas →</a>
       </section>
-
-
-      <!-- Qué cambia con Book Lab -->
-      <section class="cambia" aria-labelledby="cambia-titulo">
-        <h2 id="cambia-titulo">Qué cambia <span>con Book Lab</span></h2>
-        <div class="cambia-tabla" role="table" aria-label="Sin Book Lab y con Book Lab">
-          <div class="cambia-fila cambia-cab" role="row"><span role="columnheader">Sin Book Lab</span><b role="columnheader">Con Book Lab<sup>®</sup></b></div>
-          <div class="cambia-fila" role="row"><span role="cell">Reservas por WhatsApp</span><b role="cell">Reservas 24/7</b></div>
-          <div class="cambia-fila" role="row"><span role="cell">Agenda a mano</span><b role="cell">Agenda al día en todos los móviles</b></div>
-          <div class="cambia-fila" role="row"><span role="cell">Recordatorios uno a uno</span><b role="cell">Recordatorios automáticos</b></div>
-          <div class="cambia-fila" role="row"><span role="cell">Cuentas a mano</span><b role="cell">Caja y estadísticas</b></div>
-          <div class="cambia-fila" role="row"><span role="cell">No sabes quién no vuelve</span><b role="cell">Recuperas clientes</b></div>
-        </div>
-      </section>
-
-      <!-- Sin comisiones: frente a las apps de reservas de siempre -->
-      <section class="compara" aria-labelledby="compara-titulo">
-        <h2 id="compara-titulo">Tus clientes son tuyos</h2>
-        <div class="compara-tabla">
-          <div class="compara-col otras"><p class="compara-t">Otras apps de reservas</p><ul><li>Comisión por cada cliente nuevo</li><li>Tu barbería al lado de la competencia</li><li>Extras de pago por cada función</li><li>Soporte por formulario</li></ul></div>
-          <div class="compara-col nuestra"><p class="compara-t">Book Lab<sup>®</sup></p><ul><li>0 € de comisión por cliente</li><li>Tu página, solo tuya</li><li>Todo incluido en tu plan</li><li>WhatsApp directo con un barbero</li></ul></div>
-        </div>
-      </section>
-
-      <section class="migrar" aria-labelledby="migrar-titulo">
-        <p class="migrar-eye">¿Ya usas otra app de citas?</p>
-        <h2 id="migrar-titulo">Te ayudamos a pasar tus clientes</h2>
-        <p class="migrar-texto">Si tienes tus clientes y tus citas en otra app, en Google Calendar o en una libreta, te ayudamos a pasarlo todo a Book Lab. Empiezas con tu agenda llena y sin perder a nadie.</p>
-        <a class="pildora pildora-negra" href="https://wa.me/34746045607?text=Hola%2C%20tengo%20mis%20clientes%20en%20otra%20app%20y%20me%20interesa%20pasarme%20a%20Book%20Lab" target="_blank" rel="noopener">Quiero pasar mi barbería a Book Lab <i aria-hidden="true"></i></a>
-      </section>
-
-      <!-- Precios (oferta de lanzamiento). Se toca un plan y el botón abre WhatsApp con ese plan ya escrito -->
+<span id="demo"></span>
       <section class="precios" id="precios" aria-labelledby="precios-titulo">
         <h2 id="precios-titulo">Precios</h2>
         <p class="precios-sub"><b>Todas las herramientas en todos los planes, sin extras.</b> Solo cambia cuántos barberos sois.</p>
-        <p class="precios-fundadora">Precio de fundadora para las 20 primeras barberías: se mantiene mientras sigas. Después, Solo 16,90 €/mes y Book Lab® 24,90 €/mes o 249 €/año.</p>
+        <p class="precios-fundadora oculto">Precio de fundadora para las 20 primeras barberías: se mantiene mientras sigas. Después, Solo 16,90 €/mes y Book Lab® 24,90 €/mes o 249 €/año.</p>
         <div class="precios-planes tres" role="radiogroup" aria-label="Elige tu plan">
           <article class="plan" role="radio" tabindex="0" aria-checked="false" data-plan="Solo" data-texto="el plan Solo de Book Lab (14,90 € + IVA al mes)">
             <span class="plan-marca" aria-hidden="true"></span>
             <h3>Solo</h3>
             <p class="plan-quien">1 barbero</p>
             <p class="plan-precio"><s>16,90 €</s> <b>14,90 €</b><span>/mes <em class="iva">+ IVA</em></span></p>
-            <p class="plan-nota">Si trabajas tú solo. Con IVA: 18,03 €/mes.</p>
+            
           </article>
           <article class="plan plan-destacado is-elegido" role="radio" tabindex="0" aria-checked="true" data-plan="mensual" data-texto="el plan mensual de Book Lab (19,90 € + IVA al mes)">
             <span class="plan-marca" aria-hidden="true"></span>
@@ -486,7 +346,7 @@
             <h3>Mensual</h3>
             <p class="plan-quien">Barberos ilimitados</p>
             <p class="plan-precio"><s>24,90 €</s> <b>19,90 €</b><span>/mes <em class="iva">+ IVA</em></span></p>
-            <p class="plan-nota">Todo tu equipo, mes a mes. Con IVA: 24,08 €/mes.</p>
+            
           </article>
           <article class="plan" role="radio" tabindex="0" aria-checked="false" data-plan="anual" data-texto="el plan anual de Book Lab (219 € + IVA al año)">
             <span class="plan-marca" aria-hidden="true"></span>
@@ -494,64 +354,15 @@
             <h3>Anual</h3>
             <p class="plan-quien">Barberos ilimitados</p>
             <p class="plan-precio"><s>249 €</s> <b>219 €</b><span>/año <em class="iva">+ IVA</em></span></p>
-            <p class="plan-nota">Para ahorrar: sale a 18,25 € al mes. Con IVA: 264,99 €/año.</p>
+            
           </article>
         </div>
-        <ul class="precios-incluye">
-          <li>Todas las herramientas incluidas</li>
-          <li>Mantenimiento y cambios incluidos</li>
-          <li>Sin comisiones por reserva</li>
-          <li>Soporte por WhatsApp</li>
-          <li>App de avisos por WhatsApp para Mac y Windows</li>
-          <li>Sin permanencia</li>
-          <li>Trae a otra barbería: 1 mes gratis</li>
-        </ul>
+        <ul class="chips"><li>Todo incluido</li><li>Sin comisiones</li><li>Sin permanencia</li><li>Soporte por WhatsApp</li></ul>
         <a class="pildora pildora-amarilla pildora-grande precios-gratis" href="https://app.getbooklab.com/empezar" id="prueba">Prueba Book Lab gratis 14 días <i aria-hidden="true"></i></a>
         <p class="precios-o">o, si lo prefieres, habla conmigo:</p>
         <a class="pildora pildora-negra precios-cta" id="precios-cta" href="https://wa.me/34746045607?text=Hola%2C%20quiero%20el%20plan%20mensual%20de%20Book%20Lab%20(19%2C90%20%E2%82%AC%20%2B%20IVA%20al%20mes)" target="_blank" rel="noopener"><span id="precios-cta-txt">Quiero el plan mensual</span> <i aria-hidden="true"></i></a>
-        <ol class="precios-pasos">
-          <li><span><b>Te das de alta</b> con tu correo en un minuto. Sin tarjeta.</span></li>
-          <li><span><b>Pones tus servicios y tu horario</b> y tu página ya acepta reservas.</span></li>
-          <li><span><b>Durante 14 días</b> lo usas todo gratis. Si te gusta, eliges tu plan y sigues sin perder nada.</span></li>
-        </ol>
         <p class="precios-legal">Todos los precios llevan aparte el IVA (21 %). El precio que contrates se mantiene mientras sigas con nosotros.</p>
-      </section>
-
-      <!-- Book Lab PRO: lo de encima, más una web a medida -->
-      <section class="pro" aria-labelledby="pro-titulo">
-        <span class="pro-etiqueta"><i class="b-ico" aria-hidden="true"></i>Book Lab PRO</span>
-        <h2 id="pro-titulo">Una web a la altura de tu barbería</h2>
-        <p class="pro-lema">Para quien quiere más: todo lo de Book Lab, más una web hecha a medida. Nosotros te lo montamos todo.</p>
-        <ul class="pro-lista">
-          <li>Web con diseño exclusivo, con tus fotos y tu estilo</li>
-          <li>Tu propio dominio (tubarberia.com)</li>
-          <li>SEO para salir en Google en tu zona</li>
-          <li>Secciones a medida y correos desde tu dominio</li>
-          <li>Puesta en marcha con nosotros, sin que toques nada</li>
-        </ul>
-        <p class="pro-precio"><b>49,90 €</b>/mes + IVA</p>
-        <p class="pro-nota">Montaje gratis para las fundadoras (después, 199 € una vez). Soporte prioritario por WhatsApp.</p>
-        <div class="pro-botones">
-          <a class="pildora pildora-amarilla pildora-grande" href="demo.html">Ver un ejemplo de la PRO <i aria-hidden="true"></i></a>
-          <a class="pildora pildora-blanca" href="https://wa.me/34746045607?text=Hola%2C%20me%20interesa%20Book%20Lab%20PRO" target="_blank" rel="noopener">Hablemos por WhatsApp</a>
-        </div>
-      </section>
-
-      <!-- Llamada final: probar la demo -->
-      <!-- Preguntas frecuentes: lo que frena a la gente antes de probar -->
-      <section class="faq" aria-labelledby="faq-titulo">
-        <h2 id="faq-titulo">Preguntas que nos hacen</h2>
-        <details><summary>¿Tengo que saber de informática?</summary><p>No. Está pensado para que cualquiera lo monte solo: pones tus servicios y tu horario y ya aceptas reservas. Y si te atascas, nos escribes por WhatsApp.</p></details>
-        <details><summary>¿Mis clientes tienen que descargarse algo?</summary><p>No. Reservan desde tu página, en el navegador del móvil, en 30 segundos. Sin cuentas ni contraseñas.</p></details>
-        <details><summary>¿Funciona en el iPad y en el ordenador?</summary><p>Sí. En el móvil, en el iPad del mostrador (con modo caja) y en el ordenador. Todo a la vez y siempre al día.</p></details>
-        <details><summary>¿Qué pasa cuando acaban los 14 días?</summary><p>Eliges tu plan y sigues con todo tal cual. Si no te convence, no pagas nada: no pedimos tarjeta para probar.</p></details>
-        <details><summary>¿Los WhatsApp se envían solos?</summary><p>Desde el móvil, salen ya escritos y tú le das a enviar (dos toques por cliente). Desde un ordenador (Mac o Windows), nuestra app Book Lab Recordatorios los envía sola, uno a uno y con pausas, desde tu propio WhatsApp. Los correos (confirmación, recordatorios y reseña) siempre salen solos.</p></details>
-        <details><summary>¿Hay permanencia o comisiones?</summary><p>Ninguna de las dos. Pagas tu plan y ya: ni comisión por reserva ni extras. Te vas cuando quieras y te llevas tus datos.</p></details>
-        <details><summary>¿Mis datos están seguros?</summary><p>Sí. Servidores en Europa, conexión cifrada y una copia de seguridad cada noche. Cumplimos la ley de protección de datos.</p></details>
-        <details><summary>Ya tengo mis clientes en otra app, ¿los pierdo?</summary><p>No. Te ayudamos a pasarlos a Book Lab para que empieces con tu agenda llena.</p></details>
-      </section>
-
-      <section class="final" aria-label="Pruébalo">
+      </section>      <section class="final" aria-label="Pruébalo">
         <div class="final-demo con-foto">
           <div class="final-foto" aria-hidden="true">
             <img src="assets/img/final.webp?v=1" alt="" width="1194" height="1600" loading="lazy">
@@ -563,9 +374,7 @@
           <a class="pildora pildora-negra pildora-grande" href="#demo">Antes, mira la demo <i aria-hidden="true"></i></a>
           <p class="cta-nota">Sin tarjeta · Sin permanencia · Te pasamos tus clientes</p>
         </div>
-      </section>
-
-    </section>
+      </section>    </section>
   </main>
 
   <footer class="pie">
@@ -641,6 +450,24 @@
         if (!el) return; el.classList.remove('gl-toque'); void el.offsetWidth; el.classList.add('gl-toque');
         setTimeout(function () { el.classList.remove('gl-toque'); }, 400);
       });
+    })();
+
+    /* «Con Book Lab tienes…»: la frase se borra y se reescribe con el cursor amarillo */
+    (function () {
+      var el = document.getElementById('ganas-texto'); if (!el) return;
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var frases = ['Más tiempo libre.', 'La agenda llena.', 'Menos plantones.', 'Recordatorios automáticos.', 'Citas sin llamadas ni mensajes.'], i = 0, n = frases[0].length, borrando = true;
+      function paso() {
+        var f = frases[i];
+        if (borrando) {
+          n--; el.textContent = f.slice(0, n);
+          if (n <= 0) { borrando = false; i = (i + 1) % frases.length; setTimeout(paso, 350); } else setTimeout(paso, 28);
+        } else {
+          var g = frases[i]; n++; el.textContent = g.slice(0, n);
+          if (n >= g.length) { borrando = true; setTimeout(paso, 2200); } else setTimeout(paso, 55);
+        }
+      }
+      setTimeout(paso, 2600);
     })();
   </script>
 </body>
