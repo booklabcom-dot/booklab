@@ -1,7 +1,7 @@
 /* Códigos de fundador (23/11). Solo sus huellas: los códigos no aparecen aquí. */
 window.BL_FUNDADORES = {
   lanzamiento: "2027-01-01T00:00:00+01:00",
-  ocupadas: 3,
+  ocupadas: 7,
   codigos: [
     { h: "681cfd1141d173c1318c07ac004c8b41fef29253db86af103d19c2bc29a4e479", n: "00" },
     { h: "325d2e7dd8a9420ce72e0c57ee22aed833e996192e71fb91039193be68a4f436", n: "01" },
