@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Book Lab · La app de reservas, agenda y caja para barberías, hecha por un barbero</title>
-  <meta name="description" content="Reservas online 24/7 sin comisiones, Smart Booking, agenda de cada barbero, caja para iPad, recordatorios, control de no shows y BookLab Intelligence. Prueba 14 días gratis. Hecho por un barbero.">
+  <meta name="description" content="Reservas online 24/7 sin comisiones, Smart Booking, agenda de cada barbero, caja para iPad, recordatorios, control de no shows, facturación y estadísticas. Prueba 14 días gratis. Hecho por un barbero.">
   <link rel="canonical" href="https://getbooklab.com/web/">
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#f2f2f2">
@@ -21,7 +21,7 @@
   <link rel="stylesheet" href="../assets/css/clara.css?v=20261123">
   <link rel="stylesheet" href="../assets/css/portada-marca.css?v=2">
   <link rel="stylesheet" href="../assets/css/carteles.css?v=1">
-  <link rel="stylesheet" href="../assets/css/glitch.css?v=15">
+  <link rel="stylesheet" href="../assets/css/glitch.css?v=17">
   <script>document.documentElement.classList.add('gl-js');</script>
   <link rel="stylesheet" href="../assets/css/carrusel-ui.css?v=8">
   <script type="application/ld+json">
@@ -293,9 +293,15 @@
         </div>
         <p class="foto-texto">Confirmación, recordatorios y reseñas salen <b>solos</b>. Los WhatsApp, con un clic.</p>
         <a class="mas" href="../herramientas.html#recordatorios">Ver cómo funciona →</a>
-      </section>      <section class="cartel-ui cartel-smart" id="smart" aria-labelledby="smart-titulo">
+      </section>      <div class="smart-escena" id="smart">
+      <div class="foto-cartel cartel-smart-foto">
+        <img src="../assets/img/smart.webp?v=1" alt="Un cliente se levanta y el siguiente ya se sienta: sin huecos" width="1086" height="1448" loading="lazy">
+        <img class="g g1" src="../assets/img/smart.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+        <img class="g g2" src="../assets/img/smart.webp?v=1" alt="" aria-hidden="true" loading="lazy">
+        <h2 class="foto-titulo" id="smart-titulo">Más citas. <span>Menos huecos.</span></h2>
+      </div>
+      <section class="cartel-ui cartel-smart tras-foto" aria-labelledby="smart-titulo">
         <p class="smart-marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.5 7.3 4.7 11.5 6 7.3 7.3 6 11.5 4.7 7.3 0.5 6 4.7 4.7Z"/></svg>Smart Booking</p>
-        <h2 id="smart-titulo">Más citas. <span>Menos huecos.</span></h2>
         <div class="horas-ui" aria-hidden="true">
           <span>10:00</span><span class="r">10:30<small>✦ Recomendado</small></span><span class="ocupada">11:00<small>Reservada</small></span>
           <span class="r">11:30<small>✦ Recomendado</small></span><span>12:00</span><span>12:30</span>
@@ -303,6 +309,7 @@
         <p class="cartel-frase">Destaca las horas que no dejan huecos en tu agenda. Tu cliente elige igual.</p>
         <a class="mas" href="../herramientas.html#smart">Ver cómo funciona →</a>
       </section>
+      </div>
       <div class="foto-cartel cartel-sangre">
         <img src="../assets/img/sillon.webp?v=1" alt="Un sillón de barbero vacío y alguien que llega" width="1194" height="1600" loading="lazy">
         <img class="g g1" src="../assets/img/sillon.webp?v=1" alt="" aria-hidden="true" loading="lazy">
@@ -338,11 +345,16 @@
         </div>
         <p class="foto-texto">Cobros, productos, cierre de caja y comisiones. Conectada con la agenda.</p>
         <a class="mas" href="../herramientas.html#caja">Ver cómo funciona →</a>
-      </section>      <section class="cartel-ui cartel-intel" id="intelligence" aria-labelledby="intel-titulo">
-        <p class="smart-marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.5 7.3 4.7 11.5 6 7.3 7.3 6 11.5 4.7 7.3 0.5 6 4.7 4.7Z"/></svg>BookLab Intelligence</p>
+      </section>      <section class="cartel-ui cartel-intel con-foto" id="intelligence" aria-labelledby="intel-titulo">
+        <div class="foto-cartel intel-fondo" aria-hidden="true">
+          <img src="../assets/img/facturacion.webp?v=1" alt="" width="1086" height="1448" loading="lazy">
+          <img class="g g1" src="../assets/img/facturacion.webp?v=1" alt="" loading="lazy">
+          <img class="g g2" src="../assets/img/facturacion.webp?v=1" alt="" loading="lazy">
+        </div>
+        <p class="smart-marca"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M6 0.5 7.3 4.7 11.5 6 7.3 7.3 6 11.5 4.7 7.3 0.5 6 4.7 4.7Z"/></svg>Facturación y estadísticas</p>
         <h2 id="intel-titulo">Tus números, <span>en claro.</span></h2>
         <div class="intel-escena">
-          <div class="tel intel-pantalla"><img src="../assets/img/app/intelligence.webp?v=3" alt="Pantalla de BookLab Intelligence" loading="lazy"></div>
+          <div class="tel intel-pantalla"><img src="../assets/img/app/intelligence.webp?v=3" alt="Pantalla de facturación y estadísticas de Book Lab" loading="lazy"></div>
           <ul class="avisos-intel" aria-label="Ejemplos">
             <li><b>22 clientes</b> llevan más de 60 días sin venir</li>
             <li>Los <b>martes por la tarde</b> tienes huecos</li>

@@ -123,6 +123,30 @@
   .espera.tras-foto { margin: -70px 32px 0; }
 }
 
+/* ---------- Smart Booking: la foto de las dos sillas y, montado encima, el cartel negro con las horas ---------- */
+.smart-escena { position: relative; margin: 28px 0 0; }
+.cartel-smart-foto { --gris-foto: #bdbdbd; --pos-m: 50% 70%; margin: 0; aspect-ratio: 3 / 4; }
+.cartel-smart.tras-foto { position: relative; z-index: 3; margin: -96px 10px 0; }
+@media (min-width: 900px) {
+  .smart-escena { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+  .cartel-smart-foto { aspect-ratio: 4 / 5; }
+  .cartel-smart-foto img { left: 0; width: 100%; object-position: 50% 70%; -webkit-mask-image: none; mask-image: none; }
+  .cartel-smart-foto h2.foto-titulo { top: 34px; left: 34px; right: 34px; translate: none; max-width: none; font-size: clamp(2.4rem, 3.6vw, 3.7rem); }
+  .cartel-smart.tras-foto { display: block; margin: 0 0 0 -110px; box-shadow: 0 24px 60px rgba(0,0,0,.28); }
+}
+
+/* ---------- Facturación y estadísticas: la foto oscura de fondo del cartel negro ---------- */
+.cartel-intel.con-foto { position: relative; isolation: isolate; padding-top: 58vw; }
+.cartel-intel.con-foto > :not(.intel-fondo) { position: relative; z-index: 1; }
+.intel-fondo { position: absolute; inset: 0; z-index: 0; margin: 0; border-radius: 0; aspect-ratio: auto; background: #111; }
+.intel-fondo img { height: 75%; object-position: 50% 45%; }
+.intel-fondo::after { content: ''; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(17,17,17,0) 0%, rgba(17,17,17,0) 30%, rgba(17,17,17,.6) 50%, #111 68%); }
+@media (min-width: 900px) {
+  .cartel-intel.con-foto { padding-top: 44px; padding-left: 46%; min-height: 560px; }
+  .intel-fondo img { left: 0; width: 56%; height: 100%; object-position: 50% 50%; -webkit-mask-image: none; mask-image: none; }
+  .intel-fondo::after { background: linear-gradient(90deg, rgba(17,17,17,0) 0%, rgba(17,17,17,.2) 32%, #111 56%); }
+}
+
 /* ---------- Caja: la foto del iPad y, montada encima, la pantalla real de la caja ---------- */
 .caja-escena { position: relative; margin: 0 0 18px; }
 .cartel-caja { --gris-foto: #dadada; --pos-m: 45% 70%; margin: 0; }
