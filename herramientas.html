@@ -29,6 +29,18 @@
     .hr-sec:nth-of-type(even) .hr-num { color: #9a9a9a; }
     .rp-claro .rp-mini, .rp-claro .rp-nota-o { color: #6b6b6b !important; }
     .hr-captura-mac { display: block; width: 100%; max-width: 300px; height: auto; margin-top: 14px; border-radius: 18px; box-shadow: 0 12px 30px rgba(0,0,0,.35); }
+    .rp-prem { position: relative; overflow: hidden; margin-top: 14px; padding: 16px; border-radius: 18px; background: #121212; color: #fff; }
+    .rp-prem::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(18,18,18,.55), #121212 65%), url(assets/img/sillon.webp) center 30% / cover; filter: grayscale(1); }
+    .rp-prem > * { position: relative; }
+    .rp-prem-et { display: inline-block; padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(254,227,4,.5); color: #FEE304; font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    .rp-prem-t { margin-top: 10px !important; font: 800 1.45rem/1.05 var(--letra); letter-spacing: -.04em; }
+    .rp-prem-s { margin-top: 4px !important; color: #b9b8b2; font-size: .9rem; }
+    .rp-prem-h { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .rp-prem-h span { display: grid; justify-items: center; gap: 3px; padding: 9px 12px; border-radius: 12px; background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.16); font-weight: 700; font-size: .92rem; }
+    .rp-prem-h b { color: #FEE304; font-size: .78rem; }
+    .rp-prem-precio { display: flex; align-items: baseline; gap: 10px; margin-top: 14px !important; padding-top: 12px; border-top: 1px solid #2a2a2a; }
+    .rp-prem-precio b { font: 800 1.7rem/1 var(--letra); letter-spacing: -.04em; }
+    .rp-prem-precio s { color: #8d8d8d; }
     .nav-marca { white-space: nowrap; display: inline-flex; align-items: center; gap: 9px; } .nav-b { width: 30px; height: 30px; border-radius: 8px; }</style>
 <script src="/assets/js/fundadores.js?v=2"></script>
   <script>
@@ -52,7 +64,7 @@
       <div class="hr-indice-g"><a class="hr-indice-cat" href="#atraer">01 · Atraer y recibir clientes</a><a href="#web">Tu página</a><a href="#reservas">Reservas</a><a href="#smart">Smart Booking</a><a href="#politica">Política de reserva</a><a href="#cliente">Gestionar mi cita</a></div>
       <div class="hr-indice-g"><a class="hr-indice-cat" href="#automatizar">02 · Automatizar el día a día</a><a href="#recordatorios">Recordatorios</a><a href="#whatsapp">WhatsApp y app Mac/Windows</a><a href="#cancelar">Cancelar con motivo</a><a href="#espera">Lista de espera</a><a href="#resenas">Reseñas</a><a href="#bloqueos">No shows y bloqueos</a></div>
       <div class="hr-indice-g"><a class="hr-indice-cat" href="#gestionar">03 · Gestionar tu barbería</a><a href="#mostrador">Agenda</a><a href="#caja">Caja y modo caja</a><a href="#equipo">Equipo y permisos</a><a href="#gastos">Gastos y beneficio</a><a href="#ademas">Y además</a></div>
-      <div class="hr-indice-g"><a class="hr-indice-cat" href="#crecer">04 · Hacer crecer tu negocio</a><a href="#intelligence">BookLab Intelligence</a><a href="#numeros">Panel y números</a><a href="#recuperar">Recuperar clientes</a></div>
+      <div class="hr-indice-g"><a class="hr-indice-cat" href="#crecer">04 · Hacer crecer tu negocio</a><a href="#intelligence">BookLab Intelligence</a><a href="#numeros">Panel y números</a><a href="#recuperar">Recuperar clientes</a><a href="#fuera">Fuera de horario</a></div>
       <div class="hr-indice-g"><a class="hr-indice-cat" href="#tranquilidad">05 · Tranquilidad y control</a><a href="#privacidad">Datos y seguridad</a></div>
     </nav>
 
@@ -469,7 +481,6 @@
         <ul>
           <li><b>Google Calendar (opcional):</b> las citas aparecen en el calendario de cada barbero, y lo que ya tenga apuntado allí no se pisa.</li>
           <li><b>Avisos en tu móvil:</b> cada reserva o cancelación al momento, y el resumen de la mañana con tus citas del día.</li>
-          <li><b>Citas fuera de horario:</b> abres horas especiales con su precio, solo cuando tú quieras.</li>
           <li><b>Modo día y modo noche</b>, en el móvil, el iPad y el ordenador.</li>
         </ul>
       </div>
@@ -548,13 +559,48 @@
       </div>
     </section>
 
+    <!-- Citas fuera de horario -->
+    <section class="hr-sec" id="fuera" aria-labelledby="t-fuera">
+      <div class="hr-texto">
+        <p class="hr-num">20</p>
+        <h2 id="t-fuera">Citas fuera de horario</h2>
+        <p class="hr-intro">Abre la barbería cuando tú quieras y cóbralo como lo que es: una cita especial.</p>
+        <ul>
+          <li>Las abres desde tu agenda: el rato que quieras, solo ese día o cada semana.</li>
+          <li>Tú pones el precio: el doble, un suplemento (+5 €) o un precio fijo.</li>
+          <li>El cliente las ve aparte, como cita premium, con el precio en cada hora.</li>
+          <li>Antes de reservar se le explica el precio especial. Sin sorpresas.</li>
+          <li>¿Sin suplemento? Salen como horas normales.</li>
+        </ul>
+      </div>
+      <div class="hr-paneles" aria-hidden="true">
+        <div class="rp rp-claro">
+          <p class="rp-mini">Al reservar · Jueves 26 · Álex</p>
+          <div class="rp-horas rp-horas-o"><span>11:00</span><span>12:30</span><span>17:00</span><span>18:00</span></div>
+          <div class="rp-prem">
+            <span class="rp-prem-et">★ Fuera de horario</span>
+            <p class="rp-prem-t">La barbería, solo para ti</p>
+            <p class="rp-prem-s">Te atendemos con calma, como te mereces.</p>
+            <div class="rp-prem-h"><span>20:00<b>25 €</b></span><span>20:30<b>25 €</b></span><span>21:00<b>25 €</b></span></div>
+          </div>
+        </div>
+        <div class="rp">
+          <span class="rp-prem-et">★ Cita fuera de horario</span>
+          <p class="rp-prem-t" style="margin-top:12px">Tu momento</p>
+          <p class="rp-gris" style="line-height:1.45">Fuera de horario, la barbería es solo tuya. Te atendemos con calma, como te mereces. Esta cita tiene un precio especial.</p>
+          <p class="rp-prem-precio"><b>25 €</b><s>16 €</s></p>
+          <span class="rp-boton rp-amarillo rp-bloque">Reservar · 25 €</span>
+        </div>
+      </div>
+    </section>
+
     <!-- Bloque 5: Tranquilidad y control -->
     <div class="hr-cat" id="tranquilidad"><span>05</span><h2>Tranquilidad y control</h2></div>
 
     <!-- Privacidad -->
     <section class="hr-sec" id="privacidad" aria-labelledby="t-privacidad">
       <div class="hr-texto">
-        <p class="hr-num">20</p>
+        <p class="hr-num">21</p>
         <h2 id="t-privacidad">Tus datos, seguros y en orden</h2>
         <p class="hr-intro">Las citas y los datos de tus clientes son tuyos.</p>
         <ul>
