@@ -84,6 +84,7 @@
       document.getElementById('num').textContent = f.n;
       document.getElementById('barberia').textContent = b ? b + '.' : 'Bienvenido.';
       var e = document.getElementById('entrar'); if (f.n === '00') { e.href = '/web/'; e.textContent = 'Entrar →'; }
+      else if (q.get('web') === '1') { e.href = '/web/'; e.textContent = 'Ver la web →'; }  /* enlace «web completa» para indecisos */
       e.addEventListener('click', function () { BL.guarda({ h: f.h, n: f.n, b: b, c: cod }); });
     })();
   </script>

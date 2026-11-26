@@ -218,7 +218,7 @@
   </script>
   <script>
     /* Candado: antes del lanzamiento, solo con pase de fundador */
-    var _p = BL.pase(); if (!BL.lanzado() && !(_p && _p.n === '00')) location.replace(_p ? '/guia/' : '/');
+    var _p = BL.pase(); if (!BL.lanzado() && !_p) location.replace('/');  /* con pase de fundador (o el 00) se entra */
   </script>
 </head>
 <body>
